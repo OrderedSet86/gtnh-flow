@@ -1,0 +1,33 @@
+[
+    {
+        "m": "centrifuge",
+        "tier": "MV",
+        "I": {
+            "lava": 100
+        },
+        "O": {
+            "silicon dioxide": 0.125,
+            "magnesia dust": 0.025,
+            "quicklime dust": 0.025,
+            "golden nugget": 0.00625,
+            "sapphire dust": 0.03135,
+            "tantalite dust": 0.0125
+        },
+        "custom": true,
+        "eut": 80,
+        "dur": 80,
+        "number": 16
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "tantalite dust": 9
+        },
+        "O": {
+            "manganese dust": 1,
+            "tantalum dust": 2,
+            "oxygen": 6000
+        }
+    }
+]

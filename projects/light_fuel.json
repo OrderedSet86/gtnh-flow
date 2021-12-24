@@ -1,0 +1,42 @@
+[
+    {
+        "m": "chemical reactor",
+        "tier": "LV",
+        "I": {
+            "hydrogen gas": 2000,
+            "sulfuric light fuel": 12000
+        },
+        "O": {
+            "hydrogen sulfide": 1000,
+            "light fuel": 12000
+        },
+        "custom": true,
+        "eut": 30,
+        "dur": 160,
+        "number": 0.01666666666666
+    },
+    {
+        "m": "distillery",
+        "tier": "LV",
+        "I": {
+            "oil": 25
+        },
+        "O": {
+            "sulfuric light fuel": 25
+        }
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "water": 3000
+        },
+        "O": {
+            "oxygen gas": 1000,
+            "hydrogen gas": 2000
+        },
+        "custom": true,
+        "eut": 30,
+        "dur": 2000
+    }
+]
