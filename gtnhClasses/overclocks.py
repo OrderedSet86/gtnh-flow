@@ -1,6 +1,6 @@
 from bisect import bisect_right
 
-from ..dataClasses.recipe import Recipe, IngredientCollection, Ingredient
+from dataClasses.base import Recipe, IngredientCollection, Ingredient
 
 
 coil_multipliers = {

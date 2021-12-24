@@ -23,6 +23,9 @@
         },
         "O": {
             "sugar": 8
-        }
+        },
+        "custom": true,
+        "eut": 7,
+        "dur": 160
     }
 ]

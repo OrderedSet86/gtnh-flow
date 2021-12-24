@@ -24,6 +24,9 @@ class IngredientCollection:
         else:
             raise RuntimeError(f'Improper access to {self} using {idx}')
 
+    def __repr__(self):
+        return str([x for x in self._ings])
+
 
 class Recipe:
     def __init__(
@@ -43,6 +46,8 @@ class Recipe:
         for key, value in kwargs.items():
             setattr(self, key, value)
 
+    def __repr__(self):
+        return str([f'{x}={getattr(self, x)}' for x in vars(self)])
 
 if __name__ == '__main__':
     r = Recipe(

@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-from ..dataClasses.recipe import Ingredient, Recipe, IngredientCollection
+from ..dataClasses.base import Ingredient, Recipe, IngredientCollection
 from ..gtnhClasses.overclocks import overclockRecipe
 
 
