@@ -32,13 +32,16 @@ class Recipe:
             inputs,
             outputs,
             eut,
-            dur
+            dur,
+            **kwargs
         ):
         self.machine = machine_name
         self.I = inputs
         self.O = outputs
         self.eut = eut
         self.dur = dur
+        for key, value in kwargs.items():
+            setattr(self, key, value)
 
 
 if __name__ == '__main__':

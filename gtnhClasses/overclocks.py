@@ -51,6 +51,30 @@ def require(recipe, requirements):
             raise RuntimeError(f'Improper config! Ensure {recipe.machine} has key {key} of type {req_type}.')
 
 
+def modifyEBF(recipe):
+    require(
+        recipe,
+        [
+            ['coils', str],
+            ['heat', int],
+        ]
+    )
+    ebf_voltage_cutoffs = [x*4 for x in voltage_cutoffs]
+    base_voltage = bisect_right(ebf_voltage_cutoffs, recipe.eut)
+    user_voltage = voltages.index(recipe.user_voltage)
+    oc_count = user_voltage - base_voltage
+
+    actual_heat = coil_heat[recipe.coils] + 100 * min(0, user_voltage - 1)
+    excess_heat = actual_heat - recipe.heat
+    eut_discount = 0.95 ** (excess_heat // 900)
+    perfect_ocs = (excess_heat // 1800)
+
+    recipe.eut = recipe.eut * 4**oc_count * eut_discount
+    recipe.dur = recipe.dur / 2**oc_count / 2**max(min(perfect_ocs, oc_count), 0)
+
+    return recipe
+
+
 def modifyPyrolyse(recipe):
     require(
         recipe,
@@ -78,12 +102,21 @@ def modifyStandard(recipe):
     return recipe
 
 
+def modifyPerfect(recipe):
+    oc_count = calculateStandardOC(recipe)
+    recipe.eut = recipe.eut * 4**oc_count
+    recipe.dur = recipe.dur / 4**oc_count
+    return recipe
+
+
 def overclockRecipe(recipe):
     ### Modifies recipe according to overclocks
     # By the time that the recipe arrives here, it should have a "user_voltage" argument which indicates
     # what the user is actually providing.
     machine_overrides = {
-        'pyrolyse oven': modifyPyrolyse
+        'pyrolyse oven': modifyPyrolyse,
+        'large chemical reactor': modifyPerfect,
+        'electric blast furnace': modifyEBF,
     }
     if recipe.machine in machine_overrides:
         return machine_overrides[recipe.machine](recipe)
