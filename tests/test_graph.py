@@ -34,5 +34,27 @@ def test_connectionSimple():
 
 
 def test_connectionLoop():
-    # Loops won't cause problems until you try to balance
-    pass
+    project_name = 'loopGraph'
+
+    # Load recipes
+    recipes = recipesFromConfig(project_name, project_folder='tests/testProjects')
+
+    # Create graph
+    g = Graph(project_name, recipes)
+    g.connectGraph()
+    g.removeBackEdges()
+
+    ### Check connections
+    # 0: distillation tower
+    # 1: large chemical reactor
+
+    expected_edges = [
+        ('source', '1', 'acetic acid'),
+        ('source', '1', 'sulfuric acid'),
+        ('1', '0', 'diluted sulfuric acid'),
+        ('1', 'sink', 'ethenone'),
+        ('0', 'sink', 'sulfuric acid'),
+        ('0', 'sink', 'water')
+    ]
+
+    assert set(expected_edges) == set(g.edges.keys())

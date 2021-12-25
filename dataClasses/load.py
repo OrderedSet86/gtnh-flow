@@ -1,7 +1,8 @@
 import json
 from collections import OrderedDict
-from jsmin import jsmin
 from pathlib import Path
+
+from jsmin import jsmin
 
 from dataClasses.base import Ingredient, IngredientCollection, Recipe
 

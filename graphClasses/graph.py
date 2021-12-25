@@ -3,13 +3,15 @@
 # As a result, a special algorithm is required to connect all relevant edges in a factory.
 
 # Standard libraries
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 
 # Pypi libraries
 import graphviz
+from termcolor import cprint
 
 # Internal libraries
 from dataClasses.base import Ingredient, IngredientCollection, Recipe
+from graphClasses.backEdges import BasicGraph, dfs
 
 
 def swapIO(io_type):
@@ -26,7 +28,7 @@ class Graph:
     def __init__(self, graph_name, recipes, graph_config=None):
         self.graph_name = graph_name
         self.recipes = recipes
-        self.total_IO = IngredientCollection()
+        self.total_IO = IngredientCollection() # TODO:
         self.nodes = []
         self.edges = {} # uniquely defined by (machine from, machine to, ing name)
         self.graph_config = graph_config
@@ -102,8 +104,53 @@ class Graph:
                             added_edges.add(unique_edge_identifiers[1])
 
 
+    def removeBackEdges(self):
+        # Loops are possible in machine processing, but very difficult / NP-hard to solve properly
+        # Want to make algorithm simple, so just break all back edges and send them to sink instead
+        # The final I/O information will have these balanced, so this is ok
+
+        # Run DFS back edges detector
+        basic_edges = [(x[0], x[1]) for x in self.edges.keys()]
+        G = BasicGraph(basic_edges)
+        dfs(G)
+
+        for back_edge in G.back_edges:
+            # Note that although this doesn't include ingredient information, all edges between these two nodes
+            # should be redirected
+            from_node, to_node = back_edge
+            relevant_edges = []
+            for edge in self.edges.items():
+                edge_def, edge_data = edge
+                if (edge_def[0], edge_def[1]) == (from_node, to_node):
+                    relevant_edges.append((edge_def, edge_data))
+
+            for edge_def, edge_data in relevant_edges:
+                node_from, node_to, ing_name = edge_def
+                cprint(f'Fixing factory cycle by redirecting "{ing_name.title()}" to sink', 'yellow')
+
+                # Redirect looped ingredient to sink
+                self.addEdge(
+                    node_from,
+                    'sink',
+                    ing_name,
+                    edge_data['quant'],
+                    **edge_data['kwargs']
+                )
+                # Pull newly required ingredients from source
+                self.addEdge(
+                    'source',
+                    node_to,
+                    ing_name,
+                    edge_data['quant'],
+                    **edge_data['kwargs']
+                )
+
+                del self.edges[edge_def]
+
+
     def balanceGraph(self):
         # Applies locking info to existing graph
+        self.removeBackEdges()
         pass
 
 
@@ -122,9 +169,6 @@ class Graph:
                 # 'overlap': 'scale',
             }
         )
-
-        print(self.nodes)
-        print(self.edges)
 
         for rec_id, kwargs in self.nodes:
             if isinstance(rec_id, int):

@@ -1,4 +1,5 @@
 # Standard libraries
+import argparse
 import json
 import sys
 from collections import defaultdict, deque, OrderedDict
@@ -35,4 +36,5 @@ if __name__ == '__main__':
     # Create graph and render
     g = Graph(project_name, recipes, graph_config)
     g.connectGraph()
+    g.balanceGraph()
     g.outputGraphviz()
