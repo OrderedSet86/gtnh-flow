@@ -1,7 +1,9 @@
 from copy import deepcopy
 
-from ..dataClasses.base import Ingredient, Recipe, IngredientCollection
-from ..gtnhClasses.overclocks import overclockRecipe
+import pytest
+
+from dataClasses.base import Ingredient, Recipe, IngredientCollection
+from gtnhClasses.overclocks import overclockRecipe
 
 
 def test_standardOverclock():

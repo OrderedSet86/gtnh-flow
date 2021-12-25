@@ -23,16 +23,19 @@ def swapIO(io_type):
 class Graph:
     # Assumes recipes are pre-overclocked appropriately
 
-    def __init__(self, graph_name, recipes):
+    def __init__(self, graph_name, recipes, graph_config=None):
         self.graph_name = graph_name
         self.recipes = recipes
         self.total_IO = IngredientCollection()
         self.nodes = []
         self.edges = {} # uniquely defined by (machine from, machine to, ing name)
+        self.graph_config = graph_config
+        if self.graph_config == None:
+            self.graph_config = {}
 
 
-    def addNode(self, node_id, **kwargs):
-        self.nodes.append([node_id, kwargs])
+    def addNode(self, recipe_id, **kwargs):
+        self.nodes.append([recipe_id, kwargs])
     def addEdge(self, node_from, node_to, ing_name, quantity, **kwargs):
         self.edges[(node_from, node_to, ing_name)] = {
             'quant': quantity,
@@ -57,15 +60,15 @@ class Graph:
                     involved_recipes[ing.name][io_type].append(rec_id)
 
         # Add I/O connections
+        added_edges = set()
         for rec_id, rec in enumerate(self.recipes):
             self.addNode(
-                str(rec_id),
+                rec_id,
                 fillcolor='lightblue2',
-                label=rec.machine,
             )
             for io_type in ['I', 'O']:
                 for ing in getattr(rec, io_type):
-                    linked_machines = involved_recipes[swapIO(io_type)]
+                    linked_machines = involved_recipes[ing.name][swapIO(io_type)]
                     if len(linked_machines) == 0:
                         if io_type == 'I':
                             linked_machines = ['source']
@@ -73,20 +76,30 @@ class Graph:
                             linked_machines = ['sink']
 
                     for link_id in linked_machines:
+                        # Skip already added edges
+                        unique_edge_identifiers = [
+                            (link_id, rec_id, ing.name),
+                            (rec_id, link_id, ing.name)
+                        ]
+                        if any(x in added_edges for x in unique_edge_identifiers):
+                            continue
+
                         if io_type == 'I':
                             self.addEdge(
                                 str(link_id),
                                 str(rec_id),
                                 ing.name,
-                                ing.quant,
+                                1,
                             )
+                            added_edges.add(unique_edge_identifiers[0])
                         elif io_type == 'O':
                             self.addEdge(
                                 str(rec_id),
                                 str(link_id),
                                 ing.name,
-                                ing.quant,
+                                1,
                             )
+                            added_edges.add(unique_edge_identifiers[1])
 
 
     def balanceGraph(self):
@@ -104,7 +117,7 @@ class Graph:
             strict=False, # Prevents edge grouping
             graph_attr={
             #     'splines': 'ortho'
-                'rankdir': 'TD',
+                'rankdir': 'LR',
                 'ranksep': '0.5',
                 # 'overlap': 'scale',
             }
@@ -113,16 +126,30 @@ class Graph:
         print(self.nodes)
         print(self.edges)
 
-        for node_id, kwargs in self.nodes:
-            g.node(
-                node_id,
-                **kwargs,
-                **node_style
-            )
+        for rec_id, kwargs in self.nodes:
+            if isinstance(rec_id, int):
+                g.node(
+                    str(rec_id),
+                    label=self.recipes[rec_id].machine.title(),
+                    **kwargs,
+                    **node_style
+                )
+            elif isinstance(rec_id, str):
+                g.node(
+                    str(rec_id),
+                    label=str(rec_id).title(),
+                    **kwargs,
+                    **node_style
+                )
         for io_info, edge_data in self.edges.items():
             node_from, node_to, ing_name = io_info
             ing_quant, kwargs = edge_data['quant'], edge_data['kwargs']
-            g.edge(node_from, node_to, **kwargs)
+            g.edge(
+                node_from,
+                node_to,
+                label=f'{ing_name.title()}\n({ing_quant}/s)',
+                **kwargs
+            )
 
         # Output final graph
         g.render(

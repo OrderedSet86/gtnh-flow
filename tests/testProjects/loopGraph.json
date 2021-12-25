@@ -1,0 +1,32 @@
+[
+    {
+        "m": "distillation tower",
+        "tier": "MV",
+        "I": {
+            "diluted sulfuric acid": 3000
+        },
+        "O": {
+            "sulfuric acid": 2000,
+            "water": 1000
+        },
+        "custom": true,
+        "eut": 120,
+        "dur": 600,
+        "number": 1
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "MV",
+        "I": {
+            "sulfuric acid": 1000,
+            "acetic acid": 1000
+        },
+        "O": {
+            "ethenone": 1000,
+            "diluted sulfuric acid": 1000
+        },
+        "custom": true,
+        "eut": 120,
+        "dur": 160
+    }
+]
