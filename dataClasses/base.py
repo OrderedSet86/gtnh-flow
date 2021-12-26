@@ -26,11 +26,19 @@ class IngredientCollection:
     def __repr__(self):
         return str([x for x in self._ings])
 
+    def __mul__(self, mul_num):
+        for ing in self._ings:
+            ing.quant *= mul_num
+        self._ingdict = {x.name: x.quant for x in self._ings}
+
+        return self
+
 
 class Recipe:
     def __init__(
             self,
             machine_name,
+            user_voltage,
             inputs,
             outputs,
             eut,
@@ -38,15 +46,30 @@ class Recipe:
             **kwargs
         ):
         self.machine = machine_name
+        self.user_voltage = user_voltage
         self.I = inputs
         self.O = outputs
         self.eut = eut
         self.dur = dur
+        self.multiplier = 1
         for key, value in kwargs.items():
             setattr(self, key, value)
 
     def __repr__(self):
         return str([f'{x}={getattr(self, x)}' for x in vars(self)])
+
+    def __mul__(self, mul_num):
+        assert isinstance(mul_num, (int, float))
+        assert self.multiplier == 1 # Undefined behavior with multiple multiplications
+
+        self.I *= mul_num
+        self.O *= mul_num
+        self.eut *= mul_num
+        self.multiplier = mul_num
+
+        return self
+
+
 
 if __name__ == '__main__':
     r = Recipe(
@@ -58,7 +81,7 @@ if __name__ == '__main__':
             Ingredient('silicon dioxide', 1)
         ),
         5,
-        80
+        80,
     )
     print(r)
     print(r.I['glass dust'])

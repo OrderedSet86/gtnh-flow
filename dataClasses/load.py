@@ -20,11 +20,12 @@ def recipesFromConfig(project_name, project_folder='projects'):
         recipes.append(
             Recipe(
                 rec['m'],
+                rec['tier'],
                 IngredientCollection(*[Ingredient(name, quant) for name, quant in rec['I'].items()]),
                 IngredientCollection(*[Ingredient(name, quant) for name, quant in rec['O'].items()]),
                 rec['eut'],
                 rec['dur'],
-                **{x: rec[x] for x in vars(rec)}
+                **{x: rec[x] for x in rec.keys() if x not in {'m', 'I', 'O', 'eut', 'dur', 'tier'}},
             )
         )
 

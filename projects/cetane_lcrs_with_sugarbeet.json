@@ -9,6 +9,8 @@
         "O": {
             "cetane-boosted diesel": 7500
         },
+        "eut": 480,
+        "dur": 120,
         "number": 0.8
     },
     {
@@ -21,7 +23,9 @@
         "O": {
             "tetranitromethane": 2000,
             "water": 9000
-        }
+        },
+        "eut": 120,
+        "dur": 480
     },
     {
         "m": "large chemical reactor",
@@ -33,7 +37,9 @@
         "O": {
             "nitric acid": 1000,
             "water": 1000
-        }
+        },
+        "eut": 30,
+        "dur": 320
     },
     {
         "m": "large chemical reactor",
@@ -45,7 +51,9 @@
         "O": {
             "ethenone": 1000,
             "diluted sulfuric acid": 1000
-        }
+        },
+        "eut": 120,
+        "dur": 160
     },
     {
         "m": "large chemical reactor",
@@ -56,7 +64,9 @@
         },
         "O": {
             "ammonia": 1000
-        }
+        },
+        "eut": 384,
+        "dur": 320
     },
     {
         "m": "large chemical reactor",
@@ -68,7 +78,6 @@
             "carbon dioxide": 5000,
             "hydrogen": 15000
         },
-        "custom": true,
         "eut": 480,
         "dur": 175
     },
@@ -83,7 +92,6 @@
             "oxygen": 25000,
             "water": 5000
         },
-        "custom": true,
         "eut": 60,
         "dur": 448
     },
@@ -95,7 +103,9 @@
         },
         "O": {
             "sugar": 8
-        }
+        },
+        "eut": 7,
+        "dur": 160
     },
     {
         "m": "large chemical reactor",
@@ -108,7 +118,9 @@
         "O": {
             "glycerol": 9000,
             "bio diesel": 54000
-        }
+        },
+        "eut": 30,
+        "dur": 5400
     },
     {
         "m": "distillation tower",
@@ -120,7 +132,6 @@
             "ethanol": 600,
             "water": 300
         },
-        "custom": true,
         "eut": 400,
         "dur": 32
     },
@@ -134,7 +145,6 @@
         "O": {
             "biomass": 300
         },
-        "custom": true,
         "eut": 28,
         "dur": 20
     },
@@ -148,7 +158,6 @@
             "fish oil": 100,
             "golden nugget": 0.0001
         },
-        "custom": true,
         "eut": 7,
         "dur": 16
     },
@@ -161,9 +170,8 @@
         "O": {
             "methane": 96
         },
-        "custom": true,
         "eut": 5,
-        "dur": 19
+        "dur": 380
     },
     {
         "m": "centrifuge",
@@ -174,7 +182,6 @@
         "O": {
             "nitrogen": 3900
         },
-        "custom": true,
         "eut": 7,
         "dur": 1600
     },
@@ -185,7 +192,6 @@
         "O": {
             "air": 2000
         },
-        "custom": true,
         "eut": 2,
         "dur": 300
     }

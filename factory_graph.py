@@ -32,6 +32,7 @@ if __name__ == '__main__':
 
     for rec in recipes:
         print(rec)
+    print()
 
     # Create graph and render
     g = Graph(project_name, recipes, graph_config)
