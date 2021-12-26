@@ -214,64 +214,43 @@ class Graph:
         while need_locking:
             found_lockable = False
 
+            # Try all I/O side locked first
             for rec_id in need_locking:
                 rec = self.recipes[int(rec_id)]
                 for io_type in ['I', 'O']:
                     relevant_machine_edges = adj_machine[rec_id][io_type]
                     if len(relevant_machine_edges) > 0 and all([self.edges[x].get('locked', False) for x in relevant_machine_edges]):
                         # This machine is available to be locked!
+                        self._lockMachine(rec_id, rec, adj, adj_machine)
                         found_lockable = True
-
-                        # Compute multipliers based on all locked edges (other I/O stream as well if available)
-                        all_relevant_edges = {
-                            'I': [x for x in adj_machine[rec_id]['I'] if self.edges[x].get('locked', False)],
-                            'O': [x for x in adj_machine[rec_id]['O'] if self.edges[x].get('locked', False)],
-                        }
-                        print(all_relevant_edges)
-
-                        if len(all_relevant_edges) == 0:
-                            cprint(f'No machines adjacent to {rec.machine}. Cannot balance.', 'red')
-                            return
-
-                        multipliers = []
-                        for io_type in ['I', 'O']:
-                            io_side_edges = all_relevant_edges[io_type]
-                            for edge in io_side_edges:
-                                node_from, node_to, ing_name = edge
-                                if io_type == 'I':
-                                    other_rec = self.recipes[int(node_from)]
-                                elif io_type == 'O':
-                                    other_rec = self.recipes[int(node_to)]
-
-                                wanted_quant = getattr(other_rec, swapIO(io_type))[ing_name]
-                                wanted_per_s = wanted_quant / (other_rec.dur / 20)
-
-                                base_speed = getattr(rec, io_type)[ing_name] / (rec.dur / 20)
-                                multipliers.append(wanted_per_s / base_speed)
-
-                        print(rec.machine, multipliers)
-                        final_multiplier = max(multipliers)
-                        self.recipes[int(rec_id)] *= final_multiplier
-
-                        existing_label = self.nodes[int(rec_id)]['label']
-                        self.nodes[int(rec_id)]['label'] = f'{round(rec.multiplier, 2)}x {rec.user_voltage} {existing_label}\nCycle: {rec.dur/20}s\nEU/t: {round(rec.eut, 2)}'
-
-                        # Lock edges using new quant
-                        connected_edges = adj[rec_id]
-                        for io_dir in connected_edges:
-                            for edge in connected_edges[io_dir]:
-                                self._lockEdgeQuant(edge, rec, io_dir)
 
                         # Pop recipe and restart iteration
                         need_locking.remove(rec_id)
                         break
-
                     if found_lockable:
                         break
-
                 if found_lockable:
                     break
+            if found_lockable:
+                continue
 
+            # As a fallback, do just one I/O side locked
+            for rec_id in need_locking:
+                rec = self.recipes[int(rec_id)]
+                for io_type in ['I', 'O']:
+                    relevant_machine_edges = adj_machine[rec_id][io_type]
+                    if len(relevant_machine_edges) > 0 and any([self.edges[x].get('locked', False) for x in relevant_machine_edges]):
+                        # This machine is available to be locked!
+                        self._lockMachine(rec_id, rec, adj, adj_machine)
+                        found_lockable = True
+
+                        # Pop recipe and restart iteration
+                        need_locking.remove(rec_id)
+                        break
+                    if found_lockable:
+                        break
+                if found_lockable:
+                    break
             if found_lockable:
                 continue
 
@@ -279,7 +258,46 @@ class Graph:
             break
 
 
+    def _lockMachine(self, rec_id, rec, adj, adj_machine):
+            # Compute multipliers based on all locked edges (other I/O stream as well if available)
+            all_relevant_edges = {
+                'I': [x for x in adj_machine[rec_id]['I'] if self.edges[x].get('locked', False)],
+                'O': [x for x in adj_machine[rec_id]['O'] if self.edges[x].get('locked', False)],
+            }
+            print(all_relevant_edges)
 
+            if len(all_relevant_edges) == 0:
+                cprint(f'No machines adjacent to {rec.machine}. Cannot balance.', 'red')
+                return
+
+            multipliers = []
+            for io_type in ['I', 'O']:
+                io_side_edges = all_relevant_edges[io_type]
+                for edge in io_side_edges:
+                    node_from, node_to, ing_name = edge
+                    if io_type == 'I':
+                        other_rec = self.recipes[int(node_from)]
+                    elif io_type == 'O':
+                        other_rec = self.recipes[int(node_to)]
+
+                    wanted_quant = getattr(other_rec, swapIO(io_type))[ing_name]
+                    wanted_per_s = wanted_quant / (other_rec.dur / 20)
+
+                    base_speed = getattr(rec, io_type)[ing_name] / (rec.dur / 20)
+                    multipliers.append(wanted_per_s / base_speed)
+
+            print(rec.machine, multipliers)
+            final_multiplier = max(multipliers)
+            self.recipes[int(rec_id)] *= final_multiplier
+
+            existing_label = self.nodes[int(rec_id)]['label']
+            self.nodes[int(rec_id)]['label'] = f'{round(rec.multiplier, 2)}x {rec.user_voltage} {existing_label}\nCycle: {rec.dur/20}s\nEU/t: {round(rec.eut, 2)}'
+
+            # Lock edges using new quant
+            connected_edges = adj[rec_id]
+            for io_dir in connected_edges:
+                for edge in connected_edges[io_dir]:
+                    self._lockEdgeQuant(edge, rec, io_dir)
 
     def _lockEdgeQuant(self, edge, rec, io_dir):
         node_from, node_to, ing_name = edge
