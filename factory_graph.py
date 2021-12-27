@@ -17,7 +17,7 @@ from dataClasses.load import recipesFromConfig
 
 if __name__ == '__main__':
     graph_config = {
-        'POWER_LINE': False, # Automatically burns all leftover fuels
+        'POWER_LINE': True, # Automatically burns all leftover fuels
 
         # TODO: Add below to backend
         'PRECISION': 4,
