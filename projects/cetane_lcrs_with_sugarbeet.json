@@ -10,7 +10,8 @@
             "cetane-boosted diesel": 7500
         },
         "eut": 480,
-        "dur": 120
+        "dur": 120,
+        "number": 0.8
     },
     {
         "m": "large chemical reactor",
@@ -38,8 +39,7 @@
             "water": 1000
         },
         "eut": 30,
-        "dur": 320,
-        "number": 0.85
+        "dur": 320
     },
     {
         "m": "large chemical reactor",

@@ -153,10 +153,7 @@ class Graph:
                 del self.edges[edge_def]
 
 
-    def balanceGraph(self):
-        # Applies locking info to existing graph
-        self.removeBackEdges()
-
+    def createAdjacencyList(self):
         # Compute "adjacency list" (node -> {I: edges, O: edges}) for edges and machine-involved edges
         adj = defaultdict(lambda: defaultdict(list))
         adj_machine = defaultdict(lambda: defaultdict(list))
@@ -171,6 +168,16 @@ class Graph:
 
         self.adj = adj
         self.adj_machine = adj_machine
+
+
+    def balanceGraph(self):
+        # Applies locking info to existing graph
+        self.removeBackEdges()
+
+        # Create adjacency list for easier compute
+        self.createAdjacencyList()
+        adj = self.adj
+        adj_machine = self.adj_machine
 
         # Debug
         for node, adj_edges in adj_machine.items():
@@ -260,7 +267,114 @@ class Graph:
             cprint('Unable to compute some of the tree due to missing information; refer to output graph.', 'red')
             break
 
+        if self.graph_config.get('POWER_LINE', False):
+            self._addPowerLineNodes()
         self._addIONode()
+
+
+    def _addPowerLineNodes(self):
+        # This checks for burnables being put into sink and converts them to EU/t
+        generator_names = {
+            0: 'gas turbine',
+            1: 'combustion gen',
+        }
+        turbineables = {
+            'hydrogen': 20_000,
+            'natural gas': 20_000,
+            'carbon monoxide': 24_000,
+            'wood gas': 24_000,
+            'sulfuric gas': 25_000,
+            'biogas': 40_000,
+            'sulfuric naphtha': 40_000,
+            'cyclopentadiene': 70_000,
+            'coal gas': 96_000,
+            'methane': 104_000,
+            'ethylene': 128_000,
+            'refinery gas': 160_000,
+            'ethane': 168_000,
+            'propene': 192_000,
+            'butadiene': 206_000,
+            'propane': 232_000,
+            'rocket fuel': 250_000,
+            'butene': 256_000,
+            'phenol': 288_000,
+            'benzene': 288_000,
+            'butane': 296_000,
+            'lpg': 320_000,
+            'naphtha': 320_000,
+            'toluene': 328_000,
+            'tert-butylbenzene': 420_000,
+            'naquadah gas': 1_024_000,
+            'nitrobenzene': 1_250_000,
+        }
+        combustables = {
+            'fish oil': 2_000,
+            'short mead': 4_000,
+            'biofuel': 6_000,
+            'creosote oil': 8_000,
+            'biomass': 8_000,
+            'oil': 16_000,
+            'sulfuric light fuel': 40_000,
+            'octane': 80_000,
+            'methanol': 84_000,
+            'ethanol': 192_000,
+            'bio diesel': 256_000,
+            'light fuel': 305_000,
+            'diesel': 480_000,
+            'ether': 537_000,
+            'gasoline': 576_000,
+            'cetane-boosted diesel': 720_000,
+            'ethanol gasoline': 750_000,
+            'butanol': 1_125_000,
+            'jet fuel no.3': 1_324_000,
+            'high octane gasoline': 1_728_000,
+            'jet fuel A': 2_048_000,
+        }
+        known_burnables = {x: [0, y] for x,y in turbineables.items()}
+        known_burnables.update({x: [1, y] for x,y in combustables.items()})
+
+        outputs = self.adj['sink']['I']
+        generator_number = 1
+        for edge in outputs:
+            node_from, _, ing_name = edge
+            edge_data = self.edges[edge]
+            quant = edge_data['quant']
+
+            if ing_name in known_burnables:
+                cprint(f'Detected burnable: {ing_name.title()}! Adding to chart.', 'blue')
+                generator_idx, eut_per_cell = known_burnables[ing_name]
+                gen_name = generator_names[generator_idx].title()
+
+                # Add node
+                node_id = f'{generator_number}-{generator_idx}'
+                generator_idx += 1
+                node_name = f'{gen_name} (100% eff)'
+                self.addNode(
+                    node_id,
+                    label= node_name,
+                    fillcolor='lightblue2',
+                )
+
+                # Fix edges to point at said node
+                produced_eut = eut_per_cell * quant / 1000
+                # Edge (old output) -> (generator)
+                self.addEdge(
+                    node_from,
+                    node_id,
+                    ing_name,
+                    quant,
+                    **edge_data['kwargs'],
+                )
+                # Edge (generator) -> (EU sink)
+                self.addEdge(
+                    node_id,
+                    'sink',
+                    'EU',
+                    produced_eut,
+                )
+                # Remove old edge and repopulate adjacency list
+                del self.edges[edge]
+                self.createAdjacencyList()
 
 
     def _addIONode(self):
@@ -270,44 +384,64 @@ class Graph:
         def makeLineHtml(color, text, amt_text):
             return f'<tr><td align="left"><font color="{color}">{text}</font></td><td align ="right"><font color="{color}">{amt_text}</font></td></tr>'
 
+        # Compute I/O
         inputs = self.adj['source']
         outputs = self.adj['sink']
         total_io = defaultdict(float)
         for direction in [-1, 1]:
-            for io_dir in ['I', 'O']:
-                if direction == -1:
-                    # Inputs
-                    edges = self.adj['source'][io_dir]
-                elif direction == 1:
-                    # Outputs
-                    edges = self.adj['sink'][io_dir]
+            if direction == -1:
+                # Inputs
+                edges = self.adj['source']['O']
+            elif direction == 1:
+                # Outputs
+                edges = self.adj['sink']['I']
 
-                for edge in edges:
-                    from_node, to_node, ing_name = edge
-                    edge_data = self.edges[edge]
-                    quant = edge_data['quant']
-                    total_io[ing_name.title()] += direction * quant
+            for edge in edges:
+                from_node, to_node, ing_name = edge
+                edge_data = self.edges[edge]
+                quant = edge_data['quant']
+                total_io[ing_name] += direction * quant
 
+        # Create I/O lines
         io_label_lines = []
         io_label_lines.append('<tr><td align="left">Summary</td></tr>')
-        precision = self.graph_config.get('PRECISION', 2)
         for name, quant in sorted(total_io.items(), key=lambda x: x[1], reverse=True):
-            near_zero_range = 10**-precision
-            if -near_zero_range < quant < near_zero_range:
+            if name == 'EU':
                 continue
-            amt_text = f'{self.NDecimals(quant, precision)}'
-            amt_text = f'{round(quant, precision)}/s'
-            if quant < 0:
-                io_label_lines.append(makeLineHtml('red', name, amt_text))
-            else:
-                io_label_lines.append(makeLineHtml('MediumSeaGreen', name, amt_text))
 
-        # io_label_lines.append('<HR/>')
-        # eut_rounded = int(math.ceil(total_eut))
-        # io_label_lines.append(makeLineHtml('red', 'EU/t:', eut_rounded))
+            # Skip if too small (intended to avoid floating point issues)
+            # near_zero_range = 10**-precision
+            # if -near_zero_range < quant < near_zero_range:
+            #     continue
+
+            amt_text = f'{self.NDecimals(quant, 2)}/s'
+            if quant < 0:
+                io_label_lines.append(makeLineHtml('red', name.title(), amt_text))
+            else:
+                io_label_lines.append(makeLineHtml('MediumSeaGreen', name.title(), amt_text))
+
+        # Compute total EU/t cost and (if power line) output
+        total_eut = 0
+        for rec in self.recipes:
+            total_eut += rec.eut
+        io_label_lines.append('<HR/>')
+        eut_rounded = int(math.ceil(total_eut))
+        io_label_lines.append(makeLineHtml('red', 'Input EU/t:', eut_rounded))
+        if 'EU' in total_io:
+            produced_eut = int(math.floor(total_io['EU'] / 20))
+            io_label_lines.append(makeLineHtml('MediumSeaGreen', 'Output EU/t:', produced_eut))
+            io_label_lines.append('<HR/>')
+            net_eut = produced_eut - eut_rounded
+            if net_eut > 0:
+                io_label_lines.append(makeLineHtml('MediumSeaGreen', 'Net EU/t:', net_eut))
+            else:
+                io_label_lines.append(makeLineHtml('red', 'Net EU/t:', net_eut))
+
+        # Create final table
         io_label = ''.join(io_label_lines)
         io_label = f'<<table border="0">{io_label}</table>>'
 
+        # Add to graph
         self.addNode(
             'total_io_node',
             label=io_label,
@@ -441,6 +575,7 @@ class Graph:
             }
         )
 
+        # Populate nodes
         for rec_id, kwargs in self.nodes.items():
             if isinstance(rec_id, int):
                 g.node(
@@ -454,13 +589,36 @@ class Graph:
                     **kwargs,
                     **node_style
                 )
+
+        # Populate edges
+        capitalization_exceptions = {
+            'eu': 'EU',
+        }
+        unit_exceptions = {
+            'eu': lambda eu: f'{int(math.floor(eu / 20))}/t'
+        }
         for io_info, edge_data in self.edges.items():
             node_from, node_to, ing_name = io_info
             ing_quant, kwargs = edge_data['quant'], edge_data['kwargs']
+
+            ing_name = ing_name.lower()
+
+            # Make quantity label
+            if ing_name in unit_exceptions:
+                quant_label = unit_exceptions[ing_name](ing_quant)
+            else:
+                quant_label = f'{self.NDecimals(ing_quant, 2)}/s'
+
+            # Make ingredient label
+            if ing_name in capitalization_exceptions:
+                ing_name = capitalization_exceptions[ing_name.lower()]
+            else:
+                ing_name = ing_name.title()
+
             g.edge(
                 node_from,
                 node_to,
-                label=f'{ing_name.title()}\n({self.NDecimals(ing_quant, 2)}/s)',
+                label=f'{ing_name}\n({quant_label})',
                 **kwargs
             )
 

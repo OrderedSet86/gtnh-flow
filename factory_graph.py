@@ -17,10 +17,11 @@ from dataClasses.load import recipesFromConfig
 
 if __name__ == '__main__':
     graph_config = {
-        # TODO: Add these to backend
+        'POWER_LINE': False, # Automatically burns all leftover fuels
+
+        # TODO: Add below to backend
         'PRECISION': 4,
         'ROUND_MACHINES_UP': False,
-        'POWER_LINE': True,
     }
 
     if len(sys.argv) > 1:
