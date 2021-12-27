@@ -1,3 +1,4 @@
+from collections import defaultdict
 from dataclasses import dataclass
 
 
@@ -10,7 +11,12 @@ class Ingredient:
 class IngredientCollection:
     def __init__(self, *ingredient_list):
         self._ings = ingredient_list
-        self._ingdict = {x.name: x.quant for x in self._ings}
+        # Note: name is not a unique identifier for multi-input situations
+        # therefore, need to defaultdict a list
+        self._ingdict = defaultdict(list)
+        for ing in self._ings:
+            self._ingdict[ing.name].append(ing.quant)
+        # self._ingdict = {x.name: x.quant for x in self._ings}
 
     def __iter__(self):
         return iter(self._ings)
@@ -29,7 +35,10 @@ class IngredientCollection:
     def __mul__(self, mul_num):
         for ing in self._ings:
             ing.quant *= mul_num
-        self._ingdict = {x.name: x.quant for x in self._ings}
+        self._ingdict = defaultdict(list)
+        for ing in self._ings:
+            self._ingdict[ing.name].append(ing.quant)
+        # self._ingdict = {x.name: x.quant for x in self._ings}
 
         return self
 

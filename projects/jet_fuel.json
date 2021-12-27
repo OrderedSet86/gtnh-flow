@@ -1,0 +1,116 @@
+[
+    {
+        "m": "large chemical reactor",
+        "tier": "EV",
+        "I": {
+            "diethylamine": 1000,
+            "naphtha": 3000,
+            "kerosene": 40000,
+            "sodium hydroxide dust": 8,
+            "ferrocene dust": 4
+        },
+        "O": {
+            "jet fuel no.3": 44000
+        },
+        "eut": 1920,
+        "dur": 2400,
+        "number": 1
+    },
+    {
+        "m": "distillation tower",
+        "tier": "EV",
+        "I": {
+            "coal tar": 1200
+        },
+        "O": {
+            "kerosene": 400,
+            "anthracene": 50,
+            "ethylbenzene": 150,
+            "naphtha": 100,
+            "coal tar oil": 500
+        },
+        "eut": 60,
+        "dur": 900
+    },
+    {
+        "m": "distillery",
+        "tier": "LV",
+        "I": {
+            "ferrocene solution": 500
+        },
+        "O": {
+            "ferrocene dust": 0.25,
+            "ether": 250
+        },
+        "eut": 30,
+        "dur": 300
+    },
+    {
+        "m": "mixer",
+        "tier": "MV",
+        "I": {
+            "ether": 1000,
+            "impure ferrocene mixture": 7500
+        },
+        "O": {
+            "ferrocene solution": 1000,
+            "ferrocene waste": 5000
+        },
+        "eut": 120,
+        "dur": 800
+    },
+    {
+        "m": "distillation tower",
+        "tier": "MV",
+        "I": {
+            "ferrocene waste": 1000
+        },
+        "O": {
+            "diethylamine": 800,
+            "water": 400
+        },
+        "eut": 120,
+        "dur": 600
+    },
+    {
+        "m": "pyrolyse oven",
+        "tier": "HV",
+        "I": {
+            "charcoal": 32
+        },
+        "O": {
+            "dried earth dust": 0.5,
+            "coal tar": 800
+        },
+        "eut": 120,
+        "dur": 360,
+        "coils": "tungstensteel"
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "EV",
+        "I": {
+            "crushed ice": 4000,
+            "diethylamine": 8000,
+            "iron II chloride": 1000,
+            "cyclopentadiene": 2000
+        },
+        "O": {
+            "impure ferrocene mixture": 15000
+        },
+        "eut": 120,
+        "dur": 2400
+    },
+    {
+        "m": "distillery",
+        "tier": "MV",
+        "I": {
+            "coal tar oil": 20
+        },
+        "O": {
+            "cyclopentadiene": 6
+        },
+        "eut": 120,
+        "dur": 20
+    }
+]

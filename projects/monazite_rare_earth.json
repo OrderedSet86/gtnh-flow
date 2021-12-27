@@ -55,7 +55,7 @@
         "custom": true,
         "eut": 120,
         "dur": 3891,
-        "base heat": 1297,
+        "heat": 1297,
         "coils": "nichrome"
     },
     {

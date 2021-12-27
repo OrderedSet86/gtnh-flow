@@ -8,6 +8,7 @@ from collections import defaultdict, OrderedDict
 
 # Pypi libraries
 import graphviz
+from sigfig import round as sigfig_round
 from termcolor import cprint
 
 # Internal libraries
@@ -28,7 +29,6 @@ class Graph:
     def __init__(self, graph_name, recipes, graph_config=None):
         self.graph_name = graph_name
         self.recipes = recipes
-        self.total_IO = IngredientCollection() # TODO:
         self.nodes = {}
         self.edges = {} # uniquely defined by (machine from, machine to, ing name)
         self.graph_config = graph_config
@@ -169,6 +169,9 @@ class Graph:
             if node_from not in {'sink', 'source'}:
                 adj_machine[node_to]['I'].append(edge)
 
+        self.adj = adj
+        self.adj_machine = adj_machine
+
         # Debug
         for node, adj_edges in adj_machine.items():
             if node in ['sink', 'source']:
@@ -221,7 +224,7 @@ class Graph:
                     relevant_machine_edges = adj_machine[rec_id][io_type]
                     if len(relevant_machine_edges) > 0 and all([self.edges[x].get('locked', False) for x in relevant_machine_edges]):
                         # This machine is available to be locked!
-                        self._lockMachine(rec_id, rec, adj, adj_machine)
+                        self._lockMachine(rec_id, rec)
                         found_lockable = True
 
                         # Pop recipe and restart iteration
@@ -241,7 +244,7 @@ class Graph:
                     relevant_machine_edges = adj_machine[rec_id][io_type]
                     if len(relevant_machine_edges) > 0 and any([self.edges[x].get('locked', False) for x in relevant_machine_edges]):
                         # This machine is available to be locked!
-                        self._lockMachine(rec_id, rec, adj, adj_machine)
+                        self._lockMachine(rec_id, rec)
                         found_lockable = True
 
                         # Pop recipe and restart iteration
@@ -257,12 +260,74 @@ class Graph:
             cprint('Unable to compute some of the tree due to missing information; refer to output graph.', 'red')
             break
 
+        self._addIONode()
 
-    def _lockMachine(self, rec_id, rec, adj, adj_machine):
+
+    def _addIONode(self):
+        # Now that tree is fully locked, add I/O node
+        # Specifically, inputs are adj[source] and outputs are adj[sink]
+
+        def makeLineHtml(color, text, amt_text):
+            return f'<tr><td align="left"><font color="{color}">{text}</font></td><td align ="right"><font color="{color}">{amt_text}</font></td></tr>'
+
+        inputs = self.adj['source']
+        outputs = self.adj['sink']
+        total_io = defaultdict(float)
+        for direction in [-1, 1]:
+            for io_dir in ['I', 'O']:
+                if direction == -1:
+                    # Inputs
+                    edges = self.adj['source'][io_dir]
+                elif direction == 1:
+                    # Outputs
+                    edges = self.adj['sink'][io_dir]
+
+                for edge in edges:
+                    from_node, to_node, ing_name = edge
+                    edge_data = self.edges[edge]
+                    quant = edge_data['quant']
+                    total_io[ing_name.title()] += direction * quant
+
+        io_label_lines = []
+        io_label_lines.append('<tr><td align="left">Summary</td></tr>')
+        precision = self.graph_config.get('PRECISION', 2)
+        for name, quant in sorted(total_io.items(), key=lambda x: x[1], reverse=True):
+            near_zero_range = 10**-precision
+            if -near_zero_range < quant < near_zero_range:
+                continue
+            amt_text = f'{self.NDecimals(quant, precision)}'
+            amt_text = f'{round(quant, precision)}/s'
+            if quant < 0:
+                io_label_lines.append(makeLineHtml('red', name, amt_text))
+            else:
+                io_label_lines.append(makeLineHtml('MediumSeaGreen', name, amt_text))
+
+        # io_label_lines.append('<HR/>')
+        # eut_rounded = int(math.ceil(total_eut))
+        # io_label_lines.append(makeLineHtml('red', 'EU/t:', eut_rounded))
+        io_label = ''.join(io_label_lines)
+        io_label = f'<<table border="0">{io_label}</table>>'
+
+        self.addNode(
+            'total_io_node',
+            label=io_label,
+            fillcolor='ghostwhite',
+        )
+
+
+    @staticmethod
+    def NDecimals(number, N):
+        if number >= 1:
+            return round(number, N)
+        else:
+            return sigfig_round(number, N)
+
+
+    def _lockMachine(self, rec_id, rec):
             # Compute multipliers based on all locked edges (other I/O stream as well if available)
             all_relevant_edges = {
-                'I': [x for x in adj_machine[rec_id]['I'] if self.edges[x].get('locked', False)],
-                'O': [x for x in adj_machine[rec_id]['O'] if self.edges[x].get('locked', False)],
+                'I': [x for x in self.adj_machine[rec_id]['I'] if self.edges[x].get('locked', False)],
+                'O': [x for x in self.adj_machine[rec_id]['O'] if self.edges[x].get('locked', False)],
             }
             print(all_relevant_edges)
 
@@ -280,10 +345,10 @@ class Graph:
                     elif io_type == 'O':
                         other_rec = self.recipes[int(node_to)]
 
-                    wanted_quant = getattr(other_rec, swapIO(io_type))[ing_name]
+                    wanted_quant = sum(getattr(other_rec, swapIO(io_type))[ing_name])
                     wanted_per_s = wanted_quant / (other_rec.dur / 20)
 
-                    base_speed = getattr(rec, io_type)[ing_name] / (rec.dur / 20)
+                    base_speed = sum(getattr(rec, io_type)[ing_name]) / (rec.dur / 20)
                     multipliers.append(wanted_per_s / base_speed)
 
             print(rec.machine, multipliers)
@@ -291,19 +356,23 @@ class Graph:
             self.recipes[int(rec_id)] *= final_multiplier
 
             existing_label = self.nodes[int(rec_id)]['label']
-            self.nodes[int(rec_id)]['label'] = f'{round(rec.multiplier, 2)}x {rec.user_voltage} {existing_label}\nCycle: {rec.dur/20}s\nEU/t: {round(rec.eut, 2)}'
-
+            self.nodes[int(rec_id)]['label'] = '\n'.join([
+                f'{round(rec.multiplier, 2)}x {rec.user_voltage} {existing_label}',
+                f'Cycle: {rec.dur/20}s',
+                f'EU/t: {round(rec.eut, 2)}',
+            ])
             # Lock edges using new quant
-            connected_edges = adj[rec_id]
+            connected_edges = self.adj[rec_id]
             for io_dir in connected_edges:
                 for edge in connected_edges[io_dir]:
                     self._lockEdgeQuant(edge, rec, io_dir)
+
 
     def _lockEdgeQuant(self, edge, rec, io_dir):
         node_from, node_to, ing_name = edge
         edge_locked = self.edges[edge].get('locked', False)
 
-        packet_quant = getattr(rec, io_dir)[ing_name] / (rec.dur / 20)
+        packet_quant = sum(getattr(rec, io_dir)[ing_name]) / (rec.dur / 20)
         if not edge_locked:
             self.edges[edge]['quant'] = packet_quant
         else:
@@ -391,7 +460,7 @@ class Graph:
             g.edge(
                 node_from,
                 node_to,
-                label=f'{ing_name.title()}\n({round(ing_quant, 2)}/s)',
+                label=f'{ing_name.title()}\n({self.NDecimals(ing_quant, 2)}/s)',
                 **kwargs
             )
 
