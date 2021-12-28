@@ -18,6 +18,8 @@ from dataClasses.load import recipesFromConfig
 if __name__ == '__main__':
     graph_config = {
         'POWER_LINE': True, # Automatically burns all leftover fuels
+        'DEBUG_SHOW_EVERY_STEP': False, # Outputs graphviz on each compute step
+            # ^ (you will generally never want this to be true if you're a user)
 
         # TODO: Add below to backend
         'PRECISION': 4,

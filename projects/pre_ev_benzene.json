@@ -4,14 +4,16 @@
         "tier": "HV",
         "coils": "kanthal",
         "I": {
-            "dark oak wood": 16,
+            "oak wood": 16,
             "nitrogen": 1000
         },
         "O": {
             "charcoal": 20,
             "wood tar": 1500
         },
-        "number": 4
+        "number": 4,
+        "eut": 96,
+        "dur": 320
     },
     {
         "m": "fluid extractor",
@@ -22,7 +24,9 @@
         "O": {
             "ashes": 0.1,
             "wood tar": 100
-        }
+        },
+        "eut": 4,
+        "dur": 128
     },
     {
         "m": "distillation tower",
@@ -36,63 +40,40 @@
             "benzene": 350,
             "phenol": 75,
             "creosote": 300
-        }
+        },
+        "eut": 256,
+        "dur": 40
     },
     {
         "m": "centrifuge",
         "tier": "LV",
         "I": {
-            "compressed air cell": 5
+            "air": 10000
         },
         "O": {
-            "oxygen cell": 1,
-            "empty cell": 4,
             "nitrogen": 3900
-        }
+        },
+        "eut": 7,
+        "dur": 1600
     },
     {
         "m": "compressor",
         "tier": "LV",
-        "I": {
-            "empty cell": 1
-        },
+        "I": {},
         "O": {
-            "compressed air cell": 1
-        }
+            "air": 2000
+        },
+        "eut": 2,
+        "dur": 300
     },
     {
-        "m": "fluid canning machine",
-        "tier": "LV",
-        "I": {
-            "oxygen cell": 1
-        },
+        "m": "tree growth simulator",
+        "tier": "HV",
+        "I": {},
         "O": {
-            "empty cell": 1,
-            "oxygen": 1000
-        }
-    },
-    {
-        "m": "chemical reactor",
-        "tier": "LV",
-        "I": {
-            "ashes": 3,
-            "calcite dust": 1,
-            "water": 100
+            "oak wood": 15.83
         },
-        "O": {
-            "fertiliser": 1
-        }
-    },
-    {
-        "m": "electrolyzer",
-        "tier": "LV",
-        "I": {
-            "fertiliser": 1
-        },
-        "O": {
-            "calcite dust": 1,
-            "carbon dust": 1,
-            "water": 100
-        }
+        "eut": 480,
+        "dur": 20
     }
 ]

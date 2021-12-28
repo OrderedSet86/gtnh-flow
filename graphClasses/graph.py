@@ -5,6 +5,7 @@
 # Standard libraries
 import math
 from collections import defaultdict, OrderedDict
+from copy import deepcopy
 
 # Pypi libraries
 import graphviz
@@ -107,6 +108,9 @@ class Graph:
                                 -1,
                             )
                             added_edges.add(unique_edge_identifiers[1])
+
+        if self.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
+            self.outputGraphviz()
 
 
     def removeBackEdges(self):
@@ -219,6 +223,7 @@ class Graph:
             for io_dir in connected_edges:
                 for edge in connected_edges[io_dir]:
                     self._lockEdgeQuant(edge, rec, io_dir)
+            self.createAdjacencyList()
 
         # Now propagate updates throughout the tree
         while need_locking:
@@ -241,7 +246,10 @@ class Graph:
                         break
                 if found_lockable:
                     break
+
             if found_lockable:
+                if self.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
+                    self.outputGraphviz()
                 continue
 
             # As a fallback, do just one I/O side locked
@@ -261,7 +269,10 @@ class Graph:
                         break
                 if found_lockable:
                     break
+
             if found_lockable:
+                if self.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
+                    self.outputGraphviz()
                 continue
 
             cprint('Unable to compute some of the tree due to missing information; refer to output graph.', 'red')
@@ -277,6 +288,7 @@ class Graph:
         generator_names = {
             0: 'gas turbine',
             1: 'combustion gen',
+            2: 'semifluid gen',
         }
         turbineables = {
             'hydrogen': 20_000,
@@ -311,9 +323,9 @@ class Graph:
             'fish oil': 2_000,
             'short mead': 4_000,
             'biofuel': 6_000,
-            'creosote oil': 8_000,
-            'biomass': 8_000,
-            'oil': 16_000,
+            # 'creosote oil': 8_000,
+            # 'biomass': 8_000,
+            # 'oil': 16_000,
             'sulfuric light fuel': 40_000,
             'octane': 80_000,
             'methanol': 84_000,
@@ -330,12 +342,31 @@ class Graph:
             'high octane gasoline': 1_728_000,
             'jet fuel A': 2_048_000,
         }
+        semifluids = {
+            'seed oil': 4_000,
+            'fish oil': 4_000,
+            'raw animal waste': 12_000,
+            'biomass': 16_000,
+            'coal tar': 16_000,
+            'manure slurry': 24_000,
+            'coal tar oil': 32_000,
+            'fertile manure slurry': 32_000,
+            'oil': 40_000,
+            'light oil': 40_000,
+            'creosote oil': 48_000,
+            'raw oil': 60_000,
+            'heavy oil': 60_000,
+            'sulfuric coal tar oil': 64_000,
+            'sulfuric heavy fuel': 80_000,
+            'heavy fuel': 360_000,
+        }
         known_burnables = {x: [0, y] for x,y in turbineables.items()}
         known_burnables.update({x: [1, y] for x,y in combustables.items()})
+        known_burnables.update({x: [2, y] for x,y in semifluids.items()})
 
         outputs = self.adj['sink']['I']
         generator_number = 1
-        for edge in outputs:
+        for edge in deepcopy(outputs):
             node_from, _, ing_name = edge
             edge_data = self.edges[edge]
             quant = edge_data['quant']
@@ -347,7 +378,7 @@ class Graph:
 
                 # Add node
                 node_id = f'{generator_number}-{generator_idx}'
-                generator_idx += 1
+                generator_number += 1
                 node_name = f'{gen_name} (100% eff)'
                 self.addNode(
                     node_id,
@@ -405,7 +436,7 @@ class Graph:
         # Create I/O lines
         io_label_lines = []
         io_label_lines.append('<tr><td align="left">Summary</td></tr>')
-        for name, quant in sorted(total_io.items(), key=lambda x: x[1], reverse=True):
+        for name, quant in sorted(total_io.items(), key=lambda x: x[1]):
             if name == 'EU':
                 continue
 
@@ -458,73 +489,103 @@ class Graph:
 
 
     def _lockMachine(self, rec_id, rec):
-            # Compute multipliers based on all locked edges (other I/O stream as well if available)
-            all_relevant_edges = {
-                'I': [x for x in self.adj_machine[rec_id]['I'] if self.edges[x].get('locked', False)],
-                'O': [x for x in self.adj_machine[rec_id]['O'] if self.edges[x].get('locked', False)],
-            }
-            print(all_relevant_edges)
+        # Compute multipliers based on all locked edges (other I/O stream as well if available)
+        all_relevant_edges = {
+            'I': [x for x in self.adj_machine[rec_id]['I'] if self.edges[x].get('locked', False)],
+            'O': [x for x in self.adj_machine[rec_id]['O'] if self.edges[x].get('locked', False)],
+        }
+        print(all_relevant_edges)
 
-            if len(all_relevant_edges) == 0:
-                cprint(f'No machines adjacent to {rec.machine}. Cannot balance.', 'red')
-                return
+        if len(all_relevant_edges) == 0:
+            cprint(f'No machines adjacent to {rec.machine}. Cannot balance.', 'red')
+            return
 
-            multipliers = []
-            for io_type in ['I', 'O']:
-                io_side_edges = all_relevant_edges[io_type]
-                for edge in io_side_edges:
-                    node_from, node_to, ing_name = edge
-                    if io_type == 'I':
-                        other_rec = self.recipes[int(node_from)]
-                    elif io_type == 'O':
-                        other_rec = self.recipes[int(node_to)]
+        multipliers = []
+        for io_type in ['I', 'O']:
+            io_side_edges = all_relevant_edges[io_type]
+            total_sided_request = defaultdict(float) # Want to handle multiple ingredient inputs properly
 
-                    wanted_quant = sum(getattr(other_rec, swapIO(io_type))[ing_name])
-                    wanted_per_s = wanted_quant / (other_rec.dur / 20)
+            for edge in io_side_edges:
+                node_from, node_to, ing_name = edge
+                if io_type == 'I':
+                    other_rec = self.recipes[int(node_from)]
+                elif io_type == 'O':
+                    other_rec = self.recipes[int(node_to)]
 
-                    base_speed = sum(getattr(rec, io_type)[ing_name]) / (rec.dur / 20)
-                    multipliers.append(wanted_per_s / base_speed)
+                wanted_quant = sum(getattr(other_rec, swapIO(io_type))[ing_name])
+                wanted_per_s = wanted_quant / (other_rec.dur / 20)
 
-            print(rec.machine, multipliers)
-            final_multiplier = max(multipliers)
-            self.recipes[int(rec_id)] *= final_multiplier
+                total_sided_request[ing_name] += wanted_per_s
 
-            existing_label = self.nodes[int(rec_id)]['label']
-            self.nodes[int(rec_id)]['label'] = '\n'.join([
-                f'{round(rec.multiplier, 2)}x {rec.user_voltage} {existing_label}',
-                f'Cycle: {rec.dur/20}s',
-                f'EU/t: {round(rec.eut, 2)}',
-            ])
-            # Lock edges using new quant
-            connected_edges = self.adj[rec_id]
-            for io_dir in connected_edges:
-                for edge in connected_edges[io_dir]:
-                    self._lockEdgeQuant(edge, rec, io_dir)
+            for ing, quant_per_s in total_sided_request.items():
+                base_speed = sum(getattr(rec, io_type)[ing]) / (rec.dur / 20)
+                multipliers.append(quant_per_s / base_speed)
+
+        print(rec.machine, multipliers)
+        final_multiplier = max(multipliers)
+        self.recipes[int(rec_id)] *= final_multiplier
+
+        existing_label = self.nodes[int(rec_id)]['label']
+        self.nodes[int(rec_id)]['label'] = '\n'.join([
+            f'{round(rec.multiplier, 2)}x {rec.user_voltage} {existing_label}',
+            f'Cycle: {rec.dur/20}s',
+            f'EU/t: {round(rec.eut, 2)}',
+        ])
+        # Lock edges using new quant
+        connected_edges = self.adj[rec_id]
+        for io_dir in connected_edges:
+            for edge in connected_edges[io_dir]:
+                self._lockEdgeQuant(edge, rec, io_dir)
+        self.createAdjacencyList()
 
 
     def _lockEdgeQuant(self, edge, rec, io_dir):
         node_from, node_to, ing_name = edge
         edge_locked = self.edges[edge].get('locked', False)
 
+        if ing_name == 'diethylamine':
+            cprint(self.edges, 'blue')
+            print(edge_locked, edge, self.edges[edge])
+
         packet_quant = sum(getattr(rec, io_dir)[ing_name]) / (rec.dur / 20)
         if not edge_locked:
             self.edges[edge]['quant'] = packet_quant
         else:
-            # Edge is already locked, which means:
-            # If packet sent from destination ("request")
-                # if packet > locked then get from source
-                # if packet < locked then send to sink
-            # If packet sent from src ("supply")
-                # if packet > locked then send to sink
-                # if packet < locked then get from source
+            # Edge is already locked, which means need logic handling this.:
+            # If current rec is "request"
+                # if (request packet > locked supply)
+                    # this is the most complicated scenario
+                    # if all machine src multipliers are known and still not enough, then pull excess from source
+                    # if all machine src multipliers are known and more than enough, then send excess to sink
+                    # if not all machine src multipliers are known, ????
+                    # FIXME: Maybe worth doing node locking all at once instead of per-node
+                # if (request packet < locked supply) then send excess to sink
+            # If packet sent from src (current rec is "supply")
+                # if (send packet > current total ingredient input for requester) then send excess to sink
+                    # ie, recipe can never use all that is provided
+                # if (send packet < locked request) then get from source
 
-            if math.isclose(packet_quant, self.edges[edge]['quant']):
+            # locked_quant = self.edges[edge]['quant']
+            # ^ Old method, for multi I/O, use total sided ingredient quant
+            if io_dir == 'I':
+                sided_edges = self.adj_machine[node_to][io_dir]
+                locked_quant = sum([self.edges[x]['quant'] for x in sided_edges if x[2] == ing_name])
+            else:
+                locked_quant = self.edges[edge]['quant']
+
+            # elif io_dir == 'O':
+            #     sided_edges = self.adj_machine[node_from][io_dir]
+
+            print(edge, packet_quant, locked_quant)
+            print()
+
+            if math.isclose(packet_quant, locked_quant):
                 self.edges[edge]['quant'] = packet_quant
                 self.edges[edge]['locked'] = True
                 return
 
-            locked_quant = self.edges[edge]['quant']
             packet_diff = abs(packet_quant - locked_quant)
+
             if io_dir == 'I':
                 if packet_quant > locked_quant:
                     self.addEdge(
@@ -540,7 +601,7 @@ class Graph:
                         ing_name,
                         packet_diff,
                     )
-            if io_dir == 'O':
+            elif io_dir == 'O':
                 if packet_quant > locked_quant:
                     self.addEdge(
                         node_from,
@@ -555,6 +616,7 @@ class Graph:
                         ing_name,
                         packet_diff,
                     )
+
 
         self.edges[edge]['locked'] = True
 
@@ -629,3 +691,6 @@ class Graph:
             view=True,
             format='png',
         )
+
+        if self.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
+            input()
