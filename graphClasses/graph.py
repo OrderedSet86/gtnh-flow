@@ -625,10 +625,10 @@ class Graph:
                 ing_edges[io_dir][ing_name].append(edge)
 
         for io_dir in ['I', 'O']:
-            for ing_name, edges in ing_edges.items():
+            for ing_name, edges in ing_edges[io_dir].items():
                 num_io = len(edges)
-                locked_bools = [x.get('locked', False) for x in edges]
-                machine_ing_io = sum(getattr(rec, io_dir))[ing_name] / (rec.dur / 20)
+                locked_bools = [self.edges[x].get('locked', False) for x in edges]
+                machine_ing_io = sum(getattr(rec, io_dir)[ing_name]) / (rec.dur / 20)
 
                 if io_dir == 'I':
                     if num_io == 1: # Single input
@@ -640,7 +640,7 @@ class Graph:
                             excess = locked_quant - machine_ing_io
                             node_from, node_to, _ = edges[0]
 
-                            if math.isclose(excess, 0):
+                            if math.isclose(excess, 0, abs_tol=1e-9):
                                 continue
                             elif excess > 0:
                                 # 1. Adjust locked edge down to actual io
@@ -666,7 +666,7 @@ class Graph:
                             locked_quant = sum(edge_quants)
                             excess = locked_quant - machine_ing_io # Excess ingredient available
 
-                            if math.isclose(excess, 0):
+                            if math.isclose(excess, 0, abs_tol=1e-9):
                                 continue
                             elif excess < 0:
                                 # Get missing amount from source
@@ -685,7 +685,7 @@ class Graph:
                                     relevant_edge = edges[idx]
                                     node_from, node_to, _ = relevant_edge
                                     excess -= quant
-                                    if excess > 0 or math.isclose(excess, 0):
+                                    if excess > 0 or math.isclose(excess, 0, abs_tol=1e-9):
                                         # Send entire edge to sink and then continue iteration
                                         self.addEdge(
                                             node_from,
@@ -694,7 +694,7 @@ class Graph:
                                             quant
                                         )
                                         del self.edges[relevant_edge]
-                                        if math.isclose(excess, 0):
+                                        if math.isclose(excess, 0, abs_tol=1e-9):
                                             break
                                     else: # Removing edge would cause negative excess, need to make fractional edge
                                         excess *= -1
@@ -711,7 +711,7 @@ class Graph:
                             excess = locked_quant - machine_ing_io # Excess ingredient available
                             unlocked_edge = edges[locked_bools.index(False)]
 
-                            if excess > 0 or math.isclose(excess, 0):
+                            if excess > 0 or math.isclose(excess, 0, abs_tol=1e-9):
                                 # Get rid of link to undetermined edge and then perform same process as all determined
                                 self.addEdge(
                                     unlocked_edge[0],
@@ -721,13 +721,13 @@ class Graph:
                                 )
                                 # NOTE: DO NOT LOCK!
 
-                                if math.isclose(excess, 0):
+                                if math.isclose(excess, 0, abs_tol=1e-9):
                                     continue
 
-                                for edge, quant in edge_quants:
+                                for edge, quant in edge_quants.items():
                                     node_from, node_to, _ = edge
                                     excess -= quant
-                                    if excess > 0 or math.isclose(excess, 0):
+                                    if excess > 0 or math.isclose(excess, 0, abs_tol=1e-9):
                                         # Send entire edge to sink and then continue iteration
                                         self.addEdge(
                                             node_from,
@@ -736,7 +736,7 @@ class Graph:
                                             quant
                                         )
                                         del self.edges[edge]
-                                        if math.isclose(excess, 0):
+                                        if math.isclose(excess, 0, abs_tol=1e-9):
                                             break
                                     else: # Removing edge would cause negative excess, need to make fractional edge
                                         excess *= -1
@@ -748,7 +748,7 @@ class Graph:
                                             quant - excess
                                         )
 
-                            if excess < 0: # Not enough product from locked edges, therefore must come from unlocked
+                            elif excess < 0: # Not enough product from locked edges, therefore must come from unlocked
                                 self.edges[unlocked_edge]['quant'] = -excess
                                 self.edges[unlocked_edge]['locked'] = True
                         else:
@@ -761,88 +761,134 @@ class Graph:
                             self.outputGraphviz()
                             exit(1)
                 elif io_dir == 'O':
-                    # FIXME:
-                    pass
+                    if num_io == 1: # Single input
+                        if locked_bools[0] == False: # Undetermined
+                            self.edges[edges[0]]['quant'] = machine_ing_io
+                            self.edges[edges[0]]['locked'] = True
+                        else: # Determined
+                            locked_quant = self.edges[edges[0]]['quant']
+                            excess = machine_ing_io - locked_quant # Excess rec ingredient available
+                            node_from, node_to, _ = edges[0]
 
+                            if math.isclose(excess, 0, abs_tol=1e-9):
+                                continue
+                            elif excess > 0:
+                                # # 1. Adjust locked edge down to actual io
+                                # self.edges[edges[0]]['quant'] -= excess
+                                # 2. Send remainder to sink
+                                self.addEdge(
+                                    node_from,
+                                    'sink',
+                                    ing_name,
+                                    excess
+                                )
+                            elif excess < 0:
+                                # Get missing amount from source
+                                self.addEdge(
+                                    'source',
+                                    node_to,
+                                    ing_name,
+                                    -excess
+                                )
+                    else:
+                        if all(locked_bools): # All inputs determined
+                            edge_quants = [self.edges[x]['quant'] for x in edges]
+                            locked_quant = sum(edge_quants)
+                            excess = machine_ing_io - locked_quant # Excess rec ingredient available
 
+                            if math.isclose(excess, 0, abs_tol=1e-9):
+                                continue
+                            elif excess < 0:
+                                # Fill as many edges as possible, fill rest from source
+                                # FIXME: This is still doing single logic
+                                self.addEdge(
+                                    'source',
+                                    node_to,
+                                    ing_name,
+                                    -excess
+                                )
+                            elif excess > 0:
+                                # Adjust connected edges down until excess is satisfied
+                                # If math doesn't work out without remainder, adjust relevant edge down
+                                    # and make a new sink
 
+                                for idx, quant in edge_quants:
+                                    relevant_edge = edges[idx]
+                                    node_from, node_to, _ = relevant_edge
+                                    excess -= quant
+                                    if excess > 0 or math.isclose(excess, 0, abs_tol=1e-9):
+                                        # Send entire edge to sink and then continue iteration
+                                        self.addEdge(
+                                            node_from,
+                                            'sink',
+                                            ing_name,
+                                            quant
+                                        )
+                                        del self.edges[relevant_edge]
+                                        if math.isclose(excess, 0, abs_tol=1e-9):
+                                            break
+                                    else: # Removing edge would cause negative excess, need to make fractional edge
+                                        self.edges[relevant_edge]['quant'] -= excess
+                                        self.addEdge(
+                                            node_from,
+                                            'sink',
+                                            ing_name,
+                                            excess
+                                        )
+                        elif sum(locked_bools) == len(edges) - 1: # 1 input undetermined
+                            edge_quants = {x: self.edges[x]['quant'] for x in edges if self.edges[x].get('locked', False)}
+                            locked_quant = sum(edge_quants.values())
+                            excess = machine_ing_io - locked_quant # Excess rec ingredient available
+                            unlocked_edge = edges[locked_bools.index(False)]
 
-    def _lockEdgeQuant(self, edge, rec, io_dir):
-        node_from, node_to, ing_name = edge
-        edge_locked = self.edges[edge].get('locked', False)
+                            if excess < 0 or math.isclose(excess, 0, abs_tol=1e-9):
+                                # Get rid of link to undetermined edge and then perform same process as all determined
+                                self.addEdge(
+                                    unlocked_edge[0],
+                                    'sink',
+                                    ing_name,
+                                    -1
+                                )
+                                # NOTE: DO NOT LOCK!
 
-        packet_quant = sum(getattr(rec, io_dir)[ing_name]) / (rec.dur / 20)
-        if not edge_locked:
-            self.edges[edge]['quant'] = packet_quant
-        else:
-            # Edge is already locked, which means need logic handling this.:
-            # If current rec is "request"
-                # if (request packet > locked supply)
-                    # this is the most complicated scenario
-                    # if all machine src multipliers are known and still not enough, then pull excess from source
-                    # if all machine src multipliers are known and more than enough, then send excess to sink
-                    # if not all machine src multipliers are known, ????
-                    # FIXME: Maybe worth doing node locking all at once instead of per-node
-                # if (request packet < locked supply) then send excess to sink
-            # If packet sent from src (current rec is "supply")
-                # if (send packet > current total ingredient input for requester) then send excess to sink
-                    # ie, recipe can never use all that is provided
-                # if (send packet < locked request) then get from source
+                                if math.isclose(excess, 0, abs_tol=1e-9):
+                                    continue
 
-            # locked_quant = self.edges[edge]['quant']
-            # ^ Old method, for multi I/O, use total sided ingredient quant
-            if io_dir == 'I':
-                sided_edges = self.adj_machine[node_to][io_dir]
-                locked_quant = sum([self.edges[x]['quant'] for x in sided_edges if x[2] == ing_name])
-            else:
-                locked_quant = self.edges[edge]['quant']
+                                for edge, quant in edge_quants.items():
+                                    node_from, node_to, _ = edge
+                                    excess += quant
+                                    if excess < 0 or math.isclose(excess, 0, abs_tol=1e-9):
+                                        # Get entire edge from source and continue iteration
+                                        self.addEdge(
+                                            'source',
+                                            node_to,
+                                            ing_name,
+                                            quant
+                                        )
+                                        del self.edges[edge]
+                                        if math.isclose(excess, 0, abs_tol=1e-9):
+                                            break
+                                    else: # Removing edge would cause too much excess, need to make fractional edge
+                                        self.edges[edge]['quant'] -= excess
+                                        self.addEdge(
+                                            node_from,
+                                            'sink',
+                                            ing_name,
+                                            quant - excess
+                                        )
 
-            # elif io_dir == 'O':
-            #     sided_edges = self.adj_machine[node_from][io_dir]
+                            elif excess > 0: # Send excess to unlocked node
+                                self.edges[unlocked_edge]['quant'] = excess
+                                self.edges[unlocked_edge]['locked'] = True
+                        else:
+                            cprint('Too many undetermined edges! Please define more numbered nodes (or different ones).', 'red')
+                            cprint(f'Problem: {len(edges) - sum(locked_bools)} edges are undetermined. Can only handle 1 at most.', 'red')
+                            cprint(f'Outputs for: {rec}', 'red')
+                            cprint(f'Output edges: {edges}', 'red')
 
-            print(edge, packet_quant, locked_quant)
-            print()
-
-            if math.isclose(packet_quant, locked_quant):
-                self.edges[edge]['quant'] = packet_quant
-                self.edges[edge]['locked'] = True
-                return
-
-            packet_diff = abs(packet_quant - locked_quant)
-
-            if io_dir == 'I':
-                if packet_quant > locked_quant:
-                    self.addEdge(
-                        'source',
-                        node_to,
-                        ing_name,
-                        packet_diff,
-                    )
-                else:
-                    self.addEdge(
-                        node_from,
-                        'sink',
-                        ing_name,
-                        packet_diff,
-                    )
-            elif io_dir == 'O':
-                if packet_quant > locked_quant:
-                    self.addEdge(
-                        node_from,
-                        'sink',
-                        ing_name,
-                        packet_diff,
-                    )
-                else:
-                    self.addEdge(
-                        'source',
-                        node_to,
-                        ing_name,
-                        packet_diff,
-                    )
-
-
-        self.edges[edge]['locked'] = True
+                            self.createAdjacencyList()
+                            self.outputGraphviz()
+                            exit(1)
 
 
     def outputGraphviz(self):
