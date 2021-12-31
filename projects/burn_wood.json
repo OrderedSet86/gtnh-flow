@@ -1,0 +1,25 @@
+[
+    {
+        "m": "tungstensteel boiler",
+        "tier": "LV",
+        "I": {
+            "oak wood": 1
+        },
+        "O": {
+            "steam": 8000
+        },
+        "eut": 0,
+        "dur": 4,
+        "number": 8.192
+    },
+    {
+        "m": "tree growth simulator",
+        "tier": "HV",
+        "I": {},
+        "O": {
+            "oak wood": 15.83
+        },
+        "eut": 480,
+        "dur": 20
+    }
+]

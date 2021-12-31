@@ -291,6 +291,7 @@ class Graph:
             0: 'gas turbine',
             1: 'combustion gen',
             2: 'semifluid gen',
+            3: 'steam turbine',
         }
         turbineables = {
             'hydrogen': 20_000,
@@ -365,6 +366,7 @@ class Graph:
         known_burnables = {x: [0, y] for x,y in turbineables.items()}
         known_burnables.update({x: [1, y] for x,y in combustables.items()})
         known_burnables.update({x: [2, y] for x,y in semifluids.items()})
+        known_burnables['steam'] = [3, 500]
 
         outputs = self.adj['sink']['I']
         generator_number = 1
@@ -373,7 +375,7 @@ class Graph:
             edge_data = self.edges[edge]
             quant = edge_data['quant']
 
-            if ing_name in known_burnables:
+            if ing_name in known_burnables and not ing_name in self.graph_config['DO_NOT_BURN']:
                 cprint(f'Detected burnable: {ing_name.title()}! Adding to chart.', 'blue')
                 generator_idx, eut_per_cell = known_burnables[ing_name]
                 gen_name = generator_names[generator_idx].title()
