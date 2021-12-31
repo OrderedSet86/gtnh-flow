@@ -1,0 +1,142 @@
+[
+    {
+        "m": "pyrolyse oven",
+        "tier": "HV",
+        "coils": "kanthal",
+        "I": {
+            "oak wood": 16,
+            "nitrogen": 1000
+        },
+        "O": {
+            "charcoal": 20,
+            "wood tar": 1500
+        },
+        "number": 4,
+        "eut": 96,
+        "dur": 320
+    },
+    {
+        "m": "distillation tower",
+        "tier": "HV",
+        "I": {
+            "wood tar": 1000
+        },
+        "O": {
+            "dimethylbenzene": 200,
+            "toluene": 75,
+            "benzene": 350,
+            "phenol": 75,
+            "creosote": 300
+        },
+        "eut": 256,
+        "dur": 40
+    },
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "air": 10000
+        },
+        "O": {
+            "nitrogen": 3900
+        },
+        "eut": 7,
+        "dur": 1600
+    },
+    {
+        "m": "compressor",
+        "tier": "LV",
+        "I": {},
+        "O": {
+            "air": 2000
+        },
+        "eut": 2,
+        "dur": 300
+    },
+    {
+        "m": "tree growth simulator",
+        "tier": "HV",
+        "I": {},
+        "O": {
+            "oak wood": 15.83
+        },
+        "eut": 480,
+        "dur": 20
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "oxygen": 1000,
+            "charcoal": 1
+        },
+        "O": {
+            "carbon monoxide": 1000,
+            "tiny pile of ashes": 1
+        },
+        "eut": 7,
+        "dur": 80
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "sugar": 32
+        },
+        "O": {
+            "carbon dust": 2,
+            "oxygen": 25000
+        },
+        "eut": 60,
+        "dur": 448
+    },
+    {
+        "m": "extractor",
+        "tier": "LV",
+        "I": {
+            "sugar beet": 1
+        },
+        "O": {
+            "sugar": 8
+        },
+        "eut": 7,
+        "dur": 160
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "hydrogen": 4000,
+            "carbon monoxide": 1000
+        },
+        "O": {
+            "methanol": 1000
+        },
+        "eut": 96,
+        "dur": 120
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "water": 1000
+        },
+        "O": {
+            "electrolysed water": 1000
+        },
+        "eut": 30,
+        "dur": 490
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "electrolysed water": 3000
+        },
+        "O": {
+            "hydrogen": 2000
+        },
+        "eut": 30,
+        "dur": 30
+    }
+]

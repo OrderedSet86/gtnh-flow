@@ -19,7 +19,6 @@ if __name__ == '__main__':
     graph_config = {
         'POWER_LINE': True, # Automatically burns all leftover fuels
         'DO_NOT_BURN': {
-            'methanol'
         },
         'DEBUG_SHOW_EVERY_STEP': False, # Outputs graphviz on each compute step
             # ^ (you will generally never want this to be true if you're a user)

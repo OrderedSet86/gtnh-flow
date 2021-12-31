@@ -292,6 +292,7 @@ class Graph:
             1: 'combustion gen',
             2: 'semifluid gen',
             3: 'steam turbine',
+            4: 'rocket engine fuel',
         }
         turbineables = {
             'hydrogen': 20_000,
@@ -363,10 +364,20 @@ class Graph:
             'sulfuric heavy fuel': 80_000,
             'heavy fuel': 360_000,
         }
+        rocket_fuels = {
+            'rp-1 rocket fuel': 1_536_000,
+            'lmp-103s': 1_998_000,
+            'dense hydrazine fuel mixture': 3_072_000,
+            'monomethylhydrazine fuel mix': 4_500_000,
+            'cn3h7o3 rocket fuel': 6_144_000,
+            'unsymmetrical dimethylhydrazine fuel mix': 9_000_000,
+            'h8n4c2o4 rocket fuel': 12_588_000,
+        }
         known_burnables = {x: [0, y] for x,y in turbineables.items()}
         known_burnables.update({x: [1, y] for x,y in combustables.items()})
         known_burnables.update({x: [2, y] for x,y in semifluids.items()})
         known_burnables['steam'] = [3, 500]
+        known_burnables.update({x: [4, y] for x,y in rocket_fuels.items()})
 
         outputs = self.adj['sink']['I']
         generator_number = 1
@@ -445,9 +456,9 @@ class Graph:
                 continue
 
             # Skip if too small (intended to avoid floating point issues)
-            # near_zero_range = 10**-precision
-            # if -near_zero_range < quant < near_zero_range:
-            #     continue
+            near_zero_range = 10**-7
+            if -near_zero_range < quant < near_zero_range:
+                continue
 
             amt_text = f'{self.NDecimals(quant, 2)}/s'
             if quant < 0:
