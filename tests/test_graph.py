@@ -27,7 +27,7 @@ def test_connectionSimple():
         ('1', '0', 'sugar'),
         ('0', 'sink', 'carbon dust'),
         ('0', 'sink', 'oxygen'),
-        ('0', 'sink', 'water')
+        ('0', 'sink', 'water'),
     ]
 
     assert set(expected_edges) == set(g.edges.keys())
@@ -54,7 +54,7 @@ def test_connectionLoop():
         ('1', '0', 'diluted sulfuric acid'),
         ('1', 'sink', 'ethenone'),
         ('0', 'sink', 'sulfuric acid'),
-        ('0', 'sink', 'water')
+        ('0', 'sink', 'water'),
     ]
 
     assert set(expected_edges) == set(g.edges.keys())

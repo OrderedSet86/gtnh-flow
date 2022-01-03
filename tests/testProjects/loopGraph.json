@@ -9,7 +9,6 @@
             "sulfuric acid": 2000,
             "water": 1000
         },
-        "custom": true,
         "eut": 120,
         "dur": 600,
         "number": 1
@@ -25,7 +24,6 @@
             "ethenone": 1000,
             "diluted sulfuric acid": 1000
         },
-        "custom": true,
         "eut": 120,
         "dur": 160
     }

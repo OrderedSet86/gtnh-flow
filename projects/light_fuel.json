@@ -10,10 +10,8 @@
             "hydrogen sulfide": 1000,
             "light fuel": 12000
         },
-        "custom": true,
         "eut": 30,
-        "dur": 160,
-        "number": 0.01666666666666
+        "dur": 160
     },
     {
         "m": "distillery",
@@ -23,7 +21,10 @@
         },
         "O": {
             "sulfuric light fuel": 25
-        }
+        },
+        "number": 1,
+        "eut": 24,
+        "dur": 20
     },
     {
         "m": "electrolyzer",
@@ -32,11 +33,22 @@
             "water": 3000
         },
         "O": {
-            "oxygen gas": 1000,
-            "hydrogen gas": 2000
+            "electrolysed water": 1000
         },
-        "custom": true,
         "eut": 30,
-        "dur": 2000
+        "dur": 490
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "electrolysed water": 3000
+        },
+        "O": {
+            "hydrogen gas": 2000,
+            "oxygen gas": 1000
+        },
+        "eut": 30,
+        "dur": 30
     }
 ]

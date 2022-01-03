@@ -9,6 +9,7 @@ from gtnhClasses.overclocks import overclockRecipe
 def test_standardOverclock():
     r_base = Recipe(
         'centrifuge',
+        'MV',
         IngredientCollection(
             Ingredient('glass dust', 1)
         ),
@@ -37,6 +38,7 @@ def test_standardOverclock():
 def test_perfectOverclock():
     r_base = Recipe(
         'large chemical reactor',
+        'MV',
         IngredientCollection(
             Ingredient('glass dust', 1)
         ),
@@ -65,6 +67,7 @@ def test_perfectOverclock():
 def test_pyrolyseOverclock():
     r_base = Recipe(
         'pyrolyse oven',
+        'MV',
         IngredientCollection(
             Ingredient('oak wood', 16),
             Ingredient('nitrogen', 1000),
@@ -97,6 +100,7 @@ def test_pyrolyseOverclock():
 def test_EBFOverclock():
     r_base = Recipe(
         'electric blast furnace',
+        'LV',
         IngredientCollection(
             Ingredient('iron dust', 1),
             Ingredient('oxygen gas', 1000),

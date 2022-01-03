@@ -9,7 +9,6 @@
         "O": {
             "ammonia": 1000
         },
-        "custom": true,
         "eut": 384,
         "dur": 320
     },
@@ -29,9 +28,9 @@
             "acetic acid": 25,
             "fertiliser": 1
         },
-        "custom": true,
         "eut": 180,
-        "dur": 75
+        "dur": 75,
+        "number": 1
     },
     {
         "m": "large chemical reactor",
@@ -44,7 +43,6 @@
             "nitric acid": 1000,
             "diluted sulfuric acid": 1000
         },
-        "custom": true,
         "eut": 120,
         "dur": 160
     }

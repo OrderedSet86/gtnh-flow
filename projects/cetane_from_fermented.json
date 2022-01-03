@@ -3,15 +3,14 @@
         "m": "large chemical reactor",
         "tier": "HV",
         "I": {
-            "tetranitromethane": 400,
-            "bio diesel": 10000
+            "tetranitromethane": 200,
+            "fuel": 10000
         },
         "O": {
-            "cetane-boosted diesel": 7500
+            "cetane-boosted diesel": 10000
         },
         "eut": 480,
-        "dur": 120,
-        "number": 0.8
+        "dur": 120
     },
     {
         "m": "large chemical reactor",
@@ -53,8 +52,7 @@
             "diluted sulfuric acid": 1000
         },
         "eut": 120,
-        "dur": 160,
-        "number": 0.2133333333333333333333333333333333333333
+        "dur": 160
     },
     {
         "m": "large chemical reactor",
@@ -94,12 +92,11 @@
             "methanol": 150,
             "ethanol": 150,
             "water": 375,
-            "acetic acid": 25,
             "fertiliser": 1
         },
         "eut": 180,
         "dur": 75,
-        "number": 1.333333333333333333333333333333
+        "number": 1
     },
     {
         "m": "centrifuge",
@@ -122,46 +119,6 @@
         },
         "eut": 2,
         "dur": 300
-    },
-    {
-        "m": "large chemical reactor",
-        "tier": "HV",
-        "I": {
-            "fish oil": 54000,
-            "ethanol": 9000,
-            "sodium hydroxide dust": 1
-        },
-        "O": {
-            "glycerol": 9000,
-            "bio diesel": 54000
-        },
-        "eut": 30,
-        "dur": 5400
-    },
-    {
-        "m": "fluid extractor",
-        "tier": "LV",
-        "I": {
-            "goldfish": 1
-        },
-        "O": {
-            "fish oil": 100,
-            "golden nugget": 0.0001
-        },
-        "eut": 7,
-        "dur": 16
-    },
-    {
-        "m": "fermenter",
-        "tier": "LV",
-        "I": {
-            "biomass": 100
-        },
-        "O": {
-            "fermented biomass": 100
-        },
-        "eut": 2,
-        "dur": 150
     },
     {
         "m": "electrolyzer",
@@ -190,55 +147,43 @@
         "dur": 160
     },
     {
-        "m": "distillation tower",
+        "m": "pyrolyse oven",
         "tier": "HV",
         "I": {
-            "biomass": 1000
+            "bio chaff": 1
         },
         "O": {
-            "ethanol": 600,
-            "water": 300
+            "fermented biomass": 1500
         },
-        "eut": 400,
-        "dur": 32
+        "eut": 10,
+        "dur": 200,
+        "coils": "kanthal"
     },
     {
         "m": "large chemical reactor",
-        "tier": "LV",
+        "tier": "HV",
         "I": {
-            "oxygen": 3000,
-            "sulfur dust": 1
+            "carbon dioxide": 1000,
+            "carbon dust": 1
         },
         "O": {
-            "sulfuric acid": 1000
+            "carbon monoxide": 2000
         },
         "eut": 30,
-        "dur": 480
+        "dur": 800,
+        "number": 0.075
     },
     {
-        "m": "forestry fermenter",
-        "tier": "LV",
+        "m": "large chemical reactor",
+        "tier": "HV",
         "I": {
-            "blue mahoe sapling": 1,
-            "mulch": 0.013
+            "carbon monoxide": 1000,
+            "methanol": 1000
         },
         "O": {
-            "biomass": 300
+            "acetic acid": 1000
         },
-        "eut": 28,
-        "dur": 20
-    },
-    {
-        "m": "fluid extractor",
-        "tier": "LV",
-        "I": {
-            "carrot": 1
-        },
-        "O": {
-            "fruit juice": 200,
-            "mulch": 0.2
-        },
-        "eut": 7,
-        "dur": 32
+        "eut": 30,
+        "dur": 300
     }
 ]

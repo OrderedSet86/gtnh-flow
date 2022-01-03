@@ -403,6 +403,7 @@ class Graph:
 
                 # Fix edges to point at said node
                 produced_eut = eut_per_cell * quant / 1000
+                print(quant, eut_per_cell, produced_eut)
                 # Edge (old output) -> (generator)
                 self.addEdge(
                     node_from,

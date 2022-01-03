@@ -10,7 +10,6 @@
             "oxygen": 25000,
             "water": 5000
         },
-        "custom": true,
         "eut": 60,
         "dur": 448,
         "number": 0.896
@@ -24,7 +23,6 @@
         "O": {
             "sugar": 8
         },
-        "custom": true,
         "eut": 7,
         "dur": 160
     }
