@@ -172,6 +172,17 @@ class Graph:
 
         self.adj = adj
         self.adj_machine = adj_machine
+        for machine, io_group in self.adj_machine.items():
+            machine_name = ''
+            try:
+                int(machine)
+                machine_name = self.recipes[int(machine)].machine
+            except ValueError:
+                pass
+            cprint(f'{machine} {machine_name}', 'blue')
+            for io_type, edges in io_group.items():
+                cprint(f'{io_type} {edges}', 'blue')
+        print()
 
 
     def balanceGraph(self):
@@ -207,12 +218,9 @@ class Graph:
         for rec_id in numbered_nodes:
             rec = self.recipes[rec_id]
             connected_edges = adj[str(rec_id)]
-            # print(rec_id, connected_edges)
 
             # Multiply I/O and eut
             self.recipes[rec_id] *= getattr(rec, 'number') # NOTE: Sets rec.multiplier
-            # print(self.recipes[rec_id])
-            # print(rec)
 
             # Color edge as "locked"
             self.nodes[rec_id].update({'fillcolor': 'green'})
@@ -220,65 +228,37 @@ class Graph:
             self.nodes[rec_id]['label'] = f'{rec.multiplier}x {rec.user_voltage} {existing_label}\nCycle: {rec.dur/20}s\nEU/t: {rec.eut}'
 
             # Lock all adjacent ingredient edges
-            self._lockMachineEdges(rec_id, rec)
-            # # Lock all adj edges
-            # for io_dir in connected_edges:
-            #     for edge in connected_edges[io_dir]:
-            #         self._lockEdgeQuant(edge, rec, io_dir)
+            self._simpleLockMachineEdges(str(rec_id), rec) # Used when multiplier is known
             self.createAdjacencyList()
 
-        # Now propagate updates throughout the tree
         while need_locking:
-            found_lockable = False
-
-            # Try all I/O side locked first
+            # Now propagate updates throughout the tree
+            # Prefer sides with maximum information (highest ratio of determined edges to total edges)
+            # Compute determined edges for all machines
+            determined_edge_count = {}
             for rec_id in need_locking:
                 rec = self.recipes[int(rec_id)]
-                for io_type in ['I', 'O']:
-                    relevant_machine_edges = adj_machine[rec_id][io_type]
-                    if len(relevant_machine_edges) > 0 and all([self.edges[x].get('locked', False) for x in relevant_machine_edges]):
-                        # This machine is available to be locked!
-                        self._lockMachine(rec_id, rec)
-                        found_lockable = True
-
-                        # Pop recipe and restart iteration
-                        need_locking.remove(rec_id)
-                        break
-                    if found_lockable:
-                        break
-                if found_lockable:
-                    break
-
-            if found_lockable:
-                if self.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
+                all_adj_machine_edges = adj_machine[rec_id]['I'] + adj_machine[rec_id]['O']
+                try:
+                    locked_edges = [edge for edge in all_adj_machine_edges if self.edges[edge].get('locked', False)]
+                except Exception:
                     self.outputGraphviz()
-                continue
+                    raise
+                determined_edge_count[rec_id] = [len(locked_edges), len(all_adj_machine_edges)]
 
-            # As a fallback, do just one I/O side locked
-            for rec_id in need_locking:
+            edge_priority = sorted(determined_edge_count.items(), reverse=True, key=lambda x: x[1][0] / x[1][1])
+            picked_edge = edge_priority[0]
+            if picked_edge[1][0] > 0: # At least one determined edge
+                rec_id = picked_edge[0]
                 rec = self.recipes[int(rec_id)]
-                for io_type in ['I', 'O']:
-                    relevant_machine_edges = adj_machine[rec_id][io_type]
-                    if len(relevant_machine_edges) > 0 and any([self.edges[x].get('locked', False) for x in relevant_machine_edges]):
-                        # This machine is available to be locked!
-                        self._lockMachine(rec_id, rec)
-                        found_lockable = True
+                self._lockMachine(rec_id, rec)
+                need_locking.remove(rec_id)
 
-                        # Pop recipe and restart iteration
-                        need_locking.remove(rec_id)
-                        break
-                    if found_lockable:
-                        break
-                if found_lockable:
-                    break
-
-            if found_lockable:
                 if self.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
                     self.outputGraphviz()
-                continue
-
-            cprint('Unable to compute some of the tree due to missing information; refer to output graph.', 'red')
-            break
+            else:
+                cprint('Unable to compute some of the tree due to missing information; refer to output graph.', 'red')
+                break
 
         if self.graph_config.get('POWER_LINE', False):
             self._addPowerLineNodes()
@@ -504,7 +484,7 @@ class Graph:
             return sigfig_round(number, N)
 
 
-    def _lockMachine(self, rec_id, rec):
+    def _lockMachine(self, rec_id, rec, determined=False):
         # Compute multipliers based on all locked edges (other I/O stream as well if available)
         all_relevant_edges = {
             'I': [x for x in self.adj_machine[rec_id]['I'] if self.edges[x].get('locked', False)],
@@ -512,9 +492,10 @@ class Graph:
         }
         print(all_relevant_edges)
 
-        if len(all_relevant_edges) == 0:
-            cprint(f'No machines adjacent to {rec.machine}. Cannot balance.', 'red')
-            return
+        if all(len(y) == 0 for x, y in all_relevant_edges.items()):
+            cprint(f'No locked machine edges adjacent to {rec.machine.title()}. Cannot balance.', 'red')
+            self.outputGraphviz()
+            exit(1)
 
         multipliers = []
         for io_type in ['I', 'O']:
@@ -550,13 +531,6 @@ class Graph:
 
         # Lock ingredient edges using new quant
         self._lockMachineEdges(rec_id, rec)
-
-        # # Lock edges using new quant
-        # connected_edges = self.adj[rec_id]
-        # for io_dir in connected_edges:
-        #     for edge in connected_edges[io_dir]:
-        #         self._lockEdgeQuant(edge, rec, io_dir)
-        # self.createAdjacencyList()
 
 
     def _lockMachineEdges(self, rec_id, rec):
@@ -727,13 +701,7 @@ class Graph:
 
                             if excess > 0 or math.isclose(excess, 0, abs_tol=1e-9):
                                 # Get rid of link to undetermined edge and then perform same process as all determined
-                                self.addEdge(
-                                    unlocked_edge[0],
-                                    'sink',
-                                    ing_name,
-                                    -1
-                                )
-                                # NOTE: DO NOT LOCK!
+                                del self.edges[unlocked_edge]
 
                                 if math.isclose(excess, 0, abs_tol=1e-9):
                                     continue
@@ -747,7 +715,8 @@ class Graph:
                                             node_from,
                                             'sink',
                                             ing_name,
-                                            quant
+                                            quant,
+                                            locked=True
                                         )
                                         del self.edges[edge]
                                         if math.isclose(excess, 0, abs_tol=1e-9):
@@ -759,7 +728,8 @@ class Graph:
                                             node_from,
                                             'sink',
                                             ing_name,
-                                            quant - excess
+                                            quant - excess,
+                                            locked=True
                                         )
 
                             elif excess < 0: # Not enough product from locked edges, therefore must come from unlocked
@@ -787,14 +757,13 @@ class Graph:
                             if math.isclose(excess, 0, abs_tol=1e-9):
                                 continue
                             elif excess > 0:
-                                # # 1. Adjust locked edge down to actual io
-                                # self.edges[edges[0]]['quant'] -= excess
-                                # 2. Send remainder to sink
+                                # Send remainder to sink
                                 self.addEdge(
                                     node_from,
                                     'sink',
                                     ing_name,
-                                    excess
+                                    excess,
+                                    locked=True
                                 )
                             elif excess < 0:
                                 # Get missing amount from source
@@ -802,7 +771,8 @@ class Graph:
                                     'source',
                                     node_to,
                                     ing_name,
-                                    -excess
+                                    -excess,
+                                    locked=True
                                 )
                     else:
                         if all(locked_bools): # All inputs determined
@@ -836,7 +806,8 @@ class Graph:
                                             node_from,
                                             'sink',
                                             ing_name,
-                                            quant
+                                            quant,
+                                            locked=True,
                                         )
                                         del self.edges[relevant_edge]
                                         if math.isclose(excess, 0, abs_tol=1e-9):
@@ -847,7 +818,8 @@ class Graph:
                                             node_from,
                                             'sink',
                                             ing_name,
-                                            excess
+                                            excess,
+                                            locked=True,
                                         )
                         elif sum(locked_bools) == len(edges) - 1: # 1 input undetermined
                             edge_quants = {x: self.edges[x]['quant'] for x in edges if self.edges[x].get('locked', False)}
@@ -857,13 +829,7 @@ class Graph:
 
                             if excess < 0 or math.isclose(excess, 0, abs_tol=1e-9):
                                 # Get rid of link to undetermined edge and then perform same process as all determined
-                                self.addEdge(
-                                    unlocked_edge[0],
-                                    'sink',
-                                    ing_name,
-                                    -1
-                                )
-                                # NOTE: DO NOT LOCK!
+                                del self.edges[unlocked_edge]
 
                                 if math.isclose(excess, 0, abs_tol=1e-9):
                                     continue
@@ -877,7 +843,8 @@ class Graph:
                                             'source',
                                             node_to,
                                             ing_name,
-                                            quant
+                                            quant,
+                                            locked=True,
                                         )
                                         del self.edges[edge]
                                         if math.isclose(excess, 0, abs_tol=1e-9):
@@ -888,7 +855,8 @@ class Graph:
                                             node_from,
                                             'sink',
                                             ing_name,
-                                            quant - excess
+                                            quant - excess,
+                                            locked=True,
                                         )
 
                             elif excess > 0: # Send excess to unlocked node
@@ -903,6 +871,70 @@ class Graph:
                             self.createAdjacencyList()
                             self.outputGraphviz()
                             exit(1)
+
+
+    def _simpleLockMachineEdges(self, rec_id, rec):
+        print(self.adj[rec_id])
+        for io_dir in ['I', 'O']:
+            for edge in self.adj[rec_id][io_dir]:
+                node_from, node_to, ing_name = edge
+                edge_locked = self.edges[edge].get('locked', False)
+
+                packet_quant = sum(getattr(rec, io_dir)[ing_name]) / (rec.dur / 20)
+                if not edge_locked:
+                    self.edges[edge]['quant'] = packet_quant
+                else:
+                    # Edge is already locked, which means:
+                    # If packet sent from destination ("request")
+                        # if packet > locked then get from source
+                        # if packet < locked then send to sink
+                    # If packet sent from src ("supply")
+                        # if packet > locked then send to sink
+                        # if packet < locked then get from source
+
+                    if math.isclose(packet_quant, self.edges[edge]['quant']):
+                        self.edges[edge]['quant'] = packet_quant
+                        self.edges[edge]['locked'] = True
+                        continue
+
+                    locked_quant = self.edges[edge]['quant']
+                    packet_diff = abs(packet_quant - locked_quant)
+                    if io_dir == 'I':
+                        if packet_quant > locked_quant:
+                            self.addEdge(
+                                'source',
+                                node_to,
+                                ing_name,
+                                packet_diff,
+                                locked=True,
+                            )
+                        else:
+                            self.addEdge(
+                                node_from,
+                                'sink',
+                                ing_name,
+                                packet_diff,
+                                locked=True,
+                            )
+                    if io_dir == 'O':
+                        if packet_quant > locked_quant:
+                            self.addEdge(
+                                node_from,
+                                'sink',
+                                ing_name,
+                                packet_diff,
+                                locked=True,
+                            )
+                        else:
+                            self.addEdge(
+                                'source',
+                                node_to,
+                                ing_name,
+                                packet_diff,
+                                locked=True,
+                            )
+
+                self.edges[edge]['locked'] = True
 
 
     def outputGraphviz(self):

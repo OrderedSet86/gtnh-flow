@@ -24,7 +24,7 @@ if __name__ == '__main__':
             'ethanol',
             'methanol'
         },
-        'DEBUG_SHOW_EVERY_STEP': False, # Outputs graphviz on each compute step
+        'DEBUG_SHOW_EVERY_STEP': True, # Outputs graphviz on each compute step
             # ^ (you will generally never want this to be true if you're a user)
 
         # TODO: Add below to backend

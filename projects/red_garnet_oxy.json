@@ -1,0 +1,62 @@
+[
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "red garnet dust": 16
+        },
+        "O": {
+            "pyrope dust": 3,
+            "alamandine dust": 5,
+            "spessartine dust": 8
+        },
+        "eut": 15,
+        "dur": 73.6,
+        "number": 1
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "pyrope dust": 20
+        },
+        "O": {
+            "alumina dust": 2,
+            "magnesium dust": 3,
+            "silicon dioxide dust": 3,
+            "oxygen": 12000
+        },
+        "eut": 90,
+        "dur": 360
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "alamandine dust": 20
+        },
+        "O": {
+            "alumina dust": 2,
+            "iron dust": 3,
+            "silicon dioxide dust": 3,
+            "oxygen": 12000
+        },
+        "eut": 90,
+        "dur": 440
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "spessartine dust": 14
+        },
+        "O": {
+            "alumina dust": 2,
+            "manganese dust": 3,
+            "silicon dioxide dust": 3,
+            "oxygen": 6000
+        },
+        "eut": 90,
+        "dur": 336
+    }
+]

@@ -1,18 +1,17 @@
 [
     {
         "m": "centrifuge",
-        "tier": "MV",
+        "tier": "HV",
         "I": {
-            "silicon dioxide": 3
+            "silicon dioxide": 5
         },
         "O": {
-            "silicon dust": 1,
-            "oxygen": 2000
+            "silicon dust": 2,
+            "oxygen": 300
         },
-        "custom": true,
-        "eut": 60,
-        "dur": 300,
-        "number": 7.5
+        "eut": 480,
+        "dur": 100,
+        "number": 16.66666666666666666666666666666666666666666
     },
     {
         "m": "centrifuge",
@@ -22,7 +21,9 @@
         },
         "O": {
             "silicon dioxide": 1
-        }
+        },
+        "eut": 5,
+        "dur": 80
     },
     {
         "m": "forge hammer",
@@ -33,7 +34,6 @@
         "O": {
             "glass dust": 1
         },
-        "custom": true,
         "eut": 10,
         "dur": 10
     },
@@ -46,7 +46,6 @@
         "O": {
             "glass": 2
         },
-        "custom": true,
         "eut": 85,
         "dur": 20
     },
@@ -58,7 +57,9 @@
         },
         "O": {
             "sand": 1
-        }
+        },
+        "eut": 16,
+        "dur": 10
     },
     {
         "m": "forge hammer",
@@ -68,6 +69,8 @@
         },
         "O": {
             "gravel": 1
-        }
+        },
+        "eut": 16,
+        "dur": 10
     }
 ]
