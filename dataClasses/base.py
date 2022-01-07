@@ -83,6 +83,7 @@ class Recipe:
 if __name__ == '__main__':
     r = Recipe(
         'centrifuge',
+        'LV',
         IngredientCollection(
             Ingredient('glass dust', 1)
         ),

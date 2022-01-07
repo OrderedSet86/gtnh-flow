@@ -16,9 +16,10 @@ A (beta) tool designed for complex GT packs. In specific, aims to achieve:
 
 ## How do I use it?
 
-1. Clone repository
-2. Download Python and dependencies (pip install -r requirements.txt)
-3. Create a project file under `projects/`. I have some existing projects here for examples of how one should be structured. In `flow`'s current form, you need to specify exact I/O and eut/duration in ticks, as well as which voltage you wish to actually run the machine at (for calculating overclocks). In addition, at least one machine will need a `number` argument to be specified, which tells the program how to balance the rest of the machines in the network. (The green nodes in the example above are the `number`ed nodes.)
+1. Clone repository (`git clone https://github.com/OrderedSet86/gtnh-flow.git`)
+2. Download Python and dependencies (`pip install -r requirements.txt`)
+3. Graphviz is an external library and will need to be downloaded separately (on Debian-based Linux this is `sudo apt-get install graphviz`)
+3. Create a project file under `projects/`. You can look at existing projects to see how to structure it. In `flow`'s current form, you need to specify exact I/O and eut/duration in ticks, as well as which voltage you wish to actually run the machine at (for calculating overclocks). In addition, at least one machine will need a `number` argument to be specified, which tells the program how to balance the rest of the machines in the network. (The green nodes in the example above are the `number`ed nodes.)
 4. Run the project by name using `python3 factory_graph.py myProjectName`. Replace myProjectName with whatever your project is called.
 5. Output graph will pop up and also be available in `output/`!
 

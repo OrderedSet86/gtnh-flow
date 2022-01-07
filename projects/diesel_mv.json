@@ -1,0 +1,93 @@
+[
+    {
+        "m": "chemical reactor",
+        "tier": "LV",
+        "I": {
+            "hydrogen gas": 2000,
+            "sulfuric light fuel": 12000
+        },
+        "O": {
+            "hydrogen sulfide": 1000,
+            "light fuel": 12000
+        },
+        "eut": 30,
+        "dur": 160
+    },
+    {
+        "m": "chemical reactor",
+        "tier": "LV",
+        "I": {
+            "hydrogen gas": 2000,
+            "sulfuric heavy fuel": 8000
+        },
+        "O": {
+            "hydrogen sulfide": 1000,
+            "heavy fuel": 8000
+        },
+        "eut": 30,
+        "dur": 160
+    },
+    {
+        "m": "distillery",
+        "tier": "LV",
+        "I": {
+            "oil": 25
+        },
+        "O": {
+            "sulfuric light fuel": 25
+        },
+        "number": 3,
+        "eut": 24,
+        "dur": 20
+    },
+    {
+        "m": "distillery",
+        "tier": "LV",
+        "I": {
+            "oil": 50
+        },
+        "O": {
+            "sulfuric heavy fuel": 15
+        },
+        "eut": 24,
+        "dur": 40
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "water": 3000
+        },
+        "O": {
+            "electrolysed water": 1000
+        },
+        "eut": 30,
+        "dur": 490
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "electrolysed water": 3000
+        },
+        "O": {
+            "hydrogen gas": 2000,
+            "oxygen gas": 1000
+        },
+        "eut": 30,
+        "dur": 30
+    },
+    {
+        "m": "mixer",
+        "tier": "MV",
+        "I": {
+            "heavy fuel": 1000,
+            "light fuel": 5000
+        },
+        "O": {
+            "diesel": 6000
+        },
+        "eut": 120,
+        "dur": 16
+    }
+]

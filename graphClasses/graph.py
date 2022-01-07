@@ -29,7 +29,7 @@ def swapIO(io_type):
 class Graph:
     def __init__(self, graph_name, recipes, graph_config=None):
         self.graph_name = graph_name
-        self.recipes = recipes
+        self.recipes = {str(i): x for i, x in enumerate(recipes)}
         self.nodes = {}
         self.edges = {} # uniquely defined by (machine from, machine to, ing name)
         self.graph_config = graph_config
@@ -61,14 +61,14 @@ class Graph:
 
         # Compute {[ingredient name][IO direction] -> involved recipes} table
         involved_recipes = defaultdict(lambda: defaultdict(list))
-        for rec_id, rec in enumerate(self.recipes):
+        for rec_id, rec in self.recipes.items():
             for io_type in ['I', 'O']:
                 for ing in getattr(rec, io_type):
                     involved_recipes[ing.name][io_type].append(rec_id)
 
         # Add I/O connections
         added_edges = set()
-        for rec_id, rec in enumerate(self.recipes):
+        for rec_id, rec in self.recipes.items():
             self.addNode(
                 rec_id,
                 fillcolor='lightblue2',
@@ -172,13 +172,14 @@ class Graph:
 
         self.adj = adj
         self.adj_machine = adj_machine
+
+        # TODO: Add to debug print only
         for machine, io_group in self.adj_machine.items():
             machine_name = ''
-            try:
-                int(machine)
-                machine_name = self.recipes[int(machine)].machine
-            except ValueError:
-                pass
+            recipe_obj = self.recipes.get(machine)
+            if isinstance(recipe_obj, Recipe):
+                machine_name = recipe_obj.machine
+
             cprint(f'{machine} {machine_name}', 'blue')
             for io_type, edges in io_group.items():
                 cprint(f'{io_type} {edges}', 'blue')
@@ -204,8 +205,8 @@ class Graph:
         # Locking rules:
         # If all machine-involved edges are locked, then machine itself can be 100% locked
         # If not all machine-involved sides are locked, do some complicated logic/guessing/ask user (TODO:)
-        numbered_nodes = [i for i, x in enumerate(self.recipes) if getattr(x, 'number', False)]
-        need_locking = {str(i) for i in range(len(self.recipes)) if i not in numbered_nodes and i not in {'sink', 'source'}}
+        numbered_nodes = [i for i, x in self.recipes.items() if getattr(x, 'number', False)]
+        need_locking = {i for i in self.recipes.keys() if i not in numbered_nodes and i not in {'sink', 'source'}}
 
         if len(numbered_nodes) == 0:
             raise RuntimeError('Need at least one "number" argument to base machine balancing around.')
@@ -237,7 +238,7 @@ class Graph:
             # Compute determined edges for all machines
             determined_edge_count = {}
             for rec_id in need_locking:
-                rec = self.recipes[int(rec_id)]
+                rec = self.recipes[rec_id]
                 all_adj_machine_edges = adj_machine[rec_id]['I'] + adj_machine[rec_id]['O']
                 try:
                     locked_edges = [edge for edge in all_adj_machine_edges if self.edges[edge].get('locked', False)]
@@ -250,7 +251,7 @@ class Graph:
             picked_edge = edge_priority[0]
             if picked_edge[1][0] > 0: # At least one determined edge
                 rec_id = picked_edge[0]
-                rec = self.recipes[int(rec_id)]
+                rec = self.recipes[rec_id]
                 self._lockMachine(rec_id, rec)
                 need_locking.remove(rec_id)
 
@@ -449,7 +450,7 @@ class Graph:
 
         # Compute total EU/t cost and (if power line) output
         total_eut = 0
-        for rec in self.recipes:
+        for rec in self.recipes.values():
             total_eut += rec.eut
         io_label_lines.append('<HR/>')
         eut_rounded = int(math.ceil(total_eut))
@@ -505,9 +506,9 @@ class Graph:
             for edge in io_side_edges:
                 node_from, node_to, ing_name = edge
                 if io_type == 'I':
-                    other_rec = self.recipes[int(node_from)]
+                    other_rec = self.recipes[node_from]
                 elif io_type == 'O':
-                    other_rec = self.recipes[int(node_to)]
+                    other_rec = self.recipes[node_to]
 
                 wanted_quant = sum(getattr(other_rec, swapIO(io_type))[ing_name])
                 wanted_per_s = wanted_quant / (other_rec.dur / 20)
@@ -520,10 +521,10 @@ class Graph:
 
         print(rec.machine, multipliers)
         final_multiplier = max(multipliers)
-        self.recipes[int(rec_id)] *= final_multiplier
+        self.recipes[rec_id] *= final_multiplier
 
-        existing_label = self.nodes[int(rec_id)]['label']
-        self.nodes[int(rec_id)]['label'] = '\n'.join([
+        existing_label = self.nodes[rec_id]['label']
+        self.nodes[rec_id]['label'] = '\n'.join([
             f'{round(rec.multiplier, 2)}x {rec.user_voltage} {existing_label}',
             f'Cycle: {rec.dur/20}s',
             f'EU/t: {round(rec.eut, 2)}',
@@ -601,7 +602,7 @@ class Graph:
                     # throw error and ask user to specify additional information
 
 
-        adj_edges = self.adj[str(rec_id)]
+        adj_edges = self.adj[rec_id]
         # Create mapping of {io_dir: {ing_name: edges}}
         ing_edges = {
             'I': defaultdict(list),
@@ -935,6 +936,9 @@ class Graph:
                             )
 
                 self.edges[edge]['locked'] = True
+
+        if self.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
+            self.outputGraphviz()
 
 
     def outputGraphviz(self):
