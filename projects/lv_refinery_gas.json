@@ -1,0 +1,54 @@
+[
+    {
+        "m": "distillery",
+        "tier": "LV",
+        "I": {
+            "oil": 25
+        },
+        "O": {
+            "sulfuric gas": 30
+        },
+        "eut": 24,
+        "dur": 20,
+        "number": 1
+    },
+    {
+        "m": "chemical reactor",
+        "tier": "LV",
+        "I": {
+            "sulfuric gas": 16000,
+            "hydrogen": 2000
+        },
+        "O": {
+            "refinery gas": 16000,
+            "hydrogen sulfide": 1000
+        },
+        "eut": 30,
+        "dur": 160
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "water": 3000
+        },
+        "O": {
+            "electrolysed water": 1000
+        },
+        "eut": 30,
+        "dur": 490
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "electrolysed water": 3000
+        },
+        "O": {
+            "hydrogen": 2000,
+            "oxygen gas": 1000
+        },
+        "eut": 30,
+        "dur": 30
+    }
+]

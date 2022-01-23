@@ -1,0 +1,14 @@
+{
+    "POWER_LINE": true, // Automatically burns all leftover fuels
+    "DO_NOT_BURN": [
+        "toluene",
+        "phenol",
+        "methanol"
+    ],
+    "DEBUG_SHOW_EVERY_STEP": false, // Outputs graphviz on each compute step
+        // ^ (you will generally never want this to be true if you're a user)
+
+    // TODO: Add below to backend
+    "PRECISION": 4,
+    "ROUND_MACHINES_UP": false
+}

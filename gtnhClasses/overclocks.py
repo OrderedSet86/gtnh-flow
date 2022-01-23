@@ -1,5 +1,7 @@
 from bisect import bisect_right
 
+from termcolor import cprint
+
 from dataClasses.base import Recipe, IngredientCollection, Ingredient
 
 
@@ -38,6 +40,12 @@ pipe_casings = {
     'tungstensteel': 8
 }
 
+# [speed X, EU/t discount, parallels per tier]
+GTpp_stats = {
+    "industrial electrolyzer": [1.8, 0.9, 2],
+    "large processing factory": [2.5, 0.8, 2],
+}
+
 voltage_cutoffs = [32, 128, 512, 2048, 8192, 32768, 131_072, 524_288, 2_097_152]
 voltages = ['LV', 'MV', 'HV', 'EV', 'IV', 'LuV', 'ZPM', 'UV', 'UHV']
 
@@ -49,6 +57,45 @@ def require(recipe, requirements):
         pass_conditions = [key in vars(recipe), isinstance(getattr(recipe, key), req_type)]
         if not all(pass_conditions):
             raise RuntimeError(f'Improper config! Ensure {recipe.machine} has key {key} of type {req_type}.')
+
+
+def modifyGTpp(recipe):
+    if recipe.machine not in GTpp_stats:
+        raise RuntimeError('Missing OC data for GT++ multi - add to gtnhClasses/overclocks.py:GTpp_stats')
+
+    SPEED_BOOST, EU_DISCOUNT, PARALLELS_PER_TIER = GTpp_stats[recipe.machine]
+    SPEED_BOOST = 1/(SPEED_BOOST+1)
+
+    available_eut = voltage_cutoffs[voltages.index(recipe.user_voltage)]
+    MAX_PARALLEL = (voltages.index(recipe.user_voltage) + 1) * PARALLELS_PER_TIER
+    NEW_RECIPE_TIME = max(recipe.dur * SPEED_BOOST, 20)
+
+    x = recipe.eut * EU_DISCOUNT
+    y = min(int(available_eut/x), MAX_PARALLEL)
+    TOTAL_EUT = x*y
+
+    cprint('Base GT++ OC stats:', 'yellow')
+    cprint(f'{available_eut=} {MAX_PARALLEL=} {NEW_RECIPE_TIME=} {TOTAL_EUT=} {y=}', 'yellow')
+
+    while TOTAL_EUT < available_eut:
+        OC_EUT = TOTAL_EUT * 4
+        OC_DUR = NEW_RECIPE_TIME / 2
+        if OC_EUT <= available_eut:
+            if OC_DUR < 20:
+                break
+            cprint('OC to', 'yellow')
+            cprint(f'{OC_EUT=} {OC_DUR=}', 'yellow')
+            TOTAL_EUT = OC_EUT
+            NEW_RECIPE_TIME = OC_DUR
+        else:
+            break
+
+    recipe.eut = TOTAL_EUT
+    recipe.dur = NEW_RECIPE_TIME
+    recipe.I *= y
+    recipe.O *= y
+
+    return recipe
 
 
 def modifyEBF(recipe):
@@ -117,6 +164,8 @@ def overclockRecipe(recipe):
         'pyrolyse oven': modifyPyrolyse,
         'large chemical reactor': modifyPerfect,
         'electric blast furnace': modifyEBF,
+        'industrial electrolyzer': modifyGTpp,
+        'large processing factory': modifyGTpp,
     }
     if recipe.machine in machine_overrides:
         return machine_overrides[recipe.machine](recipe)

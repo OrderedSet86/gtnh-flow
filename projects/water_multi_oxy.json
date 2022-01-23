@@ -1,0 +1,16 @@
+[
+    {
+        "m": "industrial electrolyzer",
+        "tier": "IV",
+        "I": {
+            "water": 3000
+        },
+        "O": {
+            "oxygen": 1000,
+            "hydrogen": 2000
+        },
+        "eut": 30,
+        "dur": 2000,
+        "number": 1
+    }
+]

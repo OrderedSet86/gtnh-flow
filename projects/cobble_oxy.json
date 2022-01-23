@@ -1,17 +1,17 @@
 [
     {
-        "m": "centrifuge",
+        "m": "electrolyzer",
         "tier": "HV",
         "I": {
             "silicon dioxide": 5
         },
         "O": {
             "silicon dust": 2,
-            "oxygen": 300
+            "oxygen": 3000
         },
         "eut": 480,
         "dur": 100,
-        "number": 16.66666666666666666666666666666666666666666
+        "number": 1.66666666666666666
     },
     {
         "m": "centrifuge",

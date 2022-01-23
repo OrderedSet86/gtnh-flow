@@ -1,0 +1,56 @@
+[
+    {
+        "m": "distillation tower",
+        "tier": "HV",
+        "I": {
+            "coal tar": 1200
+        },
+        "O": {
+            "ethylbenzene": 150,
+            "anthracene": 50,
+            "kerosene": 400,
+            "coal tar oil": 500,
+            "naphtha": 100
+        },
+        "eut": 60,
+        "dur": 900,
+        "number": 1
+    },
+    {
+        "m": "distillery",
+        "tier": "MV",
+        "I": {
+            "kerosene": 20
+        },
+        "O": {
+            "rp-1": 15
+        },
+        "eut": 120,
+        "dur": 16
+    },
+    {
+        "m": "chem plant",
+        "tier": "HV",
+        "I": {
+            "liquid oxygen": 2000,
+            "rp-1": 500
+        },
+        "O": {
+            "rp-1 rocket fuel": 1500
+        },
+        "eut": 240,
+        "dur": 300
+    },
+    {
+        "m": "vacuum freezer",
+        "tier": "HV",
+        "I": {
+            "oxygen": 1000
+        },
+        "O": {
+            "liquid oxygen": 1000
+        },
+        "eut": 480,
+        "dur": 1200
+    }
+]

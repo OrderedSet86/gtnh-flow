@@ -2,35 +2,18 @@
 import argparse
 import json
 import sys
-from collections import defaultdict, deque, OrderedDict
-from pathlib import Path
 
 # Pypi libraries
 from jsmin import jsmin
-from termcolor import cprint
 
 # Internal libraries
 from graphClasses.graph import Graph
-from dataClasses.base import Ingredient, IngredientCollection, Recipe
 from dataClasses.load import recipesFromConfig
 
 
 if __name__ == '__main__':
-    graph_config = {
-        'POWER_LINE': True, # Automatically burns all leftover fuels
-        'DO_NOT_BURN': {
-            'toluene',
-            'phenol',
-            'ethanol',
-            'methanol'
-        },
-        'DEBUG_SHOW_EVERY_STEP': False, # Outputs graphviz on each compute step
-            # ^ (you will generally never want this to be true if you're a user)
-
-        # TODO: Add below to backend
-        'PRECISION': 4,
-        'ROUND_MACHINES_UP': False,
-    }
+    with open('config_factory_graph.jsonc', 'r') as f:
+        graph_config = json.loads(jsmin(f.read()))
 
     if len(sys.argv) > 1:
         project_name = sys.argv[1]

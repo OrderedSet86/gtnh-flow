@@ -1,0 +1,115 @@
+[
+    {
+        "m": "chemical bath",
+        "tier": "HV",
+        "I": {
+            "crushed nickel ore": 1,
+            "mercury": 1000
+        },
+        "O": {
+            "purified nickel ore": 1,
+            "PMP": 1.4,
+            "stone dust": 0.4
+        },
+        "eut": 7,
+        "dur": 800,
+        "number": 1
+    },
+    {
+        "m": "pulverizer",
+        "tier": "HV",
+        "I": {
+            "purified nickel ore": 1
+        },
+        "O": {
+            "purified pile of nickel dust": 1,
+            "PMP": 0.2,
+            "stone dust": 0.4
+        },
+        "eut": 2,
+        "dur": 800
+    },
+    {
+        "m": "centrifuge",
+        "tier": "HV",
+        "I": {
+            "purified pile of nickel dust": 1
+        },
+        "O": {
+            "nickel dust": 1,
+            "PMP": 0.2222
+        },
+        "eut": 5,
+        "dur": 464
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "MV",
+        "I": {
+            "PMP": 9,
+            "aqua regia": 9000
+        },
+        "O": {
+            "platinum residue dust": 1,
+            "platinum concentrate": 9000
+        },
+        "eut": 30,
+        "dur": 2250
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "LV",
+        "I": {
+            "hydrochloric acid": 1000,
+            "ammonia": 1000
+        },
+        "O": {
+            "ammonium chloride": 1000
+        },
+        "eut": 30,
+        "dur": 15
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "ammonium chloride": 1800,
+            "platinum concentrate": 18000
+        },
+        "O": {
+            "platinum salt dust": 16,
+            "reprecipitated platinum dust": 2,
+            "palladium enriched ammonia": 1800,
+            "nitrogen dioxide": 9000,
+            "diluted sulfuric acid": 9000
+        },
+        "eut": 240,
+        "dur": 1400
+    },
+    {
+        "m": "sifter",
+        "tier": "HV",
+        "I": {
+            "platinum salt dust": 1
+        },
+        "O": {
+            "refined platinum salt dust": 0.9
+        },
+        "eut": 30,
+        "dur": 600
+    },
+    {
+        "m": "electric blast furnace",
+        "tier": "LV",
+        "I": {
+            "refined platinum salt dust": 1
+        },
+        "O": {
+            "PMP": 1
+        },
+        "eut": 120,
+        "dur": 200,
+        "heat": 900,
+        "coils": "cupronickel"
+    }
+]

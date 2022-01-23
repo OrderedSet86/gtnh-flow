@@ -36,6 +36,10 @@ class Graph:
         if self.graph_config == None:
             self.graph_config = {}
 
+        # Populated later on
+        self.adj = None
+        self.adj_machine = None
+
         # TODO: Temporary until backend data import
         for i, rec in enumerate(recipes):
             recipes[i] = overclockRecipe(rec)
@@ -236,21 +240,55 @@ class Graph:
             # Now propagate updates throughout the tree
             # Prefer sides with maximum information (highest ratio of determined edges to total edges)
             # Compute determined edges for all machines
-            determined_edge_count = {}
+            determined_edge_count = defaultdict(dict)
             for rec_id in need_locking:
                 rec = self.recipes[rec_id]
-                all_adj_machine_edges = adj_machine[rec_id]['I'] + adj_machine[rec_id]['O']
-                try:
-                    locked_edges = [edge for edge in all_adj_machine_edges if self.edges[edge].get('locked', False)]
-                except Exception:
-                    self.outputGraphviz()
-                    raise
-                determined_edge_count[rec_id] = [len(locked_edges), len(all_adj_machine_edges)]
+                determined_edge_count[rec_id]['I'] = [
+                    sum([1 for edge in self.adj_machine[rec_id]['I'] if self.edges[edge].get('locked', False)]),
+                    len(self.adj_machine[rec_id]['I']),
+                ]
+                determined_edge_count[rec_id]['O'] = [
+                    sum([1 for edge in self.adj_machine[rec_id]['O'] if self.edges[edge].get('locked', False)]),
+                    len(self.adj_machine[rec_id]['O']),
+                ]
 
-            edge_priority = sorted(determined_edge_count.items(), reverse=True, key=lambda x: x[1][0] / x[1][1])
+            print(determined_edge_count)
+
+            # Now pick in this order:
+            # 1. Edges with complete side determination, using total edge determination ratio as tiebreaker
+            # 2. Edges with incomplete side determination, but highest total edge determination ratio
+
+            # total_determination_score = sorted(determined_edge_count.items(), reverse=True, key=lambda x: x[1][0] / x[1][1])
+            determination_score = {
+                rec_id: [
+                    # Complete side determination count
+                    sum([
+                        (
+                            determined_edge_count[rec_id][io_type][0] // determined_edge_count[rec_id][io_type][1]
+                            if determined_edge_count[rec_id][io_type][1] != 0
+                            else 0
+                        )
+                        for io_type in ['I', 'O']
+                    ]),
+                    # Total edge determination ratio
+                    sum([determined_edge_count[rec_id][io_type][0] for io_type in ['I', 'O']])
+                    /
+                    sum([determined_edge_count[rec_id][io_type][1] for io_type in ['I', 'O']])
+                ]
+                for rec_id
+                in determined_edge_count
+            }
+            edge_priority = sorted([
+                    [stats, rec_id]
+                    for rec_id, stats
+                    in determination_score.items()
+                ],
+                reverse=True,
+                key=lambda x: x[0]
+            )
             picked_edge = edge_priority[0]
-            if picked_edge[1][0] > 0: # At least one determined edge
-                rec_id = picked_edge[0]
+            if picked_edge[0][1] > 0: # At least one determined edge
+                rec_id = picked_edge[1]
                 rec = self.recipes[rec_id]
                 self._lockMachine(rec_id, rec)
                 need_locking.remove(rec_id)
@@ -274,6 +312,7 @@ class Graph:
             2: 'semifluid gen',
             3: 'steam turbine',
             4: 'rocket engine fuel',
+            5: 'large naquadah reactor',
         }
         turbineables = {
             'hydrogen': 20_000,
@@ -295,7 +334,7 @@ class Graph:
             'rocket fuel': 250_000,
             'butene': 256_000,
             'phenol': 288_000,
-            'benzene': 288_000,
+            'benzene': 360_000,
             'butane': 296_000,
             'lpg': 320_000,
             'naphtha': 320_000,
@@ -354,11 +393,22 @@ class Graph:
             'unsymmetrical dimethylhydrazine fuel mix': 9_000_000,
             'h8n4c2o4 rocket fuel': 12_588_000,
         }
+        naqline_fuels = {
+            'naquadah based liquid fuel mkI': 220_000*20*1000,
+            'naquadah based liquid fuel mkII': 380_000*20*1000,
+            'naquadah based liquid fuel mkIII': 9_511_000*80*1000,
+            'naquadah based liquid fuel mkIV': 88_540_000*100*1000,
+            'naquadah based liquid fuel mkV': 399_576_000*8*20*1000,
+            'uranium based liquid fuel (excited state)': 12_960*100*1000,
+            'plutonium based liquid fuel (excited state)': 32_400*7.5*20*1000,
+            'thorium based liquid fuel (excited state)': 2_200*25*20*1000,
+        }
         known_burnables = {x: [0, y] for x,y in turbineables.items()}
         known_burnables.update({x: [1, y] for x,y in combustables.items()})
         known_burnables.update({x: [2, y] for x,y in semifluids.items()})
         known_burnables['steam'] = [3, 500]
         known_burnables.update({x: [4, y] for x,y in rocket_fuels.items()})
+        known_burnables.update({x: [5, y] for x,y in naqline_fuels.items()})
 
         outputs = self.adj['sink']['I']
         generator_number = 1
@@ -411,6 +461,8 @@ class Graph:
 
         def makeLineHtml(color, text, amt_text):
             return f'<tr><td align="left"><font color="{color}">{text}</font></td><td align ="right"><font color="{color}">{amt_text}</font></td></tr>'
+
+        self.createAdjacencyList()
 
         # Compute I/O
         inputs = self.adj['source']
@@ -875,7 +927,7 @@ class Graph:
 
 
     def _simpleLockMachineEdges(self, rec_id, rec):
-        print(self.adj[rec_id])
+        # _lockMachineEdges, but no information requirements - just force lock the edges
         for io_dir in ['I', 'O']:
             for edge in self.adj[rec_id][io_dir]:
                 node_from, node_to, ing_name = edge
@@ -996,6 +1048,10 @@ class Graph:
                 ing_name = capitalization_exceptions[ing_name.lower()]
             else:
                 ing_name = ing_name.title()
+
+            # Strip bad arguments
+            if 'locked' in kwargs:
+                del kwargs['locked']
 
             g.edge(
                 node_from,

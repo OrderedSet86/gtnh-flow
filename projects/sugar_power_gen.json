@@ -1,0 +1,45 @@
+[
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "oxygen": 1000,
+            "charcoal dust": 1
+        },
+        "O": {
+            "carbon monoxide": 1000,
+            "tiny pile of ashes": 1
+        },
+        "eut": 7,
+        "dur": 80,
+        "number": 1
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "sugar": 32
+        },
+        "O": {
+            "carbon dust": 2,
+            "oxygen": 25000,
+            "water": 5000
+        },
+        "eut": 60,
+        "dur": 448
+    },
+    {
+        "m": "pyrolyse oven",
+        "tier": "MV",
+        "I": {
+            "sugar": 23,
+            "nitrogen": 500
+        },
+        "O": {
+            "charcoal dust": 12
+        },
+        "eut": 96,
+        "dur": 160,
+        "coils": "kanthal"
+    }
+]

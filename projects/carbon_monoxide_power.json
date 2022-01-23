@@ -65,7 +65,7 @@
     },
     {
         "m": "large chemical reactor",
-        "tier": "HV",
+        "tier": "EV",
         "I": {
             "oxygen": 1000,
             "charcoal": 1
