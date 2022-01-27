@@ -10,5 +10,6 @@
 
     // TODO: Add below to backend
     "PRECISION": 4,
-    "ROUND_MACHINES_UP": false
+    "ROUND_MACHINES_UP": false,
+    "SHOW_MACHINE_INDICES": false
 }

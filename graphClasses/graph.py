@@ -40,6 +40,8 @@ class Graph:
         self.adj = None
         self.adj_machine = None
 
+        self.darkModeColor = '#043742'
+
         # TODO: Temporary until backend data import
         for i, rec in enumerate(recipes):
             recipes[i] = overclockRecipe(rec)
@@ -73,10 +75,26 @@ class Graph:
         # Add I/O connections
         added_edges = set()
         for rec_id, rec in self.recipes.items():
+            # Create machine label
+            if self.graph_config['SHOW_MACHINE_INDICES']:
+                machine_label = [f'({rec_id}) {rec.machine.title()}']
+            else:
+                machine_label = [rec.machine.title()]
+
+            # Add lines for the special arguments
+            line_if_attr_exists = {
+                'heat': (lambda rec: f'Base Heat: {rec.heat}K'),
+                'coils': (lambda rec: f'Coils: {rec.coils.title()}'),
+            }
+            for lookup, line_generator in line_if_attr_exists.items():
+                if hasattr(rec, lookup):
+                    machine_label.append(line_generator(rec))
+
+            machine_label = '\n'.join(machine_label)
             self.addNode(
                 rec_id,
                 fillcolor='lightblue2',
-                label=f'({rec_id}) {rec.machine.title()}',
+                label=machine_label
             )
             for io_type in ['I', 'O']:
                 for ing in getattr(rec, io_type):
@@ -484,7 +502,7 @@ class Graph:
 
         # Create I/O lines
         io_label_lines = []
-        io_label_lines.append('<tr><td align="left">Summary</td></tr>')
+        io_label_lines.append('<tr><td align="left"><font color="white">Summary</font></td></tr>')
         for name, quant in sorted(total_io.items(), key=lambda x: x[1]):
             if name == 'EU':
                 continue
@@ -525,7 +543,7 @@ class Graph:
         self.addNode(
             'total_io_node',
             label=io_label,
-            fillcolor='ghostwhite',
+            fillcolor=self.darkModeColor,
         )
 
 
@@ -1006,6 +1024,7 @@ class Graph:
                 'rankdir': 'TD',
                 'ranksep': '0.5',
                 # 'overlap': 'scale',
+                'bgcolor': self.darkModeColor,
             }
         )
 
@@ -1057,7 +1076,9 @@ class Graph:
                 node_from,
                 node_to,
                 label=f'{ing_name}\n({quant_label})',
-                **kwargs
+                fontcolor='white',
+                color='white',
+                **kwargs,
             )
 
         # Output final graph
@@ -1065,7 +1086,7 @@ class Graph:
             self.graph_name,
             'output/',
             view=True,
-            format='png',
+            format='pdf',
         )
 
         if self.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):

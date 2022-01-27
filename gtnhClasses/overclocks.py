@@ -42,8 +42,9 @@ pipe_casings = {
 
 # [speed X, EU/t discount, parallels per tier]
 GTpp_stats = {
-    "industrial electrolyzer": [1.8, 0.9, 2],
-    "large processing factory": [2.5, 0.8, 2],
+    'industrial electrolyzer': [1.8, 0.9, 2],
+    'large processing factory': [2.5, 0.8, 2],
+    'industrial sifter': [4, 0.75, 4],
 }
 
 voltage_cutoffs = [32, 128, 512, 2048, 8192, 32768, 131_072, 524_288, 2_097_152]
@@ -166,6 +167,7 @@ def overclockRecipe(recipe):
         'electric blast furnace': modifyEBF,
         'industrial electrolyzer': modifyGTpp,
         'large processing factory': modifyGTpp,
+        'industrial sifter': modifyGTpp,
     }
     if recipe.machine in machine_overrides:
         return machine_overrides[recipe.machine](recipe)
