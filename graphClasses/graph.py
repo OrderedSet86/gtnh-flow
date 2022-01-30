@@ -317,6 +317,8 @@ class Graph:
                 cprint('Unable to compute some of the tree due to missing information; refer to output graph.', 'red')
                 break
 
+            self.createAdjacencyList()
+
         if self.graph_config.get('POWER_LINE', False):
             self._addPowerLineNodes()
         self._addIONode()
@@ -352,7 +354,7 @@ class Graph:
             'rocket fuel': 250_000,
             'butene': 256_000,
             'phenol': 288_000,
-            'benzene': 360_000,
+            'benzene': 288_000,
             'butane': 296_000,
             'lpg': 320_000,
             'naphtha': 320_000,
@@ -1086,7 +1088,7 @@ class Graph:
             self.graph_name,
             'output/',
             view=True,
-            format='pdf',
+            format=self.graph_config['OUTPUT_FORMAT'],
         )
 
         if self.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):

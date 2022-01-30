@@ -58,10 +58,10 @@
         "tier": "HV",
         "I": {},
         "O": {
-            "oak wood": 15.83
+            "oak wood": 48
         },
-        "eut": 480,
-        "dur": 20
+        "eut": 512,
+        "dur": 100
     },
     {
         "m": "large chemical reactor",
@@ -79,28 +79,75 @@
     },
     {
         "m": "electrolyzer",
-        "tier": "MV",
+        "tier": "HV",
         "I": {
-            "sugar": 32
+            "silicon dioxide": 5
         },
         "O": {
-            "carbon dust": 2,
-            "oxygen": 25000,
-            "water": 5000
+            "silicon dust": 2,
+            "oxygen": 3000
         },
-        "eut": 60,
-        "dur": 448
+        "eut": 480,
+        "dur": 100
     },
     {
-        "m": "extractor",
+        "m": "centrifuge",
         "tier": "LV",
         "I": {
-            "sugar beet": 1
+            "glass dust": 1
         },
         "O": {
-            "sugar": 8
+            "silicon dioxide": 1
         },
-        "eut": 7,
-        "dur": 160
+        "eut": 5,
+        "dur": 80
+    },
+    {
+        "m": "forge hammer",
+        "tier": "LV",
+        "I": {
+            "glass": 1
+        },
+        "O": {
+            "glass dust": 1
+        },
+        "eut": 10,
+        "dur": 10
+    },
+    {
+        "m": "arc furnace",
+        "tier": "MV",
+        "I": {
+            "sand": 1
+        },
+        "O": {
+            "glass": 2
+        },
+        "eut": 85,
+        "dur": 20
+    },
+    {
+        "m": "forge hammer",
+        "tier": "LV",
+        "I": {
+            "gravel": 1
+        },
+        "O": {
+            "sand": 1
+        },
+        "eut": 16,
+        "dur": 10
+    },
+    {
+        "m": "forge hammer",
+        "tier": "LV",
+        "I": {
+            "cobblestone": 1
+        },
+        "O": {
+            "gravel": 1
+        },
+        "eut": 16,
+        "dur": 10
     }
 ]

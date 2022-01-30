@@ -183,14 +183,14 @@
         },
         "O": {
             "iridium chloride dust": 1,
-            "ammonia": 2000
+            "ammonia": 3000
         },
         "eut": 30,
         "dur": 300
     },
     {
         "m": "large chemical reactor",
-        "tier": "HV",
+        "tier": "EV",
         "I": {
             "calcium dust": 3,
             "iridium chloride dust": 1
@@ -357,8 +357,8 @@
             "osmium solution": 100,
             "[output] water": 900
         },
-        "eut": 4,
-        "dur": 39
+        "eut": 7680,
+        "dur": 150
     },
     {
         "m": "large chemical reactor",
@@ -563,4 +563,17 @@
         "eut": 30,
         "dur": 300
     }
+    // {
+    //     "m": "large chemical reactor",
+    //     "tier": "HV",
+    //     "I": {
+    //         "hydrogen": 1000,
+    //         "chlorine": 1000
+    //     },
+    //     "O": {
+    //         "hydrochloric acid": 1000
+    //     },
+    //     "eut": 7,
+    //     "dur": 60
+    // }
 ]

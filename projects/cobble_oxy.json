@@ -7,7 +7,7 @@
         },
         "O": {
             "silicon dust": 2,
-            "oxygen": 3000
+            "[output] oxygen": 3000
         },
         "eut": 480,
         "dur": 100,
@@ -41,7 +41,8 @@
         "m": "arc furnace",
         "tier": "MV",
         "I": {
-            "sand": 1
+            "sand": 1,
+            "oxygen": 2
         },
         "O": {
             "glass": 2

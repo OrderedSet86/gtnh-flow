@@ -44,6 +44,7 @@ pipe_casings = {
 GTpp_stats = {
     'industrial electrolyzer': [1.8, 0.9, 2],
     'large processing factory': [2.5, 0.8, 2],
+    'LPF': [2.5, 0.8, 2],
     'industrial sifter': [4, 0.75, 4],
 }
 
@@ -97,6 +98,44 @@ def modifyGTpp(recipe):
     recipe.O *= y
 
     return recipe
+
+
+def modifyICO(recipe):
+    available_eut = voltage_cutoffs[voltages.index(recipe.user_voltage)]
+
+    MAX_PARALLEL = 24
+
+    x = recipe.eut
+    y = min(int(available_eut/x), MAX_PARALLEL)
+    TOTAL_EUT = x*y
+    NEW_RECIPE_TIME = recipe.dur * (.96)**(voltages.index(recipe.user_voltage) + 1)
+
+    cprint('Base GT++ OC stats:', 'yellow')
+    cprint(f'{available_eut=} {MAX_PARALLEL=} {NEW_RECIPE_TIME=} {TOTAL_EUT=} {y=}', 'yellow')
+
+    while TOTAL_EUT < available_eut:
+        OC_EUT = TOTAL_EUT * 4
+        OC_DUR = NEW_RECIPE_TIME / 2
+        if OC_EUT <= available_eut:
+            if OC_DUR < 20:
+                break
+            cprint('OC to', 'yellow')
+            cprint(f'{OC_EUT=} {OC_DUR=}', 'yellow')
+            TOTAL_EUT = OC_EUT
+            NEW_RECIPE_TIME = OC_DUR
+        else:
+            break
+
+    recipe.eut = TOTAL_EUT
+    recipe.dur = NEW_RECIPE_TIME
+    recipe.I *= y
+    recipe.O *= y
+
+    return recipe
+
+
+def modifyChemPlant(recipe):
+    raise NotImplementedError()
 
 
 def modifyEBF(recipe):
@@ -164,10 +203,19 @@ def overclockRecipe(recipe):
     machine_overrides = {
         'pyrolyse oven': modifyPyrolyse,
         'large chemical reactor': modifyPerfect,
+        'LCR': modifyPerfect,
         'electric blast furnace': modifyEBF,
+        'EBF': modifyEBF,
+        'blast furnace': modifyEBF,
         'industrial electrolyzer': modifyGTpp,
         'large processing factory': modifyGTpp,
+        'LPF': modifyGTpp,
         'industrial sifter': modifyGTpp,
+        'industrial coke oven': modifyICO,
+        'ICO': modifyICO,
+        'chem plant': modifyChemPlant,
+        'chemical plant': modifyChemPlant,
+        'exxonmobil': modifyChemPlant,
     }
     if recipe.machine in machine_overrides:
         return machine_overrides[recipe.machine](recipe)

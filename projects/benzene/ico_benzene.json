@@ -1,0 +1,70 @@
+[
+    {
+        "m": "industrial coke oven",
+        "tier": "EV",
+        "I": {
+            "oak wood": 4,
+            "nitrogen": 250
+        },
+        "O": {
+            "charcoal": 5,
+            "wood tar": 375
+        },
+        "eut": 96,
+        "dur": 60
+    },
+    {
+        "m": "distillation tower",
+        "tier": "HV",
+        "I": {
+            "wood tar": 1000
+        },
+        "O": {
+            "dimethylbenzene": 200,
+            "toluene": 75,
+            "benzene": 350,
+            "phenol": 75,
+            "creosote": 300
+        },
+        "eut": 256,
+        "dur": 40
+    },
+    {
+        "m": "tree growth simulator",
+        "tier": "HV",
+        "I": {},
+        "O": {
+            "oak wood": 48
+        },
+        "eut": 512,
+        "dur": 100
+    },
+    {
+        "m": "cryogenic freezer",
+        "tier": "EV",
+        "I": {
+            "air": 2000
+        },
+        "O": {
+            "liquid air": 1000
+        },
+        "eut": 480,
+        "dur": 20,
+        "number": 1
+    },
+    {
+        "m": "centrifuge",
+        "tier": "HV",
+        "I": {
+            "liquid air": 53000
+        },
+        "O": {
+            "nitrogen": 40000,
+            "oxygen": 11000,
+            "argon": 1000,
+            "noble gases": 1000
+        },
+        "eut": 5,
+        "dur": 1484
+    }
+]
