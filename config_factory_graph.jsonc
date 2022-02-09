@@ -1,5 +1,5 @@
 {
-    "POWER_LINE": true, // Automatically burns all leftover fuels
+    "POWER_LINE": false, // Automatically burns all leftover fuels
     "DO_NOT_BURN": [
         "toluene",
         "phenol",

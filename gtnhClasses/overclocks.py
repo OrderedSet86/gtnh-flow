@@ -42,10 +42,36 @@ pipe_casings = {
 
 # [speed X, EU/t discount, parallels per tier]
 GTpp_stats = {
+    # In order of search query:
+    # machine type.*\[gt\+\+\]
+    'industrial centrifuge': [1.25, 0.9, 6],
+    'industrial material press': [5.0, 1.0, 4],
     'industrial electrolyzer': [1.8, 0.9, 2],
+    'maceration stack': [0.6, 1.0, 8],
+    'wire factory': [2.0, 0.75, 4],
+
+    'industrial mixing machine': [2.5, 1.0, 8],
+    'industrial mixer': [2.5, 1.0, 8],
+
+    'industrial sifter': [4, 0.75, 4],
+
+    'large thermal refinery': [1.5, 0.8, 8],
+    'industrial thermal centrifuge': [1.5, 0.8, 8],
+
+    'industrial wash plant': [4.0, 1.0, 4],
+    'industrial extrusion machine': [2.5, 1.0, 4],
+
     'large processing factory': [2.5, 0.8, 2],
     'LPF': [2.5, 0.8, 2],
-    'industrial sifter': [4, 0.75, 4],
+
+    'high current industrial arc furnace': [2.5, 1.0, 8],
+    'industrial arc furnace': [2.5, 1.0, 8],
+
+    'large scale auto-assembler': [2.0, 1.0, 2],
+    'cutting factory controller': [2.0, 0.75, 4],
+
+    'boldarnator': [2.0, 0.75, 8],
+    'industrial rock breaker': [2.0, 0.75, 8],
 }
 
 voltage_cutoffs = [32, 128, 512, 2048, 8192, 32768, 131_072, 524_288, 2_097_152]
@@ -201,16 +227,37 @@ def overclockRecipe(recipe):
     # By the time that the recipe arrives here, it should have a "user_voltage" argument which indicates
     # what the user is actually providing.
     machine_overrides = {
+        # GT multis
         'pyrolyse oven': modifyPyrolyse,
         'large chemical reactor': modifyPerfect,
         'LCR': modifyPerfect,
         'electric blast furnace': modifyEBF,
         'EBF': modifyEBF,
         'blast furnace': modifyEBF,
+
+        # Basic GT++ multis
+        'industrial centrifuge': modifyGTpp,
+        'industrial material press': modifyGTpp,
         'industrial electrolyzer': modifyGTpp,
+        'maceration stack': modifyGTpp,
+        'wire factory': modifyGTpp,
+        'industrial mixing machine': modifyGTpp,
+        'industrial mixer': modifyGTpp,
+        'industrial sifter': modifyGTpp,
+        'large thermal refinery': modifyGTpp,
+        'industrial thermal centrifuge': modifyGTpp,
+        'industrial wash plant': modifyGTpp,
+        'industrial extrusion machine': modifyGTpp,
         'large processing factory': modifyGTpp,
         'LPF': modifyGTpp,
-        'industrial sifter': modifyGTpp,
+        'high current industrial arc furnace': modifyGTpp,
+        'industrial arc furnace': modifyGTpp,
+        'large scale auto-assembler': modifyGTpp,
+        'cutting factory controller': modifyGTpp,
+        'boldarnator': modifyGTpp,
+        'industrial rock breaker': modifyGTpp,
+
+        # Special GT++ multis
         'industrial coke oven': modifyICO,
         'ICO': modifyICO,
         'chem plant': modifyChemPlant,

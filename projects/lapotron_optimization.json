@@ -1,0 +1,153 @@
+
+[
+    {
+        "m": "mixer",
+        "tier": "HV",
+        "I": {
+            "redstone dust": 5,
+            "ruby dust": 4
+        },
+        "O": {
+            "energium dust": 9
+        },
+        "eut": 120,
+        "dur": 600
+    },
+    {
+        "m": "mixer",
+        "tier": "HV",
+        "I": {
+            "energium dust": 3,
+            "lapis dust": 2
+        },
+        "O": {
+            "lapotron dust": 5
+        },
+        "eut": 480,
+        "dur": 200,
+        "number": 15
+    },
+    {
+        "m": "autoclave",
+        "tier": "HV",
+        "I": {
+            "lapotron dust": 30,
+            "molten vibrant alloy": 288
+        },
+        "O": {
+            "raw lapotron crystal": 1
+        },
+        "eut": 480,
+        "dur": 1200
+    },
+    {
+        "m": "assembler",
+        "tier": "EV",
+        "I": {
+            "raw lapotron crystal": 1,
+            "nanoprocessor": 2
+        },
+        "O": {
+            "lapotron crystal": 1
+        },
+        "eut": 1024,
+        "dur": 600
+    },
+    {
+        "m": "precision laser engraver",
+        "tier": "HV",
+        "I": {
+            "lapotron crystal": 1
+        },
+        "O": {
+            "engraved lapotron chip": 3
+        },
+        "eut": 480,
+        "dur": 900
+    },
+    {
+        "m": "circuit assembler",
+        "tier": "EV",
+        "I": {
+            "more advanced circuit board": 1,
+            "power ic": 4,
+            "engraved lapotron chip": 24,
+            "nanocpu": 2,
+            "fine platinum wire": 16,
+            "platinum plate": 8
+        },
+        "O": {
+            "lapotronic energy orb": 1
+        },
+        "eut": 1024,
+        "dur": 512
+    },
+    {
+        "m": "circuit assembler",
+        "tier": "EV",
+        "I": {
+            "advanced circuit board": 1,
+            "nanocpu": 1,
+            "smd resistor": 8,
+            "smd capacitor": 8,
+            "smd transistor": 8,
+            "fine electrum wire": 8,
+            "molten tin": 144
+        },
+        "O": {
+            "nanoprocessor": 1
+        },
+        "eut": 600,
+        "dur": 200
+    },
+    {
+        "m": "cutting machine",
+        "tier": "EV",
+        "I": {
+            "pic wafer": 1
+        },
+        "O": {
+            "power ic": 4
+        },
+        "eut": 1920,
+        "dur": 900
+    },
+    {
+        "m": "precision laser engraver",
+        "tier": "HV",
+        "I": {
+            "glowstone doped wafer": 1
+        },
+        "O": {
+            "pic wafer": 1
+        },
+        "eut": 480,
+        "dur": 1200
+    },
+    {
+        "m": "cutting machine",
+        "tier": "HV",
+        "I": {
+            "nanocpu wafer": 1
+        },
+        "O": {
+            "nanocpu": 8
+        },
+        "eut": 480,
+        "dur": 900
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "EV",
+        "I": {
+            "cpu wafer": 1,
+            "raw carbon fibre": 16,
+            "molten glowstone": 576
+        },
+        "O": {
+            "nanocpu wafer": 1
+        },
+        "eut": 1920,
+        "dur": 1200
+    }
+]

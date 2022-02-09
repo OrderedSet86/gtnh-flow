@@ -9,64 +9,11 @@
         },
         "O": {
             "charcoal": 20,
-            "wood tar": 1500
+            "wood gas": 1500
         },
-        "number": 4,
+        "number": 1,
         "eut": 96,
         "dur": 320
-    },
-    // {
-    //     "m": "industrial coke oven",
-    //     "tier": "EV",
-    //     "I": {
-    //         "oak wood": 4,
-    //         "nitrogen": 250
-    //     },
-    //     "O": {
-    //         "charcoal": 5,
-    //         "wood tar": 375
-    //     },
-    //     "eut": 96,
-    //     "dur": 60,
-    //     "number": 1
-    // },
-    {
-        "m": "distillation tower",
-        "tier": "HV",
-        "I": {
-            "wood tar": 1000
-        },
-        "O": {
-            "dimethylbenzene": 200,
-            "toluene": 75,
-            "benzene": 350,
-            "phenol": 75,
-            "creosote": 300
-        },
-        "eut": 256,
-        "dur": 40
-    },
-    {
-        "m": "centrifuge",
-        "tier": "LV",
-        "I": {
-            "air": 10000
-        },
-        "O": {
-            "nitrogen": 3900
-        },
-        "eut": 7,
-        "dur": 1600
-    },
-    {
-        "m": "compressor",
-        "tier": "LV",
-        "I": {},
-        "O": {
-            "air": 2000
-        },
-        "eut": 2,
-        "dur": 300
     },
     {
         "m": "tree growth simulator",
@@ -117,5 +64,21 @@
         },
         "eut": 7,
         "dur": 160
+    },
+    {
+        "m": "distillation tower",
+        "tier": "HV",
+        "I": {
+            "wood gas": 1000
+        },
+        "O": {
+            "hydrogen": 20,
+            "carbon monoxide": 340,
+            "methane": 130,
+            "ethylene": 20,
+            "carbon dioxide": 490
+        },
+        "eut": 256,
+        "dur": 40
     }
 ]
