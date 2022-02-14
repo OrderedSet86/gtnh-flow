@@ -8,7 +8,6 @@
         "O": {
             "electrolysed water": 1000
         },
-        "custom": true,
         "eut": 30,
         "dur": 490,
         "number": 36.75119
@@ -23,7 +22,6 @@
             "hydrogen": 2000,
             "oxygen": 1000
         },
-        "custom": true,
         "eut": 30,
         "dur": 30
     }

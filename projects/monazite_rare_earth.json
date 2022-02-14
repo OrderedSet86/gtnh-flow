@@ -9,7 +9,6 @@
         "O": {
             "purified monazite ore": 4
         },
-        "custom": true,
         "eut": 384,
         "dur": 7424,
         "number": 4
@@ -24,7 +23,6 @@
             "purified pile of monazite dust": 1,
             "neodymium dust": 0.1
         },
-        "custom": true,
         "eut": 2,
         "dur": 400
     },
@@ -39,7 +37,6 @@
             "neodymium dust": 0.1,
             "neodymium nugget": 0.2
         },
-        "custom": true,
         "eut": 24,
         "dur": 400
     },
@@ -52,7 +49,6 @@
         "O": {
             "neodymium ingot": 1
         },
-        "custom": true,
         "eut": 120,
         "dur": 3891,
         "heat": 1297,
@@ -67,7 +63,6 @@
         "O": {
             "neodymium ingot": 1
         },
-        "custom": true,
         "eut": 2,
         "dur": 200
     },
@@ -81,7 +76,6 @@
             "rare earth": 1,
             "phosphate dust": 1
         },
-        "custom": true,
         "eut": 60,
         "dur": 104
     },
@@ -95,7 +89,6 @@
         "O": {
             "crushed rare earth (II) ore": 3.7
         },
-        "custom": true,
         "eut": 480,
         "dur": 300
     },
@@ -109,7 +102,6 @@
             "impure rare earth (II) dust": 1,
             "runite dust": 0.1
         },
-        "custom": true,
         "eut": 240,
         "dur": 400
     },
@@ -123,7 +115,6 @@
             "rare earth (II) dust": 1,
             "tiny pile of neodymium dust": 1
         },
-        "custom": true,
         "eut": 240,
         "dur": 224
     }
