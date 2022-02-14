@@ -72,6 +72,8 @@ GTpp_stats = {
 
     'boldarnator': [2.0, 0.75, 8],
     'industrial rock breaker': [2.0, 0.75, 8],
+
+    'dangote - distillery': [0, 1.0, 48]
 }
 
 voltage_cutoffs = [32, 128, 512, 2048, 8192, 32768, 131_072, 524_288, 2_097_152]
@@ -126,10 +128,8 @@ def modifyGTpp(recipe):
     return recipe
 
 
-def modifyICO(recipe):
+def modifyGTppSetParallel(recipe, MAX_PARALLEL):
     available_eut = voltage_cutoffs[voltages.index(recipe.user_voltage)]
-
-    MAX_PARALLEL = 24
 
     x = recipe.eut
     y = min(int(available_eut/x), MAX_PARALLEL)
@@ -162,6 +162,13 @@ def modifyICO(recipe):
 
 def modifyChemPlant(recipe):
     raise NotImplementedError()
+
+
+def modifyZhuhai(recipe):
+    recipe = modifyStandard(recipe)
+    parallel_count = (voltages.index(recipe.user_voltage) + 2)*2
+    recipe.O *= parallel_count
+    return recipe
 
 
 def modifyEBF(recipe):
@@ -256,13 +263,16 @@ def overclockRecipe(recipe):
         'cutting factory controller': modifyGTpp,
         'boldarnator': modifyGTpp,
         'industrial rock breaker': modifyGTpp,
+        'dangote - distillery': modifyGTpp,
 
         # Special GT++ multis
-        'industrial coke oven': modifyICO,
-        'ICO': modifyICO,
+        'industrial coke oven': lambda recipe: modifyGTppSetParallel(recipe, 24),
+        'ICO': lambda recipe: modifyGTppSetParallel(recipe, 24),
+        'dangote - distillation tower': lambda recipe: modifyGTppSetParallel(recipe, 12),
         'chem plant': modifyChemPlant,
         'chemical plant': modifyChemPlant,
         'exxonmobil': modifyChemPlant,
+        'zhuhai': modifyZhuhai,
     }
     if recipe.machine in machine_overrides:
         return machine_overrides[recipe.machine](recipe)

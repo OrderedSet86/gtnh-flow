@@ -9,7 +9,8 @@
             "methane": 96
         },
         "eut": 5,
-        "dur": 380
+        "dur": 380,
+        "number": 1
     },
     {
         "m": "distillery",
@@ -21,7 +22,6 @@
             "biogas": 375
         },
         "eut": 7,
-        "dur": 20,
-        "number": 1
+        "dur": 20
     }
 ]

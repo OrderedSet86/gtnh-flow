@@ -1,16 +1,20 @@
 {
-    "POWER_LINE": false, // Automatically burns all leftover fuels
+    // === FUNCTIONALITY SETTINGS ===
+    "POWER_LINE": true, // Automatically burns all leftover fuels
     "DO_NOT_BURN": [
         "toluene",
         "phenol",
-        "methanol"
+        "hydrogen",
+        "creosote oil"
+        // "methanol"
     ],
-    "DEBUG_SHOW_EVERY_STEP": false, // Outputs graphviz on each compute step
-        // ^ (you will generally never want this to be true if you're a user)
-
-    // TODO: Add below to backend
+    "OUTPUT_FORMAT": "png",
+    "USE_RAINBOW_EDGES": true,
+    // TODO: These are not added to backend yet
     "PRECISION": 4,
     "ROUND_MACHINES_UP": false,
-    "SHOW_MACHINE_INDICES": false,
-    "OUTPUT_FORMAT": "png"
+
+    // === DEV SETTINGS ===
+    "DEBUG_SHOW_EVERY_STEP": false, // Outputs graphviz on each compute step
+    "SHOW_MACHINE_INDICES": false
 }

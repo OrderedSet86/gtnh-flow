@@ -4,6 +4,7 @@
 
 # Standard libraries
 import math
+import itertools
 from collections import defaultdict, OrderedDict
 from copy import deepcopy
 
@@ -379,7 +380,7 @@ class Graph:
             'diesel': 480_000,
             'ether': 537_000,
             'gasoline': 576_000,
-            'cetane-boosted diesel': 720_000,
+            'cetane-boosted diesel': 1_000_000,
             'ethanol gasoline': 750_000,
             'butanol': 1_125_000,
             'jet fuel no.3': 1_324_000,
@@ -1020,13 +1021,16 @@ class Graph:
             'style': 'filled',
         }
         g = graphviz.Digraph(
+            engine='dot',
             strict=False, # Prevents edge grouping
             graph_attr={
-            #     'splines': 'ortho'
-                'rankdir': 'TD',
-                'ranksep': '0.5',
+                # 'splines': 'ortho',
+                # 'rankdir': 'TD',
+                # 'ranksep': '0.5',
                 # 'overlap': 'scale',
                 'bgcolor': self.darkModeColor,
+                # 'mindist': '0.1',
+                # 'overlap': 'false',
             }
         )
 
@@ -1046,6 +1050,19 @@ class Graph:
                 )
 
         # Populate edges
+        edgecolor_cycle = [
+            'white',
+            'orange',
+            'yellow',
+            'green',
+            'violet',
+        ]
+        if self.graph_config.get('USE_RAINBOW_EDGES', None):
+            cycle_obj = itertools.cycle(edgecolor_cycle)
+        else:
+            cycle_obj = itertools.cycle(['white'])
+        ingredient_colors = {}
+
         capitalization_exceptions = {
             'eu': 'EU',
         }
@@ -1074,12 +1091,15 @@ class Graph:
             if 'locked' in kwargs:
                 del kwargs['locked']
 
+            # Assign ing color if it doesn't already exist
+            if ing_name not in ingredient_colors:
+                ingredient_colors[ing_name] = next(cycle_obj)
             g.edge(
                 node_from,
                 node_to,
                 label=f'{ing_name}\n({quant_label})',
-                fontcolor='white',
-                color='white',
+                fontcolor=ingredient_colors[ing_name],
+                color=ingredient_colors[ing_name],
                 **kwargs,
             )
 
