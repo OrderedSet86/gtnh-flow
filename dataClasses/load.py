@@ -14,9 +14,16 @@ def recipesFromConfig(project_name, project_folder='projects'):
     with open(CONFIG_FILE_PATH, 'r') as f:
         config = json.loads(jsmin(f.read()), object_pairs_hook=OrderedDict)
 
+    # FIXME: Hack to get access to config_factory_graph.jsonc
+    user_config_path = Path(__file__).absolute().parent.parent / 'config_factory_graph.jsonc'
+    with open(user_config_path, 'r') as f:
+        graph_config = json.loads(jsmin(f.read()))
+
     # Prep recipes for graph
     recipes = []
     for rec in config:
+        if graph_config.get('DUR_FORMAT', 'ticks') == 'sec':
+            rec['dur'] *= 20
         recipes.append(
             Recipe(
                 rec['m'],
