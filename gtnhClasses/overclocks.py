@@ -212,6 +212,8 @@ def calculateStandardOC(recipe):
     base_voltage = bisect_right(voltage_cutoffs, recipe.eut)
     user_voltage = voltages.index(recipe.user_voltage)
     oc_count = user_voltage - base_voltage
+    if oc_count < 0:
+        raise RuntimeError(f'Recipe has negative overclock! Min voltage is {base_voltage}, given OC voltage is {user_voltage}.\n{recipe}')
     return oc_count
 
 
