@@ -355,7 +355,7 @@ class Graph:
             'rocket fuel': 250_000,
             'butene': 256_000,
             'phenol': 288_000,
-            'benzene': 288_000,
+            'benzene': 360_000,
             'butane': 296_000,
             'lpg': 320_000,
             'naphtha': 320_000,
@@ -375,7 +375,7 @@ class Graph:
             'octane': 80_000,
             'methanol': 84_000,
             'ethanol': 192_000,
-            'bio diesel': 256_000,
+            'bio diesel': 320_000,
             'light fuel': 305_000,
             'diesel': 480_000,
             'ether': 537_000,
@@ -384,7 +384,7 @@ class Graph:
             'ethanol gasoline': 750_000,
             'butanol': 1_125_000,
             'jet fuel no.3': 1_324_000,
-            'high octane gasoline': 1_728_000,
+            'high octane gasoline': 2_500_000,
             'jet fuel A': 2_048_000,
         }
         semifluids = {
