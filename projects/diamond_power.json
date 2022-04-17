@@ -109,7 +109,7 @@
         "O": {
             "flint dust": 1
         },
-        "eut": 32,
+        "eut": 30,
         "dur": 20
     },
     {
@@ -121,7 +121,7 @@
         "O": {
             "tiny pile of flint dust": 2
         },
-        "eut": 32,
+        "eut": 16,
         "dur": 20
     },
     {
@@ -133,7 +133,7 @@
         "O": {
             "flint": 1
         },
-        "eut": 32,
+        "eut": 30,
         "dur": 20
     },
     {

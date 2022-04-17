@@ -5,7 +5,11 @@
         "toluene",
         "phenol",
         "hydrogen",
-        "creosote oil"
+        "creosote oil",
+        "sulfuric naphtha",
+        "sulfuric gas",
+        "sulfuric heavy fuel",
+        "sulfuric light fuel"
         // "methanol"
     ],
     "OUTPUT_FORMAT": "png",

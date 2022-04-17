@@ -11,7 +11,8 @@
             "wood tar": 375
         },
         "eut": 96,
-        "dur": 60
+        "dur": 60,
+        "number": 1
     },
     {
         "m": "distillation tower",
@@ -36,35 +37,57 @@
         "O": {
             "oak wood": 48
         },
-        "eut": 512,
+        "eut": 480,
         "dur": 100
     },
     {
-        "m": "cryogenic freezer",
-        "tier": "EV",
+        "m": "centrifuge",
+        "tier": "LV",
         "I": {
-            "air": 2000
+            "air": 10000
         },
         "O": {
-            "liquid air": 1000
+            "nitrogen": 3900
         },
-        "eut": 480,
-        "dur": 20,
-        "number": 1
+        "eut": 7,
+        "dur": 1600
     },
     {
-        "m": "centrifuge",
-        "tier": "HV",
-        "I": {
-            "liquid air": 53000
-        },
+        "m": "compressor",
+        "tier": "LV",
+        "I": {},
         "O": {
-            "nitrogen": 40000,
-            "oxygen": 11000,
-            "argon": 1000,
-            "noble gases": 1000
+            "air": 2000
         },
-        "eut": 5,
-        "dur": 1484
+        "eut": 2,
+        "dur": 300
     }
+    // {
+    //     "m": "cryogenic freezer",
+    //     "tier": "EV",
+    //     "I": {
+    //         "air": 2000
+    //     },
+    //     "O": {
+    //         "liquid air": 1000
+    //     },
+    //     "eut": 480,
+    //     "dur": 20,
+    //     "number": 1
+    // },
+    // {
+    //     "m": "centrifuge",
+    //     "tier": "HV",
+    //     "I": {
+    //         "liquid air": 53000
+    //     },
+    //     "O": {
+    //         "nitrogen": 40000,
+    //         "oxygen": 11000,
+    //         "argon": 1000,
+    //         "noble gases": 1000
+    //     },
+    //     "eut": 5,
+    //     "dur": 1484
+    // }
 ]

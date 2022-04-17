@@ -355,7 +355,7 @@ class Graph:
             'rocket fuel': 250_000,
             'butene': 256_000,
             'phenol': 288_000,
-            'benzene': 288_000,
+            'benzene': 360_000,
             'butane': 296_000,
             'lpg': 320_000,
             'naphtha': 320_000,
@@ -552,7 +552,7 @@ class Graph:
 
     @staticmethod
     def NDecimals(number, N):
-        if number >= 1:
+        if abs(number) >= 1:
             return round(number, N)
         else:
             return sigfig_round(number, N)
