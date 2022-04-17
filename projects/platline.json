@@ -8,11 +8,11 @@
         },
         "O": {
             "platinum residue dust": 1,
-            "platinum concentrate": 9000
+            "platinum concentrate": 10400
         },
         "eut": 30,
         "dur": 2250,
-        "number": 1
+        "number": 10
     },
     {
         "m": "large chemical reactor",
@@ -51,7 +51,7 @@
             "platinum salt dust": 1
         },
         "O": {
-            "refined platinum salt dust": 0.9
+            "refined platinum salt dust": 0.95
         },
         "eut": 30,
         "dur": 600

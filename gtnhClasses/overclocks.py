@@ -76,7 +76,7 @@ GTpp_stats = {
     'dangote - distillery': [0, 1.0, 48]
 }
 
-voltage_cutoffs = [32, 128, 512, 2048, 8192, 32768, 131_072, 524_288, 2_097_152]
+voltage_cutoffs = [33, 129, 513, 2049, 8193, 32769, 131_073, 524_289, 2_097_153]
 voltages = ['LV', 'MV', 'HV', 'EV', 'IV', 'LuV', 'ZPM', 'UV', 'UHV']
 
 
@@ -128,13 +128,13 @@ def modifyGTpp(recipe):
     return recipe
 
 
-def modifyGTppSetParallel(recipe, MAX_PARALLEL):
+def modifyGTppSetParallel(recipe, MAX_PARALLEL, speed_per_tier=1):
     available_eut = voltage_cutoffs[voltages.index(recipe.user_voltage)]
 
     x = recipe.eut
     y = min(int(available_eut/x), MAX_PARALLEL)
     TOTAL_EUT = x*y
-    NEW_RECIPE_TIME = recipe.dur * (.96)**(voltages.index(recipe.user_voltage) + 1)
+    NEW_RECIPE_TIME = round(recipe.dur * (speed_per_tier)**(voltages.index(recipe.user_voltage) + 1), 2)
 
     cprint('Base GT++ OC stats:', 'yellow')
     cprint(f'{available_eut=} {MAX_PARALLEL=} {NEW_RECIPE_TIME=} {TOTAL_EUT=} {y=}', 'yellow')
@@ -268,8 +268,8 @@ def overclockRecipe(recipe):
         'dangote - distillery': modifyGTpp,
 
         # Special GT++ multis
-        'industrial coke oven': lambda recipe: modifyGTppSetParallel(recipe, 24),
-        'ICO': lambda recipe: modifyGTppSetParallel(recipe, 24),
+        'industrial coke oven': lambda recipe: modifyGTppSetParallel(recipe, 24, speed_per_tier=0.96),
+        'ICO': lambda recipe: modifyGTppSetParallel(recipe, 24, speed_per_tier=0.96),
         'dangote - distillation tower': lambda recipe: modifyGTppSetParallel(recipe, 12),
         'chem plant': modifyChemPlant,
         'chemical plant': modifyChemPlant,

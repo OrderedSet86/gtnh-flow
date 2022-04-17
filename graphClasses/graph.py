@@ -552,7 +552,7 @@ class Graph:
 
     @staticmethod
     def NDecimals(number, N):
-        if number >= 1:
+        if abs(number) >= 1:
             return round(number, N)
         else:
             return sigfig_round(number, N)

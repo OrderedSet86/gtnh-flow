@@ -11,7 +11,7 @@
             "charcoal": 20,
             "wood tar": 1500
         },
-        "number": 4,
+        "number": 1,
         "eut": 96,
         "dur": 320
     },
@@ -43,34 +43,34 @@
         "eut": 16,
         "dur": 30
     },
-    // {
-    //     "m": "distillation tower",
-    //     "tier": "HV",
-    //     "I": {
-    //         "wood tar": 1000
-    //     },
-    //     "O": {
-    //         "dimethylbenzene": 200,
-    //         "toluene": 75,
-    //         "benzene": 350,
-    //         "phenol": 75,
-    //         "creosote": 300
-    //     },
-    //     "eut": 256,
-    //     "dur": 40
-    // },
     {
-        "m": "distillery",
-        "tier": "MV",
+        "m": "distillation tower",
+        "tier": "HV",
         "I": {
-            "wood tar": 200
+            "wood tar": 1000
         },
         "O": {
-            "benzene": 70
+            "dimethylbenzene": 200,
+            "toluene": 75,
+            "benzene": 350,
+            "phenol": 75,
+            "creosote": 300
         },
-        "eut": 64,
-        "dur": 16
+        "eut": 256,
+        "dur": 40
     },
+    // {
+    //     "m": "distillery",
+    //     "tier": "MV",
+    //     "I": {
+    //         "wood tar": 200
+    //     },
+    //     "O": {
+    //         "benzene": 70
+    //     },
+    //     "eut": 64,
+    //     "dur": 16
+    // },
     {
         "m": "centrifuge",
         "tier": "LV",
@@ -100,7 +100,7 @@
         "O": {
             "oak wood": 48
         },
-        "eut": 512,
+        "eut": 480,
         "dur": 100
     }
 ]

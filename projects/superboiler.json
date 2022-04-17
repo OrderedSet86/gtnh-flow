@@ -1,0 +1,294 @@
+[
+    {
+        "m": "tungstensteel boiler",
+        "tier": "LV",
+        "I": {
+            "burn time": 10666
+        },
+        "O": {
+            "superheated steam": 213333
+        },
+        "eut": 0,
+        "dur": 20,
+        "number": 1
+    },
+    {
+        "m": "steam turbine (huge shadowmetal)",
+        "tier": "LV",
+        "I": {
+            "superheated steam": 6400
+        },
+        "O": {
+            "EU": 8320
+        },
+        "eut": 0,
+        "dur": 1
+    },
+    {
+        "m": "mixer",
+        "tier": "MV",
+        "I": {
+            "block of charcoal": 1,
+            "super fuel binder": 4,
+            "heavy fuel": 1200
+        },
+        "O": {
+            "solid super fuel": 1
+        },
+        "eut": 96,
+        "dur": 120
+    },
+    {
+        "m": "burn time convert",
+        "tier": "LV",
+        "I": {
+            "solid super fuel": 1
+        },
+        "O": {
+            "burn time": 100000
+        },
+        "eut": 0,
+        "dur": 1
+    },
+    {
+        "m": "compressor",
+        "tier": "LV",
+        "I": {
+            "charcoal": 9
+        },
+        "O": {
+            "block of charcoal": 1
+        },
+        "eut": 2,
+        "dur": 300
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "LV",
+        "I": {
+            "sulfuric heavy fuel": 8000,
+            "hydrogen": 2000
+        },
+        "O": {
+            "heavy fuel": 8000,
+            "hydrogen sulfide": 1000
+        },
+        "eut": 30,
+        "dur": 160
+    },
+    {
+        "m": "distillation tower",
+        "tier": "HV",
+        "I": {
+            "heavy oil": 100
+        },
+        "O": {
+            "sulfuric naphtha": 15,
+            "sulfuric gas": 60,
+            "sulfuric heavy fuel": 250,
+            "sulfuric light fuel": 45
+        },
+        "eut": 288,
+        "dur": 20
+    },
+    {
+        "m": "industrial coke oven",
+        "tier": "EV",
+        "I": {
+            "wood": 4
+        },
+        "O": {
+            "ashes": 1,
+            "heavy oil": 50
+        },
+        "eut": 192,
+        "dur": 64
+    },
+    {
+        "m": "mixer",
+        "tier": "LV",
+        "I": {
+            "sulfur dust": 1,
+            "sodium and lithium dust": 1,
+            "wood pulp": 4,
+            "refined glue": 333
+        },
+        "O": {
+            "super fuel binder": 8
+        },
+        "eut": 16,
+        "dur": 800
+    },
+    {
+        "m": "macerator",
+        "tier": "LV",
+        "I": {
+            "wood": 1
+        },
+        "O": {
+            "wood pulp": 6.8
+        },
+        "eut": 2,
+        "dur": 400
+    },
+    // {
+    //     "m": "large chemical reactor",
+    //     "tier": "LV",
+    //     "I": {
+    //         "hydrogen sulfide": 2000,
+    //         "sulfur dioxide": 1000
+    //     },
+    //     "O": {
+    //         "[recycle] sulfur dust": 3
+    //     },
+    //     "eut": 30,
+    //     "dur": 120
+    // }
+    // {
+    //     "m": "electrolyzer",
+    //     "tier": "LV",
+    //     "I": {
+    //         "salt water": 2000
+    //     },
+    //     "O": {
+    //         "sodium hydroxide": 1,
+    //         "chlorine": 1000,
+    //         "[recycle] hydrogen": 1000
+    //     },
+    //     "eut": 30,
+    //     "dur": 720
+    // },
+    // {
+    //     "m": "electrolyzer",
+    //     "tier": "MV",
+    //     "I": {
+    //         "sodium hydroxide": 3
+    //     },
+    //     "O": {
+    //         "sodium dust": 1,
+    //         "[recycle] hydrogen": 1000,
+    //         "oxygen": 1000
+    //     },
+    //     "eut": 60,
+    //     "dur": 36
+    // },
+    // {
+    //     "m": "large chemical reactor",
+    //     "tier": "HV",
+    //     "I": {
+    //         "ghast tear": 9
+    //     },
+    //     "O": {
+    //         "salt water": 9000,
+    //         "potassium dust": 1,
+    //         "lithium dust": 1
+    //     },
+    //     "eut": 30,
+    //     "dur": 3600
+    // }
+    {
+        "m": "electrolyzer",
+        "tier": "HV",
+        "I": {
+            "clay dust": 13
+        },
+        "O": {
+            "sodium and lithium dust": 3,
+            "alumina dust": 2,
+            "silicon dioxide dust": 2
+        },
+        "eut": 120,
+        "dur": 156
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "water": 3000
+        },
+        "O": {
+            "electrolysed water": 1000
+        },
+        "eut": 30,
+        "dur": 490
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "electrolysed water": 3000
+        },
+        "O": {
+            "hydrogen": 2000,
+            "oxygen": 1000
+        },
+        "eut": 30,
+        "dur": 30
+    },
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "blaze powder": 2
+        },
+        "O": {
+            "sulfur dust": 1,
+            "dark ashes": 1
+        },
+        "eut": 10,
+        "dur": 624
+    },
+    {
+        "m": "industrial coke oven",
+        "tier": "EV",
+        "I": {
+            "wood": 4
+        },
+        "O": {
+            "charcoal": 5,
+            "wood tar": 375
+        },
+        "eut": 64,
+        "dur": 128
+    },
+    {
+        "m": "distillery",
+        "tier": "LV",
+        "I": {
+            "glue": 8
+        },
+        "O": {
+            "refined glue": 4
+        },
+        "eut": 24,
+        "dur": 1
+    },
+    {
+        "m": "fluid extractor",
+        "tier": "LV",
+        "I": {
+            "slimeball": 1
+        },
+        "O": {
+            "glue": 144
+        },
+        "eut": 24,
+        "dur": 1
+    },
+    {
+        "m": "distillation tower",
+        "tier": "HV",
+        "I": {
+            "wood tar": 1000
+        },
+        "O": {
+            "dimethylbenzene": 150,
+            "toluene": 100,
+            "benzene": 400,
+            "phenol": 100,
+            "creosote oil": 250
+        },
+        "eut": 256,
+        "dur": 40
+    }
+]
