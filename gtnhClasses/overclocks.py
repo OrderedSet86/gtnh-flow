@@ -2,8 +2,6 @@ from bisect import bisect_right
 
 from termcolor import cprint
 
-from dataClasses.base import Recipe, IngredientCollection, Ingredient
-
 
 coil_multipliers = {
     'cupronickel': 0.5,
@@ -161,7 +159,25 @@ def modifyGTppSetParallel(recipe, MAX_PARALLEL, speed_per_tier=1):
 
 
 def modifyChemPlant(recipe):
-    raise NotImplementedError()
+    assert 'coils' in dir(recipe), 'Chem plant requires "coils" argument (eg "nichrome")'
+    assert 'pipe_casings' in dir(recipe), 'Chem plant requires "pipe_casings" argument (eg "steel")'
+    assert 'solid_casings' in dir(recipe), 'Chem plant requires "solid_casings" argument (eg "vigorous laurenium")'
+
+    chem_plant_pipe_casings = {
+        'bronze': 1,
+        'steel': 2,
+        'titanium': 3,
+        'tungstensteel': 4,
+    }
+
+    recipe.dur *= coil_multipliers[recipe.coils]
+    throughput_multiplier = (2*chem_plant_pipe_casings[recipe.pipe_casings])
+    recipe.I *= throughput_multiplier
+    recipe.O *= throughput_multiplier
+
+    recipe = modifyStandard(recipe)
+
+    return recipe
 
 
 def modifyZhuhai(recipe):
