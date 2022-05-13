@@ -161,7 +161,7 @@ def modifyGTppSetParallel(recipe, MAX_PARALLEL, speed_per_tier=1):
 def modifyChemPlant(recipe):
     assert 'coils' in dir(recipe), 'Chem plant requires "coils" argument (eg "nichrome")'
     assert 'pipe_casings' in dir(recipe), 'Chem plant requires "pipe_casings" argument (eg "steel")'
-    assert 'solid_casings' in dir(recipe), 'Chem plant requires "solid_casings" argument (eg "vigorous laurenium")'
+    # assert 'solid_casings' in dir(recipe), 'Chem plant requires "solid_casings" argument (eg "vigorous laurenium")'
 
     chem_plant_pipe_casings = {
         'bronze': 1,
