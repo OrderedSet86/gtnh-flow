@@ -42,6 +42,9 @@ class IngredientCollection:
 
         return self
 
+    def __len__(self):
+        return len(self._ings)
+
 
 class Recipe:
     def __init__(
