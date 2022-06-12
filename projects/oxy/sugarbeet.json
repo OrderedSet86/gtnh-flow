@@ -1,7 +1,7 @@
 [
     {
         "m": "electrolyzer",
-        "tier": "MV",
+        "tier": "LuV",
         "I": {
             "sugar": 32
         },
@@ -12,11 +12,13 @@
         },
         "eut": 60,
         "dur": 448,
-        "number": 0.896
+        "target": {
+            "oxygen": 1000
+        }
     },
     {
         "m": "extractor",
-        "tier": "LV",
+        "tier": "LuV",
         "I": {
             "sugar beet": 1
         },

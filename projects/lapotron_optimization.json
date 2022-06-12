@@ -149,5 +149,44 @@
         },
         "eut": 1920,
         "dur": 1200
+    },
+    {
+        "m": "electric blast furnace",
+        "tier": "EV",
+        "heat": 3000,
+        "coils": "nichrome",
+        "I": {
+            "vibrant alloy dust": 1,
+            "nitrogen": 1000
+        },
+        "O": {
+            "hot vibrant alloy ingot": 1
+        },
+        "eut": 120,
+        "dur": 3000
+    },
+    {
+        "m": "vacuum freezer",
+        "tier": "HV",
+        "I": {
+            "hot vibrant alloy ingot": 1
+        },
+        "O": {
+            "vibrant alloy ingot": 1
+        },
+        "eut": 480,
+        "dur": 321
+    },
+    {
+        "m": "fluid extractor",
+        "tier": "HV",
+        "I": {
+            "vibrant alloy ingot": 1
+        },
+        "O": {
+            "molten vibrant alloy": 144
+        },
+        "eut": 81,
+        "dur": 24
     }
 ]

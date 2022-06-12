@@ -197,6 +197,7 @@ class Graph:
         self.adj_machine = adj_machine
 
         # TODO: Add to debug print only
+        cprint('Recomputing adjacency list...', 'blue')
         for machine, io_group in self.adj_machine.items():
             machine_name = ''
             recipe_obj = self.recipes.get(machine)
@@ -219,6 +220,7 @@ class Graph:
         adj_machine = self.adj_machine
 
         # Debug
+        print('All machine-machine edges:')
         for node, adj_edges in adj_machine.items():
             if node in ['sink', 'source']:
                 continue
@@ -228,25 +230,55 @@ class Graph:
         # Locking rules:
         # If all machine-involved edges are locked, then machine itself can be 100% locked
         # If not all machine-involved sides are locked, do some complicated logic/guessing/ask user (TODO:)
-        numbered_nodes = [i for i, x in self.recipes.items() if getattr(x, 'number', False)]
-        need_locking = {i for i in self.recipes.keys() if i not in numbered_nodes and i not in {'sink', 'source'}}
+        targeted_nodes = [i for i, x in self.recipes.items() if getattr(x, 'target', False) != False]
+        numbered_nodes = [i for i, x in self.recipes.items() if getattr(x, 'number', False) != False]
+        need_locking = {i for i in self.recipes.keys() if i not in numbered_nodes and i not in targeted_nodes and i not in {'sink', 'source'}}
 
-        if len(numbered_nodes) == 0:
-            raise RuntimeError('Need at least one "number" argument to base machine balancing around.')
+        ln = len(numbered_nodes)
+        lt = len(targeted_nodes)
 
-        print(numbered_nodes)
-        print(need_locking)
-        print()
+        if lt == 0 and ln == 0:
+            raise RuntimeError('Need at least one "number" or "target" argument to base machine balancing around.')
+        elif ln != 0 and lt == 0:
+            # First lock all edges adj to numbered nodes
+            for rec_id in numbered_nodes:
+                rec = self.recipes[rec_id]
 
-        # First lock all edges adj to numbered nodes
-        for rec_id in numbered_nodes:
+                # Multiply I/O and eut
+                self.recipes[rec_id] *= getattr(rec, 'number') # NOTE: Sets rec.multiplier
+
+                # Color edge as "locked"
+                self.nodes[rec_id].update({'fillcolor': 'green'})
+                existing_label = self.nodes[rec_id]['label']
+                self.nodes[rec_id]['label'] = f'{rec.multiplier}x {rec.user_voltage} {existing_label}\nCycle: {rec.dur/20}s\nEU/t: {rec.eut}'
+
+                # Lock all adjacent ingredient edges
+                self._simpleLockMachineEdges(str(rec_id), rec) # Used when multiplier is known
+                self.createAdjacencyList()
+
+        elif ln == 0 and lt != 0:
+            if lt > 1:
+                raise NotImplementedError('>1 targeted node not supported')
+
+            rec_id = targeted_nodes[0]
             rec = self.recipes[rec_id]
-            connected_edges = adj[str(rec_id)]
+            target_ings = rec.target
+            if len(target_ings) > 1:
+                raise NotImplementedError('>1 targeted quantity not supported')
 
+            # Compute machine multiplier based on requested quant
+            # (note already OC'd by this time)
+            ing, target_quant = list(target_ings.items())[0]
+            if ing not in [x.name for x in rec.O._ings]:
+                raise RuntimeError(f'Targetted quantity must be in machine outputs for \n{rec}')
+            quant_per_tick_at_1x = rec.O[ing][0] / rec.dur
+            machine_multiplier = round(target_quant / (quant_per_tick_at_1x * 20), 8)
+
+            # Update on graph
             # Multiply I/O and eut
-            self.recipes[rec_id] *= getattr(rec, 'number') # NOTE: Sets rec.multiplier
+            self.recipes[rec_id] *= machine_multiplier # NOTE: Sets rec.multiplier
 
-            # Color edge as "locked"
+            # Color edge as locked
             self.nodes[rec_id].update({'fillcolor': 'green'})
             existing_label = self.nodes[rec_id]['label']
             self.nodes[rec_id]['label'] = f'{rec.multiplier}x {rec.user_voltage} {existing_label}\nCycle: {rec.dur/20}s\nEU/t: {rec.eut}'
@@ -254,6 +286,14 @@ class Graph:
             # Lock all adjacent ingredient edges
             self._simpleLockMachineEdges(str(rec_id), rec) # Used when multiplier is known
             self.createAdjacencyList()
+
+            # self.outputGraphviz()
+
+        elif ln != 0 and lt != 0:
+            raise NotImplementedError('mixed targeted nodes and numbered nodes not supported')
+
+        cprint(f'Still need locking: {need_locking}', 'red')
+        print()
 
         while need_locking:
             # Now propagate updates throughout the tree
@@ -271,7 +311,7 @@ class Graph:
                     len(self.adj_machine[rec_id]['O']),
                 ]
 
-            print(determined_edge_count)
+            cprint(f'Edge determination data:\n{determined_edge_count}', 'green')
 
             # Now pick in this order:
             # 1. Edges with complete side determination, using total edge determination ratio as tiebreaker
@@ -587,6 +627,16 @@ class Graph:
             else:
                 io_label_lines.append(makeLineHtml('red', 'Net EU/t:', net_eut))
 
+        # FIXME: Remove later
+        # Add total machine multiplier count for oxygen table
+        sumval = 0
+        for rec_id in self.nodes:
+            if rec_id in ['source', 'sink']:
+                continue
+            rec = self.recipes[rec_id]
+            sumval += rec.multiplier
+        io_label_lines.append(makeLineHtml('MediumSeaGreen', 'Total machine count:', sumval))
+
         # Create final table
         io_label = ''.join(io_label_lines)
         io_label = f'<<table border="0">{io_label}</table>>'
@@ -613,7 +663,8 @@ class Graph:
             'I': [x for x in self.adj_machine[rec_id]['I'] if self.edges[x].get('locked', False)],
             'O': [x for x in self.adj_machine[rec_id]['O'] if self.edges[x].get('locked', False)],
         }
-        print(all_relevant_edges)
+        print(f'Locking {rec.machine}...')
+        cprint(all_relevant_edges, 'yellow')
 
         if all(len(y) == 0 for x, y in all_relevant_edges.items()):
             cprint(f'No locked machine edges adjacent to {rec.machine.title()}. Cannot balance.', 'red')

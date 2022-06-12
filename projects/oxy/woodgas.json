@@ -1,0 +1,43 @@
+[
+    {
+        "m": "pyrolyse oven",
+        "tier": "MV",
+        "coils": "cupronickel",
+        "I": {
+            "oak wood": 16,
+            "nitrogen": 1000
+        },
+        "O": {
+            "charcoal": 20,
+            "wood gas": 1500
+        },
+        "number": 1,
+        "eut": 96,
+        "dur": 320
+    },
+    {
+        "m": "distillery",
+        "tier": "MV",
+        "I": {
+            "wood gas": 200
+        },
+        "O": {
+            "co2 gas": 98
+        },
+        "eut": 64,
+        "dur": 16
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "co2 gas": 1000
+        },
+        "O": {
+            "carbon dust": 1,
+            "oxygen": 2000
+        },
+        "eut": 120,
+        "dur": 300
+    }
+]

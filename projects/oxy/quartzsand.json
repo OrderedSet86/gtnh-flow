@@ -1,0 +1,33 @@
+[
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "quartz sand": 9
+        },
+        "O": {
+            "stone dust": 0.9,
+            "certus quartz dust": 0.3,
+            "nether quartz dust": 0.2,
+            "quartzite dust": 0.15,
+            "cassiterite dust": 0.1,
+            "silicon dioxide dust": 0.075
+        },
+        "eut": 16,
+        "dur": 2160
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "cassiterite dust": 1
+        },
+        "O": {
+            "tin dust": 1,
+            "oxygen": 2000
+        },
+        "eut": 30,
+        "dur": 132,
+        "number": 3
+    }
+]

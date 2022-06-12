@@ -3,7 +3,7 @@
         "m": "chemical reactor",
         "tier": "LV",
         "I": {
-            "hydrogen gas": 2000,
+            "hydrogen": 2000,
             "sulfuric light fuel": 12000
         },
         "O": {
@@ -33,22 +33,10 @@
             "water": 3000
         },
         "O": {
-            "electrolysed water": 1000
+            "hydrogen": 1000,
+            "oxygen": 500
         },
         "eut": 30,
-        "dur": 490
-    },
-    {
-        "m": "electrolyzer",
-        "tier": "LV",
-        "I": {
-            "electrolysed water": 3000
-        },
-        "O": {
-            "hydrogen gas": 2000,
-            "oxygen gas": 1000
-        },
-        "eut": 30,
-        "dur": 30
+        "dur": 1000
     }
 ]

@@ -1,17 +1,31 @@
 [
     {
-        "m": "electrolyzer",
-        "tier": "HV",
+        "m": "chemical reactor",
+        "tier": "LV",
         "I": {
-            "silicon dioxide": 5
+            "silicon dioxide": 1,
+            "magnesium dust": 2
         },
         "O": {
-            "silicon dust": 2,
-            "[output] oxygen": 3000
+            "raw silicon dust": 1,
+            "magnesia dust": 2
         },
-        "eut": 480,
+        "eut": 7,
         "dur": 100,
-        "number": 1.66666666666666666
+        "number": 5
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "magnesia dust": 2
+        },
+        "O": {
+            "magnesium dust": 1,
+            "oxygen [output]": 1000
+        },
+        "eut": 30,
+        "dur": 40
     },
     {
         "m": "centrifuge",

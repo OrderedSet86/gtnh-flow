@@ -1,0 +1,27 @@
+[
+    {
+        "m": "compressor",
+        "tier": "LV",
+        "I": {
+        },
+        "O": {
+            "compressed air": 1000
+        },
+        "eut": 2,
+        "dur": 300
+    },
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "compressed air": 5000
+        },
+        "O": {
+            "nitrogen": 3900,
+            "oxygen": 1000
+        },
+        "eut": 7,
+        "dur": 1600,
+        "number": 80
+    }
+]

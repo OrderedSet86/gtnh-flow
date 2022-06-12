@@ -1,0 +1,26 @@
+[
+    // {
+    //     "m": "zhuhai",
+    //     "tier": "LV",
+    //     "I": {},
+    //     "O": {
+    //         "zhuhai fish": 1
+    //     },
+    //     "eut": 16,
+    //     "dur": 100,
+    //     "number": 1
+    // },
+    {
+        "m": "fluid extractor",
+        "tier": "LV",
+        "I": {
+            "fish": 1
+        },
+        "O": {
+            "fish oil": 50
+        },
+        "eut": 4,
+        "dur": 16,
+        "number": 1
+    }
+]

@@ -1,0 +1,81 @@
+[
+    {
+        "m": "advanced coke oven",
+        "tier": "LV",
+        "I": {
+            "oak wood": 1
+        },
+        "O": {
+            "charcoal": 1
+        },
+        "number": 59,
+        "eut": 0,
+        "dur": 20
+    },
+    // {
+    //     "m": "pyrolyse oven",
+    //     "tier": "HV",
+    //     "coils": "kanthal",
+    //     "I": {
+    //         "oak wood": 16
+    //     },
+    //     "O": {
+    //         "charcoal": 20,
+    //         "wood tar": 1500
+    //     },
+    //     "eut": 64,
+    //     "dur": 640,
+    //     "number": 4
+    // },
+    {
+        "m": "fluid extractor",
+        "tier": "LV",
+        "I": {
+            "charcoal": 1
+        },
+        "O": {
+            "ashes": 0.1,
+            "wood tar": 100
+        },
+        "eut": 16,
+        "dur": 30
+    },
+    {
+        "m": "distillation tower",
+        "tier": "HV",
+        "I": {
+            "wood tar": 1000
+        },
+        "O": {
+            "dimethylbenzene": 200,
+            "toluene": 75,
+            "benzene": 350,
+            "phenol": 75,
+            "creosote": 300
+        },
+        "eut": 256,
+        "dur": 40
+    },
+    // {
+    //     "m": "distillery",
+    //     "tier": "MV",
+    //     "I": {
+    //         "wood tar": 200
+    //     },
+    //     "O": {
+    //         "benzene": 70
+    //     },
+    //     "eut": 64,
+    //     "dur": 16
+    // },
+    {
+        "m": "tree growth simulator",
+        "tier": "HV",
+        "I": {},
+        "O": {
+            "oak wood": 48
+        },
+        "eut": 480,
+        "dur": 100
+    }
+]
