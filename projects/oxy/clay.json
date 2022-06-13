@@ -12,20 +12,48 @@
         },
         "eut": 10,
         "dur": 1092,
-        "number": 9.1
+        "target": {
+            "oxygen": 1000
+        }
     },
-    {
-        "m": "multi smelter",
-        "tier": "LV",
-        "I": {
-            "unfired clay brick": 1
-        },
-        "O": {
-            "brick": 1
-        },
-        "eut": 16,
-        "dur": 10
-    },
+    // {
+    //     "m": "macerator",
+    //     "tier": "LV",
+    //     "I": {
+    //         "coke oven brick": 1
+    //     },
+    //     "O": {
+    //         "coke oven brick dust": 1
+    //     },
+    //     "eut": 30,
+    //     "dur": 200
+    // },
+    // {
+    //     "m": "centrifuge",
+    //     "tier": "LV",
+    //     "I": {
+    //         "coke oven brick dust": 4
+    //     },
+    //     "O": {
+    //         "clay dust": 2,
+    //         "silicon dioxide": 2,
+    //         "brick dust": 1
+    //     },
+    //     "eut": 30,
+    //     "dur": 400
+    // },
+    // {
+    //     "m": "alloy smelter",
+    //     "tier": "LV",
+    //     "I": {
+    //         "clay": 1
+    //     },
+    //     "O": {
+    //         "brick": 1
+    //     },
+    //     "eut": 2,
+    //     "dur": 200
+    // },
     {
         "m": "forge hammer",
         "tier": "LV",
@@ -37,5 +65,30 @@
         },
         "eut": 16,
         "dur": 10
+    },
+    {
+        "m": "crafting",
+        "tier": "LV",
+        "I": {
+            "clay": 1
+        },
+        "O": {
+            "unfired clay brick": 1
+        },
+        "eut": 0,
+        "dur": 0.01
+    },
+    {
+        "m": "multi smelter",
+        "tier": "LV",
+        "I": {
+            "unfired clay brick": 1
+        },
+        "O": {
+            "brick": 1
+        },
+        "coils": "kanthal",
+        "eut": 4,
+        "dur": 500
     }
 ]

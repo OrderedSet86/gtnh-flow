@@ -1,9 +1,9 @@
 [
     {
-        "m": "industrial electrolyzer",
-        "tier": "IV",
+        "m": "electrolyzer",
+        "tier": "LV",
         "I": {
-            "water": 3000
+            "water": 1000
         },
         "O": {
             "oxygen": 1000,
@@ -11,6 +11,8 @@
         },
         "eut": 30,
         "dur": 2000,
-        "number": 1
+        "target": {
+            "hydrogen": 1000
+        }
     }
 ]

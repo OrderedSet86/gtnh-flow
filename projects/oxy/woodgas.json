@@ -1,7 +1,7 @@
 [
     {
         "m": "pyrolyse oven",
-        "tier": "MV",
+        "tier": "IV",
         "coils": "kanthal",
         "I": {
             "oak wood": 16,
@@ -16,7 +16,7 @@
     },
     // {
     //     "m": "distillation tower",
-    //     "tier": "HV",
+    //     "tier": "IV",
     //     "I": {
     //         "wood gas": 1000
     //     },
@@ -32,7 +32,7 @@
     // },
     {
         "m": "distillery",
-        "tier": "MV",
+        "tier": "IV",
         "I": {
             "wood gas": 200
         },
@@ -44,7 +44,7 @@
     },
     {
         "m": "electrolyzer",
-        "tier": "MV",
+        "tier": "IV",
         "I": {
             "co2 gas": 1000
         },
@@ -60,7 +60,7 @@
     },
     {
         "m": "compressor",
-        "tier": "LV",
+        "tier": "IV",
         "I": {
         },
         "O": {
@@ -71,7 +71,7 @@
     },
     {
         "m": "centrifuge",
-        "tier": "LV",
+        "tier": "IV",
         "I": {
             "compressed air": 5000
         },
@@ -84,7 +84,7 @@
     },
     {
         "m": "tree growth simulator",
-        "tier": "LV",
+        "tier": "IV",
         "I": {},
         "O": {
             "oak wood": 20

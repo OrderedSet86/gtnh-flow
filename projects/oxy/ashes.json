@@ -1,0 +1,125 @@
+[
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "ashes": 36
+        },
+        "O": {
+            "quicklime dust": 11.52,
+            "potash dust": 5.4,
+            "magnesia dust": 0.45,
+            "phosphorous pentoxide dust": 2,
+            "soda ash dust": 1,
+            "banded iron dust": 4
+        },
+        "eut": 30,
+        "dur": 6000
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "magnesia dust": 2
+        },
+        "O": {
+            "magnesium dust": 1,
+            "oxygen": 1000
+        },
+        "eut": 30,
+        "dur": 40
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "quicklime dust": 2
+        },
+        "O": {
+            "calcium dust": 1,
+            "oxygen": 1000
+        },
+        "eut": 30,
+        "dur": 56,
+        "target": {
+            "oxygen": 391.47455
+        }
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "potash dust": 3
+        },
+        "O": {
+            "potassium dust": 2,
+            "oxygen": 1000
+        },
+        "eut": 30,
+        "dur": 90
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "banded iron dust": 3
+        },
+        "O": {
+            "iron dust": 2,
+            "oxygen": 3000
+        },
+        "eut": 30,
+        "dur": 150
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "phosphorous pentoxide dust": 7
+        },
+        "O": {
+            "phosphorus dust": 2,
+            "oxygen": 5000
+        },
+        "eut": 30,
+        "dur": 140
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "soda ash dust": 2
+        },
+        "O": {
+            "sodium dust": 2,
+            "carbon dust": 1,
+            "oxygen": 3000
+        },
+        "eut": 60,
+        "dur": 96
+    },
+    {
+        "m": "pyrolyse oven",
+        "tier": "HV",
+        "coils": "nichrome",
+        "I": {
+            "oak wood": 16
+        },
+        "O": {
+            "ashes": 4,
+            "heavy oil": 200
+        },
+        "eut": 192,
+        "dur": 320
+    },
+    {
+        "m": "tree growth simulator",
+        "tier": "LV",
+        "I": {},
+        "O": {
+            "oak wood": 20
+        },
+        "eut": 32,
+        "dur": 20
+    }
+]

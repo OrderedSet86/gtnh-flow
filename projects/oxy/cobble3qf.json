@@ -1,7 +1,7 @@
 [
     {
         "m": "electrolyzer",
-        "tier": "HV",
+        "tier": "MV",
         "I": {
             "silicon dioxide": 3
         },
@@ -11,7 +11,9 @@
         },
         "eut": 120,
         "dur": 100,
-        "number": 1.25
+        "target": {
+            "[output] oxygen": 1000
+        }
     },
     {
         "m": "centrifuge",
@@ -73,5 +75,15 @@
         },
         "eut": 16,
         "dur": 10
+    },
+    {
+        "m": "rock breaker",
+        "tier": "LV",
+        "I": {},
+        "O": {
+            "cobblestone": 1
+        },
+        "eut": 30,
+        "dur": 16
     }
 ]

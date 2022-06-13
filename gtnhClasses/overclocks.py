@@ -8,8 +8,8 @@ coil_multipliers = {
     'kanthal': 1.0,
     'nichrome': 1.5,
     'tungstensteel': 2.0,
-    'HSSG': 2.5,
-    'HSSS': 3.0,
+    'HSS-G': 2.5,
+    'HSS-S': 3.0,
     'naquadah': 3.5,
     'naquadah alloy': 4,
     'trinium': 4.5,
@@ -21,8 +21,8 @@ coil_heat = {
     'kanthal': 2701,
     'nichrome': 3601,
     'tungstensteel': 4501,
-    'HSSG': 5401,
-    'HSSS': 6301,
+    'HSS-G': 5401,
+    'HSS-S': 6301,
     'naquadah': 7201,
     'naquadah alloy': 8101,
     'trinium': 9001,
@@ -224,6 +224,17 @@ def modifyPyrolyse(recipe):
     return recipe
 
 
+def modifyMultiSmelter(recipe):
+    recipe.eut = 4
+    recipe.dur = 500
+    recipe = modifyStandard(recipe)
+    coil_list = list(coil_multipliers)
+    batch_size = 8 * 2**max(4, coil_list.index(recipe.coils))
+    recipe.I *= batch_size
+    recipe.O *= batch_size
+    return recipe
+
+
 def calculateStandardOC(recipe):
     base_voltage = bisect_right(voltage_cutoffs, recipe.eut)
     user_voltage = voltages.index(recipe.user_voltage)
@@ -259,6 +270,7 @@ def overclockRecipe(recipe):
         'electric blast furnace': modifyEBF,
         'EBF': modifyEBF,
         'blast furnace': modifyEBF,
+        'multi smelter': modifyMultiSmelter,
 
         # Basic GT++ multis
         'industrial centrifuge': modifyGTpp,

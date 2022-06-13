@@ -1,0 +1,30 @@
+[
+    {
+        "m": "large chemical reactor",
+        "tier": "IV",
+        "I": {
+            "methane": 5000
+        },
+        "O": {
+            "carbon dioxide": 5000,
+            "hydrogen": 20000
+        },
+        "eut": 480,
+        "dur": 165,
+        "target": {
+            "hydrogen": 1000
+        }
+    },
+    {
+        "m": "centrifuge",
+        "tier": "IV",
+        "I": {
+            "pams fish": 1
+        },
+        "O": {
+            "methane": 96
+        },
+        "eut": 5,
+        "dur": 380
+    }
+]

@@ -636,6 +636,10 @@ class Graph:
             rec = self.recipes[rec_id]
             if rec.machine == 'distillation tower':
                 sumval += rec.multiplier * 10
+            elif rec.machine == 'pyrolyse oven':
+                sumval += rec.multiplier * 5
+            elif rec.machine == 'multi smelter':
+                sumval += rec.multiplier * 3
             else:
                 sumval += rec.multiplier
         io_label_lines.append(makeLineHtml('MediumSeaGreen', 'Total machine count:', sumval))

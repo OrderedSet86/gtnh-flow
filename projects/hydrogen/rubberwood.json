@@ -1,7 +1,7 @@
 [
     {
         "m": "centrifuge",
-        "tier": "LV",
+        "tier": "IV",
         "I": {
             "rubber wood": 1
         },
@@ -17,7 +17,7 @@
     },
     {
         "m": "large chemical reactor",
-        "tier": "HV",
+        "tier": "IV",
         "I": {
             "methane": 5000
         },
@@ -26,27 +26,14 @@
             "hydrogen": 20000
         },
         "eut": 480,
-        "dur": 175
-    },
-    {
-        "m": "electrolyzer",
-        "tier": "MV",
-        "I": {
-            "carbon dioxide": 1000
-        },
-        "O": {
-            "carbon dust": 1,
-            "oxygen": 2000
-        },
-        "eut": 120,
-        "dur": 300,
+        "dur": 175,
         "target": {
-            "oxygen": 1000
+            "hydrogen": 1000
         }
     },
     {
         "m": "tree growth simulator",
-        "tier": "LV",
+        "tier": "IV",
         "I": {},
         "O": {
             "rubber wood": 20
