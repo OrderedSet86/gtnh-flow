@@ -1,0 +1,30 @@
+[
+    {
+        "m": "electrolyzer",
+        "tier": "IV",
+        "I": {
+            "water": 1000
+        },
+        "O": {
+            "electrolysed water": 1000
+        },
+        "eut": 30,
+        "dur": 1470
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "IV",
+        "I": {
+            "electrolysed water": 1000
+        },
+        "O": {
+            "hydrogen": 2000,
+            "oxygen": 1000
+        },
+        "eut": 30,
+        "dur": 30,
+        "target": {
+            "oxygen": 1000
+        }
+    }
+]

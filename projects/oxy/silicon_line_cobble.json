@@ -11,8 +11,7 @@
             "magnesia dust": 2
         },
         "eut": 7,
-        "dur": 100,
-        "number": 5
+        "dur": 100
     },
     {
         "m": "electrolyzer",
@@ -25,7 +24,10 @@
             "oxygen [output]": 1000
         },
         "eut": 30,
-        "dur": 40
+        "dur": 40,
+        "target": {
+            "oxygen [output]": 1000
+        }
     },
     {
         "m": "centrifuge",

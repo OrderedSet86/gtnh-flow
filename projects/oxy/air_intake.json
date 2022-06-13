@@ -1,20 +1,19 @@
 [
     {
-        "m": "compressor",
+        "m": "air intake hatch",
         "tier": "LV",
-        "I": {
-        },
+        "I": {},
         "O": {
-            "compressed air": 1000
+            "air": 1000
         },
-        "eut": 2,
-        "dur": 300
+        "eut": 0,
+        "dur": 4
     },
     {
         "m": "centrifuge",
-        "tier": "LV",
+        "tier": "IV",
         "I": {
-            "compressed air": 5000
+            "air": 10000
         },
         "O": {
             "nitrogen": 3900,

@@ -11,8 +11,7 @@
             "spessartine dust": 8
         },
         "eut": 15,
-        "dur": 1472,
-        "number": 8.9444638
+        "dur": 1472
     },
     {
         "m": "electrolyzer",
@@ -21,13 +20,13 @@
             "pyrope dust": 20
         },
         "O": {
-            "alumina dust": 2,
+            "aluminium dust": 2,
             "magnesium dust": 3,
-            "silicon dioxide dust": 3,
+            "raw silicon dust": 3,
             "oxygen": 12000
         },
         "eut": 90,
-        "dur": 360
+        "dur": 400
     },
     {
         "m": "electrolyzer",
@@ -36,27 +35,30 @@
             "alamandine dust": 20
         },
         "O": {
-            "alumina dust": 2,
+            "aluminium dust": 2,
             "iron dust": 3,
-            "silicon dioxide dust": 3,
+            "raw silicon dust": 3,
             "oxygen": 12000
         },
         "eut": 90,
-        "dur": 440
+        "dur": 480
     },
     {
         "m": "electrolyzer",
         "tier": "MV",
         "I": {
-            "spessartine dust": 14
+            "spessartine dust": 20
         },
         "O": {
             "alumina dust": 2,
             "manganese dust": 3,
             "silicon dioxide dust": 3,
-            "oxygen": 6000
+            "oxygen": 12000
         },
         "eut": 90,
-        "dur": 336
+        "dur": 440,
+        "target": {
+            "oxygen": 500
+        }
     }
 ]

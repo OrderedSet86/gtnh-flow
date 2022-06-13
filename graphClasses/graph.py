@@ -634,7 +634,10 @@ class Graph:
             if rec_id in ['source', 'sink']:
                 continue
             rec = self.recipes[rec_id]
-            sumval += rec.multiplier
+            if rec.machine == 'distillation tower':
+                sumval += rec.multiplier * 10
+            else:
+                sumval += rec.multiplier
         io_label_lines.append(makeLineHtml('MediumSeaGreen', 'Total machine count:', sumval))
 
         # Create final table

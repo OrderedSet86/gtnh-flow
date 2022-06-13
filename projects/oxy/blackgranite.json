@@ -1,0 +1,35 @@
+[
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "black granite dust": 5
+        },
+        "O": {
+            "silicon dioxide dust": 4,
+            "biotite dust": 1
+        },
+        "eut": 10,
+        "dur": 400
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "biotite dust": 22
+        },
+        "O": {
+            "potassium dust": 1,
+            "magnesium dust": 3,
+            "aluminium dust": 3,
+            "raw silicon dust": 3,
+            "oxygen": 10000,
+            "fluorine": 2000
+        },
+        "eut": 120,
+        "dur": 440,
+        "target": {
+            "oxygen": 1000
+        }
+    }
+]

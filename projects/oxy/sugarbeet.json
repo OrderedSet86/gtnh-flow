@@ -1,7 +1,7 @@
 [
     {
         "m": "electrolyzer",
-        "tier": "LuV",
+        "tier": "MV",
         "I": {
             "sugar": 32
         },
@@ -18,7 +18,7 @@
     },
     {
         "m": "extractor",
-        "tier": "LuV",
+        "tier": "LV",
         "I": {
             "sugar beet": 1
         },

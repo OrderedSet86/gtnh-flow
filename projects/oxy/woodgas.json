@@ -2,7 +2,7 @@
     {
         "m": "pyrolyse oven",
         "tier": "MV",
-        "coils": "cupronickel",
+        "coils": "kanthal",
         "I": {
             "oak wood": 16,
             "nitrogen": 1000
@@ -11,10 +11,25 @@
             "charcoal": 20,
             "wood gas": 1500
         },
-        "number": 1,
         "eut": 96,
         "dur": 320
     },
+    // {
+    //     "m": "distillation tower",
+    //     "tier": "HV",
+    //     "I": {
+    //         "wood gas": 1000
+    //     },
+    //     "O": {
+    //         "hydrogen": 20,
+    //         "carbon monoxide": 340,
+    //         "methane": 130,
+    //         "ethylene": 20,
+    //         "co2 gas": 490
+    //     },
+    //     "eut": 256,
+    //     "dur": 40
+    // },
     {
         "m": "distillery",
         "tier": "MV",
@@ -38,6 +53,43 @@
             "oxygen": 2000
         },
         "eut": 120,
+        "dur": 300,
+        "target": {
+            "oxygen": 851.48
+        }
+    },
+    {
+        "m": "compressor",
+        "tier": "LV",
+        "I": {
+        },
+        "O": {
+            "compressed air": 1000
+        },
+        "eut": 2,
         "dur": 300
+    },
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "compressed air": 5000
+        },
+        "O": {
+            "nitrogen": 3900,
+            "oxygen": 1000
+        },
+        "eut": 7,
+        "dur": 1600
+    },
+    {
+        "m": "tree growth simulator",
+        "tier": "LV",
+        "I": {},
+        "O": {
+            "oak wood": 20
+        },
+        "eut": 32,
+        "dur": 20
     }
 ]
