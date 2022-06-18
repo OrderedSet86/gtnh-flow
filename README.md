@@ -42,7 +42,7 @@ Some tips:
 + When writing a config file, I recommend copy pasting an old machine, then editing the numbers. This will help you avoid missing any required fields (eg. EU/t).
 + How to add machines without any power usage? Set "tier" to LV and "eut" to 0.
 + Will this automagically handle overclocking for GT++ multis? Yes! All these names are recognized and will be overclocked automatically to 1A of the tier you select. Specifying the exact amount of power input is a planned feature, but not in the library yet.
-![Recognized overclock names](recognized_ocs.png)
+![Recognized overclock names](samples/recognized_ocs.png)
 + Sometimes the balancing algorithm will fail. This is explained in more detail in ## It's still beta. You may need to manually make adjustments to some shared ingredients to separate them from other machines. The easiest way to do this is is by renaming the ingredient slightly, like `chlorine 1` and `chlorine 2`. This will cause it to no longer automatically be used in any machine that needs chlorine, just the one you want. You can see this technique used regularly for platline.
 
 ## It's still beta
