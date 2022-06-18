@@ -13,7 +13,7 @@
             "jet fuel no.3": 44000
         },
         "eut": 1920,
-        "dur": 2400,
+        "dur": 120,
         "number": 1
     },
     {
@@ -30,7 +30,7 @@
             "coal tar oil": 500
         },
         "eut": 60,
-        "dur": 900
+        "dur": 45
     },
     {
         "m": "distillery",
@@ -43,7 +43,7 @@
             "ether": 250
         },
         "eut": 30,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "mixer",
@@ -57,7 +57,7 @@
             "ferrocene waste": 5000
         },
         "eut": 120,
-        "dur": 800
+        "dur": 40
     },
     {
         "m": "distillation tower",
@@ -70,7 +70,7 @@
             "water": 400
         },
         "eut": 120,
-        "dur": 600
+        "dur": 30
     },
     {
         "m": "pyrolyse oven",
@@ -83,7 +83,7 @@
             "coal tar": 800
         },
         "eut": 120,
-        "dur": 360,
+        "dur": 18,
         "coils": "tungstensteel"
     },
     {
@@ -99,7 +99,7 @@
             "impure ferrocene mixture": 15000
         },
         "eut": 120,
-        "dur": 2400
+        "dur": 120
     },
     {
         "m": "distillery",
@@ -111,6 +111,6 @@
             "cyclopentadiene": 6
         },
         "eut": 120,
-        "dur": 20
+        "dur": 1
     }
 ]

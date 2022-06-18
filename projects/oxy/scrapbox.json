@@ -9,7 +9,7 @@
             "scrap": 0.118
         },
         "eut": 1,
-        "dur": 40
+        "dur": 2
     },
     {
         "m": "packager",
@@ -21,7 +21,7 @@
             "scrap box": 1
         },
         "eut": 1,
-        "dur": 16
+        "dur": 0.8
     },
     {
         "m": "unpackager",
@@ -40,7 +40,7 @@
             "yellow garnet dust": 0.0016
         },
         "eut": 1,
-        "dur": 16
+        "dur": 0.8
     },
     {
         "m": "electrolyzer",
@@ -54,7 +54,7 @@
             "nitrogen": 1000
         },
         "eut": 60,
-        "dur": 100,
+        "dur": 5,
         "target": {
             "oxygen": 282.147
         }
@@ -72,7 +72,7 @@
             "oxygen": 8000
         },
         "eut": 90,
-        "dur": 240
+        "dur": 12
     },
     {
         "m": "centrifuge",
@@ -86,7 +86,7 @@
             "spessartine dust": 8
         },
         "eut": 15,
-        "dur": 1472
+        "dur": 73.6
     },
     {
         "m": "electrolyzer",
@@ -101,7 +101,7 @@
             "oxygen": 12000
         },
         "eut": 90,
-        "dur": 400
+        "dur": 20
     },
     {
         "m": "electrolyzer",
@@ -116,7 +116,7 @@
             "oxygen": 12000
         },
         "eut": 90,
-        "dur": 480
+        "dur": 24
     },
     {
         "m": "electrolyzer",
@@ -131,7 +131,7 @@
             "oxygen": 12000
         },
         "eut": 90,
-        "dur": 440
+        "dur": 22
     },
     {
         "m": "electrolyzer",
@@ -145,7 +145,7 @@
             "oxygen": 3000
         },
         "eut": 60,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "centrifuge",
@@ -160,7 +160,7 @@
             "mercury": 3000
         },
         "eut": 15,
-        "dur": 340
+        "dur": 17
     },
     {
         "m": "electrolyzer",
@@ -174,7 +174,7 @@
             "oxygen": 3000
         },
         "eut": 60,
-        "dur": 144
+        "dur": 7.2
     },
     {
         "m": "electrolyzer",
@@ -189,7 +189,7 @@
             "hydrogen": 10000
         },
         "eut": 90,
-        "dur": 702
+        "dur": 35.1
     },
     {
         "m": "macerator",
@@ -201,7 +201,7 @@
             "ruby dust": 1
         },
         "eut": 4,
-        "dur": 25
+        "dur": 1.25
     },
     {
         "m": "centrifuge",
@@ -215,7 +215,7 @@
             "uvarovite dust": 3
         },
         "eut": 15,
-        "dur": 1472
+        "dur": 73.6
     },
     {
         "m": "electrolyzer",
@@ -230,7 +230,7 @@
             "oxygen": 12000
         },
         "eut": 90,
-        "dur": 480
+        "dur": 24
     },
     {
         "m": "electrolyzer",
@@ -245,7 +245,7 @@
             "oxygen": 12000
         },
         "eut": 90,
-        "dur": 440
+        "dur": 22
     },
     {
         "m": "electrolyzer",
@@ -260,6 +260,6 @@
             "oxygen": 12000
         },
         "eut": 90,
-        "dur": 480
+        "dur": 24
     }
 ]

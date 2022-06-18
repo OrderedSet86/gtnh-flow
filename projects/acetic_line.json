@@ -10,7 +10,7 @@
             "acetic acid": 1000
         },
         "eut": 30,
-        "dur": 320
+        "dur": 16
     },
     {
         "m": "distillation tower",
@@ -26,7 +26,7 @@
             "ethylene": 20
         },
         "eut": 256,
-        "dur": 40,
+        "dur": 2,
         "number": 1
     },
     {
@@ -40,6 +40,6 @@
             "hydrogen": 15000
         },
         "eut": 480,
-        "dur": 175
+        "dur": 8.75
     }
 ]

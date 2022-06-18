@@ -11,7 +11,7 @@
             "spessartine dust": 8
         },
         "eut": 15,
-        "dur": 1472
+        "dur": 73.6
     },
     {
         "m": "electrolyzer",
@@ -26,7 +26,7 @@
             "oxygen": 12000
         },
         "eut": 90,
-        "dur": 400
+        "dur": 20
     },
     {
         "m": "electrolyzer",
@@ -41,7 +41,7 @@
             "oxygen": 12000
         },
         "eut": 90,
-        "dur": 480
+        "dur": 24
     },
     {
         "m": "electrolyzer",
@@ -56,7 +56,7 @@
             "oxygen": 12000
         },
         "eut": 90,
-        "dur": 440,
+        "dur": 22,
         "target": {
             "oxygen": 500
         }

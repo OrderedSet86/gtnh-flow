@@ -12,7 +12,7 @@
             "saltpeter dust": 0.5
         },
         "eut": 30,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "electrolyzer",
@@ -25,7 +25,7 @@
             "chlorine": 1000
         },
         "eut": 30,
-        "dur": 320,
+        "dur": 16,
         "target": {
             "chlorine": 542.85542
         }
@@ -41,6 +41,6 @@
             "chlorine": 1000
         },
         "eut": 30,
-        "dur": 72
+        "dur": 3.6
     }
 ]

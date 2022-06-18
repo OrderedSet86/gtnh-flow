@@ -10,7 +10,7 @@
             "biotite dust": 1
         },
         "eut": 10,
-        "dur": 400
+        "dur": 20
     },
     {
         "m": "electrolyzer",
@@ -27,7 +27,7 @@
             "fluorine": 2000
         },
         "eut": 120,
-        "dur": 440,
+        "dur": 22,
         "target": {
             "oxygen": 1000
         }

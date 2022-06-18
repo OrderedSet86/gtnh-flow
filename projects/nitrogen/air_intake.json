@@ -7,7 +7,7 @@
             "air": 1000
         },
         "eut": 0,
-        "dur": 4
+        "dur": 0.2
     },
     {
         "m": "centrifuge",
@@ -20,7 +20,7 @@
             "oxygen": 1000
         },
         "eut": 7,
-        "dur": 1600,
+        "dur": 80,
         "target": {
             "nitrogen": 1000
         }

@@ -10,7 +10,7 @@
             "[output] oxygen": 2000
         },
         "eut": 120,
-        "dur": 100,
+        "dur": 5,
         "target": {
             "[output] oxygen": 1000
         }
@@ -25,7 +25,7 @@
             "silicon dioxide": 1
         },
         "eut": 5,
-        "dur": 80
+        "dur": 4
     },
     {
         "m": "forge hammer",
@@ -37,7 +37,7 @@
             "glass dust": 1
         },
         "eut": 10,
-        "dur": 10
+        "dur": 0.5
     },
     {
         "m": "arc furnace",
@@ -50,7 +50,7 @@
             "glass": 2
         },
         "eut": 85,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "forge hammer",
@@ -62,7 +62,7 @@
             "sand": 1
         },
         "eut": 16,
-        "dur": 10
+        "dur": 0.5
     },
     {
         "m": "forge hammer",
@@ -74,7 +74,7 @@
             "gravel": 1
         },
         "eut": 16,
-        "dur": 10
+        "dur": 0.5
     },
     {
         "m": "rock breaker",
@@ -84,6 +84,6 @@
             "cobblestone": 1
         },
         "eut": 30,
-        "dur": 16
+        "dur": 0.8
     }
 ]

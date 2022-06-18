@@ -1,4 +1,3 @@
-
 [
     {
         "m": "distillation tower",
@@ -17,7 +16,7 @@
             "IC2 fertiliser": 1
         },
         "eut": 180,
-        "dur": 75
+        "dur": 3.75
     },
     {
         "m": "electrolyzer",
@@ -31,7 +30,7 @@
             "water": 1000
         },
         "eut": 30,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "electrolyzer",
@@ -45,7 +44,7 @@
             "oxygen": 3000
         },
         "eut": 60,
-        "dur": 100,
+        "dur": 5,
         "target": {
             "oxygen": 230.77
         }
@@ -61,7 +60,7 @@
             "oxygen": 2000
         },
         "eut": 120,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "large chemical reactor",
@@ -74,6 +73,6 @@
             "hydrogen": 20000
         },
         "eut": 480,
-        "dur": 175
+        "dur": 8.75
     }
 ]

@@ -11,7 +11,7 @@
             "chlorine": 1000
         },
         "eut": 30,
-        "dur": 720,
+        "dur": 36,
         "target": {
             "hydrogen": 500
         }
@@ -28,6 +28,6 @@
             "oxygen": 1000
         },
         "eut": 60,
-        "dur": 36
+        "dur": 1.8
     }
 ]

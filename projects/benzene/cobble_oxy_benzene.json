@@ -13,7 +13,7 @@
         },
         "number": 4,
         "eut": 96,
-        "dur": 320
+        "dur": 16
     },
     {
         "m": "distillation tower",
@@ -29,7 +29,7 @@
             "creosote": 300
         },
         "eut": 256,
-        "dur": 40
+        "dur": 2
     },
     {
         "m": "centrifuge",
@@ -41,7 +41,7 @@
             "nitrogen": 3900
         },
         "eut": 7,
-        "dur": 1600
+        "dur": 80
     },
     {
         "m": "compressor",
@@ -51,7 +51,7 @@
             "air": 2000
         },
         "eut": 2,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "tree growth simulator",
@@ -61,7 +61,7 @@
             "oak wood": 48
         },
         "eut": 512,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "large chemical reactor",
@@ -75,7 +75,7 @@
             "tiny pile of ashes": 1
         },
         "eut": 7,
-        "dur": 80
+        "dur": 4
     },
     {
         "m": "electrolyzer",
@@ -88,7 +88,7 @@
             "oxygen": 3000
         },
         "eut": 480,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "centrifuge",
@@ -100,7 +100,7 @@
             "silicon dioxide": 1
         },
         "eut": 5,
-        "dur": 80
+        "dur": 4
     },
     {
         "m": "forge hammer",
@@ -112,7 +112,7 @@
             "glass dust": 1
         },
         "eut": 10,
-        "dur": 10
+        "dur": 0.5
     },
     {
         "m": "arc furnace",
@@ -124,7 +124,7 @@
             "glass": 2
         },
         "eut": 85,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "forge hammer",
@@ -136,7 +136,7 @@
             "sand": 1
         },
         "eut": 16,
-        "dur": 10
+        "dur": 0.5
     },
     {
         "m": "forge hammer",
@@ -148,6 +148,6 @@
             "gravel": 1
         },
         "eut": 16,
-        "dur": 10
+        "dur": 0.5
     }
 ]

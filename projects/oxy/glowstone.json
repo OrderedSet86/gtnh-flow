@@ -12,7 +12,7 @@
             "mercury": 3000
         },
         "eut": 15,
-        "dur": 340
+        "dur": 17
     },
     {
         "m": "electrolyzer",
@@ -26,7 +26,7 @@
             "oxygen": 3000
         },
         "eut": 60,
-        "dur": 144,
+        "dur": 7.2,
         "target": {
             "oxygen": 1000
         }
@@ -42,6 +42,6 @@
             "gold dust": 1
         },
         "eut": 80,
-        "dur": 976
+        "dur": 48.8
     }
 ]

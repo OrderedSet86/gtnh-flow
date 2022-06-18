@@ -11,7 +11,7 @@
             "magnesia dust": 2
         },
         "eut": 7,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "electrolyzer",
@@ -24,7 +24,7 @@
             "oxygen [output]": 1000
         },
         "eut": 30,
-        "dur": 40,
+        "dur": 2,
         "target": {
             "oxygen [output]": 1000
         }
@@ -39,7 +39,7 @@
             "silicon dioxide": 1
         },
         "eut": 5,
-        "dur": 80
+        "dur": 4
     },
     {
         "m": "forge hammer",
@@ -51,7 +51,7 @@
             "glass dust": 1
         },
         "eut": 10,
-        "dur": 10
+        "dur": 0.5
     },
     {
         "m": "arc furnace",
@@ -64,7 +64,7 @@
             "glass": 2
         },
         "eut": 85,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "forge hammer",
@@ -76,7 +76,7 @@
             "sand": 1
         },
         "eut": 16,
-        "dur": 10
+        "dur": 0.5
     },
     {
         "m": "forge hammer",
@@ -88,6 +88,6 @@
             "gravel": 1
         },
         "eut": 16,
-        "dur": 10
+        "dur": 0.5
     }
 ]

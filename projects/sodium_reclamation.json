@@ -11,7 +11,7 @@
             "water": 1000
         },
         "eut": 30,
-        "dur": 1200
+        "dur": 60
     },
     {
         "m": "large chemical reactor",
@@ -25,7 +25,7 @@
             "hydrofluoric acid": 2000
         },
         "eut": 1920,
-        "dur": 50,
+        "dur": 2.5,
         "number": 1.25
     },
     {
@@ -40,6 +40,6 @@
             "sodium dust": 2
         },
         "eut": 30,
-        "dur": 30
+        "dur": 1.5
     }
 ]

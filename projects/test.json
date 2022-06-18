@@ -10,7 +10,7 @@
             "cetane-boosted diesel": 1000
         },
         "eut": 480,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "industrial mixing machine",
@@ -23,7 +23,7 @@
             "diesel": 6000
         },
         "eut": 1920,
-        "dur": 16
+        "dur": 0.8
     },
     {
         "m": "large chemical reactor",
@@ -37,7 +37,7 @@
             "hydrogen sulfide": 1000
         },
         "eut": 30,
-        "dur": 160
+        "dur": 8
     },
     {
         "m": "large chemical reactor",
@@ -51,7 +51,7 @@
             "hydrogen sulfide": 1000
         },
         "eut": 30,
-        "dur": 160
+        "dur": 8
     },
     {
         "m": "distillation tower",
@@ -66,7 +66,7 @@
             "sulfuric gas": 60
         },
         "eut": 288,
-        "dur": 20,
+        "dur": 1,
         "number": 2
     },
     {
@@ -81,7 +81,7 @@
             "water": 9000
         },
         "eut": 120,
-        "dur": 480
+        "dur": 24
     },
     {
         "m": "large chemical reactor",
@@ -95,7 +95,7 @@
             "water": 1000
         },
         "eut": 30,
-        "dur": 320
+        "dur": 16
     },
     {
         "m": "distillation tower",
@@ -114,7 +114,7 @@
             "methane gas": 600
         },
         "eut": 180,
-        "dur": 75
+        "dur": 3.75
     },
     {
         "m": "pyrolyse oven",
@@ -125,10 +125,9 @@
         "O": {
             "fermented biomass": 1500
         },
-        "coils":"kanthal",
+        "coils": "kanthal",
         "eut": 10,
-        "dur": 200
-        // "number": 4
+        "dur": 10
     },
     {
         "m": "centrifuge",
@@ -140,7 +139,7 @@
             "bio chaff": 1
         },
         "eut": 4,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "macerator",
@@ -152,7 +151,7 @@
             "plant mass": 2
         },
         "eut": 480,
-        "dur": 50
+        "dur": 2.5
     },
     {
         "m": "fluid extractor",
@@ -165,7 +164,7 @@
             "creosote oil": 5
         },
         "eut": 64,
-        "dur": 4
+        "dur": 0.2
     },
     {
         "m": "macerator",
@@ -177,6 +176,6 @@
             "wood pulp": 6.78
         },
         "eut": 16,
-        "dur": 100
+        "dur": 5
     }
 ]

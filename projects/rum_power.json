@@ -10,7 +10,7 @@
             "reed water": 750
         },
         "eut": 4,
-        "dur": 128
+        "dur": 6.4
     },
     {
         "m": "bacterial vat",
@@ -22,7 +22,7 @@
             "fermented reedwater": 8000
         },
         "eut": 2,
-        "dur": 1020
+        "dur": 51
     },
     {
         "m": "distillery",
@@ -34,7 +34,7 @@
             "sugar whine": 7
         },
         "eut": 24,
-        "dur": 22
+        "dur": 1.1
     },
     {
         "m": "mixer",
@@ -47,7 +47,7 @@
             "rum": 6000
         },
         "eut": 7,
-        "dur": 10
+        "dur": 0.5
     },
     {
         "m": "distillation tower",
@@ -60,7 +60,7 @@
             "ethanol": 500
         },
         "eut": 180,
-        "dur": 80,
+        "dur": 4,
         "number": 1
     },
     {
@@ -73,7 +73,7 @@
             "distilled water": 260
         },
         "eut": 64,
-        "dur": 16
+        "dur": 0.8
     },
     {
         "m": "pyrolyse oven",
@@ -86,7 +86,7 @@
             "charcoal dust": 12
         },
         "eut": 96,
-        "dur": 160,
+        "dur": 8,
         "coils": "kanthal"
     }
 ]

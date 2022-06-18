@@ -1,22 +1,4 @@
 [
-    // {
-    //     "m": "centrifuge",
-    //     "tier": "LV",
-    //     "I": {
-    //         "liquid air": 53000
-    //     },
-    //     "O": {
-    //         "nitrogen": 40000,
-    //         "oxygen": 11000,
-    //         "argon": 1000,
-    //         "noble gases": 1000
-    //     },
-    //     "eut": 5,
-    //     "dur": 1484,
-    //     "target": {
-    //         "oxygen": 1000
-    //     }
-    // },
     {
         "m": "distillation tower",
         "tier": "EV",
@@ -36,7 +18,7 @@
             "xenon": 9
         },
         "eut": 1920,
-        "dur": 7500,
+        "dur": 375,
         "target": {
             "oxygen": 1000
         }
@@ -51,7 +33,7 @@
             "liquid air": 1000
         },
         "eut": 480,
-        "dur": 28
+        "dur": 1.4
     },
     {
         "m": "air intake hatch",
@@ -61,6 +43,6 @@
             "air": 1000
         },
         "eut": 0,
-        "dur": 4
+        "dur": 0.2
     }
 ]

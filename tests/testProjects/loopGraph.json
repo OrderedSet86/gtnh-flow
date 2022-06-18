@@ -10,7 +10,7 @@
             "water": 1000
         },
         "eut": 120,
-        "dur": 600,
+        "dur": 30,
         "number": 1
     },
     {
@@ -25,6 +25,6 @@
             "diluted sulfuric acid": 1000
         },
         "eut": 120,
-        "dur": 160
+        "dur": 8
     }
 ]

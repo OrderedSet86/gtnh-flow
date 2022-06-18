@@ -11,7 +11,7 @@
             "hydrogen": 20000
         },
         "eut": 480,
-        "dur": 165
+        "dur": 8.25
     },
     {
         "m": "electrolyzer",
@@ -24,7 +24,7 @@
             "oxygen": 2000
         },
         "eut": 120,
-        "dur": 300,
+        "dur": 15,
         "target": {
             "oxygen": 1000
         }
@@ -40,6 +40,6 @@
             "methane": 1000
         },
         "eut": 30,
-        "dur": 200
+        "dur": 10
     }
 ]

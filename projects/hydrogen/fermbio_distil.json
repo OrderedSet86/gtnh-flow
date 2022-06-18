@@ -1,4 +1,3 @@
-
 [
     {
         "m": "distillation tower",
@@ -17,21 +16,8 @@
             "IC2 fertiliser": 1
         },
         "eut": 180,
-        "dur": 75
+        "dur": 3.75
     },
-    // {
-    //     "m": "distillery",
-    //     "tier": "LV",
-    //     "I": {
-    //         "fermented biomass": 1000
-    //     },
-    //     "O": {
-    //         "fertiliser": 1,
-    //         "methane": 600
-    //     },
-    //     "eut": 7,
-    //     "dur": 1500
-    // },
     {
         "m": "large chemical reactor",
         "tier": "HV",
@@ -43,7 +29,7 @@
             "hydrogen": 20000
         },
         "eut": 480,
-        "dur": 175,
+        "dur": 8.75,
         "target": {
             "hydrogen": 615.3846
         }
@@ -60,7 +46,7 @@
             "oxygen": 1000
         },
         "eut": 90,
-        "dur": 144
+        "dur": 7.2
     },
     {
         "m": "electrolyzer",
@@ -74,6 +60,6 @@
             "oxygen": 1000
         },
         "eut": 90,
-        "dur": 144
+        "dur": 7.2
     }
 ]

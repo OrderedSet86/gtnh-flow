@@ -12,7 +12,7 @@
             "hydrogen": 10000
         },
         "eut": 90,
-        "dur": 702
+        "dur": 35.1
     },
     {
         "m": "chemical reactor",
@@ -26,7 +26,7 @@
             "titanium tetrachloride": 1000
         },
         "eut": 480,
-        "dur": 400
+        "dur": 20
     },
     {
         "m": "electric blast furnace",
@@ -40,7 +40,7 @@
             "magnesium chloride dust": 2
         },
         "eut": 480,
-        "dur": 800,
+        "dur": 40,
         "coils": "kanthal",
         "heat": 2140,
         "number": 1
@@ -55,6 +55,6 @@
             "titanium ingot": 1
         },
         "eut": 480,
-        "dur": 144
+        "dur": 7.2
     }
 ]

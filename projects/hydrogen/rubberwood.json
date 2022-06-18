@@ -13,7 +13,7 @@
             "methane": 60
         },
         "eut": 20,
-        "dur": 200
+        "dur": 10
     },
     {
         "m": "large chemical reactor",
@@ -26,7 +26,7 @@
             "hydrogen": 20000
         },
         "eut": 480,
-        "dur": 175,
+        "dur": 8.75,
         "target": {
             "hydrogen": 1000
         }
@@ -39,6 +39,6 @@
             "rubber wood": 20
         },
         "eut": 32,
-        "dur": 20
+        "dur": 1
     }
 ]

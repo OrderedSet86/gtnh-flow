@@ -10,7 +10,7 @@
             "calcite dust": 7
         },
         "eut": 10,
-        "dur": 640
+        "dur": 32
     },
     {
         "m": "electrolyzer",
@@ -24,7 +24,7 @@
             "oxygen": 3000
         },
         "eut": 60,
-        "dur": 100,
+        "dur": 5,
         "target": {
             "oxygen": 1000
         }

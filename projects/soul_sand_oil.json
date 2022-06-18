@@ -9,7 +9,7 @@
             "oil": 80
         },
         "eut": 80,
-        "dur": 200,
+        "dur": 10,
         "number": 6
     },
     {
@@ -22,7 +22,7 @@
             "sulfuric light fuel": 25
         },
         "eut": 24,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "electrolyzer",
@@ -35,7 +35,7 @@
             "hydrogen gas": 2000
         },
         "eut": 30,
-        "dur": 2000
+        "dur": 100
     },
     {
         "m": "chemical reactor",
@@ -49,7 +49,7 @@
             "light fuel": 12000
         },
         "eut": 30,
-        "dur": 160
+        "dur": 8
     },
     {
         "m": "thaumic replicator",
@@ -63,6 +63,6 @@
             "soul sand": 1
         },
         "eut": 0,
-        "dur": 260
+        "dur": 13
     }
 ]

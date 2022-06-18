@@ -11,7 +11,7 @@
             "combustion promoter": 2000
         },
         "eut": 120,
-        "dur": 200
+        "dur": 10
     },
     {
         "m": "large chemical reactor",
@@ -25,7 +25,7 @@
             "[recycle] 2-tert-butyl-anthraquinone": 900
         },
         "eut": 1920,
-        "dur": 40
+        "dur": 2
     },
     {
         "m": "large chemical reactor",
@@ -39,7 +39,7 @@
             "2-tert-butyl-anthrahydroquinone": 10000
         },
         "eut": 7680,
-        "dur": 1200
+        "dur": 60
     },
     {
         "m": "large chemical reactor",
@@ -52,7 +52,7 @@
             "2-tert-butyl-anthraquinone": 10000
         },
         "eut": 7680,
-        "dur": 200
+        "dur": 10
     },
     {
         "m": "universal chemical fuel engine",
@@ -65,7 +65,7 @@
             "EU": 5
         },
         "eut": 0,
-        "dur": 20,
+        "dur": 1,
         "number": 1
     }
 ]

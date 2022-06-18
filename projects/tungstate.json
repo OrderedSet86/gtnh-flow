@@ -1,4 +1,3 @@
-
 [
     {
         "m": "centrifuge",
@@ -13,7 +12,7 @@
             "helium": 120
         },
         "eut": 20,
-        "dur": 320,
+        "dur": 16,
         "number": 4
     },
     {
@@ -28,7 +27,7 @@
             "sodium tungstate": 4000
         },
         "eut": 1920,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "large chemical reactor",
@@ -42,7 +41,7 @@
             "salt": 8
         },
         "eut": 480,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "large chemical reactor",
@@ -56,7 +55,7 @@
             "calcium chloride dust": 6
         },
         "eut": 1920,
-        "dur": 50
+        "dur": 2.5
     },
     {
         "m": "electric blast furnace",
@@ -68,7 +67,7 @@
             "tungsten trioxide dust": 1
         },
         "eut": 480,
-        "dur": 200,
+        "dur": 10,
         "heat": 1200,
         "coils": "cupronickel"
     },
@@ -83,7 +82,7 @@
             "tungsten dust": 1
         },
         "eut": 1920,
-        "dur": 100,
+        "dur": 5,
         "heat": 1000,
         "coils": "cupronickel"
     },
@@ -98,7 +97,7 @@
             "chlorine": 1000
         },
         "eut": 30,
-        "dur": 320
+        "dur": 16
     },
     {
         "m": "chemical reactor",
@@ -112,6 +111,6 @@
             "hydrogen": 500
         },
         "eut": 30,
-        "dur": 200
+        "dur": 10
     }
 ]

@@ -13,23 +13,8 @@
         },
         "number": 1,
         "eut": 96,
-        "dur": 320
+        "dur": 16
     },
-    // {
-    //     "m": "pyrolyse oven",
-    //     "tier": "HV",
-    //     "coils": "kanthal",
-    //     "I": {
-    //         "oak wood": 16
-    //     },
-    //     "O": {
-    //         "charcoal": 20,
-    //         "wood tar": 1500
-    //     },
-    //     "eut": 64,
-    //     "dur": 640,
-    //     "number": 4
-    // },
     {
         "m": "fluid extractor",
         "tier": "LV",
@@ -41,7 +26,7 @@
             "wood tar": 100
         },
         "eut": 16,
-        "dur": 30
+        "dur": 1.5
     },
     {
         "m": "distillation tower",
@@ -57,20 +42,8 @@
             "creosote": 300
         },
         "eut": 256,
-        "dur": 40
+        "dur": 2
     },
-    // {
-    //     "m": "distillery",
-    //     "tier": "MV",
-    //     "I": {
-    //         "wood tar": 200
-    //     },
-    //     "O": {
-    //         "benzene": 70
-    //     },
-    //     "eut": 64,
-    //     "dur": 16
-    // },
     {
         "m": "centrifuge",
         "tier": "LV",
@@ -81,7 +54,7 @@
             "nitrogen": 3900
         },
         "eut": 7,
-        "dur": 1600
+        "dur": 80
     },
     {
         "m": "compressor",
@@ -91,7 +64,7 @@
             "air": 2000
         },
         "eut": 2,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "tree growth simulator",
@@ -101,6 +74,6 @@
             "oak wood": 48
         },
         "eut": 480,
-        "dur": 100
+        "dur": 5
     }
 ]

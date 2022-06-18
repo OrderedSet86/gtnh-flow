@@ -11,7 +11,7 @@
             "acetic acid": 1000
         },
         "eut": 30,
-        "dur": 480
+        "dur": 24
     },
     {
         "m": "large chemical reactor",
@@ -26,7 +26,7 @@
             "[output] hydrogen": 8000
         },
         "eut": 30,
-        "dur": 480,
+        "dur": 24,
         "target": {
             "[output] hydrogen": 1000
         }
@@ -43,7 +43,7 @@
             "[output] oxygen": 1000
         },
         "eut": 90,
-        "dur": 240
+        "dur": 12
     },
     {
         "m": "electrolyzer",
@@ -56,6 +56,6 @@
             "[output] oxygen": 2000
         },
         "eut": 120,
-        "dur": 300
+        "dur": 15
     }
 ]

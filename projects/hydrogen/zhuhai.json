@@ -8,7 +8,7 @@
             "vanilla fish": 0.18181818
         },
         "eut": 16,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "centrifuge",
@@ -20,7 +20,7 @@
             "methane": 96
         },
         "eut": 5,
-        "dur": 380
+        "dur": 19
     },
     {
         "m": "large chemical reactor",
@@ -33,7 +33,7 @@
             "hydrogen": 20000
         },
         "eut": 480,
-        "dur": 165,
+        "dur": 8.25,
         "target": {
             "hydrogen": 1000
         }

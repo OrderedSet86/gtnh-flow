@@ -10,7 +10,7 @@
             "purified monazite ore": 4
         },
         "eut": 384,
-        "dur": 7424,
+        "dur": 371.2,
         "number": 4
     },
     {
@@ -24,7 +24,7 @@
             "neodymium dust": 0.1
         },
         "eut": 2,
-        "dur": 400
+        "dur": 20
     },
     {
         "m": "electromagnetic separator",
@@ -38,7 +38,7 @@
             "neodymium nugget": 0.2
         },
         "eut": 24,
-        "dur": 400
+        "dur": 20
     },
     {
         "m": "electric blast furnace",
@@ -50,7 +50,7 @@
             "neodymium ingot": 1
         },
         "eut": 120,
-        "dur": 3891,
+        "dur": 194.55,
         "heat": 1297,
         "coils": "nichrome"
     },
@@ -64,7 +64,7 @@
             "neodymium ingot": 1
         },
         "eut": 2,
-        "dur": 200
+        "dur": 10
     },
     {
         "m": "electrolyzer",
@@ -77,7 +77,7 @@
             "phosphate dust": 1
         },
         "eut": 60,
-        "dur": 104
+        "dur": 5.2
     },
     {
         "m": "chemical bath",
@@ -90,7 +90,7 @@
             "crushed rare earth (II) ore": 3.7
         },
         "eut": 480,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "pulverization",
@@ -103,7 +103,7 @@
             "runite dust": 0.1
         },
         "eut": 240,
-        "dur": 400
+        "dur": 20
     },
     {
         "m": "centrifuge",
@@ -116,6 +116,6 @@
             "tiny pile of neodymium dust": 1
         },
         "eut": 240,
-        "dur": 224
+        "dur": 11.2
     }
 ]

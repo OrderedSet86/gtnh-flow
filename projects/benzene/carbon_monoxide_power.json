@@ -13,23 +13,8 @@
         },
         "number": 4,
         "eut": 96,
-        "dur": 320
+        "dur": 16
     },
-    // {
-    //     "m": "industrial coke oven",
-    //     "tier": "EV",
-    //     "I": {
-    //         "oak wood": 4,
-    //         "nitrogen": 250
-    //     },
-    //     "O": {
-    //         "charcoal": 5,
-    //         "wood tar": 375
-    //     },
-    //     "eut": 96,
-    //     "dur": 60,
-    //     "number": 1
-    // },
     {
         "m": "distillation tower",
         "tier": "HV",
@@ -44,7 +29,7 @@
             "creosote": 300
         },
         "eut": 256,
-        "dur": 40
+        "dur": 2
     },
     {
         "m": "centrifuge",
@@ -56,7 +41,7 @@
             "nitrogen": 3900
         },
         "eut": 7,
-        "dur": 1600
+        "dur": 80
     },
     {
         "m": "compressor",
@@ -66,7 +51,7 @@
             "air": 2000
         },
         "eut": 2,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "tree growth simulator",
@@ -76,7 +61,7 @@
             "oak wood": 48
         },
         "eut": 512,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "large chemical reactor",
@@ -90,7 +75,7 @@
             "tiny pile of ashes": 1
         },
         "eut": 7,
-        "dur": 80
+        "dur": 4
     },
     {
         "m": "electrolyzer",
@@ -104,7 +89,7 @@
             "water": 5000
         },
         "eut": 60,
-        "dur": 448
+        "dur": 22.4
     },
     {
         "m": "extractor",
@@ -116,6 +101,6 @@
             "sugar": 8
         },
         "eut": 7,
-        "dur": 160
+        "dur": 8
     }
 ]

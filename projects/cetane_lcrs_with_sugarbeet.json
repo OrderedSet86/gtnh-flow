@@ -10,7 +10,7 @@
             "cetane-boosted diesel": 7500
         },
         "eut": 480,
-        "dur": 120,
+        "dur": 6,
         "number": 0.8
     },
     {
@@ -25,7 +25,7 @@
             "water": 9000
         },
         "eut": 120,
-        "dur": 480
+        "dur": 24
     },
     {
         "m": "large chemical reactor",
@@ -39,7 +39,7 @@
             "water": 1000
         },
         "eut": 30,
-        "dur": 320
+        "dur": 16
     },
     {
         "m": "large chemical reactor",
@@ -53,7 +53,7 @@
             "diluted sulfuric acid": 1000
         },
         "eut": 120,
-        "dur": 160
+        "dur": 8
     },
     {
         "m": "large chemical reactor",
@@ -66,7 +66,7 @@
             "ammonia": 1000
         },
         "eut": 384,
-        "dur": 320
+        "dur": 16
     },
     {
         "m": "large chemical reactor",
@@ -79,7 +79,7 @@
             "hydrogen": 15000
         },
         "eut": 480,
-        "dur": 175
+        "dur": 8.75
     },
     {
         "m": "electrolyzer",
@@ -93,7 +93,7 @@
             "water": 5000
         },
         "eut": 60,
-        "dur": 448
+        "dur": 22.4
     },
     {
         "m": "extractor",
@@ -105,7 +105,7 @@
             "sugar": 8
         },
         "eut": 7,
-        "dur": 160
+        "dur": 8
     },
     {
         "m": "large chemical reactor",
@@ -120,7 +120,7 @@
             "bio diesel": 54000
         },
         "eut": 30,
-        "dur": 5400
+        "dur": 270
     },
     {
         "m": "distillation tower",
@@ -133,7 +133,7 @@
             "water": 300
         },
         "eut": 400,
-        "dur": 32
+        "dur": 1.6
     },
     {
         "m": "forestry fermenter",
@@ -146,7 +146,7 @@
             "biomass": 300
         },
         "eut": 28,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "fluid extractor",
@@ -159,7 +159,7 @@
             "golden nugget": 0.0001
         },
         "eut": 7,
-        "dur": 16
+        "dur": 0.8
     },
     {
         "m": "centrifuge",
@@ -171,7 +171,7 @@
             "methane": 96
         },
         "eut": 5,
-        "dur": 380
+        "dur": 19
     },
     {
         "m": "centrifuge",
@@ -183,7 +183,7 @@
             "nitrogen": 3900
         },
         "eut": 7,
-        "dur": 1600
+        "dur": 80
     },
     {
         "m": "compressor",
@@ -193,6 +193,6 @@
             "air": 2000
         },
         "eut": 2,
-        "dur": 300
+        "dur": 15
     }
 ]

@@ -10,7 +10,7 @@
             "hydrogen": 20000
         },
         "eut": 480,
-        "dur": 165,
+        "dur": 8.25,
         "target": {
             "hydrogen": 1000
         }
@@ -26,7 +26,7 @@
             "methane": 4608
         },
         "eut": 5,
-        "dur": 9216
+        "dur": 460.8
     },
     {
         "m": "large chemical reactor",
@@ -39,7 +39,7 @@
             "enchanted golden apple": 1
         },
         "eut": 30,
-        "dur": 50
+        "dur": 2.5
     },
     {
         "m": "alloy smelter",
@@ -51,6 +51,6 @@
             "gold block": 1
         },
         "eut": 60,
-        "dur": 5
+        "dur": 0.25
     }
 ]

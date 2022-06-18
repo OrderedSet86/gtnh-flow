@@ -9,7 +9,7 @@
             "scrap": 0.118
         },
         "eut": 1,
-        "dur": 40
+        "dur": 2
     },
     {
         "m": "packager",
@@ -21,7 +21,7 @@
             "scrap box": 1
         },
         "eut": 1,
-        "dur": 16
+        "dur": 0.8
     },
     {
         "m": "unpackager",
@@ -33,7 +33,7 @@
             "sodalite dust": 0.0062
         },
         "eut": 1,
-        "dur": 16
+        "dur": 0.8
     },
     {
         "m": "electrolyzer",
@@ -48,7 +48,7 @@
             "chlorine": 1000
         },
         "eut": 90,
-        "dur": 264,
+        "dur": 13.2,
         "target": {
             "chlorine": 1000
         }

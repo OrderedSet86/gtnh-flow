@@ -11,7 +11,7 @@
             "chlorine": 1000
         },
         "eut": 30,
-        "dur": 720,
+        "dur": 36,
         "target": {
             "chlorine": 1000
         }
@@ -29,6 +29,6 @@
             "salt water": 9000
         },
         "eut": 30,
-        "dur": 3600
+        "dur": 180
     }
 ]

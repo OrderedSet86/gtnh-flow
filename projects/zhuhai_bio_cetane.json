@@ -10,7 +10,7 @@
             "cetane-boosted diesel": 7500
         },
         "eut": 480,
-        "dur": 120
+        "dur": 6
     },
     {
         "m": "large chemical reactor",
@@ -24,7 +24,7 @@
             "water": 9000
         },
         "eut": 120,
-        "dur": 480
+        "dur": 24
     },
     {
         "m": "large chemical reactor",
@@ -38,7 +38,7 @@
             "water": 1000
         },
         "eut": 30,
-        "dur": 320
+        "dur": 16
     },
     {
         "m": "large chemical reactor",
@@ -52,7 +52,7 @@
             "diluted sulfuric acid": 1000
         },
         "eut": 120,
-        "dur": 160
+        "dur": 8
     },
     {
         "m": "large chemical reactor",
@@ -65,7 +65,7 @@
             "ammonia": 1000
         },
         "eut": 384,
-        "dur": 320
+        "dur": 16
     },
     {
         "m": "large chemical reactor",
@@ -78,7 +78,7 @@
             "hydrogen": 15000
         },
         "eut": 480,
-        "dur": 175
+        "dur": 8.75
     },
     {
         "m": "electrolyzer",
@@ -91,7 +91,7 @@
             "oxygen": 3000
         },
         "eut": 480,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "centrifuge",
@@ -103,7 +103,7 @@
             "silicon dioxide": 1
         },
         "eut": 5,
-        "dur": 80
+        "dur": 4
     },
     {
         "m": "forge hammer",
@@ -115,7 +115,7 @@
             "glass dust": 1
         },
         "eut": 10,
-        "dur": 10
+        "dur": 0.5
     },
     {
         "m": "arc furnace",
@@ -127,7 +127,7 @@
             "glass": 2
         },
         "eut": 85,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "forge hammer",
@@ -139,7 +139,7 @@
             "sand": 1
         },
         "eut": 16,
-        "dur": 10
+        "dur": 0.5
     },
     {
         "m": "forge hammer",
@@ -151,7 +151,7 @@
             "gravel": 1
         },
         "eut": 16,
-        "dur": 10
+        "dur": 0.5
     },
     {
         "m": "large chemical reactor",
@@ -166,7 +166,7 @@
             "bio diesel": 54000
         },
         "eut": 30,
-        "dur": 5400
+        "dur": 270
     },
     {
         "m": "distillation tower",
@@ -179,7 +179,7 @@
             "water": 300
         },
         "eut": 400,
-        "dur": 32
+        "dur": 1.6
     },
     {
         "m": "forestry fermenter",
@@ -192,7 +192,7 @@
             "biomass": 300
         },
         "eut": 28,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "fluid extractor",
@@ -204,7 +204,7 @@
             "fish oil": 50
         },
         "eut": 4,
-        "dur": 16
+        "dur": 0.8
     },
     {
         "m": "centrifuge",
@@ -216,7 +216,7 @@
             "nitrogen": 3900
         },
         "eut": 7,
-        "dur": 1600
+        "dur": 80
     },
     {
         "m": "air intake hatch",
@@ -226,7 +226,7 @@
             "air": 5000
         },
         "eut": 0,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "zhuhai",
@@ -236,7 +236,7 @@
             "zhuhai fish": 1
         },
         "eut": 16,
-        "dur": 100,
+        "dur": 5,
         "number": 4
     },
     {
@@ -247,7 +247,7 @@
             "cobblestone": 1
         },
         "eut": 30,
-        "dur": 16
+        "dur": 0.8
     },
     {
         "m": "fluid extractor",
@@ -260,7 +260,7 @@
             "fruit juice": 200
         },
         "eut": 7,
-        "dur": 32
+        "dur": 1.6
     },
     {
         "m": "centrifuge",
@@ -272,7 +272,7 @@
             "methane": 96
         },
         "eut": 5,
-        "dur": 380
+        "dur": 19
     },
     {
         "m": "zhuhai",
@@ -282,7 +282,7 @@
             "pams fish": 0.818181818
         },
         "eut": 16,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "electrolyzer",
@@ -293,10 +293,9 @@
         "O": {
             "sodium hydroxide dust": 1,
             "chlorine": 1000
-            // "hydrogen": 1000
         },
         "eut": 30,
-        "dur": 720
+        "dur": 36
     },
     {
         "m": "large chemical reactor",
@@ -306,12 +305,9 @@
         },
         "O": {
             "salt water": 9000
-            // "lithium dust": 1,
-            // "potassium dust": 1,
-            // "hydrogen": 1000
         },
         "eut": 30,
-        "dur": 3600
+        "dur": 180
     },
     {
         "m": "distillery",
@@ -323,7 +319,7 @@
             "acetic acid": 20
         },
         "eut": 64,
-        "dur": 16
+        "dur": 0.8
     },
     {
         "m": "pyrolyse oven",
@@ -336,7 +332,7 @@
             "wood vinegar": 3000
         },
         "eut": 96,
-        "dur": 320,
+        "dur": 16,
         "coils": "tungstensteel"
     },
     {
@@ -350,7 +346,7 @@
             "sulfuric acid": 1000
         },
         "eut": 30,
-        "dur": 480
+        "dur": 24
     },
     {
         "m": "tree growth simulator",
@@ -360,7 +356,7 @@
             "wood": 48
         },
         "eut": 512,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "centrifuge",
@@ -373,23 +369,6 @@
             "sulfur dust": 1
         },
         "eut": 10,
-        "dur": 6240
+        "dur": 312
     }
-    // {
-    //     "m": "distillation tower",
-    //     "tier": "EV",
-    //     "I": {
-    //         "fermented biomass": 1000
-    //     },
-    //     "O": {
-    //         "methane": 600,
-    //         "carbon dioxide": 400,
-    //         "methanol": 150,
-    //         // "ethanol": 150,
-    //         "water": 375,
-    //         "fertiliser": 1
-    //     },
-    //     "eut": 180,
-    //     "dur": 75
-    // }
 ]

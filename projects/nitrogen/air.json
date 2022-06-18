@@ -2,13 +2,12 @@
     {
         "m": "compressor",
         "tier": "LV",
-        "I": {
-        },
+        "I": {},
         "O": {
             "compressed air": 1000
         },
         "eut": 2,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "centrifuge",
@@ -21,7 +20,7 @@
             "oxygen": 1000
         },
         "eut": 7,
-        "dur": 1600,
+        "dur": 80,
         "target": {
             "nitrogen": 1000
         }

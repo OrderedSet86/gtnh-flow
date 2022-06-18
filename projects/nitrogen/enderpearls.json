@@ -11,7 +11,7 @@
             "nitrogen": 5000
         },
         "eut": 60,
-        "dur": 220,
+        "dur": 11,
         "target": {
             "nitrogen": 1000
         }
@@ -26,6 +26,6 @@
             "ender pearl dust": 1
         },
         "eut": 4,
-        "dur": 83
+        "dur": 4.15
     }
 ]

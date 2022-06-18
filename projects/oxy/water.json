@@ -10,7 +10,7 @@
             "hydrogen": 2000
         },
         "eut": 30,
-        "dur": 2000,
+        "dur": 100,
         "target": {
             "oxygen": 1000
         }

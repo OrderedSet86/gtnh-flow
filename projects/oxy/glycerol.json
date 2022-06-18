@@ -11,7 +11,7 @@
             "oxygen": 3000
         },
         "eut": 90,
-        "dur": 300,
+        "dur": 15,
         "target": {
             "oxygen": 1000
         }

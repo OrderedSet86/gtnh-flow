@@ -12,7 +12,7 @@
             "saltpeter dust": 0.5
         },
         "eut": 30,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "electrolyzer",
@@ -26,7 +26,7 @@
             "nitrogen": 1000
         },
         "eut": 60,
-        "dur": 100,
+        "dur": 5,
         "target": {
             "oxygen": 1000
         }

@@ -13,7 +13,7 @@
         },
         "number": 1,
         "eut": 96,
-        "dur": 320
+        "dur": 16
     },
     {
         "m": "tree growth simulator",
@@ -23,7 +23,7 @@
             "oak wood": 48
         },
         "eut": 512,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "large chemical reactor",
@@ -37,7 +37,7 @@
             "tiny pile of ashes": 1
         },
         "eut": 7,
-        "dur": 80
+        "dur": 4
     },
     {
         "m": "electrolyzer",
@@ -51,7 +51,7 @@
             "water": 5000
         },
         "eut": 60,
-        "dur": 448
+        "dur": 22.4
     },
     {
         "m": "extractor",
@@ -63,7 +63,7 @@
             "sugar": 8
         },
         "eut": 7,
-        "dur": 160
+        "dur": 8
     },
     {
         "m": "distillation tower",
@@ -79,6 +79,6 @@
             "carbon dioxide": 490
         },
         "eut": 256,
-        "dur": 40
+        "dur": 2
     }
 ]

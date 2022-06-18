@@ -11,7 +11,7 @@
             "wood tar": 375
         },
         "eut": 96,
-        "dur": 60,
+        "dur": 3,
         "number": 1
     },
     {
@@ -28,7 +28,7 @@
             "creosote": 300
         },
         "eut": 256,
-        "dur": 40
+        "dur": 2
     },
     {
         "m": "tree growth simulator",
@@ -38,7 +38,7 @@
             "oak wood": 48
         },
         "eut": 480,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "centrifuge",
@@ -50,7 +50,7 @@
             "nitrogen": 3900
         },
         "eut": 7,
-        "dur": 1600
+        "dur": 80
     },
     {
         "m": "compressor",
@@ -60,34 +60,6 @@
             "air": 2000
         },
         "eut": 2,
-        "dur": 300
+        "dur": 15
     }
-    // {
-    //     "m": "cryogenic freezer",
-    //     "tier": "EV",
-    //     "I": {
-    //         "air": 2000
-    //     },
-    //     "O": {
-    //         "liquid air": 1000
-    //     },
-    //     "eut": 480,
-    //     "dur": 20,
-    //     "number": 1
-    // },
-    // {
-    //     "m": "centrifuge",
-    //     "tier": "HV",
-    //     "I": {
-    //         "liquid air": 53000
-    //     },
-    //     "O": {
-    //         "nitrogen": 40000,
-    //         "oxygen": 11000,
-    //         "argon": 1000,
-    //         "noble gases": 1000
-    //     },
-    //     "eut": 5,
-    //     "dur": 1484
-    // }
 ]

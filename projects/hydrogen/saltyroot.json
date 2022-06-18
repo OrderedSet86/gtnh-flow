@@ -12,7 +12,7 @@
             "saltpeter dust": 0.5
         },
         "eut": 30,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "mixer",
@@ -25,7 +25,7 @@
             "salt water": 1000
         },
         "eut": 7,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "electrolyzer",
@@ -39,7 +39,7 @@
             "chlorine": 1000
         },
         "eut": 30,
-        "dur": 720,
+        "dur": 36,
         "target": {
             "hydrogen": 500
         }
@@ -56,6 +56,6 @@
             "oxygen": 1000
         },
         "eut": 60,
-        "dur": 36
+        "dur": 1.8
     }
 ]

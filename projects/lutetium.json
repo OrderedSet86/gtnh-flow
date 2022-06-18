@@ -10,7 +10,7 @@
             "wrapped thorium ingot": 1
         },
         "eut": 480,
-        "dur": 1000,
+        "dur": 50,
         "number": 1
     },
     {
@@ -25,7 +25,7 @@
             "tungstensteel dust": 0.33333
         },
         "eut": 480,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "compressor",
@@ -37,7 +37,7 @@
             "high density thorium": 1
         },
         "eut": 120,
-        "dur": 400
+        "dur": 20
     },
     {
         "m": "mixer",
@@ -52,7 +52,7 @@
             "thorium based liquid fuel": 4000
         },
         "eut": 240,
-        "dur": 3000
+        "dur": 150
     },
     {
         "m": "mixer",
@@ -65,7 +65,7 @@
             "thorium based liquid fuel (excited state)": 1000
         },
         "eut": 3840,
-        "dur": 120
+        "dur": 6
     },
     {
         "m": "mixer",
@@ -80,7 +80,7 @@
             "uranium carbide-thorium mixture dust": 16
         },
         "eut": 20,
-        "dur": 32
+        "dur": 1.6
     },
     {
         "m": "neutron activator",
@@ -92,7 +92,7 @@
             "thorium based liquid fuel (depleted)": 200
         },
         "eut": 0,
-        "dur": 10000
+        "dur": 500
     },
     {
         "m": "centrifuge",
@@ -107,7 +107,7 @@
             "indium dust": 1
         },
         "eut": 1040,
-        "dur": 750
+        "dur": 37.5
     },
     {
         "m": "electric blast furnace",
@@ -121,7 +121,7 @@
             "molten zinc": 36
         },
         "eut": 480,
-        "dur": 185,
+        "dur": 9.25,
         "coils": "tungstensteel",
         "heat": 1900
     },
@@ -139,7 +139,7 @@
             "calcium chloride": 1000
         },
         "eut": 120,
-        "dur": 300,
+        "dur": 15,
         "coils": "tungstensteel",
         "heat": 3000
     },
@@ -153,7 +153,7 @@
             "thorium-232 tetrafluoride": 750
         },
         "eut": 480,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "large chemical reactor",
@@ -166,7 +166,7 @@
             "thorium tetrafluoride": 1000
         },
         "eut": 30,
-        "dur": 400
+        "dur": 20
     },
     {
         "m": "large chemical reactor",
@@ -180,7 +180,7 @@
             "sodium nitrate dust": 4
         },
         "eut": 120,
-        "dur": 200
+        "dur": 10
     },
     {
         "m": "large chemical reactor",
@@ -195,6 +195,6 @@
             "nitrogen dioxide": 4000
         },
         "eut": 120,
-        "dur": 40
+        "dur": 2
     }
 ]

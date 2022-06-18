@@ -11,7 +11,7 @@
             "light fuel": 12000
         },
         "eut": 30,
-        "dur": 160
+        "dur": 8
     },
     {
         "m": "distillery",
@@ -24,7 +24,7 @@
         },
         "number": 1,
         "eut": 24,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "electrolyzer",
@@ -36,7 +36,7 @@
             "electrolysed water": 1000
         },
         "eut": 30,
-        "dur": 490
+        "dur": 24.5
     },
     {
         "m": "electrolyzer",
@@ -49,6 +49,6 @@
             "oxygen gas": 1000
         },
         "eut": 30,
-        "dur": 30
+        "dur": 1.5
     }
 ]

@@ -3,6 +3,12 @@ import pytest
 from dataClasses.load import recipesFromConfig
 from graphClasses.graph import Graph
 
+import json
+from jsmin import jsmin
+def loadTestConfig():
+    with open('config_factory_graph.jsonc', 'r') as f:
+        graph_config = json.loads(jsmin(f.read()))
+    return graph_config
 
 # Note that recipe ordering is deterministic!
 # (Thanks to the OrderedDict hook in dataClasses.load.recipesFromConfig)
@@ -15,7 +21,7 @@ def test_connectionSimple():
     recipes = recipesFromConfig(project_name, project_folder='tests/testProjects')
 
     # Create graph
-    g = Graph(project_name, recipes)
+    g = Graph(project_name, recipes, loadTestConfig())
     g.connectGraph()
 
     ### Check connections
@@ -40,7 +46,7 @@ def test_connectionLoop():
     recipes = recipesFromConfig(project_name, project_folder='tests/testProjects')
 
     # Create graph
-    g = Graph(project_name, recipes)
+    g = Graph(project_name, recipes, loadTestConfig())
     g.connectGraph()
     g.removeBackEdges()
 

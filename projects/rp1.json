@@ -13,7 +13,7 @@
             "naphtha": 100
         },
         "eut": 60,
-        "dur": 900,
+        "dur": 45,
         "number": 1
     },
     {
@@ -26,7 +26,7 @@
             "rp-1": 15
         },
         "eut": 120,
-        "dur": 16
+        "dur": 0.8
     },
     {
         "m": "chem plant",
@@ -39,7 +39,7 @@
             "rp-1 rocket fuel": 1500
         },
         "eut": 240,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "vacuum freezer",
@@ -51,6 +51,6 @@
             "liquid oxygen": 1000
         },
         "eut": 480,
-        "dur": 1200
+        "dur": 60
     }
 ]

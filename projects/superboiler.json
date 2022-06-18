@@ -9,7 +9,7 @@
             "superheated steam": 213333
         },
         "eut": 0,
-        "dur": 20,
+        "dur": 1,
         "number": 1
     },
     {
@@ -22,7 +22,7 @@
             "EU": 8320
         },
         "eut": 0,
-        "dur": 1
+        "dur": 0.05
     },
     {
         "m": "mixer",
@@ -36,7 +36,7 @@
             "solid super fuel": 1
         },
         "eut": 96,
-        "dur": 120
+        "dur": 6
     },
     {
         "m": "burn time convert",
@@ -48,7 +48,7 @@
             "burn time": 100000
         },
         "eut": 0,
-        "dur": 1
+        "dur": 0.05
     },
     {
         "m": "compressor",
@@ -60,7 +60,7 @@
             "block of charcoal": 1
         },
         "eut": 2,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "large chemical reactor",
@@ -74,7 +74,7 @@
             "hydrogen sulfide": 1000
         },
         "eut": 30,
-        "dur": 160
+        "dur": 8
     },
     {
         "m": "distillation tower",
@@ -89,7 +89,7 @@
             "sulfuric light fuel": 45
         },
         "eut": 288,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "industrial coke oven",
@@ -102,7 +102,7 @@
             "heavy oil": 50
         },
         "eut": 192,
-        "dur": 64
+        "dur": 3.2
     },
     {
         "m": "mixer",
@@ -117,7 +117,7 @@
             "super fuel binder": 8
         },
         "eut": 16,
-        "dur": 800
+        "dur": 40
     },
     {
         "m": "macerator",
@@ -129,63 +129,8 @@
             "wood pulp": 6.8
         },
         "eut": 2,
-        "dur": 400
+        "dur": 20
     },
-    // {
-    //     "m": "large chemical reactor",
-    //     "tier": "LV",
-    //     "I": {
-    //         "hydrogen sulfide": 2000,
-    //         "sulfur dioxide": 1000
-    //     },
-    //     "O": {
-    //         "[recycle] sulfur dust": 3
-    //     },
-    //     "eut": 30,
-    //     "dur": 120
-    // }
-    // {
-    //     "m": "electrolyzer",
-    //     "tier": "LV",
-    //     "I": {
-    //         "salt water": 2000
-    //     },
-    //     "O": {
-    //         "sodium hydroxide": 1,
-    //         "chlorine": 1000,
-    //         "[recycle] hydrogen": 1000
-    //     },
-    //     "eut": 30,
-    //     "dur": 720
-    // },
-    // {
-    //     "m": "electrolyzer",
-    //     "tier": "MV",
-    //     "I": {
-    //         "sodium hydroxide": 3
-    //     },
-    //     "O": {
-    //         "sodium dust": 1,
-    //         "[recycle] hydrogen": 1000,
-    //         "oxygen": 1000
-    //     },
-    //     "eut": 60,
-    //     "dur": 36
-    // },
-    // {
-    //     "m": "large chemical reactor",
-    //     "tier": "HV",
-    //     "I": {
-    //         "ghast tear": 9
-    //     },
-    //     "O": {
-    //         "salt water": 9000,
-    //         "potassium dust": 1,
-    //         "lithium dust": 1
-    //     },
-    //     "eut": 30,
-    //     "dur": 3600
-    // }
     {
         "m": "electrolyzer",
         "tier": "HV",
@@ -198,7 +143,7 @@
             "silicon dioxide dust": 2
         },
         "eut": 120,
-        "dur": 156
+        "dur": 7.8
     },
     {
         "m": "electrolyzer",
@@ -210,7 +155,7 @@
             "electrolysed water": 1000
         },
         "eut": 30,
-        "dur": 490
+        "dur": 24.5
     },
     {
         "m": "electrolyzer",
@@ -223,7 +168,7 @@
             "oxygen": 1000
         },
         "eut": 30,
-        "dur": 30
+        "dur": 1.5
     },
     {
         "m": "centrifuge",
@@ -236,7 +181,7 @@
             "dark ashes": 1
         },
         "eut": 10,
-        "dur": 624
+        "dur": 31.2
     },
     {
         "m": "industrial coke oven",
@@ -249,7 +194,7 @@
             "wood tar": 375
         },
         "eut": 64,
-        "dur": 128
+        "dur": 6.4
     },
     {
         "m": "distillery",
@@ -261,7 +206,7 @@
             "refined glue": 4
         },
         "eut": 24,
-        "dur": 1
+        "dur": 0.05
     },
     {
         "m": "fluid extractor",
@@ -273,7 +218,7 @@
             "glue": 144
         },
         "eut": 24,
-        "dur": 1
+        "dur": 0.05
     },
     {
         "m": "distillation tower",
@@ -289,6 +234,6 @@
             "creosote oil": 250
         },
         "eut": 256,
-        "dur": 40
+        "dur": 2
     }
 ]

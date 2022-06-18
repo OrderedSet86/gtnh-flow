@@ -12,7 +12,7 @@
             "oxygen": 18000
         },
         "eut": 90,
-        "dur": 522,
+        "dur": 26.1,
         "target": {
             "oxygen": 269.2305
         }
@@ -32,7 +32,7 @@
             "emerald dust": 0.35
         },
         "eut": 16,
-        "dur": 800
+        "dur": 40
     },
     {
         "m": "autoclave",
@@ -45,7 +45,7 @@
             "purified emerald ore": 1
         },
         "eut": 384,
-        "dur": 2304
+        "dur": 115.2
     },
     {
         "m": "macerator",
@@ -57,7 +57,7 @@
             "[ex] emerald dust": 4
         },
         "eut": 4,
-        "dur": 72
+        "dur": 3.6
     },
     {
         "m": "electrolyzer",
@@ -72,7 +72,7 @@
             "oxygen": 18000
         },
         "eut": 90,
-        "dur": 522
+        "dur": 26.1
     },
     {
         "m": "macerator",
@@ -84,7 +84,7 @@
             "[fl] emerald dust": 2
         },
         "eut": 4,
-        "dur": 72
+        "dur": 3.6
     },
     {
         "m": "electrolyzer",
@@ -99,7 +99,7 @@
             "oxygen": 18000
         },
         "eut": 90,
-        "dur": 522
+        "dur": 26.1
     },
     {
         "m": "macerator",
@@ -111,7 +111,7 @@
             "[b] emerald dust": 1
         },
         "eut": 4,
-        "dur": 72
+        "dur": 3.6
     },
     {
         "m": "electrolyzer",
@@ -126,7 +126,7 @@
             "oxygen": 18000
         },
         "eut": 90,
-        "dur": 522
+        "dur": 26.1
     },
     {
         "m": "macerator",
@@ -138,7 +138,7 @@
             "[wd] emerald dust": 0.5
         },
         "eut": 4,
-        "dur": 72
+        "dur": 3.6
     },
     {
         "m": "electrolyzer",
@@ -153,7 +153,7 @@
             "oxygen": 18000
         },
         "eut": 90,
-        "dur": 522
+        "dur": 26.1
     },
     {
         "m": "macerator",
@@ -165,7 +165,7 @@
             "[ch] emerald dust": 0.25
         },
         "eut": 4,
-        "dur": 72
+        "dur": 3.6
     },
     {
         "m": "electrolyzer",
@@ -180,6 +180,6 @@
             "oxygen": 18000
         },
         "eut": 90,
-        "dur": 522
+        "dur": 26.1
     }
 ]

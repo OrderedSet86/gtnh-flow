@@ -12,24 +12,8 @@
             "wood gas": 1500
         },
         "eut": 96,
-        "dur": 320
+        "dur": 16
     },
-    // {
-    //     "m": "distillation tower",
-    //     "tier": "IV",
-    //     "I": {
-    //         "wood gas": 1000
-    //     },
-    //     "O": {
-    //         "hydrogen": 20,
-    //         "carbon monoxide": 340,
-    //         "methane": 130,
-    //         "ethylene": 20,
-    //         "co2 gas": 490
-    //     },
-    //     "eut": 256,
-    //     "dur": 40
-    // },
     {
         "m": "distillery",
         "tier": "IV",
@@ -40,7 +24,7 @@
             "co2 gas": 98
         },
         "eut": 64,
-        "dur": 16
+        "dur": 0.8
     },
     {
         "m": "electrolyzer",
@@ -53,7 +37,7 @@
             "oxygen": 2000
         },
         "eut": 120,
-        "dur": 300,
+        "dur": 15,
         "target": {
             "oxygen": 851.48
         }
@@ -61,13 +45,12 @@
     {
         "m": "compressor",
         "tier": "IV",
-        "I": {
-        },
+        "I": {},
         "O": {
             "compressed air": 1000
         },
         "eut": 2,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "centrifuge",
@@ -80,7 +63,7 @@
             "oxygen": 1000
         },
         "eut": 7,
-        "dur": 1600
+        "dur": 80
     },
     {
         "m": "tree growth simulator",
@@ -90,6 +73,6 @@
             "oak wood": 20
         },
         "eut": 32,
-        "dur": 20
+        "dur": 1
     }
 ]

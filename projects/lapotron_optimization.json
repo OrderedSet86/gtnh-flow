@@ -1,4 +1,3 @@
-
 [
     {
         "m": "mixer",
@@ -11,7 +10,7 @@
             "energium dust": 9
         },
         "eut": 120,
-        "dur": 600
+        "dur": 30
     },
     {
         "m": "mixer",
@@ -24,7 +23,7 @@
             "lapotron dust": 5
         },
         "eut": 480,
-        "dur": 200,
+        "dur": 10,
         "number": 15
     },
     {
@@ -38,7 +37,7 @@
             "raw lapotron crystal": 1
         },
         "eut": 480,
-        "dur": 1200
+        "dur": 60
     },
     {
         "m": "assembler",
@@ -51,7 +50,7 @@
             "lapotron crystal": 1
         },
         "eut": 1024,
-        "dur": 600
+        "dur": 30
     },
     {
         "m": "precision laser engraver",
@@ -63,7 +62,7 @@
             "engraved lapotron chip": 3
         },
         "eut": 480,
-        "dur": 900
+        "dur": 45
     },
     {
         "m": "circuit assembler",
@@ -80,7 +79,7 @@
             "lapotronic energy orb": 1
         },
         "eut": 1024,
-        "dur": 512
+        "dur": 25.6
     },
     {
         "m": "circuit assembler",
@@ -98,7 +97,7 @@
             "nanoprocessor": 1
         },
         "eut": 600,
-        "dur": 200
+        "dur": 10
     },
     {
         "m": "cutting machine",
@@ -110,7 +109,7 @@
             "power ic": 4
         },
         "eut": 1920,
-        "dur": 900
+        "dur": 45
     },
     {
         "m": "precision laser engraver",
@@ -122,7 +121,7 @@
             "pic wafer": 1
         },
         "eut": 480,
-        "dur": 1200
+        "dur": 60
     },
     {
         "m": "cutting machine",
@@ -134,7 +133,7 @@
             "nanocpu": 8
         },
         "eut": 480,
-        "dur": 900
+        "dur": 45
     },
     {
         "m": "large chemical reactor",
@@ -148,7 +147,7 @@
             "nanocpu wafer": 1
         },
         "eut": 1920,
-        "dur": 1200
+        "dur": 60
     },
     {
         "m": "electric blast furnace",
@@ -163,7 +162,7 @@
             "hot vibrant alloy ingot": 1
         },
         "eut": 120,
-        "dur": 3000
+        "dur": 150
     },
     {
         "m": "vacuum freezer",
@@ -175,7 +174,7 @@
             "vibrant alloy ingot": 1
         },
         "eut": 480,
-        "dur": 321
+        "dur": 16.05
     },
     {
         "m": "fluid extractor",
@@ -187,6 +186,6 @@
             "molten vibrant alloy": 144
         },
         "eut": 81,
-        "dur": 24
+        "dur": 1.2
     }
 ]

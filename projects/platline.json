@@ -11,7 +11,7 @@
             "platinum concentrate": 10400
         },
         "eut": 30,
-        "dur": 2250,
+        "dur": 112.5,
         "number": 10
     },
     {
@@ -25,7 +25,7 @@
             "[recycle] ammonium chloride": 1000
         },
         "eut": 30,
-        "dur": 15
+        "dur": 0.75
     },
     {
         "m": "large chemical reactor",
@@ -42,7 +42,7 @@
             "diluted sulfuric acid": 9000
         },
         "eut": 240,
-        "dur": 1400
+        "dur": 70
     },
     {
         "m": "industrial sifter",
@@ -54,7 +54,7 @@
             "refined platinum salt dust": 0.95
         },
         "eut": 30,
-        "dur": 600
+        "dur": 30
     },
     {
         "m": "electric blast furnace",
@@ -67,7 +67,7 @@
             "[recycle] chlorine": 87
         },
         "eut": 120,
-        "dur": 200,
+        "dur": 10,
         "heat": 900,
         "coils": "tungstensteel"
     },
@@ -83,7 +83,7 @@
             "rhodium sulfate": 360
         },
         "eut": 90,
-        "dur": 250,
+        "dur": 12.5,
         "heat": 775,
         "coils": "nichrome"
     },
@@ -100,7 +100,7 @@
             "rarest metal residue dust": 6
         },
         "eut": 120,
-        "dur": 200,
+        "dur": 10,
         "heat": 775,
         "coils": "nichrome"
     },
@@ -116,7 +116,7 @@
             "potassium disulfate dust": 11
         },
         "eut": 90,
-        "dur": 42
+        "dur": 2.1
     },
     {
         "m": "fluid extractor",
@@ -128,7 +128,7 @@
             "[100% recycle] molten potassium disulfate": 144
         },
         "eut": 30,
-        "dur": 23
+        "dur": 1.15
     },
     {
         "m": "electric blast furnace",
@@ -142,7 +142,7 @@
             "acidic osmium solution": 1000
         },
         "eut": 120,
-        "dur": 100,
+        "dur": 5,
         "heat": 775,
         "coils": "nichrome"
     },
@@ -157,7 +157,7 @@
             "iridium dioxide dust": 1
         },
         "eut": 120,
-        "dur": 100,
+        "dur": 5,
         "heat": 775,
         "coils": "nichrome"
     },
@@ -172,7 +172,7 @@
             "acidic iridium solution": 1000
         },
         "eut": 30,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "large chemical reactor",
@@ -186,7 +186,7 @@
             "ammonia": 3000
         },
         "eut": 30,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "large chemical reactor",
@@ -201,7 +201,7 @@
             "calcium chloride": 3000
         },
         "eut": 1920,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "fluid solidifier",
@@ -213,7 +213,7 @@
             "calcium chloride dust": 1
         },
         "eut": 30,
-        "dur": 36
+        "dur": 1.8
     },
     {
         "m": "electrolyzer",
@@ -226,7 +226,7 @@
             "[recycle] chlorine": 2000
         },
         "eut": 60,
-        "dur": 27
+        "dur": 1.35
     },
     {
         "m": "centrifuge",
@@ -239,7 +239,7 @@
             "copper dust": 1
         },
         "eut": 10,
-        "dur": 30
+        "dur": 1.5
     },
     {
         "m": "mixer",
@@ -252,7 +252,7 @@
             "[100% recycle] aqua regia": 2000
         },
         "eut": 30,
-        "dur": 30
+        "dur": 1.5
     },
     {
         "m": "large chemical reactor",
@@ -266,21 +266,8 @@
             "nitric acid": 2000
         },
         "eut": 30,
-        "dur": 320
+        "dur": 16
     },
-    // {
-    //     "m": "large chemical reactor",
-    //     "tier": "HV",
-    //     "I": {
-    //         "palladium enriched ammonia": 1000
-    //     },
-    //     "O": {
-    //         "palladium salt dust": 1
-    //     },
-    //     "eut": 30,
-    //     "dur": 250,
-    //     "number": 0.05
-    // },
     {
         "m": "large chemical reactor",
         "tier": "HV",
@@ -294,7 +281,7 @@
             "leach residue dust": 1.111111
         },
         "eut": 30,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "large chemical reactor",
@@ -308,7 +295,7 @@
             "crude rhodium metal dust": 1
         },
         "eut": 30,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "electrolyzer",
@@ -321,7 +308,7 @@
             "[recycle] oxygen": 4000
         },
         "eut": 90,
-        "dur": 26
+        "dur": 1.3
     },
     {
         "m": "fluid solidifier",
@@ -333,7 +320,7 @@
             "potassium ingot": 1
         },
         "eut": 7,
-        "dur": 32
+        "dur": 1.6
     },
     {
         "m": "macerator",
@@ -345,7 +332,7 @@
             "potassium dust": 1
         },
         "eut": 4,
-        "dur": 39
+        "dur": 1.95
     },
     {
         "m": "distillation tower",
@@ -358,7 +345,7 @@
             "[output] water": 900
         },
         "eut": 7680,
-        "dur": 150
+        "dur": 7.5
     },
     {
         "m": "large chemical reactor",
@@ -373,7 +360,7 @@
             "[output] water": 2000
         },
         "eut": 30,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "large chemical reactor",
@@ -387,20 +374,8 @@
             "calcium chloride dust": 1
         },
         "eut": 30,
-        "dur": 30
+        "dur": 1.5
     },
-    // {
-    //     "m": "sifter",
-    //     "tier": "HV",
-    //     "I": {
-    //         "palladium salt dust": 1
-    //     },
-    //     "O": {
-    //         "palladium metallic powder dust": 0.9
-    //     },
-    //     "eut": 30,
-    //     "dur": 600
-    // },
     {
         "m": "electric blast furnace",
         "tier": "MV",
@@ -413,7 +388,7 @@
             "rhodium salt dust": 1
         },
         "eut": 120,
-        "dur": 100,
+        "dur": 5,
         "heat": 600,
         "coils": "nichrome"
     },
@@ -428,7 +403,7 @@
             "rhodium salt solution": 200
         },
         "eut": 30,
-        "dur": 30
+        "dur": 1.5
     },
     {
         "m": "large chemical reactor",
@@ -442,7 +417,7 @@
             "[recycle] salt": 1
         },
         "eut": 30,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "sifter",
@@ -454,7 +429,7 @@
             "rhodium filter cake dust": 0.9
         },
         "eut": 30,
-        "dur": 600
+        "dur": 30
     },
     {
         "m": "mixer",
@@ -467,7 +442,7 @@
             "rhodium filter cake solution": 200
         },
         "eut": 30,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "large chemical reactor",
@@ -479,7 +454,7 @@
             "reprecipitated rhodium dust": 1
         },
         "eut": 30,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "large chemical reactor",
@@ -494,7 +469,7 @@
             "[recycle] chlorine": 1000
         },
         "eut": 30,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "large chemical reactor",
@@ -507,7 +482,7 @@
             "ruthenium tetroxide solution": 9000
         },
         "eut": 30,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "oil cracker",
@@ -520,7 +495,7 @@
             "hot ruthenium tetroxide solution": 2000
         },
         "eut": 480,
-        "dur": 150
+        "dur": 7.5
     },
     {
         "m": "distillation tower",
@@ -534,7 +509,7 @@
             "ruthenium tetroxide": 7200
         },
         "eut": 480,
-        "dur": 1500
+        "dur": 75
     },
     {
         "m": "fluid solidifier",
@@ -546,7 +521,7 @@
             "ruthenium tetroxide dust": 1
         },
         "eut": 30,
-        "dur": 33
+        "dur": 1.65
     },
     {
         "m": "large chemical reactor",
@@ -561,19 +536,6 @@
             "[output] water": 2000
         },
         "eut": 30,
-        "dur": 300
+        "dur": 15
     }
-    // {
-    //     "m": "large chemical reactor",
-    //     "tier": "HV",
-    //     "I": {
-    //         "hydrogen": 1000,
-    //         "chlorine": 1000
-    //     },
-    //     "O": {
-    //         "hydrochloric acid": 1000
-    //     },
-    //     "eut": 7,
-    //     "dur": 60
-    // }
 ]

@@ -9,7 +9,7 @@
             "steam": 30720000
         },
         "eut": 0,
-        "dur": 15360,
+        "dur": 768,
         "number": 8.192
     },
     {
@@ -22,7 +22,7 @@
             "diamond block": 1
         },
         "eut": 2,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "compressor",
@@ -34,7 +34,7 @@
             "diamond": 1
         },
         "eut": 2,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "electric blast furnace",
@@ -46,7 +46,7 @@
             "coal chunk": 1
         },
         "eut": 120,
-        "dur": 1200,
+        "dur": 60,
         "heat": 1000,
         "coils": "nichrome"
     },
@@ -61,7 +61,7 @@
             "bio chunk": 1
         },
         "eut": 64,
-        "dur": 1200
+        "dur": 60
     },
     {
         "m": "compressor",
@@ -73,7 +73,7 @@
             "block of charcoal": 1
         },
         "eut": 2,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "compressor",
@@ -85,7 +85,7 @@
             "compressed bio ball": 1
         },
         "eut": 2,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "mixer",
@@ -98,7 +98,7 @@
             "bio ball": 1
         },
         "eut": 16,
-        "dur": 200
+        "dur": 10
     },
     {
         "m": "enderio crafter",
@@ -110,7 +110,7 @@
             "flint dust": 1
         },
         "eut": 30,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "forge hammer",
@@ -122,7 +122,7 @@
             "tiny pile of flint dust": 2
         },
         "eut": 16,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "enderio crafter",
@@ -134,7 +134,7 @@
             "flint": 1
         },
         "eut": 30,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "advanced coke oven",
@@ -146,7 +146,7 @@
             "charcoal": 1
         },
         "eut": 0,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "tree growth simulator",
@@ -156,7 +156,7 @@
             "oak wood": 15.83
         },
         "eut": 480,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "compressor",
@@ -168,7 +168,7 @@
             "plantball": 1
         },
         "eut": 2,
-        "dur": 300
+        "dur": 15
     },
     {
         "m": "forge hammer",
@@ -180,7 +180,7 @@
             "gravel": 1
         },
         "eut": 16,
-        "dur": 10
+        "dur": 0.5
     },
     {
         "m": "rock breaker",
@@ -190,6 +190,6 @@
             "cobblestone": 1
         },
         "eut": 30,
-        "dur": 16
+        "dur": 0.8
     }
 ]

@@ -14,7 +14,7 @@
             "sodalite dust": 2
         },
         "eut": 30,
-        "dur": 8640
+        "dur": 432
     },
     {
         "m": "electrolyzer",
@@ -29,7 +29,7 @@
             "oxygen": 8000
         },
         "eut": 90,
-        "dur": 260,
+        "dur": 13,
         "target": {
             "oxygen": 458.42
         }
@@ -42,7 +42,7 @@
             "stone": 1
         },
         "eut": 30,
-        "dur": 16
+        "dur": 0.8
     },
     {
         "m": "macerator",
@@ -54,7 +54,7 @@
             "stone dust": 1
         },
         "eut": 4,
-        "dur": 98
+        "dur": 4.9
     },
     {
         "m": "centrifuge",
@@ -67,7 +67,7 @@
             "calcite dust": 7
         },
         "eut": 10,
-        "dur": 640
+        "dur": 32
     },
     {
         "m": "electrolyzer",
@@ -81,7 +81,7 @@
             "oxygen": 3000
         },
         "eut": 60,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "electrolyzer",
@@ -98,6 +98,6 @@
             "fluorine": 2000
         },
         "eut": 120,
-        "dur": 440
+        "dur": 22
     }
 ]

@@ -14,7 +14,7 @@
     ],
     "OUTPUT_FORMAT": "png",
     "USE_RAINBOW_EDGES": true,
-    "DUR_FORMAT": "ticks", // choose either "ticks" or "sec"
+    "DUR_FORMAT": "sec", // choose either "ticks" or "sec"
     // TODO: These are not added to backend yet
     "PRECISION": 4,
     "ROUND_MACHINES_UP": false,

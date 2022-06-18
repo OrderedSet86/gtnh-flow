@@ -11,7 +11,7 @@
             "forestry fertilizer": 30
         },
         "eut": 16,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "fluid extractor",
@@ -23,7 +23,7 @@
             "fertiliser (fluid)": 144
         },
         "eut": 16,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "centrifuge",
@@ -36,7 +36,7 @@
             "IC2 fertiliser (pt 2)": 0.735
         },
         "eut": 16,
-        "dur": 40
+        "dur": 2
     },
     {
         "m": "electrolyzer",
@@ -50,7 +50,7 @@
             "water": 1000
         },
         "eut": 30,
-        "dur": 100
+        "dur": 5
     },
     {
         "m": "electrolyzer",
@@ -64,7 +64,7 @@
             "oxygen": 3000
         },
         "eut": 60,
-        "dur": 100,
+        "dur": 5,
         "target": {
             "oxygen": 1000
         }

@@ -11,7 +11,7 @@
         },
         "number": 1,
         "eut": 30,
-        "dur": 160
+        "dur": 8
     },
     {
         "m": "chemical reactor",
@@ -25,7 +25,7 @@
             "tetrafluoroethylene": 500
         },
         "eut": 240,
-        "dur": 240
+        "dur": 12
     },
     {
         "m": "distillery",
@@ -37,7 +37,7 @@
             "hydrofluoric acid": 20
         },
         "eut": 16,
-        "dur": 24
+        "dur": 1.2
     },
     {
         "m": "chemical reactor",
@@ -50,7 +50,7 @@
             "hydrofluoric acid": 1000
         },
         "eut": 7,
-        "dur": 60
+        "dur": 3
     },
     {
         "m": "chemical reactor",
@@ -64,7 +64,7 @@
             "chloroform": 1000
         },
         "eut": 30,
-        "dur": 80
+        "dur": 4
     },
     {
         "m": "electrolyzer",
@@ -77,7 +77,7 @@
             "potassium dust": 1
         },
         "eut": 30,
-        "dur": 72
+        "dur": 3.6
     },
     {
         "m": "electrolyzer",
@@ -92,10 +92,9 @@
             "silicon dioxide dust": 3,
             "oxygen": 4000,
             "fluorine": 2000
-            
         },
         "eut": 120,
-        "dur": 280
+        "dur": 14
     },
     {
         "m": "centrifuge",
@@ -107,7 +106,7 @@
             "methane gas": 60
         },
         "eut": 20,
-        "dur": 200
+        "dur": 10
     },
     {
         "m": "centrifuge",
@@ -120,6 +119,6 @@
             "biotite": 1
         },
         "eut": 10,
-        "dur": 400
+        "dur": 20
     }
 ]

@@ -14,7 +14,7 @@
             "sodalite dust": 2
         },
         "eut": 30,
-        "dur": 8640
+        "dur": 432
     },
     {
         "m": "industrial centrifuge",
@@ -31,7 +31,7 @@
             "ilmenite dust": 2
         },
         "eut": 1920,
-        "dur": 12525
+        "dur": 626.25
     },
     {
         "m": "electrolyzer",
@@ -45,7 +45,7 @@
             "oxygen": 4000
         },
         "eut": 60,
-        "dur": 204
+        "dur": 10.2
     },
     {
         "m": "macerator",
@@ -57,18 +57,17 @@
             "stone dust": 1
         },
         "eut": 4,
-        "dur": 98
+        "dur": 4.9
     },
     {
         "m": "rock breaker",
         "tier": "HV",
-        "I": {
-        },
+        "I": {},
         "O": {
             "stone": 1
         },
         "eut": 30,
-        "dur": 16,
+        "dur": 0.8,
         "number": 1
     },
     {
@@ -84,7 +83,7 @@
             "hydrogen": 10000
         },
         "eut": 90,
-        "dur": 702
+        "dur": 35.1
     },
     {
         "m": "chemical reactor",
@@ -98,7 +97,7 @@
             "titanium tetrachloride": 1000
         },
         "eut": 480,
-        "dur": 400
+        "dur": 20
     },
     {
         "m": "electric blast furnace",
@@ -112,7 +111,7 @@
             "magnesiumchloride dust": 2
         },
         "eut": 480,
-        "dur": 800,
+        "dur": 40,
         "coils": "kanthal",
         "heat": 2140
     },
@@ -126,7 +125,7 @@
             "titanium ingot": 1
         },
         "eut": 480,
-        "dur": 144
+        "dur": 7.2
     },
     {
         "m": "large chemical reactor",
@@ -140,7 +139,7 @@
             "chlorine": 2000
         },
         "eut": 300,
-        "dur": 400
+        "dur": 20
     },
     {
         "m": "electric blast furnace",
@@ -154,7 +153,7 @@
             "rutile dust": 4
         },
         "eut": 480,
-        "dur": 3200,
+        "dur": 160,
         "coils": "cupronickel",
         "heat": 1700
     },
@@ -171,6 +170,6 @@
             "chlorine": 1000
         },
         "eut": 90,
-        "dur": 242
+        "dur": 12.1
     }
 ]

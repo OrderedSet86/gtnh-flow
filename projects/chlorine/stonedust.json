@@ -14,7 +14,7 @@
             "sodalite dust": 2
         },
         "eut": 30,
-        "dur": 8640
+        "dur": 432
     },
     {
         "m": "electrolyzer",
@@ -29,7 +29,7 @@
             "chlorine": 1000
         },
         "eut": 90,
-        "dur": 264,
+        "dur": 13.2,
         "target": {
             "chlorine": 1000
         }
@@ -42,7 +42,7 @@
             "stone": 1
         },
         "eut": 30,
-        "dur": 16
+        "dur": 0.8
     },
     {
         "m": "macerator",
@@ -54,6 +54,6 @@
             "stone dust": 1
         },
         "eut": 4,
-        "dur": 98
+        "dur": 4.9
     }
 ]

@@ -10,7 +10,7 @@
             "ammonia": 1000
         },
         "eut": 384,
-        "dur": 320
+        "dur": 16
     },
     {
         "m": "distillation tower",
@@ -29,7 +29,7 @@
             "fertiliser": 1
         },
         "eut": 180,
-        "dur": 75,
+        "dur": 3.75,
         "number": 1
     },
     {
@@ -44,6 +44,6 @@
             "diluted sulfuric acid": 1000
         },
         "eut": 120,
-        "dur": 160
+        "dur": 8
     }
 ]

@@ -11,7 +11,7 @@
             "light fuel": 12000
         },
         "eut": 30,
-        "dur": 160
+        "dur": 8
     },
     {
         "m": "chemical reactor",
@@ -25,7 +25,7 @@
             "heavy fuel": 8000
         },
         "eut": 30,
-        "dur": 160
+        "dur": 8
     },
     {
         "m": "distillery",
@@ -38,7 +38,7 @@
         },
         "number": 3,
         "eut": 24,
-        "dur": 20
+        "dur": 1
     },
     {
         "m": "distillery",
@@ -50,7 +50,7 @@
             "sulfuric heavy fuel": 15
         },
         "eut": 24,
-        "dur": 40
+        "dur": 2
     },
     {
         "m": "electrolyzer",
@@ -62,7 +62,7 @@
             "electrolysed water": 1000
         },
         "eut": 30,
-        "dur": 490
+        "dur": 24.5
     },
     {
         "m": "electrolyzer",
@@ -75,7 +75,7 @@
             "oxygen gas": 1000
         },
         "eut": 30,
-        "dur": 30
+        "dur": 1.5
     },
     {
         "m": "mixer",
@@ -88,6 +88,6 @@
             "diesel": 6000
         },
         "eut": 120,
-        "dur": 16
+        "dur": 0.8
     }
 ]
