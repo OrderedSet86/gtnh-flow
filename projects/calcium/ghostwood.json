@@ -1,0 +1,39 @@
+[
+    {
+        "m": "tree growth simulator",
+        "tier": "LV",
+        "I": {},
+        "O": {
+            "ghostwood": 20
+        },
+        "eut": 32,
+        "dur": 1
+    },
+    {
+        "m": "extractor",
+        "tier": "MV",
+        "I": {
+            "ghostwood": 2
+        },
+        "O": {
+            "bone meal": 1
+        },
+        "eut": 120,
+        "dur": 5
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "bone meal": 3
+        },
+        "O": {
+            "calcium dust": 1
+        },
+        "eut": 26,
+        "dur": 4.9,
+        "target": {
+            "calcium dust": 1
+        }
+    }
+]

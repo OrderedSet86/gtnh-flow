@@ -1,0 +1,32 @@
+[
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "marble dust": 8
+        },
+        "O": {
+            "magnesium dust": 1,
+            "calcite dust": 7
+        },
+        "eut": 10,
+        "dur": 32
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "calcite dust": 5
+        },
+        "O": {
+            "calcium dust": 1,
+            "carbon dust": 1,
+            "oxygen": 3000
+        },
+        "eut": 60,
+        "dur": 5,
+        "target": {
+            "calcium dust": 1
+        }
+    }
+]

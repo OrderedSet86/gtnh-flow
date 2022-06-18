@@ -1,0 +1,85 @@
+[
+    {
+        "m": "recycler",
+        "tier": "LV",
+        "I": {
+            "recyclable": 1
+        },
+        "O": {
+            "scrap": 0.118
+        },
+        "eut": 1,
+        "dur": 2
+    },
+    {
+        "m": "packager",
+        "tier": "LV",
+        "I": {
+            "scrap": 9
+        },
+        "O": {
+            "scrap box": 1
+        },
+        "eut": 1,
+        "dur": 0.8
+    },
+    {
+        "m": "unpackager",
+        "tier": "LV",
+        "I": {
+            "scrap box": 0.9307
+        },
+        "O": {
+            "saltpeter dust": 0.0062,
+            "soul sand": 0.0031
+        },
+        "eut": 1,
+        "dur": 0.8
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "saltpeter dust": 5
+        },
+        "O": {
+            "potassium dust": 1,
+            "oxygen": 3000,
+            "nitrogen": 1000
+        },
+        "eut": 60,
+        "dur": 5,
+        "target": {
+            "potassium dust": 0.9090909
+        }
+    },
+    {
+        "m": "centrifuge",
+        "tier": "HV",
+        "I": {
+            "soul sand": 36
+        },
+        "O": {
+            "saltpeter dust 2": 7.2,
+            "coal dust": 0.8,
+            "sand": 32.4,
+            "oil": 2880
+        },
+        "eut": 320,
+        "dur": 81
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "saltpeter dust 2": 5
+        },
+        "O": {
+            "potassium dust": 1,
+            "oxygen": 3000,
+            "nitrogen": 1000
+        },
+        "eut": 60,
+        "dur": 5
+    }
+]

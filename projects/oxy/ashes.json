@@ -97,29 +97,5 @@
         },
         "eut": 60,
         "dur": 4.8
-    },
-    {
-        "m": "pyrolyse oven",
-        "tier": "HV",
-        "coils": "nichrome",
-        "I": {
-            "oak wood": 16
-        },
-        "O": {
-            "ashes": 4,
-            "heavy oil": 200
-        },
-        "eut": 192,
-        "dur": 16
-    },
-    {
-        "m": "tree growth simulator",
-        "tier": "LV",
-        "I": {},
-        "O": {
-            "oak wood": 20
-        },
-        "eut": 32,
-        "dur": 1
     }
 ]

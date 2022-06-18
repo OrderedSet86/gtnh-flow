@@ -1,0 +1,36 @@
+
+[
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "ashes": 36
+        },
+        "O": {
+            "quicklime dust": 11.52,
+            "potash dust": 5.4,
+            "magnesia dust": 0.45,
+            "phosphorous pentoxide dust": 2,
+            "soda ash dust": 1,
+            "banded iron dust": 4
+        },
+        "eut": 30,
+        "dur": 300
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "quicklime dust": 2
+        },
+        "O": {
+            "calcium dust": 1,
+            "oxygen": 1000
+        },
+        "eut": 30,
+        "dur": 2.8,
+        "target": {
+            "calcium dust": 1
+        }
+    }
+]
