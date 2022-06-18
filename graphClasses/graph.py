@@ -632,7 +632,6 @@ class Graph:
             else:
                 io_label_lines.append(makeLineHtml('red', 'Net EU/t:', net_eut))
 
-        # FIXME: Remove later
         # Add total machine multiplier count for oxygen table
         sumval = 0
         for rec_id in self.nodes:
@@ -649,7 +648,7 @@ class Graph:
                 sumval += rec.multiplier * 3
             else:
                 sumval += rec.multiplier
-        io_label_lines.append(makeLineHtml('MediumSeaGreen', 'Total machine count:', sumval))
+        io_label_lines.append(makeLineHtml('MediumSeaGreen', 'Total machine count:', round(sumval, 2)))
 
         # Create final table
         io_label = ''.join(io_label_lines)

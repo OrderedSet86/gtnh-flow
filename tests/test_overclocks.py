@@ -5,6 +5,13 @@ import pytest
 from dataClasses.base import Ingredient, Recipe, IngredientCollection
 from gtnhClasses.overclocks import overclockRecipe
 
+import json
+from jsmin import jsmin
+def loadTestConfig():
+    with open('config_factory_graph.jsonc', 'r') as f:
+        graph_config = json.loads(jsmin(f.read()))
+    return graph_config
+
 
 def test_standardOverclock():
     r_base = Recipe(
