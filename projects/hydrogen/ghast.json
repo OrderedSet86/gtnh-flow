@@ -1,0 +1,48 @@
+[
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "salt water": 1000
+        },
+        "O": {
+            "sodium hydroxide dust": 3,
+            "hydrogen": 1000,
+            "chlorine": 1000
+        },
+        "eut": 30,
+        "dur": 720,
+        "target": {
+            "hydrogen": 500
+        }
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "sodium hydroxide dust": 3
+        },
+        "O": {
+            "sodium dust": 1,
+            "hydrogen": 1000,
+            "oxygen": 1000
+        },
+        "eut": 60,
+        "dur": 36
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "LV",
+        "I": {
+            "ghast tear": 9,
+            "water": 9000
+        },
+        "O": {
+            "lithium dust": 1,
+            "potassium dust": 1,
+            "salt water": 9000
+        },
+        "eut": 30,
+        "dur": 3600
+    }
+]

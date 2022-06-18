@@ -1,0 +1,265 @@
+[
+    {
+        "m": "recycler",
+        "tier": "LV",
+        "I": {
+            "recyclable": 1
+        },
+        "O": {
+            "scrap": 0.118
+        },
+        "eut": 1,
+        "dur": 40
+    },
+    {
+        "m": "packager",
+        "tier": "LV",
+        "I": {
+            "scrap": 9
+        },
+        "O": {
+            "scrap box": 1
+        },
+        "eut": 1,
+        "dur": 16
+    },
+    {
+        "m": "unpackager",
+        "tier": "LV",
+        "I": {
+            "scrap box": 0.9307
+        },
+        "O": {
+            "saltpeter dust": 0.0062,
+            "obsidian dust": 0.0047,
+            "red garnet dust": 0.0016,
+            "ruby": 0.0002,
+            "bauxite dust": 0.0016,
+            "redstone": 0.0028,
+            "calcite dust": 0.0062,
+            "yellow garnet dust": 0.0016
+        },
+        "eut": 1,
+        "dur": 16
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "saltpeter dust": 5
+        },
+        "O": {
+            "potassium dust": 1,
+            "oxygen": 3000,
+            "nitrogen": 1000
+        },
+        "eut": 60,
+        "dur": 100,
+        "target": {
+            "oxygen": 282.147
+        }
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "obsidian dust": 12
+        },
+        "O": {
+            "magnesium dust": 1,
+            "iron dust": 1,
+            "raw silicon dust": 2,
+            "oxygen": 8000
+        },
+        "eut": 90,
+        "dur": 240
+    },
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "red garnet dust": 16
+        },
+        "O": {
+            "pyrope dust": 3,
+            "alamandine dust": 5,
+            "spessartine dust": 8
+        },
+        "eut": 15,
+        "dur": 1472
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "pyrope dust": 20
+        },
+        "O": {
+            "aluminium dust": 2,
+            "magnesium dust": 3,
+            "raw silicon dust": 3,
+            "oxygen": 12000
+        },
+        "eut": 90,
+        "dur": 400
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "alamandine dust": 20
+        },
+        "O": {
+            "aluminium dust": 2,
+            "iron dust": 3,
+            "raw silicon dust": 3,
+            "oxygen": 12000
+        },
+        "eut": 90,
+        "dur": 480
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "spessartine dust": 20
+        },
+        "O": {
+            "alumina dust": 2,
+            "manganese dust": 3,
+            "silicon dioxide dust": 3,
+            "oxygen": 12000
+        },
+        "eut": 90,
+        "dur": 440
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "calcite dust": 5
+        },
+        "O": {
+            "calcium dust": 1,
+            "carbon dust": 1,
+            "oxygen": 3000
+        },
+        "eut": 60,
+        "dur": 100
+    },
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "redstone": 10
+        },
+        "O": {
+            "raw silicon dust": 1,
+            "pyrite dust": 5,
+            "ruby dust": 1,
+            "mercury": 3000
+        },
+        "eut": 15,
+        "dur": 340
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "ruby dust": 6
+        },
+        "O": {
+            "chrome dust": 1,
+            "aluminium dust": 2,
+            "oxygen": 3000
+        },
+        "eut": 60,
+        "dur": 144
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "bauxite dust": 39
+        },
+        "O": {
+            "rutile dust": 2,
+            "alumina dust": 16,
+            "oxygen": 11000,
+            "hydrogen": 10000
+        },
+        "eut": 90,
+        "dur": 702
+    },
+    {
+        "m": "macerator",
+        "tier": "LV",
+        "I": {
+            "ruby": 1
+        },
+        "O": {
+            "ruby dust": 1
+        },
+        "eut": 4,
+        "dur": 25
+    },
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "yellow garnet dust": 16
+        },
+        "O": {
+            "andradite dust": 5,
+            "grossular dust": 8,
+            "uvarovite dust": 3
+        },
+        "eut": 15,
+        "dur": 1472
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "andradite dust": 20
+        },
+        "O": {
+            "calcium dust": 3,
+            "iron dust": 2,
+            "raw silicon dust": 3,
+            "oxygen": 12000
+        },
+        "eut": 90,
+        "dur": 480
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "grossular dust": 20
+        },
+        "O": {
+            "calcium dust": 3,
+            "aluminium dust": 2,
+            "raw silicon dust": 3,
+            "oxygen": 12000
+        },
+        "eut": 90,
+        "dur": 440
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "uvarovite dust": 20
+        },
+        "O": {
+            "calcium dust": 3,
+            "chrome dust": 2,
+            "raw silicon dust": 3,
+            "oxygen": 12000
+        },
+        "eut": 90,
+        "dur": 480
+    }
+]

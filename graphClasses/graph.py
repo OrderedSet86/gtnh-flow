@@ -318,25 +318,30 @@ class Graph:
             # 2. Edges with incomplete side determination, but highest total edge determination ratio
 
             # total_determination_score = sorted(determined_edge_count.items(), reverse=True, key=lambda x: x[1][0] / x[1][1])
-            determination_score = {
-                rec_id: [
-                    # Complete side determination count
-                    sum([
-                        (
-                            determined_edge_count[rec_id][io_type][0] // determined_edge_count[rec_id][io_type][1]
-                            if determined_edge_count[rec_id][io_type][1] != 0
-                            else 0
-                        )
-                        for io_type in ['I', 'O']
-                    ]),
-                    # Total edge determination ratio
-                    sum([determined_edge_count[rec_id][io_type][0] for io_type in ['I', 'O']])
-                    /
-                    sum([determined_edge_count[rec_id][io_type][1] for io_type in ['I', 'O']])
-                ]
-                for rec_id
-                in determined_edge_count
-            }
+            try:
+                determination_score = {
+                    rec_id: [
+                        # Complete side determination count
+                        sum([
+                            (
+                                determined_edge_count[rec_id][io_type][0] // determined_edge_count[rec_id][io_type][1]
+                                if determined_edge_count[rec_id][io_type][1] != 0
+                                else 0
+                            )
+                            for io_type in ['I', 'O']
+                        ]),
+                        # Total edge determination ratio
+                        sum([determined_edge_count[rec_id][io_type][0] for io_type in ['I', 'O']])
+                        /
+                        sum([determined_edge_count[rec_id][io_type][1] for io_type in ['I', 'O']])
+                    ]
+                    for rec_id
+                    in determined_edge_count
+                }
+            except ZeroDivisionError as e:
+                self.outputGraphviz()
+                raise RuntimeError('A machine is disconnected from all the others. Please check for typos. A graph will be output.')
+
             edge_priority = sorted([
                     [stats, rec_id]
                     for rec_id, stats

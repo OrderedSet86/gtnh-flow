@@ -1,0 +1,46 @@
+[
+    {
+        "m": "chemical bath",
+        "tier": "LV",
+        "I": {
+            "salty root": 1,
+            "water": 100
+        },
+        "O": {
+            "salt": 0.95,
+            "rock salt": 0.8,
+            "saltpeter dust": 0.5
+        },
+        "eut": 30,
+        "dur": 100
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "salt": 2
+        },
+        "O": {
+            "sodium dust": 1,
+            "chlorine": 1000
+        },
+        "eut": 30,
+        "dur": 320,
+        "target": {
+            "chlorine": 542.85542
+        }
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "rock salt": 2
+        },
+        "O": {
+            "potassium dust": 1,
+            "chlorine": 1000
+        },
+        "eut": 30,
+        "dur": 72
+    }
+]

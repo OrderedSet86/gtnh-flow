@@ -1,7 +1,7 @@
 [
     {
         "m": "large chemical reactor",
-        "tier": "IV",
+        "tier": "HV",
         "I": {
             "methane": 5000
         },
@@ -17,7 +17,7 @@
     },
     {
         "m": "centrifuge",
-        "tier": "IV",
+        "tier": "LV",
         "I": {
             "pams fish": 1
         },

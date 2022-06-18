@@ -1,7 +1,7 @@
 [
     {
         "m": "centrifuge",
-        "tier": "IV",
+        "tier": "LV",
         "I": {
             "rubber wood": 1
         },
@@ -17,7 +17,7 @@
     },
     {
         "m": "large chemical reactor",
-        "tier": "IV",
+        "tier": "HV",
         "I": {
             "methane": 5000
         },
@@ -33,7 +33,7 @@
     },
     {
         "m": "tree growth simulator",
-        "tier": "IV",
+        "tier": "LV",
         "I": {},
         "O": {
             "rubber wood": 20

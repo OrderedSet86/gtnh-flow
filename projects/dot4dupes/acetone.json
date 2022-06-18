@@ -1,0 +1,61 @@
+[
+    {
+        "m": "large chemical reactor",
+        "tier": "LV",
+        "I": {
+            "hydrogen": 4000,
+            "oxygen": 2000,
+            "carbon dust": 2
+        },
+        "O": {
+            "acetic acid": 1000
+        },
+        "eut": 30,
+        "dur": 480
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "acetic acid": 4000,
+            "calcium dust": 1
+        },
+        "O": {
+            "acetone": 4000,
+            "co2 gas": 4000,
+            "[output] hydrogen": 8000
+        },
+        "eut": 30,
+        "dur": 480,
+        "target": {
+            "[output] hydrogen": 1000
+        }
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "acetone": 1000
+        },
+        "O": {
+            "[output] carbon dust": 3,
+            "[output] hydrogen": 6000,
+            "[output] oxygen": 1000
+        },
+        "eut": 90,
+        "dur": 240
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "co2 gas": 1000
+        },
+        "O": {
+            "[output] carbon dust": 1,
+            "[output] oxygen": 2000
+        },
+        "eut": 120,
+        "dur": 300
+    }
+]

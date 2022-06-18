@@ -1,0 +1,61 @@
+[
+    {
+        "m": "chemical bath",
+        "tier": "IV",
+        "I": {
+            "salty root": 1,
+            "water": 100
+        },
+        "O": {
+            "salt": 0.95,
+            "rock salt": 0.8,
+            "saltpeter dust": 0.5
+        },
+        "eut": 30,
+        "dur": 100
+    },
+    {
+        "m": "mixer",
+        "tier": "IV",
+        "I": {
+            "salt": 1,
+            "water": 1000
+        },
+        "O": {
+            "salt water": 1000
+        },
+        "eut": 7,
+        "dur": 100
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "IV",
+        "I": {
+            "salt water": 1000
+        },
+        "O": {
+            "sodium hydroxide dust": 3,
+            "hydrogen": 1000,
+            "chlorine": 1000
+        },
+        "eut": 30,
+        "dur": 720,
+        "target": {
+            "hydrogen": 500
+        }
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "IV",
+        "I": {
+            "sodium hydroxide dust": 3
+        },
+        "O": {
+            "sodium dust": 1,
+            "hydrogen": 1000,
+            "oxygen": 1000
+        },
+        "eut": 60,
+        "dur": 36
+    }
+]

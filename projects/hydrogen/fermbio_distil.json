@@ -1,0 +1,79 @@
+
+[
+    {
+        "m": "distillation tower",
+        "tier": "HV",
+        "I": {
+            "fermented biomass": 1000
+        },
+        "O": {
+            "methane": 600,
+            "carbon dioxide": 400,
+            "ammonia": 100,
+            "methanol": 150,
+            "ethanol": 150,
+            "water": 375,
+            "acetic acid": 25,
+            "IC2 fertiliser": 1
+        },
+        "eut": 180,
+        "dur": 75
+    },
+    // {
+    //     "m": "distillery",
+    //     "tier": "LV",
+    //     "I": {
+    //         "fermented biomass": 1000
+    //     },
+    //     "O": {
+    //         "fertiliser": 1,
+    //         "methane": 600
+    //     },
+    //     "eut": 7,
+    //     "dur": 1500
+    // },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "methane": 5000
+        },
+        "O": {
+            "carbon dioxide": 5000,
+            "hydrogen": 20000
+        },
+        "eut": 480,
+        "dur": 175,
+        "target": {
+            "hydrogen": 615.3846
+        }
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "methanol": 1000
+        },
+        "O": {
+            "carbon dust": 1,
+            "hydrogen": 4000,
+            "oxygen": 1000
+        },
+        "eut": 90,
+        "dur": 144
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "ethanol": 1000
+        },
+        "O": {
+            "carbon dust": 2,
+            "hydrogen": 6000,
+            "oxygen": 1000
+        },
+        "eut": 90,
+        "dur": 144
+    }
+]
