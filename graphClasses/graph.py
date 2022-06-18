@@ -638,6 +638,8 @@ class Graph:
         for rec_id in self.nodes:
             if rec_id in ['source', 'sink']:
                 continue
+            elif '-' in rec_id:
+                continue
             rec = self.recipes[rec_id]
             if rec.machine == 'distillation tower':
                 sumval += rec.multiplier * 10
@@ -786,7 +788,6 @@ class Graph:
                     # no way to determine what was meant here
                     # throw error and ask user to specify additional information
 
-
         adj_edges = self.adj[rec_id]
         # Create mapping of {io_dir: {ing_name: edges}}
         ing_edges = {
@@ -855,7 +856,7 @@ class Graph:
                                 # If math doesn't work out without remainder, adjust relevant edge down
                                     # and make a new sink
 
-                                for idx, quant in edge_quants:
+                                for idx, quant in enumerate(edge_quants):
                                     relevant_edge = edges[idx]
                                     node_from, node_to, _ = relevant_edge
                                     excess -= quant
@@ -982,7 +983,7 @@ class Graph:
                                 # If math doesn't work out without remainder, adjust relevant edge down
                                     # and make a new sink
 
-                                for idx, quant in edge_quants:
+                                for idx, quant in enumerate(edge_quants):
                                     relevant_edge = edges[idx]
                                     node_from, node_to, _ = relevant_edge
                                     excess -= quant
