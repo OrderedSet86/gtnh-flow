@@ -91,7 +91,7 @@ class Graph:
                 if hasattr(rec, lookup):
                     machine_label.append(line_generator(rec))
 
-            machine_label = '\r\n'.join(machine_label)
+            machine_label = '\n'.join(machine_label)
             self.addNode(
                 rec_id,
                 fillcolor='lightblue2',
@@ -250,7 +250,7 @@ class Graph:
                 # Color edge as "locked"
                 self.nodes[rec_id].update({'fillcolor': 'green'})
                 existing_label = self.nodes[rec_id]['label']
-                self.nodes[rec_id]['label'] = f'{rec.multiplier}x {rec.user_voltage} {existing_label}\r\nCycle: {rec.dur/20}s\r\nEU/t: {rec.eut}'
+                self.nodes[rec_id]['label'] = f'{rec.multiplier}x {rec.user_voltage} {existing_label}\nCycle: {rec.dur/20}s\nEU/t: {rec.eut}'
 
                 # Lock all adjacent ingredient edges
                 self._simpleLockMachineEdges(str(rec_id), rec) # Used when multiplier is known
@@ -270,7 +270,7 @@ class Graph:
             # (note already OC'd by this time)
             ing, target_quant = list(target_ings.items())[0]
             if ing not in [x.name for x in rec.O._ings]:
-                raise RuntimeError(f'Targetted quantity must be in machine outputs for \r\n{rec}')
+                raise RuntimeError(f'Targetted quantity must be in machine outputs for \n{rec}')
             quant_per_tick_at_1x = rec.O[ing][0] / rec.dur
             machine_multiplier = round(target_quant / (quant_per_tick_at_1x * 20), 8)
 
@@ -281,7 +281,7 @@ class Graph:
             # Color edge as locked
             self.nodes[rec_id].update({'fillcolor': 'green'})
             existing_label = self.nodes[rec_id]['label']
-            self.nodes[rec_id]['label'] = f'{rec.multiplier}x {rec.user_voltage} {existing_label}\r\nCycle: {rec.dur/20}s\r\nEU/t: {rec.eut}'
+            self.nodes[rec_id]['label'] = f'{rec.multiplier}x {rec.user_voltage} {existing_label}\nCycle: {rec.dur/20}s\nEU/t: {rec.eut}'
 
             # Lock all adjacent ingredient edges
             self._simpleLockMachineEdges(str(rec_id), rec) # Used when multiplier is known
@@ -311,7 +311,7 @@ class Graph:
                     len(self.adj_machine[rec_id]['O']),
                 ]
 
-            cprint(f'Edge determination data:\r\n{determined_edge_count}', 'green')
+            cprint(f'Edge determination data:\n{determined_edge_count}', 'green')
 
             # Now pick in this order:
             # 1. Edges with complete side determination, using total edge determination ratio as tiebreaker
@@ -711,7 +711,7 @@ class Graph:
         self.recipes[rec_id] *= final_multiplier
 
         existing_label = self.nodes[rec_id]['label']
-        self.nodes[rec_id]['label'] = '\r\n'.join([
+        self.nodes[rec_id]['label'] = '\n'.join([
             f'{round(rec.multiplier, 2)}x {rec.user_voltage} {existing_label}',
             f'Cycle: {rec.dur/20}s',
             f'EU/t: {round(rec.eut, 2)}',
@@ -1210,7 +1210,7 @@ class Graph:
             g.edge(
                 node_from,
                 node_to,
-                label=f'{ing_name}\r\n({quant_label})',
+                label=f'{ing_name}\n({quant_label})',
                 fontcolor=ingredient_colors[ing_name],
                 color=ingredient_colors[ing_name],
                 **kwargs,
