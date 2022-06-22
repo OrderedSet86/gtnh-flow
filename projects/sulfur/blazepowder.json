@@ -1,0 +1,18 @@
+[
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "blaze powder": 2
+        },
+        "O": {
+            "sulfur": 1,
+            "dark ashes": 1
+        },
+        "eut": 10,
+        "dur": 31.2,
+        "target": {
+            "sulfur": 1
+        }
+     }
+]

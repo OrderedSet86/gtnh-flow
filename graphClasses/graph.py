@@ -3,9 +3,10 @@
 # As a result, a special algorithm is required to connect all relevant edges in a factory.
 
 # Standard libraries
-import math
 import itertools
-from collections import defaultdict, OrderedDict
+import math
+import re
+from collections import defaultdict
 from copy import deepcopy
 
 # Pypi libraries
@@ -367,7 +368,7 @@ class Graph:
 
         if self.graph_config.get('POWER_LINE', False):
             self._addPowerLineNodes()
-        self._addIONode()
+        self._addSummaryNode()
 
 
     def _addPowerLineNodes(self):
@@ -570,7 +571,7 @@ class Graph:
             # 4. Update edge with new value
             self.edges[(UCFE_id, 'sink', 'EU')]['quant'] = output_eu
 
-    def _addIONode(self):
+    def _addSummaryNode(self):
         # Now that tree is fully locked, add I/O node
         # Specifically, inputs are adj[source] and outputs are adj[sink]
 
@@ -580,9 +581,8 @@ class Graph:
         self.createAdjacencyList()
 
         # Compute I/O
-        inputs = self.adj['source']
-        outputs = self.adj['sink']
         total_io = defaultdict(float)
+        bracket_prefix_re = re.compile(r'^\[.*\]\s*(.*)')
         for direction in [-1, 1]:
             if direction == -1:
                 # Inputs
@@ -595,6 +595,12 @@ class Graph:
                 from_node, to_node, ing_name = edge
                 edge_data = self.edges[edge]
                 quant = edge_data['quant']
+
+                # Check for bracket prefixes and strip
+                m = bracket_prefix_re.match(ing_name)
+                if m is not None:
+                    ing_name = m.group(1)
+
                 total_io[ing_name] += direction * quant
 
         # Create I/O lines

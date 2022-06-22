@@ -1,0 +1,61 @@
+[
+    {
+        "m": "centrifuge",
+        "tier": "IV",
+        "I": {
+            "stone dust": 36
+        },
+        "O": {
+            "quartzite dust": 9,
+            "potassium feldspar dust": 9,
+            "marble dust": 9,
+            "biotite dust": 4,
+            "metal mixture dust": 3,
+            "sodalite dust": 2
+        },
+        "eut": 30,
+        "dur": 432
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "IV",
+        "I": {
+            "biotite dust": 22
+        },
+        "O": {
+            "potassium dust": 1,
+            "magnesium dust": 3,
+            "aluminium dust": 3,
+            "raw silicon dust": 3,
+            "oxygen": 10000,
+            "fluorine": 2000
+        },
+        "eut": 120,
+        "dur": 22,
+        "target": {
+            "fluorine": 1000
+        }
+    },
+    {
+        "m": "rock breaker",
+        "tier": "IV",
+        "I": {},
+        "O": {
+            "stone": 1
+        },
+        "eut": 30,
+        "dur": 0.8
+    },
+    {
+        "m": "macerator",
+        "tier": "IV",
+        "I": {
+            "stone": 1
+        },
+        "O": {
+            "stone dust": 1
+        },
+        "eut": 4,
+        "dur": 4.9
+    }
+]

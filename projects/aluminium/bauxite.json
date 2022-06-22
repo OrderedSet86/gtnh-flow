@@ -1,0 +1,20 @@
+[
+    {
+        "m": "electrolyzer",
+        "tier": "IV",
+        "I": {
+            "bauxite dust": 39
+        },
+        "O": {
+            "rutile dust": 2,
+            "aluminium dust": 16,
+            "oxygen": 11000,
+            "hydrogen": 10000
+        },
+        "eut": 90,
+        "dur": 35.1,
+        "target": {
+            "aluminium dust": 1
+        }
+    }
+]

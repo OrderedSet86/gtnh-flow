@@ -1,0 +1,33 @@
+[
+    {
+        "m": "chemical bath",
+        "tier": "LV",
+        "I": {
+            "sodium dust": 1,
+            "water": 1000
+        },
+        "O": {
+            "sodium hydroxide dust": 1,
+            "hydrogen": 500
+        },
+        "eut": 4,
+        "dur": 2.5
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "sodium hydroxide dust": 3
+        },
+        "O": {
+            "[recycle] sodium dust": 1,
+            "hydrogen": 1000,
+            "oxygen": 1000
+        },
+        "eut": 60,
+        "dur": 1.8,
+        "target": {
+            "hydrogen": 400
+        }
+    }
+]

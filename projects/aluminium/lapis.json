@@ -1,0 +1,62 @@
+[
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "lazurite dust": 14
+        },
+        "O": {
+            "aluminium dust": 3,
+            "raw silicon dust": 3,
+            "calcium dust": 4,
+            "sodium dust": 4
+        },
+        "eut": 120,
+        "dur": 19.6,
+        "target": {
+            "aluminium dust": 0.82645
+        }
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "sodalite dust": 11
+        },
+        "O": {
+            "aluminium dust": 3,
+            "raw silicon dust": 3,
+            "sodium dust": 4,
+            "chlorine": 1000
+        },
+        "eut": 90,
+        "dur": 13.2
+    },
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "lapis dust": 16
+        },
+        "O": {
+            "lazurite dust": 12,
+            "sodalite dust": 2,
+            "pyrite dust": 1,
+            "calcite dust": 1
+        },
+        "eut": 20,
+        "dur": 89.6
+    },
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "lapis lazuli": 1
+        },
+        "O": {
+            "lapis dust": 1
+        },
+        "eut": 4,
+        "dur": 1.4
+    }
+]

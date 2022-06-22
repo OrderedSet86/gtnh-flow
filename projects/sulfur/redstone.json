@@ -1,0 +1,33 @@
+[
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "redstone": 10
+        },
+        "O": {
+            "raw silicon dust": 1,
+            "pyrite dust": 5,
+            "ruby dust": 1,
+            "mercury": 3000
+        },
+        "eut": 15,
+        "dur": 17
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "pyrite dust": 3
+        },
+        "O": {
+            "iron dust": 1,
+            "sulfur dust": 1
+        },
+        "eut": 60,
+        "dur": 5.7,
+        "target": {
+            "sulfur dust": 1
+        }
+    }
+]

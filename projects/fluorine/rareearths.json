@@ -1,0 +1,84 @@
+[
+    {
+        "m": "chemical bath",
+        "tier": "LV",
+        "I": {
+            "rare earth": 3,
+            "sulfuric acid": 1000
+        },
+        "O": {
+            "crushed rare earth (I) ore": 6
+        },
+        "eut": 30,
+        "dur": 30
+    },
+    {
+        "m": "ore washing plant",
+        "tier": "LV",
+        "I": {
+            "crushed rare earth (I) ore": 1,
+            "water": 200
+        },
+        "O": {
+            "purified crushed rare earth (I) ore": 1,
+            "nether quartz dust": 0.11111111,
+            "stone dust": 1
+        },
+        "eut": 16,
+        "dur": 15
+    },
+    {
+        "m": "forge hammer",
+        "tier": "LV",
+        "I": {
+            "purified crushed rare earth (I) ore": 1
+        },
+        "O": {
+            "purified rare earth (I) dust": 1
+        },
+        "eut": 7,
+        "dur": 0.5
+    },
+    {
+        "m": "forge hammer",
+        "tier": "LV",
+        "I": {
+            "purified rare earth (I) dust": 1
+        },
+        "O": {
+            "rare earth (I) dust": 1,
+            "nether quartz dust": 0.11111111
+        },
+        "eut": 15,
+        "dur": 11.6
+    },
+    {
+        "m": "dehydrator",
+        "tier": "LV",
+        "I": {
+            "rare earth (I) dust": 9
+        },
+        "O": {
+            "cryolite (F) dust": 1
+        },
+        "eut": 30,
+        "dur": 5.8
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "cryolite (F) dust": 10
+        },
+        "O": {
+            "sodium dust": 3,
+            "aluminium dust": 1,
+            "fluorine": 6000
+        },
+        "eut": 16,
+        "dur": 3.3,
+        "target": {
+            "fluorine": 1000
+        }
+    }
+]

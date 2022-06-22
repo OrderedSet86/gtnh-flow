@@ -1,0 +1,188 @@
+[
+    {
+        "m": "chemical bath",
+        "tier": "HV",
+        "I": {
+            "crushed fluorite (F) ore": 1,
+            "hydrogen": 1000
+        },
+        "O": {
+            "impure/purified fluorite (F) dust": 5.1
+        },
+        "eut": 240,
+        "dur": 15
+    },
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "impure/purified fluorite (F) dust": 1
+        },
+        "O": {
+            "fluorite (F) dust": 1.1111111111
+        },
+        "eut": 7,
+        "dur": 5.6
+    },
+    {
+        "m": "dehydrator",
+        "tier": "HV",
+        "I": {
+            "fluorite (F) dust": 37,
+            "sulfuric acid": 8000
+        },
+        "O": {
+            "gypsum dust": 15,
+            "silver dust": 0.1,
+            "gold dust": 0.2,
+            "tin dust": 0.3,
+            "copper dust": 0.2,
+            "hydrofluoric acid": 16000
+        },
+        "eut": 240,
+        "dur": 600
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "hydrofluoric acid": 1000
+        },
+        "O": {
+            "[output] hydrogen": 1000,
+            "fluorine": 1000
+        },
+        "eut": 60,
+        "dur": 4,
+        "target": {
+            "fluorine": 1000
+        }
+    },
+    {
+        "m": "macerator",
+        "tier": "LV",
+        "I": {
+            "fluorite (F) ore": 1
+        },
+        "O": {
+            "crushed fluorite (F) ore": 2
+        },
+        "eut": 7,
+        "dur": 20
+    },
+    {
+        "m": "exxonmobil",
+        "tier": "EV",
+        "I": {
+            "sandstone": 128,
+            "nitric acid": 4000,
+            "air": 8000
+        },
+        "O": {
+            "fluorite (F) ore": 10.4
+        },
+        "eut": 1024,
+        "dur": 10,
+        "coils": "nichrome",
+        "pipe_casings": "steel"
+    },
+    {
+        "m": "forge hammer",
+        "tier": "LV",
+        "I": {
+            "gravel": 1
+        },
+        "O": {
+            "sand": 1
+        },
+        "eut": 16,
+        "dur": 0.5
+    },
+    {
+        "m": "forge hammer",
+        "tier": "LV",
+        "I": {
+            "cobblestone": 1
+        },
+        "O": {
+            "gravel": 1
+        },
+        "eut": 16,
+        "dur": 0.5
+    },
+    {
+        "m": "rock breaker",
+        "tier": "LV",
+        "I": {},
+        "O": {
+            "cobblestone": 1
+        },
+        "eut": 30,
+        "dur": 0.8
+    },
+    {
+        "m": "compressor",
+        "tier": "LV",
+        "I": {
+            "sand": 4
+        },
+        "O": {
+            "sandstone": 1
+        },
+        "eut": 2,
+        "dur": 15
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "LV",
+        "I": {
+            "oxygen": 4000,
+            "ammonia": 1000
+        },
+        "O": {
+            "nitric acid": 1000
+        },
+        "eut": 30,
+        "dur": 16
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "nitrogen": 1000,
+            "hydrogen": 3000
+        },
+        "O": {
+            "ammonia": 1000
+        },
+        "eut": 384,
+        "dur": 16
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "gypsum dust": 8
+        },
+        "O": {
+            "calcium dust": 1,
+            "sulfur dust": 1,
+            "[output] oxygen": 4000
+        },
+        "eut": 90,
+        "dur": 7.2
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "LV",
+        "I": {
+            "oxygen": 3000,
+            "sulfur dust": 1
+        },
+        "O": {
+            "sulfuric acid": 1000
+        },
+        "eut": 30,
+        "dur": 24
+    }
+]
