@@ -47,7 +47,7 @@ class Graph:
         # TODO: Temporary until backend data import
         for i, rec in enumerate(recipes):
             recipes[i] = overclockRecipe(rec)
-
+            rec.base_eut = rec.eut
 
     def addNode(self, recipe_id, **kwargs):
         self.nodes[recipe_id] = kwargs
@@ -251,7 +251,7 @@ class Graph:
                 # Color edge as "locked"
                 self.nodes[rec_id].update({'fillcolor': 'green'})
                 existing_label = self.nodes[rec_id]['label']
-                self.nodes[rec_id]['label'] = f'{rec.multiplier}x {rec.user_voltage} {existing_label}\nCycle: {rec.dur/20}s\nEU/t: {rec.eut}'
+                self.nodes[rec_id]['label'] = f'{rec.multiplier}x {rec.user_voltage} {existing_label}\nCycle: {rec.dur/20}s\nAvg. EU/t: {rec.eut}\nBase EU/t: {rec.base_eut}'
 
                 # Lock all adjacent ingredient edges
                 self._simpleLockMachineEdges(str(rec_id), rec) # Used when multiplier is known
@@ -282,7 +282,7 @@ class Graph:
             # Color edge as locked
             self.nodes[rec_id].update({'fillcolor': 'green'})
             existing_label = self.nodes[rec_id]['label']
-            self.nodes[rec_id]['label'] = f'{rec.multiplier}x {rec.user_voltage} {existing_label}\nCycle: {rec.dur/20}s\nEU/t: {rec.eut}'
+            self.nodes[rec_id]['label'] = f'{rec.multiplier}x {rec.user_voltage} {existing_label}\nCycle: {rec.dur/20}s\nAvg. EU/t: {rec.eut}\nBase EU/t: {rec.base_eut}'
 
             # Lock all adjacent ingredient edges
             self._simpleLockMachineEdges(str(rec_id), rec) # Used when multiplier is known
@@ -640,20 +640,26 @@ class Graph:
 
         # Add total machine multiplier count for oxygen table
         sumval = 0
+        special_machine_weights = {
+            'distillation tower': 10,
+            'pyrolyse oven': 5,
+            'multi smelter': 3,
+            'zhuhai': 3,
+            'vacuum freezer': 3,
+            'electric blast furnace': 5,
+        }
         for rec_id in self.nodes:
             if rec_id in ['source', 'sink']:
                 continue
             elif '-' in rec_id:
                 continue
             rec = self.recipes[rec_id]
-            if rec.machine == 'distillation tower':
-                sumval += rec.multiplier * 10
-            elif rec.machine == 'pyrolyse oven':
-                sumval += rec.multiplier * 5
-            elif rec.machine == 'multi smelter':
-                sumval += rec.multiplier * 3
-            else:
-                sumval += rec.multiplier
+
+            machine_weight = rec.multiplier
+            if rec.machine in special_machine_weights:
+                machine_weight *= special_machine_weights[rec.machine]
+            sumval += machine_weight
+
         io_label_lines.append(makeLineHtml('MediumSeaGreen', 'Total machine count:', round(sumval, 2)))
 
         # Create final table
@@ -719,7 +725,8 @@ class Graph:
         self.nodes[rec_id]['label'] = '\n'.join([
             f'{round(rec.multiplier, 2)}x {rec.user_voltage} {existing_label}',
             f'Cycle: {rec.dur/20}s',
-            f'EU/t: {round(rec.eut, 2)}',
+            f'Avg. EU/t: {round(rec.eut, 2)}',
+            f'Machine Usage: {rec.base_eut}',
         ])
 
         # Lock ingredient edges using new quant

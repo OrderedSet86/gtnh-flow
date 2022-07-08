@@ -1,0 +1,56 @@
+[
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "brick dust": 13
+        },
+        "O": {
+            "aluminium dust": 4,
+            "raw silicon dust": 3,
+            "oxygen": 6000
+        },
+        "eut": 10,
+        "dur": 54.6,
+        "target": {
+            "raw silicon dust": 1
+        }
+    },
+    {
+        "m": "forge hammer",
+        "tier": "LV",
+        "I": {
+            "brick": 1
+        },
+        "O": {
+            "brick dust": 0.25
+        },
+        "eut": 16,
+        "dur": 0.5
+    },
+    {
+        "m": "crafting",
+        "tier": "LV",
+        "I": {
+            "clay": 1
+        },
+        "O": {
+            "unfired clay brick": 1
+        },
+        "eut": 0,
+        "dur": 0.01
+    },
+    {
+        "m": "multi smelter",
+        "tier": "LV",
+        "I": {
+            "unfired clay brick": 1
+        },
+        "O": {
+            "brick": 1
+        },
+        "coils": "kanthal",
+        "eut": 4,
+        "dur": 25
+    }
+]

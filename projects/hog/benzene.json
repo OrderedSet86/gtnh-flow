@@ -1,0 +1,463 @@
+[
+    {
+        "m": "large chemical reactor",
+        "tier": "EV",
+        "I": {
+            "anti-knock agent": 3000,
+            "toluene": 1000,
+            "nitrous oxide": 6000,
+            "octane": 2000,
+            "gasoline": 20000
+        },
+        "O": {
+            "high octane gasoline": 32000
+        },
+        "eut": 1920,
+        "dur": 2.5,
+        "target": {
+            "high octane gasoline": 1000
+        }
+    },
+    {
+        "m": "extreme combustion engine",
+        "tier": "LV",
+        "I": {
+            "high octane gasoline": 8.72,
+            "liquid oxygen": 4
+        },
+        "O": {
+            "EU": 32700
+        },
+        "eut": 0,
+        "dur": 0.05
+    },
+    {
+        "m": "vacuum freezer",
+        "tier": "HV",
+        "I": {
+            "oxygen": 1000
+        },
+        "O": {
+            "liquid oxygen": 1000
+        },
+        "eut": 480,
+        "dur": 60
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "butene": 1000,
+            "ethanol": 1000
+        },
+        "O": {
+            "anti-knock agent": 2000
+        },
+        "eut": 480,
+        "dur": 20
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "oxygen": 10000,
+            "nitrogen": 20000
+        },
+        "O": {
+            "nitrous oxide": 30000
+        },
+        "eut": 480,
+        "dur": 2.5
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "toluene": 1000,
+            "raw gasoline": 10000
+        },
+        "O": {
+            "gasoline": 11000
+        },
+        "eut": 480,
+        "dur": 0.5
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "acetone": 1000,
+            "methanol": 1000,
+            "refinery gas": 2000,
+            "naphtha": 16000
+        },
+        "O": {
+            "raw gasoline": 10000
+        },
+        "eut": 480,
+        "dur": 5
+    },
+    {
+        "m": "magic optimal fractions",
+        "tier": "EV", // DO NOT CHANGE THIS!!!
+        "I": {
+            "hydrogen": 1584.99,
+            "light fuel": 1285.18,
+            "steam": 319.24
+        },
+        "O": {
+            "carbon dust": 0.055,
+            "butene": 46.88,
+            "ethylene": 46.88,
+            "heavy fuel": 51.83,
+            "propene": 63.1,
+            "benzene": 87.88,
+            "octane": 96.59,
+            "ethane": 126.83,
+            "butane": 144.89,
+            "methane": 151.16,
+            "propane": 202.54,
+            "naphtha": 909.09
+        },
+        "eut": 1326,
+        "dur": 1
+    },
+    {
+        "m": "distillery",
+        "tier": "LV",
+        "I": {
+            "toluene": 30
+        },
+        "O": {
+            "light fuel": 30
+        },
+        "eut": 24,
+        "dur": 0.8
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "MV",
+        "I": {
+            "hydrogen": 4000,
+            "oxygen": 1000,
+            "[i] carbon dust": 1
+        },
+        "O": {
+            "methanol": 1000
+        },
+        "eut": 96,
+        "dur": 16
+    },
+    {
+        "m": "fluid heater",
+        "tier": "LV",
+        "I": {
+            "water": 6
+        },
+        "O": {
+            "steam": 960
+        },
+        "eut": 30,
+        "dur": 1.5
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "LV",
+        "I": {
+            "sulfuric gas": 16000,
+            "hydrogen": 2000
+        },
+        "O": {
+            "hydrogen sulfide": 1000,
+            "refinery gas": 16000
+        },
+        "eut": 30,
+        "dur": 8
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "steam": 2000,
+            "[i] ethylene": 1000
+        },
+        "O": {
+            "ethanol": 1000
+        },
+        "eut": 480,
+        "dur": 20
+    },
+    {
+        "m": "distillation tower",
+        "tier": "HV",
+        "I": {
+            "wood tar": 1000
+        },
+        "O": {
+            "creosote oil": 250,
+            "phenol": 100,
+            "benzene": 400,
+            "toluene": 100,
+            "1,4-dimethylbenzen": 150
+        },
+        "eut": 256,
+        "dur": 2
+    },
+    {
+        "m": "pyrolyse oven",
+        "tier": "HV",
+        "coils": "tungstensteel",
+        "I": {
+            "oak wood": 16,
+            "nitrogen": 1000
+        },
+        "O": {
+            "ashes": 2,
+            "wood tar": 3500
+        },
+        "eut": 97.5,
+        "dur": 16
+    },
+    {
+        "m": "tree growth simulator",
+        "tier": "HV",
+        "I": {},
+        "O": {
+            "oak wood": 68
+        },
+        "eut": 512,
+        "dur": 5
+    },
+    {
+        "m": "air intake hatch",
+        "tier": "LV",
+        "I": {},
+        "O": {
+            "air": 1000
+        },
+        "eut": 0,
+        "dur": 0.2
+    },
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "air": 10000
+        },
+        "O": {
+            "nitrogen": 3900,
+            "[o] oxygen": 1000
+        },
+        "eut": 7,
+        "dur": 80
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "acetic acid": 4000,
+            "calcium dust": 1
+        },
+        "O": {
+            "acetone": 4000,
+            "co2 gas": 4000
+        },
+        "eut": 480,
+        "dur": 20
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "LV",
+        "I": {
+            "[i] carbon dust": 2,
+            "hydrogen": 4000,
+            "oxygen": 2000
+        },
+        "O": {
+            "acetic acid": 1000
+        },
+        "eut": 30,
+        "dur": 24
+    },
+    {
+        "m": "jupiter gas siphon",
+        "tier": "EV",
+        "I": {
+        },
+        "O": {
+            "hydrogen": 16000
+        },
+        "eut": 1024,
+        "dur": 1
+    },
+    {
+        "m": "zhuhai",
+        "tier": "IV",
+        "I": {},
+        "O": {
+            "bone": 0.08333
+        },
+        "eut": 16,
+        "dur": 5
+    },
+    {
+        "m": "macerator",
+        "tier": "LV",
+        "I": {
+            "bone": 1
+        },
+        "O": {
+            "bone meal": 4
+        },
+        "eut": 2,
+        "dur": 15
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "bone meal": 3
+        },
+        "O": {
+            "calcium dust": 1
+        },
+        "eut": 26,
+        "dur": 4.9
+    },
+    {
+        "m": "distillery",
+        "tier": "LV",
+        "I": {
+            "oil": 25
+        },
+        "O": {
+            "sulfuric gas": 30
+        },
+        "eut": 24,
+        "dur": 1
+    },
+    {
+        "m": "industrial coke oven",
+        "tier": "EV",
+        "I": {
+            "kerogen": 200,
+            "wood pulp": 2
+        },
+        "O": {
+            "oil": 200
+        },
+        "eut": 480,
+        "dur": 0.85
+    },
+    {
+        "m": "chemical reactor",
+        "tier": "MV",
+        "I": {
+            "heated fulvic acid": 250
+        },
+        "O": {
+            "kerogen": 250
+        },
+        "eut": 120,
+        "dur": 0.9
+    },
+    {
+        "m": "fluid heater",
+        "tier": "MV",
+        "I": {
+            "fulvic acid": 200
+        },
+        "O": {
+            "heated fulvic acid": 200
+        },
+        "eut": 120,
+        "dur": 0.9
+    },
+    {
+        "m": "bacterial vat",
+        "tier": "HV",
+        "I": {
+            "fermented biomass": 10000000
+        },
+        "O": {
+            "fulvic acid": 1000000
+        },
+        "eut": 480,
+        "dur": 137.4
+    },
+    {
+        "m": "industrial coke oven",
+        "tier": "HV",
+        "I": {
+            "bio chaff": 1,
+            "water": 1500
+        },
+        "O": {
+            "fermented biomass": 1500
+        },
+        "eut": 10,
+        "dur": 8
+    },
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "plant mass": 1
+        },
+        "O": {
+            "bio chaff": 1
+        },
+        "eut": 4,
+        "dur": 15
+    },
+    {
+        "m": "macerator",
+        "tier": "HV",
+        "I": {
+            "plantball": 2
+        },
+        "O": {
+            "plant mass": 2
+        },
+        "eut": 30,
+        "dur": 10
+    },
+    {
+        "m": "macerator",
+        "tier": "LV",
+        "I": {
+            "oak wood": 1
+        },
+        "O": {
+            "wood pulp": 6
+        },
+        "eut": 2,
+        "dur": 20
+    }
+    // {
+    //     "m": "large chemical reactor",
+    //     "tier": "LV",
+    //     "I": {
+    //         "calcite dust": 1,
+    //         "ashes": 3
+    //     },
+    //     "O": {
+    //         "fertiliser": 1
+    //     },
+    //     "eut": 30,
+    //     "dur": 5
+    // },
+    // {
+    //     "m": "electrolyzer",
+    //     "tier": "LV",
+    //     "I": {
+    //         "fertiliser": 1
+    //     },
+    //     "O": {
+    //         "[O] calcite dust": 1,
+    //         "[O] carbon dust": 1
+    //     },
+    //     "eut": 30,
+    //     "dur": 5
+    // }
+]

@@ -11,7 +11,8 @@
             "light fuel": 12000
         },
         "eut": 30,
-        "dur": 8
+        "dur": 8,
+        "number": 1
     },
     {
         "m": "distillery",
@@ -22,7 +23,6 @@
         "O": {
             "sulfuric light fuel": 25
         },
-        "number": 1,
         "eut": 24,
         "dur": 1
     },

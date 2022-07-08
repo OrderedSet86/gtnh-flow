@@ -17,8 +17,7 @@
         "m": "large chemical reactor",
         "tier": "HV",
         "I": {
-            "acetic acid": 4000,
-            "calcium dust": 1
+            "acetic acid": 4000
         },
         "O": {
             "acetone": 4000,

@@ -1,0 +1,100 @@
+[
+    {
+        "m": "large chemical reactor",
+        "tier": "EV",
+        "I": {
+            "anti-knock agent": 3000,
+            "toluene": 1000,
+            "nitrous oxide": 6000,
+            "octane": 2000,
+            "gasoline": 20000
+        },
+        "O": {
+            "high octane gasoline": 32000
+        },
+        "eut": 1920,
+        "dur": 2.5,
+        "target": {
+            "high octane gasoline": 1000
+        }
+    },
+    {
+        "m": "extreme combustion engine",
+        "tier": "LV",
+        "I": {
+            "high octane gasoline": 8.72,
+            "liquid oxygen": 4
+        },
+        "O": {
+            "EU": 32700
+        },
+        "eut": 0,
+        "dur": 0.05
+    },
+    {
+        "m": "vacuum freezer",
+        "tier": "HV",
+        "I": {
+            "oxygen": 1000
+        },
+        "O": {
+            "liquid oxygen": 1000
+        },
+        "eut": 480,
+        "dur": 60
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "butene": 1000,
+            "ethanol": 1000
+        },
+        "O": {
+            "anti-knock agent": 2000
+        },
+        "eut": 480,
+        "dur": 20
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "oxygen": 10000,
+            "nitrogen": 20000
+        },
+        "O": {
+            "nitrous oxide": 30000
+        },
+        "eut": 480,
+        "dur": 2.5
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "toluene": 1000,
+            "raw gasoline": 10000
+        },
+        "O": {
+            "gasoline": 11000
+        },
+        "eut": 480,
+        "dur": 0.5
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "acetone": 1000,
+            "methanol": 1000,
+            "refinery gas": 2000,
+            "naphtha": 16000
+        },
+        "O": {
+            "raw gasoline": 10000
+        },
+        "eut": 480,
+        "dur": 5
+    }
+]

@@ -1,0 +1,81 @@
+[
+    {
+        "m": "forge hammer",
+        "tier": "LV",
+        "I": {
+            "gravel": 1
+        },
+        "O": {
+            "sand": 1
+        },
+        "eut": 16,
+        "dur": 0.5
+    },
+    {
+        "m": "forge hammer",
+        "tier": "LV",
+        "I": {
+            "cobblestone": 1
+        },
+        "O": {
+            "gravel": 1
+        },
+        "eut": 16,
+        "dur": 0.5
+    },
+    {
+        "m": "rock breaker",
+        "tier": "LV",
+        "I": {},
+        "O": {
+            "cobblestone": 1
+        },
+        "eut": 30,
+        "dur": 0.8
+    },
+    {
+        "m": "macerator",
+        "tier": "LV",
+        "I": {
+            "sand": 1
+        },
+        "O": {
+            "quartz sand": 1
+        },
+        "eut": 7,
+        "dur": 10
+    },
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "quartz sand": 9
+        },
+        "O": {
+            "stone dust": 0.9,
+            "certus quartz dust": 0.3,
+            "nether quartz dust": 0.2,
+            "quartzite dust": 0.15,
+            "cassiterite dust": 0.1,
+            "silicon dioxide dust": 0.075
+        },
+        "eut": 16,
+        "dur": 108
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "cassiterite dust": 1
+        },
+        "O": {
+            "tin dust": 1,
+            "oxygen": 2000
+        },
+        "eut": 30,
+        "dur": 6.6,
+        "target": {
+            "oxygen": 1000
+        }
+    }
+]

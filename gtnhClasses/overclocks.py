@@ -91,20 +91,25 @@ def modifyGTpp(recipe):
     if recipe.machine not in GTpp_stats:
         raise RuntimeError('Missing OC data for GT++ multi - add to gtnhClasses/overclocks.py:GTpp_stats')
 
+    # Get per-machine boosts
     SPEED_BOOST, EU_DISCOUNT, PARALLELS_PER_TIER = GTpp_stats[recipe.machine]
     SPEED_BOOST = 1/(SPEED_BOOST+1)
 
+    # Calculate base parallel count and clip time to 1 tick
     available_eut = voltage_cutoffs[voltages.index(recipe.user_voltage)]
     MAX_PARALLEL = (voltages.index(recipe.user_voltage) + 1) * PARALLELS_PER_TIER
     NEW_RECIPE_TIME = max(recipe.dur * SPEED_BOOST, 20)
 
+    # Calculate current EU/t spend
     x = recipe.eut * EU_DISCOUNT
     y = min(int(available_eut/x), MAX_PARALLEL)
     TOTAL_EUT = x*y
 
+    # Debug info
     cprint('Base GT++ OC stats:', 'yellow')
     cprint(f'{available_eut=} {MAX_PARALLEL=} {NEW_RECIPE_TIME=} {TOTAL_EUT=} {y=}', 'yellow')
 
+    # Attempt to GT OC the entire parallel set until no energy is left
     while TOTAL_EUT < available_eut:
         OC_EUT = TOTAL_EUT * 4
         OC_DUR = NEW_RECIPE_TIME / 2

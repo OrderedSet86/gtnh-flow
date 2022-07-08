@@ -1,0 +1,56 @@
+[
+    {
+        "m": "rock breaker",
+        "tier": "LV",
+        "I": {
+            "redstone": 1
+        },
+        "O": {
+            "obsidian": 1
+        },
+        "eut": 30,
+        "dur": 6.4
+    },
+    {
+        "m": "alloy smelter",
+        "tier": "LV",
+        "I": {
+            "obsidian": 1
+        },
+        "O": {
+            "obsidian ingot": 9
+        },
+        "eut": 3,
+        "dur": 6.5
+    },
+    {
+        "m": "macerator",
+        "tier": "LV",
+        "I": {
+            "obsidian ingot": 1
+        },
+        "O": {
+            "obsidian dust": 1
+        },
+        "eut": 4,
+        "dur": 1.1
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "obsidian dust": 12
+        },
+        "O": {
+            "magnesium dust": 1,
+            "iron dust": 1,
+            "raw silicon dust": 2,
+            "oxygen": 8000
+        },
+        "eut": 90,
+        "dur": 12,
+        "target": {
+            "raw silicon dust": 1
+        }
+    }
+]

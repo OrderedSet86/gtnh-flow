@@ -64,6 +64,7 @@ class Recipe:
         self.eut = eut
         self.dur = dur
         self.multiplier = 1
+        self.base_eut = eut # Used for final graph output
         for key, value in kwargs.items():
             setattr(self, key, value)
 
