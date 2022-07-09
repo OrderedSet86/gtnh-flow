@@ -2,6 +2,8 @@ from bisect import bisect_right
 
 from termcolor import cprint
 
+from dataClasses.base import Ingredient, IngredientCollection
+
 
 coil_multipliers = {
     'cupronickel': 0.5,
@@ -98,7 +100,7 @@ def modifyGTpp(recipe):
     # Calculate base parallel count and clip time to 1 tick
     available_eut = voltage_cutoffs[voltages.index(recipe.user_voltage)]
     MAX_PARALLEL = (voltages.index(recipe.user_voltage) + 1) * PARALLELS_PER_TIER
-    NEW_RECIPE_TIME = max(recipe.dur * SPEED_BOOST, 20)
+    NEW_RECIPE_TIME = max(recipe.dur * SPEED_BOOST, 1)
 
     # Calculate current EU/t spend
     x = recipe.eut * EU_DISCOUNT
@@ -239,6 +241,39 @@ def modifyMultiSmelter(recipe):
     recipe.O *= batch_size
     return recipe
 
+def modifyTGS(recipe):
+    # This enforces a known overclock chart - too lazy to look up the code
+    require(
+        recipe,
+        [
+            ['saw_type', str]
+        ]
+    )
+    saw_multipliers = {
+        'saw': 1,
+        'buzzsaw': 2,
+        'chainsaw': 4,
+    }
+    assert recipe.saw_type in saw_multipliers, f'"saw_type" must be in {saw_multipliers}'
+    assert recipe.user_voltage in {'LV', 'MV', 'HV', 'EV', 'IV', 'LuV', 'ZPM'}, 'Bother Order#0001 on Discord and tell him to read the code and stop being lazy'
+
+    TGS_outputs = [5, 9, 17, 29, 45, 65, 89]
+    oc_idx = voltages.index(recipe.user_voltage)
+    TGS_wood_out = TGS_outputs[oc_idx] * saw_multipliers[recipe.saw_type]
+
+    assert len(recipe.O) <= 1, 'Automatic TGS overclocking only supported for single output - contact dev for more details'
+
+    # Mutate final recipe
+    if len(recipe.O) == 0:
+        recipe.O = IngredientCollection(Ingredient('wood', TGS_wood_out))
+    else:
+        recipe.O = IngredientCollection(Ingredient(recipe.O._ings[0].name, TGS_wood_out))
+    recipe.eut = voltage_cutoffs[oc_idx] - 1
+    print(oc_idx)
+    recipe.dur = max(100/(2**(oc_idx)), 1)
+
+    return recipe
+
 
 def calculateStandardOC(recipe):
     base_voltage = bisect_right(voltage_cutoffs, recipe.eut)
@@ -308,6 +343,8 @@ def overclockRecipe(recipe):
         'chemical plant': modifyChemPlant,
         'exxonmobil': modifyChemPlant,
         'zhuhai': modifyZhuhai,
+        'tree growth simulator': modifyTGS,
+        'tgs': modifyTGS,
     }
     if recipe.machine in machine_overrides:
         return machine_overrides[recipe.machine](recipe)

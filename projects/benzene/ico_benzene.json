@@ -38,7 +38,8 @@
             "oak wood": 48
         },
         "eut": 480,
-        "dur": 5
+        "dur": 5,
+        "saw_type": "saw"
     },
     {
         "m": "centrifuge",

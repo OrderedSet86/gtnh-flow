@@ -12,10 +12,10 @@
         },
         "eut": 30,
         "dur": 30,
-        "number": 1
-        // "target": {
-        //     "good circuit board": 1
-        // }
+        // "number": 1
+        "target": {
+            "good circuit board": 1
+        }
     },
     {
         "m": "bending machine",
@@ -92,5 +92,19 @@
         },
         "eut": 7,
         "dur": 3
+    },
+    {
+
+        "m": "electrolyzer",
+        "tier": "LV",
+        "I": {
+            "salt": 2
+        },
+        "O": {
+            "sodium dust": 1,
+            "chlorine": 1000
+        },
+        "eut": 30,
+        "dur": 16
     }
 ]

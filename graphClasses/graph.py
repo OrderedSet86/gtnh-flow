@@ -251,7 +251,7 @@ class Graph:
                 # Color edge as "locked"
                 self.nodes[rec_id].update({'fillcolor': 'green'})
                 existing_label = self.nodes[rec_id]['label']
-                self.nodes[rec_id]['label'] = f'{rec.multiplier}x {rec.user_voltage} {existing_label}\nCycle: {rec.dur/20}s\nAvg. EU/t: {rec.eut}\nBase EU/t: {rec.base_eut}'
+                self.nodes[rec_id]['label'] = f'{rec.multiplier}x {rec.user_voltage} {existing_label}\nCycle: {rec.dur/20}s\nAvg. EU/t: {rec.eut}\nMachine Usage: {rec.base_eut}'
 
                 # Lock all adjacent ingredient edges
                 self._simpleLockMachineEdges(str(rec_id), rec) # Used when multiplier is known
@@ -282,7 +282,7 @@ class Graph:
             # Color edge as locked
             self.nodes[rec_id].update({'fillcolor': 'green'})
             existing_label = self.nodes[rec_id]['label']
-            self.nodes[rec_id]['label'] = f'{rec.multiplier}x {rec.user_voltage} {existing_label}\nCycle: {rec.dur/20}s\nAvg. EU/t: {rec.eut}\nBase EU/t: {rec.base_eut}'
+            self.nodes[rec_id]['label'] = f'{rec.multiplier}x {rec.user_voltage} {existing_label}\nCycle: {rec.dur/20}s\nAvg. EU/t: {rec.eut}\nMachine Usage: {rec.base_eut}'
 
             # Lock all adjacent ingredient edges
             self._simpleLockMachineEdges(str(rec_id), rec) # Used when multiplier is known
@@ -643,6 +643,7 @@ class Graph:
         special_machine_weights = {
             'distillation tower': 10,
             'pyrolyse oven': 5,
+            'electric blast furnace': 5,
             'multi smelter': 3,
             'zhuhai': 3,
             'vacuum freezer': 3,
