@@ -1,0 +1,22 @@
+[
+    {
+        "m": "centrifuge",
+        "tier": "HV",
+        "I": {
+            "mars stone dust": 36
+        },
+        "O": {
+            "banded iron dust": 4.5,
+            "magnesium dust": 2.7,
+            "alumina dust": 6.4,
+            "ruby dust": 0.3,
+            "diamond dust": 0.2,
+            "iridium metal residue dust": 0.1
+        },
+        "eut": 480,
+        "dur": 121.5,
+        "target": {
+            "magnesium dust": 1
+        }
+    }
+]

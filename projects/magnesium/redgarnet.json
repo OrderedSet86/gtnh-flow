@@ -1,0 +1,34 @@
+[
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "red garnet dust": 16
+        },
+        "O": {
+            "pyrope dust": 3,
+            "alamandine dust": 5,
+            "spessartine dust": 8
+        },
+        "eut": 15,
+        "dur": 73.6
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "pyrope dust": 20
+        },
+        "O": {
+            "aluminium dust": 2,
+            "magnesium dust": 3,
+            "raw silicon dust": 3,
+            "oxygen": 12000
+        },
+        "eut": 90,
+        "dur": 20,
+        "target": {
+            "magnesium dust": 1
+        }
+    }
+]

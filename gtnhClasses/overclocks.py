@@ -73,7 +73,11 @@ GTpp_stats = {
     'boldarnator': [2.0, 0.75, 8],
     'industrial rock breaker': [2.0, 0.75, 8],
 
-    'dangote - distillery': [0, 1.0, 48]
+    'dangote - distillery': [0, 1.0, 48],
+
+    'utupu-tanuri': [1.2, 0.5, 4],
+    'utupu tanuri': [1.2, 0.5, 4],
+    'industrial dehydrator': [1.2, 0.5, 4],
 }
 
 voltage_cutoffs = [33, 129, 513, 2049, 8193, 32769, 131_073, 524_289, 2_097_153]
@@ -177,7 +181,7 @@ def modifyChemPlant(recipe):
         'tungstensteel': 4,
     }
 
-    recipe.dur *= coil_multipliers[recipe.coils]
+    recipe.dur /= coil_multipliers[recipe.coils]
     throughput_multiplier = (2*chem_plant_pipe_casings[recipe.pipe_casings])
     recipe.I *= throughput_multiplier
     recipe.O *= throughput_multiplier
@@ -241,6 +245,7 @@ def modifyMultiSmelter(recipe):
     recipe.O *= batch_size
     return recipe
 
+
 def modifyTGS(recipe):
     # This enforces a known overclock chart - too lazy to look up the code
     require(
@@ -271,6 +276,55 @@ def modifyTGS(recipe):
     recipe.eut = voltage_cutoffs[oc_idx] - 1
     print(oc_idx)
     recipe.dur = max(100/(2**(oc_idx)), 1)
+
+    return recipe
+
+
+def modifyUtupu(recipe):
+    require(
+        recipe,
+        [
+            ['coils', str],
+            ['heat', int],
+        ]
+    )
+
+    ### First do parallel step of GTpp
+    if recipe.machine not in GTpp_stats:
+        raise RuntimeError('Missing OC data for GT++ multi - add to gtnhClasses/overclocks.py:GTpp_stats')
+
+    # Get per-machine boosts
+    SPEED_BOOST, EU_DISCOUNT, PARALLELS_PER_TIER = GTpp_stats[recipe.machine]
+    SPEED_BOOST = 1/(SPEED_BOOST+1)
+
+    # Calculate base parallel count and clip time to 1 tick
+    available_eut = voltage_cutoffs[voltages.index(recipe.user_voltage)]
+    MAX_PARALLEL = (voltages.index(recipe.user_voltage) + 1) * PARALLELS_PER_TIER
+    NEW_RECIPE_TIME = max(recipe.dur * SPEED_BOOST, 1)
+
+    # Calculate current EU/t spend
+    x = recipe.eut * EU_DISCOUNT
+    y = min(int(available_eut/x), MAX_PARALLEL)
+    TOTAL_EUT = x*y
+
+    # Debug info
+    cprint('Base GT++ OC stats:', 'yellow')
+    cprint(f'{available_eut=} {MAX_PARALLEL=} {NEW_RECIPE_TIME=} {TOTAL_EUT=} {y=}', 'yellow')
+
+    ### Now do GT EBF OC
+    base_voltage = bisect_right(voltage_cutoffs, TOTAL_EUT)
+    user_voltage = voltages.index(recipe.user_voltage)
+    oc_count = user_voltage - base_voltage
+
+    actual_heat = coil_heat[recipe.coils] # + 100 * min(0, user_voltage - 1) # I assume there's no bonus heat on UT
+    excess_heat = actual_heat - recipe.heat
+    eut_discount = 0.95 ** (excess_heat // 900)
+    perfect_ocs = (excess_heat // 1800)
+
+    recipe.eut = TOTAL_EUT * 4**oc_count * eut_discount
+    recipe.dur = NEW_RECIPE_TIME / 2**oc_count / 2**max(min(perfect_ocs, oc_count), 0)
+    recipe.I *= y
+    recipe.O *= y
 
     return recipe
 
@@ -345,6 +399,13 @@ def overclockRecipe(recipe):
         'zhuhai': modifyZhuhai,
         'tree growth simulator': modifyTGS,
         'tgs': modifyTGS,
+        'utupu-tanuri': modifyUtupu,
+        'utupu tanuri': modifyUtupu,
+        'industrial dehydrator': modifyUtupu,
+        'flotation cell': modifyPerfect,
+        'flotation cell regulator': modifyPerfect,
+        'isamill': modifyPerfect,
+        'isamill grinding machine': modifyPerfect,
     }
     if recipe.machine in machine_overrides:
         return machine_overrides[recipe.machine](recipe)

@@ -1,0 +1,35 @@
+[
+    {
+        "m": "centrifuge",
+        "tier": "IV",
+        "I": {
+            "lava": 100
+        },
+        "O": {
+            "silicon dioxide dust": 0.125,
+            "magnesia dust": 0.025,
+            "quicklime dust": 0.025,
+            "golden nugget": 0.025,
+            "sapphire dust": 0.03125,
+            "tantalite dust": 0.0125
+        },
+        "eut": 90,
+        "dur": 12
+    },
+    {
+        "m": "centrifuge",
+        "tier": "IV",
+        "I": {
+            "magnesia dust": 2
+        },
+        "O": {
+            "magnesium dust": 1,
+            "oxygen": 1000
+        },
+        "eut": 30,
+        "dur": 2,
+        "target": {
+            "magnesium dust": 1
+        }
+    }
+]

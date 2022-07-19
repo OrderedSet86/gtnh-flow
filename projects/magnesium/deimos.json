@@ -1,0 +1,36 @@
+[
+    {
+        "m": "centrifuge",
+        "tier": "HV",
+        "I": {
+            "deimos stone dust": 36
+        },
+        "O": {
+            "magnesite dust": 4.5,
+            "lapis dust": 2.7,
+            "pitchblende": 0.9,
+            "sheldonite dust": 0.3,
+            "neodymium dust": 0.26,
+            "tungstate dust": 0.14
+        },
+        "eut": 480,
+        "dur": 121.5
+    },
+    {
+        "m": "centrifuge",
+        "tier": "MV",
+        "I": {
+            "magnesite dust": 5
+        },
+        "O": {
+            "magnesium dust": 1,
+            "carbon dust": 1,
+            "oxygen": 3000
+        },
+        "eut": 60,
+        "dur": 4,
+        "target": {
+            "magnesium dust": 1
+        }
+    }
+]

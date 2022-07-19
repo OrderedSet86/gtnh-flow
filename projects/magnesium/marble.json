@@ -1,0 +1,18 @@
+[
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "marble dust": 8
+        },
+        "O": {
+            "magnesium dust": 1,
+            "calcite dust": 7
+        },
+        "eut": 10,
+        "dur": 32,
+        "target": {
+            "magnesium dust": 1
+        }
+    }
+]
