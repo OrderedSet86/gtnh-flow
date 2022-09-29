@@ -59,10 +59,10 @@
         "tier": "LV",
         "I": {
             "cetane-boosted diesel": 1000,
-            "combustion promoter": 1500
+            "combustion promoter": 10
         },
         "O": {
-            "EU": 1500000
+            "EU": 0
         },
         "eut": 0,
         "dur": 1,

@@ -1,7 +1,7 @@
 [
     {
         "m": "chemical bath",
-        "tier": "LV",
+        "tier": "IV",
         "I": {
             "sodium dust": 1,
             "water": 1000
@@ -15,7 +15,7 @@
     },
     {
         "m": "electrolyzer",
-        "tier": "MV",
+        "tier": "IV",
         "I": {
             "sodium hydroxide dust": 3
         },
@@ -27,7 +27,7 @@
         "eut": 60,
         "dur": 50,
         "target": {
-            "hydrogen": 400
+            "oxygen": 1000
         }
     }
 ]

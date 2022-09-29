@@ -74,8 +74,7 @@ class Graph:
                 for ing in getattr(rec, io_type):
                     involved_recipes[ing.name][io_type].append(rec_id)
 
-        # Add I/O connections
-        added_edges = set()
+        # Create initial nodes
         for rec_id, rec in self.recipes.items():
             # Create machine label
             if self.graph_config['SHOW_MACHINE_INDICES']:
@@ -98,6 +97,10 @@ class Graph:
                 fillcolor='lightblue2',
                 label=machine_label
             )
+        
+        # Add I/O connections
+        added_edges = set()
+        for rec_id, rec in self.recipes.items():
             for io_type in ['I', 'O']:
                 for ing in getattr(rec, io_type):
                     linked_machines = involved_recipes[ing.name][swapIO(io_type)]
@@ -251,7 +254,12 @@ class Graph:
                 # Color edge as "locked"
                 self.nodes[rec_id].update({'fillcolor': 'green'})
                 existing_label = self.nodes[rec_id]['label']
-                self.nodes[rec_id]['label'] = f'{rec.multiplier}x {rec.user_voltage} {existing_label}\nCycle: {rec.dur/20}s\nAvg. EU/t: {rec.eut}\nMachine Usage: {rec.base_eut}'
+                self.nodes[rec_id]['label'] = '\n'.join([
+                    f'{round(rec.multiplier, 2)}x {rec.user_voltage} {existing_label}',
+                    f'Cycle: {rec.dur/20}s',
+                    f'Amoritized: {round(rec.eut, 2)} EU/t',
+                    f'Per Machine: {round(rec.base_eut, 2)} EU/t',
+                ])
 
                 # Lock all adjacent ingredient edges
                 self._simpleLockMachineEdges(str(rec_id), rec) # Used when multiplier is known
@@ -282,7 +290,13 @@ class Graph:
             # Color edge as locked
             self.nodes[rec_id].update({'fillcolor': 'green'})
             existing_label = self.nodes[rec_id]['label']
-            self.nodes[rec_id]['label'] = f'{rec.multiplier}x {rec.user_voltage} {existing_label}\nCycle: {rec.dur/20}s\nAvg. EU/t: {rec.eut}\nMachine Usage: {rec.base_eut}'
+            self.nodes[rec_id]['label'] = '\n'.join([
+                f'{round(rec.multiplier, 2)}x {rec.user_voltage} {existing_label}',
+                f'Cycle: {rec.dur/20}s',
+                f'Amoritized: {round(rec.eut, 2)} EU/t',
+                f'Per Machine: {round(rec.base_eut, 2)} EU/t',
+            ])
+
 
             # Lock all adjacent ingredient edges
             self._simpleLockMachineEdges(str(rec_id), rec) # Used when multiplier is known
@@ -563,10 +577,12 @@ class Graph:
             # 3. Compute UCFE ratio and output EU/s
             combustion_promoter_quant = input_ingredient_collection['combustion promoter'][0]
             fuel_quant = input_ingredient_collection[fuel_name][0]
-            ratio = fuel_quant / combustion_promoter_quant
+            ratio = combustion_promoter_quant / fuel_quant
+            cprint(f'UCFE power ratio: {ratio}', 'green')
 
             efficiency = math.exp(-coefficient*ratio) * 1.5
-            output_eu = efficiency * fuel_quant * burn_value_table[fuel_name] / 1000
+            cprint(f'Efficiency stat: {efficiency}', 'green')
+            output_eu = efficiency * burn_value_table[fuel_name] * (fuel_quant / 1000)
 
             # 4. Update edge with new value
             self.edges[(UCFE_id, 'sink', 'EU')]['quant'] = output_eu
@@ -611,7 +627,7 @@ class Graph:
                 continue
 
             # Skip if too small (intended to avoid floating point issues)
-            near_zero_range = 10**-7
+            near_zero_range = 10**-5
             if -near_zero_range < quant < near_zero_range:
                 continue
 
@@ -726,8 +742,8 @@ class Graph:
         self.nodes[rec_id]['label'] = '\n'.join([
             f'{round(rec.multiplier, 2)}x {rec.user_voltage} {existing_label}',
             f'Cycle: {rec.dur/20}s',
-            f'Avg. EU/t: {round(rec.eut, 2)}',
-            f'Machine Usage: {rec.base_eut}',
+            f'Amoritized: {round(rec.eut, 2)} EU/t',
+            f'Per Machine: {round(rec.base_eut, 2)} EU/t',
         ])
 
         # Lock ingredient edges using new quant
@@ -1150,33 +1166,33 @@ class Graph:
             engine='dot',
             strict=False, # Prevents edge grouping
             graph_attr={
-                # 'splines': 'ortho',
-                # 'rankdir': 'TD',
-                # 'ranksep': '0.5',
+                'splines': 'true',
+                'rankdir': 'TD',
+                'ranksep': '0.5',
                 # 'overlap': 'scale',
                 'bgcolor': self.darkModeColor,
                 # 'mindist': '0.1',
                 # 'overlap': 'false',
+                'nodesep': '0.1',
             }
         )
 
-        # Populate nodes
+        # Collect nodes by subgraph grouping
+        groups = defaultdict(list)
+        groups['no-group'] = []
         for rec_id, kwargs in self.nodes.items():
-            if isinstance(rec_id, int):
-                g.node(
-                    str(rec_id),
-                    **kwargs,
-                    **node_style
-                )
-            elif isinstance(rec_id, str):
-                g.node(
-                    str(rec_id),
-                    **kwargs,
-                    **node_style
-                )
+            repackaged = (rec_id, kwargs)
+            if rec_id in self.recipes:
+                rec = self.recipes[rec_id]
+                if hasattr(rec, 'group'):
+                    groups[rec.group].append(repackaged)
+                else:
+                    groups['no-group'].append(repackaged)
+            else:
+                groups['no-group'].append(repackaged)
 
-        # Populate edges
-        edgecolor_cycle = [
+        # Create color cycle object for group and edge coloring
+        color_cycle = [
             'white',
             'orange',
             'yellow',
@@ -1184,9 +1200,57 @@ class Graph:
             'violet',
         ]
         if self.graph_config.get('USE_RAINBOW_EDGES', None):
-            cycle_obj = itertools.cycle(edgecolor_cycle)
+            cycle_obj = itertools.cycle(color_cycle)
         else:
             cycle_obj = itertools.cycle(['white'])
+
+        # Populate nodes by group
+        for group in groups:
+            if group == 'no-group':
+                # Don't draw subgraph if not part of a group
+                for rec_id, kwargs in groups[group]:
+                    if isinstance(rec_id, int):
+                        g.node(
+                            str(rec_id),
+                            **kwargs,
+                            **node_style
+                        )
+                    elif isinstance(rec_id, str):
+                        g.node(
+                            str(rec_id),
+                            **kwargs,
+                            **node_style
+                        )
+            else:
+                with g.subgraph(name=f'cluster_{group}') as c:
+                    print(f'Creating subgraph {group}')
+                    subgraph_color = next(cycle_obj)
+
+                    # Populate nodes
+                    for rec_id, kwargs in groups[group]:
+                        if isinstance(rec_id, int):
+                            c.node(
+                                str(rec_id),
+                                **kwargs,
+                                **node_style
+                            )
+                        elif isinstance(rec_id, str):
+                            c.node(
+                                str(rec_id),
+                                **kwargs,
+                                **node_style
+                            )
+
+                    payload = group.upper()
+                    ln = f'<tr><td align="left"><font color="{subgraph_color}" face="Verdana">{payload}</font></td></tr>'
+                    tb = f'<<table border="0">{ln}</table>>'
+                    c.attr(
+                        color=subgraph_color,
+                        label=tb,
+                        fontsize="20pt"
+                    )
+
+        # Populate edges
         ingredient_colors = {}
 
         capitalization_exceptions = {

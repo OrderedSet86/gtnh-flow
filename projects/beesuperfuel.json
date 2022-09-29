@@ -1,0 +1,401 @@
+[
+    {
+        "m": "zhuhai",
+        "tier": "IV",
+        "I": {},
+        "O": {
+            "pams fish": 0.81818181,
+            "vanilla fish": 0.18181818
+        },
+        "eut": 16,
+        "dur": 5
+    },
+    {
+        "m": "fluid extractor",
+        "tier": "LV",
+        "I": {
+            "pams fish": 1
+        },
+        "O": {
+            "fish oil": 50
+        },
+        "eut": 4,
+        "dur": 0.8
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "MV",
+        "I": {
+            "oxygen": 1000,
+            "hydrogen": 4000,
+            "carbon dust": 1
+        },
+        "O": {
+            "methanol": 1000
+        },
+        "eut": 96,
+        "dur": 16
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "LV",
+        "I": {
+            "fish oil": 54000,
+            "methanol": 9000,
+            "sodium hydroxide dust": 1
+        },
+        "O": {
+            "bio diesel": 54000,
+            "glycerol": 9000
+        },
+        "eut": 30,
+        "dur": 270
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "bio diesel": 10000,
+            "tetranitromethane": 400
+        },
+        "O": {
+            "cetane-boosted diesel": 9000
+        },
+        "eut": 480,
+        "dur": 6
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "MV",
+        "I": {
+            "nitric acid": 8000,
+            "ethenone": 1000
+        },
+        "O": {
+            "tetranitromethane": 2000,
+            "water": 9000
+        },
+        "eut": 120,
+        "dur": 24
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "LV",
+        "I": {
+            "oxygen": 4000,
+            "ammonia": 1000
+        },
+        "O": {
+            "nitric acid": 1000,
+            "water": 1000
+        },
+        "eut": 30,
+        "dur": 16
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "nitrogen": 1000,
+            "hydrogen": 3000
+        },
+        "O": {
+            "ammonia": 1000
+        },
+        "eut": 384,
+        "dur": 16
+    },
+    {
+        "m": "mixer",
+        "tier": "EV",
+        "I": {
+            "block of charcoal": 1,
+            "magic super fuel binder": 4,
+            "alumentum": 4,
+            "cetane-boosted diesel": 750
+        },
+        "O": {
+            "magic solid super fuel": 1
+        },
+        "eut": 384,
+        "dur": 16,
+        "target": {
+            "magic solid super fuel": 1
+        }
+    },
+    {
+        "m": "burn value conversion",
+        "tier": "LV",
+        "I": {
+            "magic solid super fuel": 1
+        },
+        "O": {
+            "burn_in_sec": 14.05
+        },
+        "eut": 0,
+        "dur": 0.05
+    },
+    {
+        "m": "tungstensteel boiler",
+        "tier": "LV",
+        "I": {
+            "burn_in_sec": 1
+        },
+        "O": {
+            "superheated steam": 213333
+        },
+        "eut": 0,
+        "dur": 1
+    },
+    {
+        "m": "huge stellar alloy steam turbine",
+        "tier": "LV",
+        "I": {
+            "superheated steam": 19200
+        },
+        "O": {
+            "EU": 28800
+        },
+        "eut": 0,
+        "dur": 0.05
+    },
+    {
+        "m": "mixer",
+        "tier": "MV",
+        "I": {
+            "super fuel binder": 20,
+            "aer crystal powder": 1,
+            "fiery blood": 50
+        },
+        "O": {
+            "magic super fuel binder": 20
+        },
+        "eut": 64,
+        "dur": 10
+    },
+    {
+        "m": "centrifuge",
+        "tier": "HV",
+        "I": {
+            "hydra comb": 1
+        },
+        "O": {
+            "[output] breezey propolis": 0.05,
+            "hydra + fiery blood drop": 1,
+            "beeswax": 0.3
+        },
+        "eut": 480,
+        "dur": 19.2
+    },
+    {
+        "m": "centrifuge",
+        "tier": "HV",
+        "I": {
+            "hydra + fiery blood drop": 1
+        },
+        "O": {
+            "burning propolis": 0.024,
+            "fiery blood": 7.3
+        },
+        "eut": 480,
+        "dur": 4.10933333
+    },
+    {
+        "m": "crafting table",
+        "tier": "LV",
+        "I": {
+            "air infused dust": 1
+        },
+        "O": {
+            "aer crystal powder": 0.25
+        },
+        "eut": 0,
+        "dur": 1
+    },
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "breezey propolis": 1
+        },
+        "O": {
+            "propolis": 1,
+            "air infused dust": 0.9
+        },
+        "eut": 5,
+        "dur": 6.4
+    },
+    {
+        "m": "centrifuge",
+        "tier": "LV",
+        "I": {
+            "glittering windy comb": 1
+        },
+        "O": {
+            "magic wax": 1,
+            "breezey propolis": 0.8,
+            "feather": 0.6
+        },
+        "eut": 5,
+        "dur": 6.4
+    },
+    {
+        "m": "thaumatorium",
+        "tier": "LV",
+        "I": {
+            "charcoal dust": 4
+        },
+        "O": {
+            "alumentum": 1
+        },
+        "eut": 0,
+        "dur": 1
+    },
+    {
+        "m": "macerator",
+        "tier": "LV",
+        "I": {
+            "charcoal": 1
+        },
+        "O": {
+            "charcoal dust": 1
+        },
+        "eut": 4,
+        "dur": 0.8
+    },
+    {
+        "m": "compressor",
+        "tier": "LV",
+        "I": {
+            "charcoal": 9
+        },
+        "O": {
+            "block of charcoal": 1
+        },
+        "eut": 2,
+        "dur": 15
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "MV",
+        "I": {
+            "sulfuric acid": 500,
+            "acetic acid": 1000
+        },
+        "O": {
+            "ethenone": 1000
+        },
+        "eut": 120,
+        "dur": 8
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "LV",
+        "I": {
+            "oxygen": 3000,
+            "sulfur dust": 1
+        },
+        "O": {
+            "sulfuric acid": 1000
+        },
+        "eut": 30,
+        "dur": 24
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "LV",
+        "I": {
+            "oxygen": 2000,
+            "hydrogen": 4000,
+            "carbon dust": 2
+        },
+        "O": {
+            "acetic acid": 1000
+        },
+        "eut": 30,
+        "dur": 24
+    },
+    {
+        "m": "mixer",
+        "tier": "LV",
+        "I": {
+            "sulfur dust": 1,
+            "lithium dust": 1,
+            "wood pulp": 4,
+            "advanced glue": 200
+        },
+        "O": {
+            "super fuel binder": 8
+        },
+        "eut": 16,
+        "dur": 40
+    },
+    {
+        "m": "electrolyzer",
+        "tier": "MV",
+        "I": {
+            "clay dust": 13
+        },
+        "O": {
+            "sodium dust": 2,
+            "lithium dust": 1,
+            "alumina dust": 2,
+            "silicon dioxide dust": 2
+        },
+        "eut": 120,
+        "dur": 7.8
+    },
+    {
+        "m": "mixer",
+        "tier": "LV",
+        "I": {
+            "polyvinyl acetate": 1000,
+            "acetone": 1500
+        },
+        "O": {
+            "advanced glue": 2500
+        },
+        "eut": 7,
+        "dur": 2.5
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "acetic acid": 2000
+        },
+        "O": {
+            "acetone": 1000,
+            "co2 gas": 1000
+        },
+        "eut": 480,
+        "dur": 20
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "vinyl acetate": 144,
+            "oxygen": 1000
+        },
+        "O": {
+            "polyvinyl acetate": 216
+        },
+        "eut": 30,
+        "dur": 8
+    },
+    {
+        "m": "large chemical reactor",
+        "tier": "HV",
+        "I": {
+            "acetic acid": 1000,
+            "ethylene": 1000,
+            "oxygen": 1000
+        },
+        "O": {
+            "vinyl acetate": 1000
+        },
+        "eut": 30,
+        "dur": 9
+    }
+]

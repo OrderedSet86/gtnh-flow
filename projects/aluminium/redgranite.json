@@ -1,7 +1,7 @@
 [
     {
         "m": "electrolyzer",
-        "tier": "MV",
+        "tier": "IV",
         "I": {
             "red granite dust": 6
         },
@@ -15,20 +15,5 @@
         "target": {
             "aluminium dust": 1
         }
-    },
-    {
-        "m": "electrolyzer",
-        "tier": "MV",
-        "I": {
-            "potassium feldspar dust": 13
-        },
-        "O": {
-            "potassium dust": 1,
-            "aluminium dust": 1,
-            "raw silicon dust": 3,
-            "oxygen": 8000
-        },
-        "eut": 90,
-        "dur": 13
     }
 ]

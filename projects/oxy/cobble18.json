@@ -1,37 +1,23 @@
 [
     {
-        "m": "chemical reactor",
-        "tier": "LV",
-        "I": {
-            "silicon dioxide": 1,
-            "magnesium dust": 2
-        },
-        "O": {
-            "raw silicon dust": 1,
-            "magnesia dust": 2
-        },
-        "eut": 7,
-        "dur": 5
-    },
-    {
         "m": "electrolyzer",
-        "tier": "LV",
+        "tier": "IV",
         "I": {
-            "magnesia dust": 2
+            "silicon dioxide": 5
         },
         "O": {
-            "magnesium dust": 1,
-            "oxygen [output]": 1000
+            "silicon dust": 1,
+            "[output] oxygen": 3000
         },
-        "eut": 30,
-        "dur": 2,
+        "eut": 480,
+        "dur": 5,
         "target": {
-            "oxygen [output]": 1000
+            "[output] oxygen": 1000
         }
     },
     {
         "m": "centrifuge",
-        "tier": "LV",
+        "tier": "IV",
         "I": {
             "glass dust": 1
         },
@@ -43,7 +29,7 @@
     },
     {
         "m": "forge hammer",
-        "tier": "LV",
+        "tier": "IV",
         "I": {
             "glass": 1
         },
@@ -55,7 +41,7 @@
     },
     {
         "m": "arc furnace",
-        "tier": "MV",
+        "tier": "IV",
         "I": {
             "sand": 1,
             "oxygen": 2
@@ -68,7 +54,7 @@
     },
     {
         "m": "forge hammer",
-        "tier": "LV",
+        "tier": "IV",
         "I": {
             "gravel": 1
         },
@@ -80,7 +66,7 @@
     },
     {
         "m": "forge hammer",
-        "tier": "LV",
+        "tier": "IV",
         "I": {
             "cobblestone": 1
         },
@@ -89,5 +75,15 @@
         },
         "eut": 16,
         "dur": 0.5
+    },
+    {
+        "m": "rock breaker",
+        "tier": "IV",
+        "I": {},
+        "O": {
+            "cobblestone": 1
+        },
+        "eut": 30,
+        "dur": 0.8
     }
 ]

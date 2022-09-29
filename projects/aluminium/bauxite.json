@@ -1,7 +1,7 @@
 [
     {
         "m": "electrolyzer",
-        "tier": "IV",
+        "tier": "MV",
         "I": {
             "bauxite dust": 39
         },

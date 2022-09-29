@@ -226,7 +226,8 @@
             "oak wood": 68
         },
         "eut": 512,
-        "dur": 5
+        "dur": 5,
+        "saw_type": "chainsaw"
     },
     {
         "m": "air intake hatch",
