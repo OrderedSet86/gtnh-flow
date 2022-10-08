@@ -41,7 +41,7 @@
   eut: 1920
   dur: 2.5
 - m: electric blast furnace
-  tier: MV
+  tier: HV
   I:
     tungstic acid dust: 1
   O:
@@ -51,7 +51,7 @@
   heat: 1200
   coils: cupronickel
 - m: electric blast furnace
-  tier: HV
+  tier: EV
   I:
     tungsten trioxide dust: 1
     hydrogen: 3000

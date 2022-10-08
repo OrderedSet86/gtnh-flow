@@ -24,7 +24,7 @@
   eut: 2
   dur: 15
 - m: electric blast furnace
-  tier: MV
+  tier: HV
   I:
     bio chunk: 1
   O:

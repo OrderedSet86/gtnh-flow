@@ -77,7 +77,7 @@
   eut: 1040
   dur: 37.5
 - m: electric blast furnace
-  tier: HV
+  tier: EV
   I:
     zn-th alloy ingot: 1
     helium: 250
@@ -89,7 +89,7 @@
   coils: tungstensteel
   heat: 1900
 - m: electric blast furnace
-  tier: EV
+  tier: IV
   I:
     zinc chloride dust: 1
     calcium dust: 3

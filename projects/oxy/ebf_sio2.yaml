@@ -47,7 +47,7 @@
   eut: 30
   dur: 0.8
 - m: electric blast furnace
-  tier: LV
+  tier: MV
   I:
     silicon dioxide: 3
     carbon dust: 2

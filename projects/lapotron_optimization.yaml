@@ -105,7 +105,7 @@
   eut: 1920
   dur: 60
 - m: electric blast furnace
-  tier: EV
+  tier: IV
   heat: 3000
   coils: nichrome
   I:

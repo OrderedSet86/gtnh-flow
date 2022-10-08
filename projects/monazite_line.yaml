@@ -79,7 +79,7 @@
   eut: 480
   dur: 40
 - m: EBF
-  tier: IV
+  tier: LuV
   coils: HSS-G
   heat: 1200
   I:
@@ -134,7 +134,7 @@
   eut: 1920
   dur: 30
 - m: EBF
-  tier: IV
+  tier: LuV
   coils: HSS-G
   heat: 1200
   I:
@@ -203,7 +203,7 @@
   eut: 30
   dur: 10
 - m: EBF
-  tier: IV
+  tier: LuV
   coils: HSS-G
   heat: 2700
   I:
@@ -224,7 +224,7 @@
   eut: 30
   dur: 15
 - m: EBF
-  tier: IV
+  tier: LuV
   heat: 3400
   coils: HSS-G
   I:
@@ -257,7 +257,7 @@
 - m: EBF
   coils: HSS-G
   heat: 4500
-  tier: IV
+  tier: LuV
   I:
     magnesium: 2
     zirconium tetrachloride solution: 1000
@@ -269,7 +269,7 @@
 - m: EBF
   coils: HSS-G
   heat: 1500
-  tier: IV
+  tier: LuV
   I:
     thorium-phosphate cake dust: 1
   O:
@@ -309,7 +309,7 @@
 - m: EBF
   coils: HSS-G
   heat: 800
-  tier: IV
+  tier: LuV
   I:
     cerium oxalate dust: 1
   O:

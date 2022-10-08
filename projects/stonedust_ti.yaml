@@ -36,7 +36,7 @@
   eut: 90
   dur: 35.1
 - m: electric blast furnace
-  tier: MV
+  tier: HV
   I:
     ilmenite dust: 9
     carbon dust: 9

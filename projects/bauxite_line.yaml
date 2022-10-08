@@ -20,7 +20,7 @@
   eut: 480
   dur: 20
 - m: electric blast furnace
-  tier: MV
+  tier: HV
   I:
     magnesium dust: 2
     titanium tetrachloride: 1000

@@ -56,7 +56,7 @@
   coils: tungstensteel
   group: pmp recycling
 - m: electric blast furnace
-  tier: HV
+  tier: EV
   I:
     platinum residue dust: 1
     '[100% recycle] molten potassium disulfate': 360
@@ -68,7 +68,7 @@
   heat: 775
   coils: nichrome
 - m: electric blast furnace
-  tier: MV
+  tier: HV
   I:
     leach residue dust: 10
     saltpeter: 10
@@ -102,7 +102,7 @@
   dur: 1.15
   group: K2S2O7 recycling
 - m: electric blast furnace
-  tier: MV
+  tier: HV
   I:
     rarest metal residue dust: 2
     '[rep] hydrochloric acid': 500
@@ -115,7 +115,7 @@
   coils: nichrome
   group: rare element prep
 - m: electric blast furnace
-  tier: MV
+  tier: HV
   I:
     iridium metal residue dust: 1
   O:
@@ -290,7 +290,7 @@
   dur: 1.5
   group: platinum
 - m: electric blast furnace
-  tier: MV
+  tier: HV
   I:
     crude rhodium metal dust: 1
     salt: 1

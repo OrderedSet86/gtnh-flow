@@ -206,12 +206,11 @@ def modifyEBF(recipe):
             ['heat', int],
         ]
     )
-    ebf_voltage_cutoffs = [x*4 for x in voltage_cutoffs]
-    base_voltage = bisect_right(ebf_voltage_cutoffs, recipe.eut)
+    base_voltage = bisect_right(voltage_cutoffs, recipe.eut)
     user_voltage = voltages.index(recipe.user_voltage)
     oc_count = user_voltage - base_voltage
 
-    actual_heat = coil_heat[recipe.coils] + 100 * min(0, user_voltage - 1)
+    actual_heat = coil_heat[recipe.coils] + 100 * min(0, user_voltage - 2)
     excess_heat = actual_heat - recipe.heat
     eut_discount = 0.95 ** (excess_heat // 900)
     perfect_ocs = (excess_heat // 1800)

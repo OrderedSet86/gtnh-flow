@@ -28,7 +28,7 @@
   eut: 24
   dur: 20
 - m: electric blast furnace
-  tier: HV
+  tier: EV
   I:
     neodymium dust: 1
   O:
