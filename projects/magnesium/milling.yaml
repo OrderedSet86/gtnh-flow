@@ -1,0 +1,89 @@
+- m: utupu-tanuri
+  tier: EV
+  I:
+    pyrope froth: 4000
+  O:
+    magnesium dust: 110
+    manganese dust: 70
+    borax dust: 60
+    rhenium dust: 20
+    red mud slurry: 2000
+    '[output] water': 2000
+  eut: 1920
+  dur: 120
+  heat: 3500
+  coils: naquadah
+  target:
+    magnesium dust: 1
+- m: flotation cell
+  tier: ZPM
+  I:
+    sodium ethyl xanthate dust: 32
+    milled pyrope: 256
+    pine oil: 8000
+  O:
+    pyrope froth: 1000
+  eut: 1920
+  dur: 1200
+- m: isamill
+  tier: UV
+  I:
+    crushed pyrope ore: 16
+  O:
+    milled pyrope: 32
+  eut: 1920
+  dur: 375
+- m: chem plant
+  tier: LuV
+  I:
+    carbon disulfide: 1000
+  O:
+    sodium ethyl xanthate dust: 1
+  eut: 120
+  dur: 60
+  coils: tungstensteel
+  pipe_casings: tungstensteel
+- m: chem plant
+  tier: LuV
+  I:
+    coal gas: 1000
+  O:
+    carbon disulfide: 2000
+    hydrogen sulfide: 4000
+  eut: 30
+  dur: 300
+  coils: tungstensteel
+  pipe_casings: tungstensteel
+- m: industrial coke oven
+  tier: IV
+  I:
+    oak wood: 5
+    steam: 250
+  O:
+    charcoal: 6
+    coal gas: 360
+  eut: 30
+  dur: 14.4
+- m: chem plant
+  tier: LuV
+  I:
+    crushed pine materials: 64
+    superheated steam: 5000
+  O:
+    ashes: 0.3333333
+    dark ashes: 0.33333333
+    pine oil: 1500
+  eut: 120
+  dur: 45
+  coils: tungstensteel
+  pipe_casings: tungstensteel
+- m: chem plant
+  tier: LuV
+  I:
+    pine wood: 0.1
+  O:
+    crushed pine materials: 40
+  eut: 120
+  dur: 10
+  coils: tungstensteel
+  pipe_casings: tungstensteel

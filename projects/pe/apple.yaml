@@ -1,0 +1,45 @@
+- m: chemical reactor
+  tier: LV
+  I:
+    ethylene: 144
+    oxygen: 1000
+  O:
+    polyethylene: 216
+  eut: 30
+  dur: 8
+  target:
+    polyethylene: 100
+- m: fluid extractor
+  tier: LV
+  I:
+    apple: 1
+  O:
+    mulch: 0.2
+    fruit juice: 200
+  eut: 7
+  dur: 1.6
+- m: brewing machine
+  tier: LV
+  I:
+    mulch: 8
+    fruit juice: 500
+  O:
+    biomass: 750
+  eut: 4
+  dur: 6.4
+- m: dehydrator
+  tier: MV
+  I:
+    ethanol: 1000
+  O:
+    ethylene: 1000
+  eut: 80
+  dur: 120
+- m: distillery
+  tier: LV
+  I:
+    biomass: 40
+  O:
+    ethanol: 20
+  eut: 24
+  dur: 0.8

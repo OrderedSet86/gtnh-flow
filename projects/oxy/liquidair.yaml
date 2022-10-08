@@ -1,0 +1,34 @@
+- m: distillation tower
+  tier: EV
+  I:
+    liquid air: 100000000
+  O:
+    nitrogen: 78084000
+    oxygen: 20946000
+    argon: 934000
+    carbon dioxide: 40700
+    neon: 1818
+    helium: 524
+    methane: 180
+    krypton: 114
+    hydrogen: 55
+    xenon: 9
+  eut: 1920
+  dur: 375
+  target:
+    oxygen: 1000
+- m: vacuum freezer
+  tier: HV
+  I:
+    air: 2000
+  O:
+    liquid air: 1000
+  eut: 480
+  dur: 1.4
+- m: air intake hatch
+  tier: LV
+  I: {}
+  O:
+    air: 1000
+  eut: 0
+  dur: 0.2

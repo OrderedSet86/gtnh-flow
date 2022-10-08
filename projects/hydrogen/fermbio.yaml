@@ -1,0 +1,20 @@
+- m: distillery
+  tier: LV
+  I:
+    fermented biomass: 1000
+  O:
+    fertiliser: 1
+    methane: 600
+  eut: 7
+  dur: 75
+- m: large chemical reactor
+  tier: HV
+  I:
+    methane: 5000
+  O:
+    carbon dioxide: 5000
+    hydrogen: 20000
+  eut: 480
+  dur: 8.75
+  target:
+    hydrogen: 1000

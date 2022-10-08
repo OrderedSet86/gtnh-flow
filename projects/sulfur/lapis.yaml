@@ -1,0 +1,30 @@
+- m: electrolyzer
+  tier: MV
+  I:
+    pyrite dust: 3
+  O:
+    iron dust: 1
+    sulfur dust: 1
+  eut: 60
+  dur: 5.7
+  target:
+    sulfur dust: 1
+- m: centrifuge
+  tier: LV
+  I:
+    lapis dust: 16
+  O:
+    lazurite dust: 12
+    sodalite dust: 2
+    pyrite dust: 1
+    calcite dust: 1
+  eut: 20
+  dur: 89.6
+- m: centrifuge
+  tier: LV
+  I:
+    lapis lazuli: 1
+  O:
+    lapis dust: 1
+  eut: 4
+  dur: 1.4

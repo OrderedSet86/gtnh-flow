@@ -1,0 +1,33 @@
+- m: electrolyzer
+  tier: MV
+  I:
+    milk: 10000
+  O:
+    sugar: 5.25
+    calcium dust: 0.11111111
+    magnesium dust: 0.011111111
+    potassium dust: 0.11111111
+    sodium dust: 0.0444444444
+    phosphorus dust: 0.0111111111
+    '[output] water': 8832
+  eut: 120
+  dur: 2.5
+  target:
+    calcium dust: 1
+- m: brewing machine
+  tier: LV
+  I:
+    milk powder: 1
+    water: 750
+  O:
+    milk: 750
+  eut: 4
+  dur: 6.4
+- m: extractor
+  tier: LV
+  I:
+    milk wart: 1
+  O:
+    milk powder: 1
+  eut: 2
+  dur: 15

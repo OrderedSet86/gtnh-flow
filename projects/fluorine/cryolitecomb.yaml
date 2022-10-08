@@ -1,0 +1,21 @@
+- m: centrifuge
+  tier: LV
+  I:
+    cryolite comb: 1
+  O:
+    cryolite dust: 0.0888888888
+    beeswax: 0.3
+  eut: 5
+  dur: 6.4
+- m: electrolyzer
+  tier: MV
+  I:
+    cryolite dust: 10
+  O:
+    sodium dust: 3
+    aluminium dust: 1
+    fluorine: 6000
+  eut: 60
+  dur: 10
+  target:
+    fluorine: 1000

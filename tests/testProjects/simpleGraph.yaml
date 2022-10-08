@@ -1,0 +1,19 @@
+- m: electrolyzer
+  tier: MV
+  I:
+    sugar: 32
+  O:
+    carbon dust: 2
+    oxygen: 25000
+    water: 5000
+  eut: 60
+  dur: 22.4
+  number: 0.896
+- m: extractor
+  tier: LV
+  I:
+    sugar beet: 1
+  O:
+    sugar: 8
+  eut: 7
+  dur: 8

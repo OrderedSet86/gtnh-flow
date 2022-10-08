@@ -1,0 +1,18 @@
+- m: electrolyzer
+  tier: LV
+  I:
+    diamond dust: 1
+  O:
+    carbon dust: 64
+  eut: 30
+  dur: 38.4
+  target:
+    carbon dust: 1
+- m: macerator
+  tier: LV
+  I:
+    diamond: 1
+  O:
+    diamond dust: 1
+  eut: 4
+  dur: 38.4

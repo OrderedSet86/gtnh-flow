@@ -1,0 +1,23 @@
+- m: chemical bath
+  tier: LV
+  I:
+    salty root: 1
+    water: 100
+  O:
+    salt: 0.95
+    rock salt: 0.8
+    saltpeter dust: 0.5
+  eut: 30
+  dur: 5
+- m: electrolyzer
+  tier: MV
+  I:
+    saltpeter dust: 5
+  O:
+    potassium dust: 1
+    oxygen: 3000
+    nitrogen: 1000
+  eut: 60
+  dur: 5
+  target:
+    oxygen: 1000

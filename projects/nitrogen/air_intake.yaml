@@ -1,0 +1,18 @@
+- m: air intake hatch
+  tier: LV
+  I: {}
+  O:
+    air: 1000
+  eut: 0
+  dur: 0.2
+- m: centrifuge
+  tier: LV
+  I:
+    air: 10000
+  O:
+    nitrogen: 3900
+    oxygen: 1000
+  eut: 7
+  dur: 80
+  target:
+    nitrogen: 1000

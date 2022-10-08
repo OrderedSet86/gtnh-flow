@@ -1,0 +1,12 @@
+- m: chemical bath
+  tier: LV
+  I:
+    sodium dust: 1
+    water: 1000
+  O:
+    sodium hydroxide dust: 3
+    hydrogen: 1000
+  eut: 4
+  dur: 5
+  target:
+    hydrogen: 1000

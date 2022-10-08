@@ -1,0 +1,22 @@
+- m: electrolyzer
+  tier: LV
+  I:
+    fertiliser: 1
+  O:
+    '[output] calcite dust': 1
+    carbon dust: 1
+    '[output] water': 1000
+  eut: 30
+  dur: 5
+  target:
+    carbon dust: 1
+- m: large chemical reactor
+  tier: LV
+  I:
+    water: 1000
+    ashes: 3
+    calcite dust: 1
+  O:
+    fertiliser: 1
+  eut: 30
+  dur: 5

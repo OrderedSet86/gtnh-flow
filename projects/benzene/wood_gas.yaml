@@ -1,0 +1,59 @@
+- m: pyrolyse oven
+  tier: HV
+  coils: kanthal
+  I:
+    oak wood: 16
+    nitrogen: 1000
+  O:
+    charcoal: 20
+    wood gas: 1500
+  number: 1
+  eut: 96
+  dur: 16
+- m: tree growth simulator
+  tier: HV
+  I: {}
+  O:
+    oak wood: 48
+  eut: 512
+  dur: 5
+- m: large chemical reactor
+  tier: EV
+  I:
+    oxygen: 1000
+    charcoal: 1
+  O:
+    carbon monoxide: 1000
+    tiny pile of ashes: 1
+  eut: 7
+  dur: 4
+- m: electrolyzer
+  tier: MV
+  I:
+    sugar: 32
+  O:
+    carbon dust: 2
+    oxygen: 25000
+    water: 5000
+  eut: 60
+  dur: 22.4
+- m: extractor
+  tier: LV
+  I:
+    sugar beet: 1
+  O:
+    sugar: 8
+  eut: 7
+  dur: 8
+- m: distillation tower
+  tier: HV
+  I:
+    wood gas: 1000
+  O:
+    hydrogen: 20
+    carbon monoxide: 340
+    methane: 130
+    ethylene: 20
+    carbon dioxide: 490
+  eut: 256
+  dur: 2

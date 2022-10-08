@@ -1,0 +1,49 @@
+- m: mixer
+  tier: LV
+  I:
+    IC2 fertiliser: 8
+    apatite dust: 1
+    water: 1000
+  O:
+    forestry fertilizer: 30
+  eut: 16
+  dur: 5
+- m: fluid extractor
+  tier: LV
+  I:
+    forestry fertilizer: 1
+  O:
+    fertiliser (fluid): 144
+  eut: 16
+  dur: 1
+- m: centrifuge
+  tier: LV
+  I:
+    fertiliser (fluid): 144
+  O:
+    IC2 fertiliser (recycle): 0.265
+    IC2 fertiliser (pt 2): 0.735
+  eut: 16
+  dur: 2
+- m: electrolyzer
+  tier: LV
+  I:
+    IC2 fertiliser (pt 2): 1
+  O:
+    calcite dust: 1
+    carbon dust: 1
+    water: 1000
+  eut: 30
+  dur: 5
+- m: electrolyzer
+  tier: MV
+  I:
+    calcite dust: 5
+  O:
+    calcium dust: 1
+    carbon dust: 1
+    oxygen: 3000
+  eut: 60
+  dur: 5
+  target:
+    oxygen: 1000

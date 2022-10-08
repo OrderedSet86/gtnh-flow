@@ -1,0 +1,61 @@
+- m: chemical reactor
+  tier: LV
+  I:
+    ethylene: 144
+    oxygen: 1000
+  O:
+    polyethylene: 216
+  eut: 30
+  dur: 8
+  target:
+    polyethylene: 100
+- m: dehydrator
+  tier: MV
+  I:
+    ethanol: 1000
+  O:
+    ethylene: 1000
+  eut: 80
+  dur: 120
+- m: distillery
+  tier: LV
+  I:
+    fermented biomass: 1000
+  O:
+    ethanol: 150
+    fertiliser: 1
+  eut: 7
+  dur: 75
+- m: pyrolyse oven
+  tier: LV
+  I:
+    bio chaff: 1
+  O:
+    fermented biomass: 1500
+  eut: 10
+  dur: 10
+  coils: cupronickel
+- m: centrifuge
+  tier: LV
+  I:
+    plant mass: 1
+  O:
+    bio chaff: 1
+  eut: 4
+  dur: 15
+- m: macerator
+  tier: LV
+  I:
+    plantball: 2
+  O:
+    plant mass: 1
+  eut: 30
+  dur: 10
+- m: compressor
+  tier: LV
+  I:
+    sugar cane: 8
+  O:
+    plantball: 1
+  eut: 2
+  dur: 15

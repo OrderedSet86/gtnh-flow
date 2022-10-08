@@ -1,0 +1,25 @@
+- m: zhuhai
+  tier: IV
+  I: {}
+  O:
+    bone: 0.08333
+  eut: 16
+  dur: 5
+- m: macerator
+  tier: LV
+  I:
+    bone: 1
+  O:
+    bone meal: 4
+  eut: 2
+  dur: 15
+- m: electrolyzer
+  tier: LV
+  I:
+    bone meal: 3
+  O:
+    calcium dust: 1
+  eut: 26
+  dur: 4.9
+  target:
+    calcium dust: 1

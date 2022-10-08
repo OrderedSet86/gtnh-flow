@@ -1,0 +1,45 @@
+- m: large chemical reactor
+  tier: HV
+  I:
+    nitrogen: 1000
+    hydrogen: 3000
+  O:
+    ammonia: 1000
+  eut: 384
+  dur: 16
+- m: large chemical reactor
+  tier: MV
+  I:
+    sulfuric acid: 1000
+    acetic acid: 1000
+  O:
+    ethenone: 1000
+    diluted sulfuric acid: 1000
+  eut: 120
+  dur: 8
+  number: 1
+- m: distillation tower
+  tier: HV
+  I:
+    fermented biomass: 1000
+  O:
+    carbon dioxide: 400
+    methane gas: 600
+    ammonia: 100
+    methanol: 150
+    ethanol: 150
+    water: 375
+    acetic acid: 25
+    fertiliser: 1
+  eut: 180
+  dur: 3.75
+- m: large chemical reactor
+  tier: LV
+  I:
+    oxygen: 4000
+    ammonia: 1000
+  O:
+    nitric acid: 1000
+    diluted sulfuric acid: 1000
+  eut: 120
+  dur: 8

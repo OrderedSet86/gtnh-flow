@@ -1,0 +1,11 @@
+- m: electrolyzer
+  tier: IV
+  I:
+    water: 1000
+  O:
+    oxygen: 1000
+    hydrogen: 2000
+  eut: 30
+  dur: 100
+  target:
+    oxygen: 1000

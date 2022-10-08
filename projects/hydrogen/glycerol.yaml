@@ -1,0 +1,12 @@
+- m: electrolyzer
+  tier: MV
+  I:
+    glycerol: 1000
+  O:
+    carbon dust: 1
+    hydrogen: 8000
+    oxygen: 3000
+  eut: 90
+  dur: 15
+  target:
+    hydrogen: 1000

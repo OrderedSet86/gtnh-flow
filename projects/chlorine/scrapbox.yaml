@@ -1,0 +1,37 @@
+- m: recycler
+  tier: LV
+  I:
+    recyclable: 1
+  O:
+    scrap: 0.118
+  eut: 1
+  dur: 2
+- m: packager
+  tier: LV
+  I:
+    scrap: 9
+  O:
+    scrap box: 1
+  eut: 1
+  dur: 0.8
+- m: unpackager
+  tier: LV
+  I:
+    scrap box: 0.9307
+  O:
+    sodalite dust: 0.0062
+  eut: 1
+  dur: 0.8
+- m: electrolyzer
+  tier: MV
+  I:
+    sodalite dust: 11
+  O:
+    aluminium dust: 3
+    raw silicon dust: 3
+    sodium dust: 4
+    chlorine: 1000
+  eut: 90
+  dur: 13.2
+  target:
+    chlorine: 1000

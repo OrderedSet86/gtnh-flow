@@ -1,0 +1,63 @@
+- m: large chemical reactor
+  tier: HV
+  I:
+    hydrochloric acid: 30000
+    raw silicon dust: 10
+  O:
+    trichlorosilane: 9000
+    silicon tetrachloride: 300
+    hexachlorodisilane: 200
+    dichlorosilane: 300
+    '[recycle] hydrogen': 20400
+  eut: 480
+  dur: 7.5
+  target:
+    trichlorosilane: 9000
+- m: large chemical reactor
+  tier: HV
+  I:
+    trichlorosilane: 1000
+    hydrogen: 2000
+  O:
+    sisg: 1
+    '[recycle] hydrochloric acid': 3000
+  eut: 30
+  dur: 15
+- m: electrolyzer
+  tier: MV
+  I:
+    dichlorosilane: 1000
+  O:
+    '[recycle] raw silicon dust': 1
+    '[recycle] hydrogen': 2000
+    '[recycle] chlorine': 2000
+  eut: 90
+  dur: 20
+- m: electrolyzer
+  tier: MV
+  I:
+    hexachlorodisilane: 1000
+  O:
+    '[recycle] raw silicon dust': 2
+    '[recycle] chlorine': 6000
+  eut: 60
+  dur: 51.2
+- m: large chemical reactor
+  tier: LV
+  I:
+    silicon tetrachloride: 3000
+    zinc dust: 2
+  O:
+    sisg: 1
+    zinc chloride dust: 6
+  eut: 30
+  dur: 20
+- m: electrolyzer
+  tier: MV
+  I:
+    zinc chloride dust: 3
+  O:
+    zinc dust: 1
+    '[recycle] chlorine': 2000
+  eut: 60
+  dur: 1.6

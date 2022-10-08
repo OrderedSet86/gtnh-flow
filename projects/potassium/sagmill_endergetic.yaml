@@ -1,0 +1,51 @@
+- m: electrolyzer
+  tier: MV
+  I:
+    saltpeter dust: 5
+  O:
+    potassium dust: 1
+    oxygen: 3000
+    nitrogen: 1000
+  eut: 60
+  dur: 5
+  target:
+    potassium dust: 1
+- m: sag mill
+  tier: LV
+  I:
+    sandstone: 0.3
+  O:
+    saltpeter dust: 0.15
+  eut: 11.1
+  dur: 2
+- m: forge hammer
+  tier: LV
+  I:
+    gravel: 1
+  O:
+    sand: 1
+  eut: 16
+  dur: 0.5
+- m: forge hammer
+  tier: LV
+  I:
+    cobblestone: 1
+  O:
+    gravel: 1
+  eut: 16
+  dur: 0.5
+- m: rock breaker
+  tier: LV
+  I: {}
+  O:
+    cobblestone: 1
+  eut: 30
+  dur: 0.8
+- m: compressor
+  tier: LV
+  I:
+    sand: 4
+  O:
+    sandstone: 1
+  eut: 2
+  dur: 15

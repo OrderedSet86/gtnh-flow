@@ -1,0 +1,54 @@
+- m: chemical bath
+  tier: LV
+  I:
+    sodium dust: 1
+    water: 1000
+  O:
+    sodium hydroxide dust: 3
+    hydrogen: 1000
+  eut: 30
+  dur: 10
+  target:
+    hydrogen: 1000
+- m: large chemical reactor
+  tier: LV
+  I:
+    sodium hydroxide dust: 3
+    allyl chloride: 1000
+    hypochlorous acid: 1000
+  O:
+    salt water: 1000
+    epichlorohydrin: 1000
+  eut: 30
+  dur: 24
+- m: electrolyzer
+  tier: MV
+  I:
+    epichlorohydrin: 1000
+  O:
+    carbon dust: 3
+    '[recycle] hydrogen': 5000
+    '[recycle] chlorine': 1000
+    '[recycle] oxygen': 1000
+  eut: 120
+  dur: 16
+- m: large chemical reactor
+  tier: LV
+  I:
+    propene: 1000
+    chlorine: 2000
+  O:
+    allyl chloride: 1000
+    hydrochloric acid: 1000
+  eut: 30
+  dur: 8
+- m: large chemical reactor
+  tier: LV
+  I:
+    water: 1000
+    chlorine: 2000
+  O:
+    hydrochloric acid: 500
+    hypochlorous acid: 1000
+  eut: 30
+  dur: 6

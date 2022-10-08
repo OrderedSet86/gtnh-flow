@@ -1,0 +1,21 @@
+- m: centrifuge
+  tier: LV
+  I:
+    rubber wood: 1
+  O:
+    sticky resin: 0.5
+    plantball: 0.375
+    carbon dust: 0.25
+    wood pulp: 0.25
+    methane: 60
+  eut: 20
+  dur: 10
+  target:
+    carbon dust: 1
+- m: tree growth simulator
+  tier: LV
+  I: {}
+  O:
+    rubber wood: 20
+  eut: 32
+  dur: 1

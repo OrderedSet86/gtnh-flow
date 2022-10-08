@@ -1,0 +1,22 @@
+- m: electrolyzer
+  tier: LV
+  I:
+    salt water: 1000
+  O:
+    sodium hydroxide dust: 3
+    hydrogen: 1000
+    chlorine: 1000
+  eut: 30
+  dur: 36
+- m: electrolyzer
+  tier: MV
+  I:
+    sodium hydroxide dust: 3
+  O:
+    sodium dust: 1
+    hydrogen: 1000
+    oxygen: 1000
+  eut: 60
+  dur: 1.8
+  target:
+    sodium dust: 1

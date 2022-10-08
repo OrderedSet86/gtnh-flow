@@ -1,0 +1,51 @@
+- m: chemical bath
+  tier: LV
+  I:
+    sodium dust: 1
+    water: 1000
+  O:
+    sodium hydroxide dust: 3
+    hydrogen: 1000
+  eut: 30
+  dur: 10
+  target:
+    hydrogen: 500
+- m: large chemical reactor
+  tier: LV
+  I:
+    sodium hydroxide dust: 3
+    sulfuric acid: 1000
+  O:
+    sodium bisulfate dust: 7
+    '[recycle] water': 1000
+  eut: 30
+  dur: 3
+- m: electrolyzer
+  tier: LV
+  I:
+    sodium bisulfate dust: 7
+  O:
+    hydrogen: 1000
+    sodium persulfate: 500
+  eut: 30
+  dur: 15
+- m: electrolyzer
+  tier: MV
+  I:
+    sodium persulfate: 1000
+  O:
+    sodium dust: 2
+    '[recycle] sulfur dust': 2
+    '[recycle] oxygen': 8000
+  eut: 90
+  dur: 43.2
+- m: large chemical reactor
+  tier: HV
+  I:
+    sulfur dust: 1
+    oxygen: 3000
+    water: 1000
+  O:
+    sulfuric acid: 1000
+  eut: 30
+  dur: 24

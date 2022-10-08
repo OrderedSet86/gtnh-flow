@@ -1,0 +1,49 @@
+- m: large chemical reactor
+  tier: HV
+  I:
+    nitrogen dioxide: 1000
+    lcr hydrogen peroxide: 1000
+    saltpeter dust: 2
+  O:
+    combustion promoter: 2000
+  eut: 120
+  dur: 10
+- m: large chemical reactor
+  tier: EV
+  I:
+    oxygen: 1000
+    2-tert-butyl-anthrahydroquinone: 1000
+  O:
+    lcr hydrogen peroxide: 1000
+    '[recycle] 2-tert-butyl-anthraquinone': 900
+  eut: 1920
+  dur: 2
+- m: large chemical reactor
+  tier: IV
+  I:
+    2-tert-butyl-anthraquinone: 10000
+    hydrogen: 10000
+    palladium dust: 0.11111
+  O:
+    2-tert-butyl-anthrahydroquinone: 10000
+  eut: 7680
+  dur: 60
+- m: large chemical reactor
+  tier: IV
+  I:
+    tert-butylbenzene: 1000
+    phthalic anhydride dust: 1
+  O:
+    2-tert-butyl-anthraquinone: 10000
+  eut: 7680
+  dur: 10
+- m: universal chemical fuel engine
+  tier: LV
+  I:
+    cetane-boosted diesel: 1000
+    combustion promoter: 200
+  O:
+    EU: 5
+  eut: 0
+  dur: 1
+  number: 1

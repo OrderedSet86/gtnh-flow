@@ -1,0 +1,38 @@
+- m: electrolyzer
+  tier: LV
+  I:
+    IC2 fertiliser: 1
+  O:
+    calcite dust: 1
+    carbon dust: 1
+    water: 1000
+  eut: 30
+  dur: 5
+- m: electrolyzer
+  tier: MV
+  I:
+    calcite dust: 5
+  O:
+    calcium dust: 1
+    carbon dust: 1
+    oxygen: 3000
+  eut: 60
+  dur: 5
+  target:
+    oxygen: 1000
+- m: tree growth simulator
+  tier: LV
+  I: {}
+  O:
+    darkwood: 1
+  eut: 1
+  dur: 1
+  saw_type: chainsaw
+- m: extractor
+  tier: MV
+  I:
+    darkwood: 2
+  O:
+    IC2 fertiliser: 1
+  eut: 120
+  dur: 5

@@ -1,0 +1,12 @@
+- m: electrolyzer
+  tier: IV
+  I:
+    red granite dust: 6
+  O:
+    aluminium dust: 2
+    potassium feldspar dust: 1
+    oxygen: 3000
+  eut: 60
+  dur: 6
+  target:
+    aluminium dust: 1

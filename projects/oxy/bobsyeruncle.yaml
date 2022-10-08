@@ -1,0 +1,130 @@
+- m: electrolyzer
+  tier: IV
+  I:
+    emerald dust: 29
+  O:
+    beryllium dust: 3
+    aluminium dust: 2
+    raw silicon dust: 6
+    oxygen: 18000
+  eut: 90
+  dur: 26.1
+  target:
+    oxygen: 269.2305
+- m: sifter
+  tier: IV
+  I:
+    purified emerald ore: 1
+  O:
+    exquisite emerald: 0.03
+    flawless emerald: 0.12
+    emerald: 0.45
+    flawed emerald: 0.14
+    chipped emerald: 0.28
+    emerald dust: 0.35
+  eut: 16
+  dur: 40
+- m: autoclave
+  tier: IV
+  I:
+    bobs-yer-uncle-berry: 16
+    UUM: 2
+  O:
+    purified emerald ore: 1
+  eut: 384
+  dur: 115.2
+- m: macerator
+  tier: IV
+  I:
+    exquisite emerald: 1
+  O:
+    '[ex] emerald dust': 4
+  eut: 4
+  dur: 3.6
+- m: electrolyzer
+  tier: IV
+  I:
+    '[ex] emerald dust': 29
+  O:
+    beryllium dust: 3
+    aluminium dust: 2
+    raw silicon dust: 6
+    oxygen: 18000
+  eut: 90
+  dur: 26.1
+- m: macerator
+  tier: IV
+  I:
+    flawless emerald: 1
+  O:
+    '[fl] emerald dust': 2
+  eut: 4
+  dur: 3.6
+- m: electrolyzer
+  tier: IV
+  I:
+    '[fl] emerald dust': 29
+  O:
+    beryllium dust: 3
+    aluminium dust: 2
+    raw silicon dust: 6
+    oxygen: 18000
+  eut: 90
+  dur: 26.1
+- m: macerator
+  tier: IV
+  I:
+    emerald: 1
+  O:
+    '[b] emerald dust': 1
+  eut: 4
+  dur: 3.6
+- m: electrolyzer
+  tier: IV
+  I:
+    '[b] emerald dust': 29
+  O:
+    beryllium dust: 3
+    aluminium dust: 2
+    raw silicon dust: 6
+    oxygen: 18000
+  eut: 90
+  dur: 26.1
+- m: macerator
+  tier: IV
+  I:
+    flawed emerald: 1
+  O:
+    '[wd] emerald dust': 0.5
+  eut: 4
+  dur: 3.6
+- m: electrolyzer
+  tier: IV
+  I:
+    '[wd] emerald dust': 29
+  O:
+    beryllium dust: 3
+    aluminium dust: 2
+    raw silicon dust: 6
+    oxygen: 18000
+  eut: 90
+  dur: 26.1
+- m: macerator
+  tier: IV
+  I:
+    chipped emerald: 1
+  O:
+    '[ch] emerald dust': 0.25
+  eut: 4
+  dur: 3.6
+- m: electrolyzer
+  tier: IV
+  I:
+    '[ch] emerald dust': 29
+  O:
+    beryllium dust: 3
+    aluminium dust: 2
+    raw silicon dust: 6
+    oxygen: 18000
+  eut: 90
+  dur: 26.1

@@ -1,6 +1,7 @@
 from copy import deepcopy
 
 import pytest
+import yaml
 
 from dataClasses.base import Ingredient, Recipe, IngredientCollection
 from gtnhClasses.overclocks import overclockRecipe
@@ -8,8 +9,8 @@ from gtnhClasses.overclocks import overclockRecipe
 import json
 from jsmin import jsmin
 def loadTestConfig():
-    with open('config_factory_graph.jsonc', 'r') as f:
-        graph_config = json.loads(jsmin(f.read()))
+    with open('config_factory_graph.yaml', 'r') as f:
+        graph_config = yaml.safe_load(f)
     return graph_config
 
 

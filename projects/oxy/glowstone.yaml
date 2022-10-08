@@ -1,0 +1,32 @@
+- m: centrifuge
+  tier: IV
+  I:
+    redstone: 10
+  O:
+    raw silicon dust: 1
+    pyrite dust: 5
+    ruby dust: 1
+    mercury: 3000
+  eut: 15
+  dur: 17
+- m: electrolyzer
+  tier: IV
+  I:
+    ruby dust: 6
+  O:
+    chrome dust: 1
+    aluminium dust: 2
+    oxygen: 3000
+  eut: 60
+  dur: 7.2
+  target:
+    oxygen: 1000
+- m: centrifuge
+  tier: IV
+  I:
+    glowstone dust: 2
+  O:
+    redstone: 1
+    gold dust: 1
+  eut: 80
+  dur: 48.8

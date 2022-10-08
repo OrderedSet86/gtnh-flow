@@ -37,7 +37,7 @@ A (beta) tool designed for complex GT packs. In specific, aims to achieve:
 
 ## How do I use it?
 Some tips:
-+ You can modify a variety of layout and functional choices in `config_factory_graph.jsonc`.
++ You can modify a variety of layout and functional choices in `config_factory_graph.yaml`.
 + The POWER_LINE feature in `config_factory_graph` lets you automatically burn fuels and choose which ones to ignore. This is on by default.
 + When writing a config file, I recommend copy pasting an old machine, then editing the numbers. This will help you avoid missing any required fields (eg. EU/t).
 + How to add machines without any power usage? Set "tier" to LV and "eut" to 0.

@@ -1,0 +1,117 @@
+- m: distillation tower
+  tier: MV
+  I:
+    lightly hydro-cracked light fuel: 1000
+  O:
+    naphtha: 800
+    octane: 100
+    butane: 150
+    propane: 200
+    ethane: 125
+    methane: 125
+  eut: 120
+  dur: 6
+  number: 5.79567
+- m: distillation tower
+  tier: MV
+  I:
+    lightly steam-cracked light fuel: 1000
+  O:
+    carbon dust: 0.11111
+    heavy fuel: 150
+    naphtha: 400
+    toluene: 40
+    benzene: 200
+    butene: 75
+    butadiene 1: 60
+    propane: 20
+    propene: 150
+    ethane: 10
+    ethylene: 50
+    methane: 50
+  eut: 120
+  dur: 6
+  number: 1.62248
+- m: distillation tower
+  tier: MV
+  I:
+    moderately steam-cracked light fuel: 1000
+  O:
+    carbon dust: 0.22222
+    heavy fuel: 100
+    naphtha: 250
+    toluene: 50
+    benzene: 300
+    butene: 90
+    butadiene 2: 75
+    propane: 35
+    propene: 200
+    ethane: 30
+    ethylene: 150
+    methane: 150
+  eut: 120
+  dur: 6
+  number: 0.67604
+- m: oil cracker
+  tier: HV
+  I:
+    steam: 1000
+    light fuel: 1000
+  O:
+    moderately steam-cracked light fuel: 1200
+  eut: 240
+  dur: 2
+- m: oil cracker
+  tier: HV
+  I:
+    hydrogen: 1600
+    light fuel: 1000
+  O:
+    lightly hydro-cracked light fuel: 1000
+  eut: 240
+  dur: 1
+- m: oil cracker
+  tier: HV
+  I:
+    steam: 1000
+    light fuel: 1000
+  O:
+    lightly steam-cracked light fuel: 1200
+  eut: 240
+  dur: 1
+- m: oil cracker
+  tier: HV
+  I:
+    hydrogen: 1600
+    butadiene 1: 1000
+  O:
+    lightly hydro-cracked butadiene 1: 1000
+  eut: 240
+  dur: 1
+- m: oil cracker
+  tier: HV
+  I:
+    hydrogen: 1600
+    butadiene 2: 1000
+  O:
+    lightly hydro-cracked butadiene 2: 1000
+  eut: 240
+  dur: 1
+- m: distillation tower
+  tier: MV
+  I:
+    lightly hydro-cracked butadiene 1: 1000
+  O:
+    butene: 667
+    ethylene: 667
+  eut: 120
+  dur: 6
+- m: distillation tower
+  tier: MV
+  I:
+    lightly hydro-cracked butadiene 2: 1000
+  O:
+    butene: 667
+    ethylene: 667
+  eut: 120
+  dur: 6

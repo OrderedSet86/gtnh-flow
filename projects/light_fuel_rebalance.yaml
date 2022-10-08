@@ -1,0 +1,31 @@
+- m: chemical reactor
+  tier: LV
+  I:
+    hydrogen: 2000
+    sulfuric light fuel: 12000
+  O:
+    hydrogen sulfide: 1000
+    light fuel: 12000
+  eut: 30
+  dur: 8
+  group: oil
+- m: distillery
+  tier: LV
+  I:
+    oil: 25
+  O:
+    sulfuric light fuel: 25
+  number: 1
+  eut: 24
+  dur: 1
+  group: oil
+- m: electrolyzer
+  tier: MV
+  I:
+    hydrogen sulfide: 1000
+  O:
+    '[recycle] hydrogen': 2000
+    sulfur dust: 1
+  eut: 60
+  dur: 7.2
+  group: hydrogen

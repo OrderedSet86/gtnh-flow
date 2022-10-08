@@ -1,0 +1,73 @@
+- m: centrifuge
+  tier: LV
+  I:
+    stone dust: 36
+  O:
+    quartzite dust: 9
+    potassium feldspar dust: 9
+    marble dust: 9
+    biotite dust: 4
+    metal mixture dust: 3
+    sodalite dust: 2
+  eut: 30
+  dur: 432
+- m: electrolyzer
+  tier: MV
+  I:
+    potassium feldspar dust: 13
+  O:
+    potassium dust: 1
+    aluminium dust: 1
+    raw silicon dust: 3
+    oxygen: 8000
+  eut: 90
+  dur: 13
+  target:
+    oxygen: 458.42
+- m: rock breaker
+  tier: LV
+  I: {}
+  O:
+    stone: 1
+  eut: 30
+  dur: 0.8
+- m: macerator
+  tier: LV
+  I:
+    stone: 1
+  O:
+    stone dust: 1
+  eut: 4
+  dur: 4.9
+- m: centrifuge
+  tier: LV
+  I:
+    marble dust: 8
+  O:
+    magnesium dust: 1
+    calcite dust: 7
+  eut: 10
+  dur: 32
+- m: electrolyzer
+  tier: MV
+  I:
+    calcite dust: 5
+  O:
+    calcium dust: 1
+    carbon dust: 1
+    oxygen: 3000
+  eut: 60
+  dur: 5
+- m: electrolyzer
+  tier: MV
+  I:
+    biotite dust: 22
+  O:
+    potassium dust: 1
+    magnesium dust: 3
+    aluminium dust: 3
+    raw silicon dust: 3
+    oxygen: 10000
+    fluorine: 2000
+  eut: 120
+  dur: 22

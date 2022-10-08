@@ -4,6 +4,7 @@ import json
 import sys
 
 # Pypi libraries
+import yaml
 from jsmin import jsmin
 
 # Internal libraries
@@ -12,8 +13,8 @@ from dataClasses.load import recipesFromConfig
 
 
 if __name__ == '__main__':
-    with open('config_factory_graph.jsonc', 'r') as f:
-        graph_config = json.loads(jsmin(f.read()))
+    with open('config_factory_graph.yaml', 'r') as f:
+        graph_config = yaml.safe_load(f)
 
     if len(sys.argv) > 1:
         project_name = sys.argv[1]

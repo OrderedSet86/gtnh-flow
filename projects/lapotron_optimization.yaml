@@ -1,0 +1,133 @@
+- m: mixer
+  tier: HV
+  I:
+    redstone dust: 5
+    ruby dust: 4
+  O:
+    energium dust: 9
+  eut: 120
+  dur: 30
+- m: mixer
+  tier: HV
+  I:
+    energium dust: 3
+    lapis dust: 2
+  O:
+    lapotron dust: 5
+  eut: 480
+  dur: 10
+  number: 15
+- m: autoclave
+  tier: HV
+  I:
+    lapotron dust: 30
+    molten vibrant alloy: 288
+  O:
+    raw lapotron crystal: 1
+  eut: 480
+  dur: 60
+- m: assembler
+  tier: EV
+  I:
+    raw lapotron crystal: 1
+    nanoprocessor: 2
+  O:
+    lapotron crystal: 1
+  eut: 1024
+  dur: 30
+- m: precision laser engraver
+  tier: HV
+  I:
+    lapotron crystal: 1
+  O:
+    engraved lapotron chip: 3
+  eut: 480
+  dur: 45
+- m: circuit assembler
+  tier: EV
+  I:
+    more advanced circuit board: 1
+    power ic: 4
+    engraved lapotron chip: 24
+    nanocpu: 2
+    fine platinum wire: 16
+    platinum plate: 8
+  O:
+    lapotronic energy orb: 1
+  eut: 1024
+  dur: 25.6
+- m: circuit assembler
+  tier: EV
+  I:
+    advanced circuit board: 1
+    nanocpu: 1
+    smd resistor: 8
+    smd capacitor: 8
+    smd transistor: 8
+    fine electrum wire: 8
+    molten tin: 144
+  O:
+    nanoprocessor: 1
+  eut: 600
+  dur: 10
+- m: cutting machine
+  tier: EV
+  I:
+    pic wafer: 1
+  O:
+    power ic: 4
+  eut: 1920
+  dur: 45
+- m: precision laser engraver
+  tier: HV
+  I:
+    glowstone doped wafer: 1
+  O:
+    pic wafer: 1
+  eut: 480
+  dur: 60
+- m: cutting machine
+  tier: HV
+  I:
+    nanocpu wafer: 1
+  O:
+    nanocpu: 8
+  eut: 480
+  dur: 45
+- m: large chemical reactor
+  tier: EV
+  I:
+    cpu wafer: 1
+    raw carbon fibre: 16
+    molten glowstone: 576
+  O:
+    nanocpu wafer: 1
+  eut: 1920
+  dur: 60
+- m: electric blast furnace
+  tier: EV
+  heat: 3000
+  coils: nichrome
+  I:
+    vibrant alloy dust: 1
+    nitrogen: 1000
+  O:
+    hot vibrant alloy ingot: 1
+  eut: 120
+  dur: 150
+- m: vacuum freezer
+  tier: HV
+  I:
+    hot vibrant alloy ingot: 1
+  O:
+    vibrant alloy ingot: 1
+  eut: 480
+  dur: 16.05
+- m: fluid extractor
+  tier: HV
+  I:
+    vibrant alloy ingot: 1
+  O:
+    molten vibrant alloy: 144
+  eut: 81
+  dur: 1.2

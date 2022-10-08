@@ -1,0 +1,21 @@
+- m: large chemical reactor
+  tier: LV
+  I:
+    trichlorosilane: 1000
+    hydrogen: 2000
+  O:
+    sisg: 1
+    '[recycle] hydrochloric acid': 3000
+  eut: 30
+  dur: 15
+- m: chemical reactor
+  tier: LV
+  I:
+    raw silicon dust: 1
+    hydrochloric acid: 3000
+  O:
+    '[recycle] hydrogen': 2000
+    trichlorosilane: 1000
+  eut: 30
+  dur: 15
+  number: 1

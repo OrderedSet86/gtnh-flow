@@ -1,0 +1,127 @@
+- m: industrial mixing machine
+  tier: HV
+  I:
+    diesel: 1000
+    tetranitromethane: 20
+  O:
+    cetane-boosted diesel: 1000
+  eut: 480
+  dur: 1
+- m: industrial mixing machine
+  tier: EV
+  I:
+    heavy fuel: 1000
+    light fuel: 5000
+  O:
+    diesel: 6000
+  eut: 1920
+  dur: 0.8
+- m: large chemical reactor
+  tier: LV
+  I:
+    sulfuric heavy fuel: 8000
+    hydrogen: 2000
+  O:
+    heavy fuel: 8000
+    hydrogen sulfide: 1000
+  eut: 30
+  dur: 8
+- m: large chemical reactor
+  tier: LV
+  I:
+    sulfuric light fuel: 12000
+    hydrogen: 2000
+  O:
+    light fuel: 12000
+    hydrogen sulfide: 1000
+  eut: 30
+  dur: 8
+- m: distillation tower
+  tier: HV
+  I:
+    heavy oil: 100
+  O:
+    sulfuric heavy fuel: 250
+    sulfuric light fuel: 45
+    sulfuric naptha: 15
+    sulfuric gas: 60
+  eut: 288
+  dur: 1
+  number: 2
+- m: large chemical reactor
+  tier: MV
+  I:
+    ethenone: 1000
+    nitric acid: 8000
+  O:
+    tetranitromethane: 2000
+    water: 9000
+  eut: 120
+  dur: 24
+- m: large chemical reactor
+  tier: LV
+  I:
+    oxygen gas: 4000
+    ammonia: 1000
+  O:
+    nitric acid: 1000
+    water: 1000
+  eut: 30
+  dur: 16
+- m: distillation tower
+  tier: HV
+  I:
+    fermented biomass: 1000
+  O:
+    fertilizer: 1
+    acetic acid: 25
+    water: 375
+    ethanol: 150
+    methanol: 150
+    ammonia: 100
+    co2 gas: 400
+    methane gas: 600
+  eut: 180
+  dur: 3.75
+- m: pyrolyse oven
+  tier: LV
+  I:
+    bio chaff: 1
+  O:
+    fermented biomass: 1500
+  coils: kanthal
+  eut: 10
+  dur: 10
+- m: centrifuge
+  tier: LV
+  I:
+    plant mass: 1
+  O:
+    bio chaff: 1
+  eut: 4
+  dur: 15
+- m: macerator
+  tier: HV
+  I:
+    plantball: 2
+  O:
+    plant mass: 2
+  eut: 480
+  dur: 2.5
+- m: fluid extractor
+  tier: HV
+  I:
+    wood pulp: 1
+  O:
+    plantball: 0.01
+    creosote oil: 5
+  eut: 64
+  dur: 0.2
+- m: macerator
+  tier: HV
+  I:
+    oak wood: 1
+  O:
+    wood pulp: 6.78
+  eut: 16
+  dur: 5

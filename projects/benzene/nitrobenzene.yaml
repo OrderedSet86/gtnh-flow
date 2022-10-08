@@ -1,0 +1,123 @@
+- m: industrial coke oven
+  tier: EV
+  I:
+    wood: 4
+    nitrogen: 250
+  O:
+    charcoal: 5
+    wood tar: 375
+  eut: 96
+  dur: 3
+  number: 1
+- m: distillation tower
+  tier: EV
+  I:
+    wood tar: 1000
+  O:
+    dimethylbenzene: 200
+    toluene: 75
+    benzene: 350
+    phenol: 75
+    creosote: 300
+  eut: 256
+  dur: 2
+- m: tree growth simulator
+  tier: HV
+  I: {}
+  O: {}
+  eut: 0
+  dur: 0
+  saw_type: saw
+- m: centrifuge
+  tier: LV
+  I:
+    air: 10000
+  O:
+    nitrogen: 3900
+    '[output] oxygen': 1000
+  eut: 7
+  dur: 80
+- m: compressor
+  tier: LV
+  I: {}
+  O:
+    air: 2000
+  eut: 2
+  dur: 15
+- m: exxonmobil
+  tier: EV
+  I:
+    benzene: 5000
+    '[recycle] sulfuric acid': 2000
+    sulfuric acid: 1000
+    nitric acid: 3000
+    distilled water: 10000
+  O:
+    nitrobenzene: 5000
+    diluted sulfuric acid: 3000
+  eut: 500
+  dur: 30
+  coils: tungstensteel
+  pipe_casings: tungstensteel
+- m: distillation tower
+  tier: EV
+  I:
+    water: 1000
+  O:
+    distilled water: 1000
+  eut: 120
+  dur: 1.6
+- m: distillation tower
+  tier: EV
+  I:
+    diluted sulfuric acid: 3000
+  O:
+    '[recycle] sulfuric acid': 2000
+    '[output] water': 1000
+  eut: 120
+  dur: 30
+- m: large chemical reactor
+  tier: HV
+  I:
+    water: 1000
+    oxygen: 3000
+    sulfur dust: 1
+  O:
+    sulfuric acid: 1000
+  eut: 30
+  dur: 24
+- m: large chemical reactor
+  tier: HV
+  I:
+    oxygen: 4000
+    ammonia: 1000
+  O:
+    nitric acid: 1000
+    '[output] water': 1000
+  eut: 30
+  dur: 16
+- m: large chemical reactor
+  tier: HV
+  I:
+    nitrogen 2: 1000
+    hydrogen: 3000
+  O:
+    ammonia: 1000
+  eut: 384
+  dur: 16
+- m: centrifuge
+  tier: LV
+  I:
+    air 2: 10000
+  O:
+    nitrogen 2: 3900
+    '[output] oxygen': 1000
+  eut: 7
+  dur: 80
+- m: air intake hatch
+  tier: LV
+  I: {}
+  O:
+    air 2: 1000
+  eut: 0
+  dur: 0.2

@@ -1,0 +1,25 @@
+# === FUNCTIONALITY SETTINGS ===
+POWER_LINE: true # Automatically burns all leftover fuels
+DO_NOT_BURN: # If POWER_LINE is true, don't burn these
+  - toluene
+  - phenol
+  - hydrogen
+  - creosote oil
+  - sulfuric naphtha
+  - sulfuric gas
+  - sulfuric heavy fuel
+  - sulfuric light fuel
+  - coal tar oil
+OUTPUT_FORMAT: png # png or pdf (pdf is searchable)
+USE_RAINBOW_EDGES: true # feature to help distinguish between overlapping edges
+DUR_FORMAT: sec # choose either "ticks" or "sec"
+
+# { These settings are not added to backend yet
+PRECISION: 4
+ROUND_MACHINES_UP: false
+# }
+
+# { You should probably only modify these if you are dev
+DEBUG_SHOW_EVERY_STEP: false
+SHOW_MACHINE_INDICES: false
+# }

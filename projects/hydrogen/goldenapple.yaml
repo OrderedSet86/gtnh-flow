@@ -1,0 +1,37 @@
+- m: large chemical reactor
+  tier: HV
+  I:
+    methane: 5000
+  O:
+    carbon dioxide: 5000
+    hydrogen: 20000
+  eut: 480
+  dur: 8.25
+  target:
+    hydrogen: 1000
+- m: centrifuge
+  tier: LV
+  I:
+    enchanted golden apple: 1
+  O:
+    gold ingot [recycle]: 64
+    methane: 4608
+  eut: 5
+  dur: 460.8
+- m: large chemical reactor
+  tier: LV
+  I:
+    apple: 1
+    gold block: 8
+  O:
+    enchanted golden apple: 1
+  eut: 30
+  dur: 2.5
+- m: alloy smelter
+  tier: MV
+  I:
+    gold ingot: 9
+  O:
+    gold block: 1
+  eut: 60
+  dur: 0.25

@@ -1,0 +1,25 @@
+- m: centrifuge
+  tier: LV
+  I:
+    ashes: 36
+  O:
+    quicklime dust: 11.52
+    potash dust: 5.4
+    magnesia dust: 0.45
+    phosphorous pentoxide dust: 2
+    soda ash dust: 1
+    banded iron dust: 4
+  eut: 30
+  dur: 300
+- m: electrolyzer
+  tier: MV
+  I:
+    soda ash dust: 2
+  O:
+    sodium dust: 2
+    carbon dust: 1
+    oxygen: 3000
+  eut: 60
+  dur: 4.8
+  target:
+    sodium dust: 1

@@ -1,0 +1,11 @@
+- m: electrolyzer
+  tier: IV
+  I:
+    salt: 2
+  O:
+    sodium dust: 1
+    chlorine: 6000
+  eut: 30
+  dur: 16
+  target:
+    sodium dust: 1

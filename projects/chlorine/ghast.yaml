@@ -1,0 +1,23 @@
+- m: electrolyzer
+  tier: LV
+  I:
+    salt water: 1000
+  O:
+    sodium hydroxide dust: 3
+    hydrogen: 1000
+    chlorine: 1000
+  eut: 30
+  dur: 36
+  target:
+    chlorine: 1000
+- m: large chemical reactor
+  tier: LV
+  I:
+    ghast tear: 9
+    water: 9000
+  O:
+    lithium dust: 1
+    potassium dust: 1
+    salt water: 9000
+  eut: 30
+  dur: 180

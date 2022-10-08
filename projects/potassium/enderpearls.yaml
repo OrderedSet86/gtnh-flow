@@ -1,0 +1,20 @@
+- m: electrolyzer
+  tier: MV
+  I:
+    ender pearl dust: 10
+  O:
+    beryllium dust: 1
+    potassium dust: 4
+    nitrogen: 5000
+  eut: 60
+  dur: 11
+  target:
+    potassium dust: 1
+- m: macerator
+  tier: MV
+  I:
+    ender pearl: 1
+  O:
+    ender pearl dust: 1
+  eut: 4
+  dur: 4.15

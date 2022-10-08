@@ -1,0 +1,69 @@
+- m: chemical reactor
+  tier: LV
+  I:
+    silicon dioxide: 3
+    magnesium dust: 2
+  O:
+    raw silicon dust: 1
+    magnesia dust: 4
+  eut: 7
+  dur: 5
+- m: electrolyzer
+  tier: LV
+  I:
+    magnesia dust: 2
+  O:
+    magnesium dust: 1
+    '[output] oxygen': 1000
+  eut: 30
+  dur: 2
+  target:
+    '[output] oxygen': 1000
+- m: centrifuge
+  tier: LV
+  I:
+    glass dust: 1
+  O:
+    silicon dioxide: 1
+  eut: 5
+  dur: 4
+- m: forge hammer
+  tier: LV
+  I:
+    glass: 1
+  O:
+    glass dust: 1
+  eut: 10
+  dur: 0.5
+- m: arc furnace
+  tier: MV
+  I:
+    sand: 1
+    oxygen: 2
+  O:
+    glass: 2
+  eut: 85
+  dur: 1
+- m: forge hammer
+  tier: LV
+  I:
+    gravel: 1
+  O:
+    sand: 1
+  eut: 16
+  dur: 0.5
+- m: forge hammer
+  tier: LV
+  I:
+    cobblestone: 1
+  O:
+    gravel: 1
+  eut: 16
+  dur: 0.5
+- m: rock breaker
+  tier: LV
+  I: {}
+  O:
+    cobblestone: 1
+  eut: 30
+  dur: 0.8

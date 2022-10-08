@@ -1,4 +1,5 @@
 import pytest
+import yaml
 
 from dataClasses.load import recipesFromConfig
 from graphClasses.graph import Graph
@@ -6,8 +7,8 @@ from graphClasses.graph import Graph
 import json
 from jsmin import jsmin
 def loadTestConfig():
-    with open('config_factory_graph.jsonc', 'r') as f:
-        graph_config = json.loads(jsmin(f.read()))
+    with open('config_factory_graph.yaml', 'r') as f:
+        graph_config = yaml.safe_load(f)
     return graph_config
 
 # Note that recipe ordering is deterministic!

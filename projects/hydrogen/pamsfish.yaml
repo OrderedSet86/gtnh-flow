@@ -1,0 +1,19 @@
+- m: large chemical reactor
+  tier: HV
+  I:
+    methane: 5000
+  O:
+    carbon dioxide: 5000
+    hydrogen: 20000
+  eut: 480
+  dur: 8.25
+  target:
+    hydrogen: 1000
+- m: centrifuge
+  tier: LV
+  I:
+    pams fish: 1
+  O:
+    methane: 96
+  eut: 5
+  dur: 19

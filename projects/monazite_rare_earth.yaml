@@ -1,0 +1,83 @@
+- m: autoclave
+  tier: HV
+  I:
+    slag comb: 9
+    UU-matter: 6
+  O:
+    purified monazite ore: 4
+  eut: 384
+  dur: 371.2
+  number: 4
+- m: pulverizer
+  tier: LV
+  I:
+    purified monazite ore: 1
+  O:
+    purified pile of monazite dust: 1
+    neodymium dust: 0.1
+  eut: 2
+  dur: 20
+- m: electromagnetic separator
+  tier: LV
+  I:
+    purified pile of monazite dust: 1
+  O:
+    monazite dust: 1
+    neodymium dust: 0.1
+    neodymium nugget: 0.2
+  eut: 24
+  dur: 20
+- m: electric blast furnace
+  tier: HV
+  I:
+    neodymium dust: 1
+  O:
+    neodymium ingot: 1
+  eut: 120
+  dur: 194.55
+  heat: 1297
+  coils: nichrome
+- m: alloy smelter
+  tier: LV
+  I:
+    neodymium nugget: 9
+  O:
+    neodymium ingot: 1
+  eut: 2
+  dur: 10
+- m: electrolyzer
+  tier: MV
+  I:
+    monazite dust: 2
+  O:
+    rare earth: 1
+    phosphate dust: 1
+  eut: 60
+  dur: 5.2
+- m: chemical bath
+  tier: HV
+  I:
+    rare earth: 3
+    industrial strength hydrogen chloride: 1000
+  O:
+    crushed rare earth (II) ore: 3.7
+  eut: 480
+  dur: 15
+- m: pulverization
+  tier: HV
+  I:
+    crushed rare earth (II) ore: 1
+  O:
+    impure rare earth (II) dust: 1
+    runite dust: 0.1
+  eut: 240
+  dur: 20
+- m: centrifuge
+  tier: HV
+  I:
+    impure rare earth (II) dust: 1
+  O:
+    rare earth (II) dust: 1
+    tiny pile of neodymium dust: 1
+  eut: 240
+  dur: 11.2

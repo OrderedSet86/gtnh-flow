@@ -1,0 +1,35 @@
+- m: chemical reactor
+  tier: LV
+  I:
+    ethylene: 144
+    oxygen: 1000
+  O:
+    polyethylene: 216
+  eut: 30
+  dur: 8
+  target:
+    polyethylene: 100
+- m: dehydrator
+  tier: MV
+  I:
+    ethanol: 1000
+  O:
+    ethylene: 1000
+  eut: 80
+  dur: 120
+- m: distillery
+  tier: LV
+  I:
+    biomass: 40
+  O:
+    ethanol: 20
+  eut: 24
+  dur: 0.8
+- m: brewing machine
+  tier: LV
+  I:
+    sugar cane: 1
+  O:
+    biomass: 20
+  eut: 3
+  dur: 8
