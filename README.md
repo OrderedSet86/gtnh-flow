@@ -11,7 +11,7 @@ A (beta) tool designed for complex GT packs. In specific, aims to achieve:
 
 ## Samples
 
-![Fluid Extractor Benzene Power](samples/fluid_ex_benzene.png)
+![Light Fuel w/inefficient hydrogen source](samples/inefficient_light_fuel.png)
 ![Platline (minus Palladium)](samples/platline.png)
 
 ## Installation

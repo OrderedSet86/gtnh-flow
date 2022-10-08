@@ -8,7 +8,7 @@
     light fuel: 12000
   eut: 30
   dur: 8
-  number: 1
+  group: oil
 - m: distillery
   tier: LV
   I:
@@ -17,6 +17,8 @@
     sulfuric light fuel: 25
   eut: 24
   dur: 1
+  group: oil
+  number: 1
 - m: electrolyzer
   tier: LV
   I:
@@ -26,3 +28,4 @@
     oxygen: 500
   eut: 30
   dur: 50
+  group: hydrogen
