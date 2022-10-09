@@ -1,0 +1,145 @@
+- m: centrifuge
+  tier: LV
+  I:
+    pams fish: 1
+  O:
+    fish oil: 50
+  eut: 4
+  dur: 0.8
+- m: LCR
+  tier: LV
+  I:
+    fish oil: 54000
+    methanol: 9000
+    sodium hydroxide dust: 1
+  O:
+    bio diesel: 54000
+    glycerol: 9000
+  eut: 30
+  dur: 270
+- m: LCR
+  tier: MV
+  I:
+    carbon monoxide: 1000
+    hydrogen: 4000
+  O:
+    methanol: 1000
+  eut: 96
+  dur: 6
+  group: methanol
+- m: LCR
+  tier: LV
+  I:
+    carbon dust: 1
+    oxygen: 1000
+  O:
+    carbon monoxide: 1000
+  eut: 7
+  dur: 2
+  group: methanol
+- m: LCR
+  tier: LV
+  I:
+    # this uses the water recipe, but water is free so it is removed
+    sodium dust: 1
+  O:
+    sodium hydroxide dust: 3
+    '[recycle] hydrogen': 1000
+  eut: 30
+  dur: 10
+- m: zhuhai
+  tier: EV
+  I: {}
+  O:
+    pams fish: 0.8181818181
+  eut: 16
+  dur: 5
+- m: LCR
+  tier: EV
+  I: 
+    bio diesel: 10000
+    tetranitromethane: 400
+  O:
+    cetane-boosted diesel: 9000
+  eut: 480
+  dur: 6
+  target:
+    cetane-boosted diesel: 1000
+- m: LCR
+  tier: HV
+  I:
+    nitric acid: 8000
+    ethenone: 1000
+  O:
+    tetranitromethane: 2000
+  eut: 120
+  dur: 24
+- m: LCR
+  tier: EV
+  I:
+    acetic acid: 2000
+  O:
+    acetone: 1000
+    co2 gas: 1000
+  eut: 480
+  dur: 20
+  group: ethenone
+- m: LCR
+  tier: HV
+  I:
+    carbon dust: 1
+    hydrogen: 4000
+    oxygen: 2000
+  O:
+    acetic acid: 1000
+  eut: 30
+  dur: 24
+  group: ethenone
+- m: distillery
+  tier: HV
+  I:
+    acetone: 100
+  O:
+    ethenone: 100
+  eut: 160
+  dur: 0.8
+  group: ethenone
+- m: LCR
+  tier: HV
+  I:
+    oxygen: 4000
+    ammonia: 1000
+  O:
+    nitric acid: 1000
+  eut: 30
+  dur: 16
+  group: nitric acid
+- m: LCR
+  tier: EV
+  I:
+    nitrogen: 3000
+    hydrogen: 1000
+  O:
+    ammonia: 1000
+  eut: 384
+  dur: 16
+  group: nitric acid
+- m: electrolyzer
+  tier: HV
+  I:
+    co2 gas: 1000
+  O:
+    '[recycle] carbon dust': 1
+    '[recycle] oxygen': 2000
+  eut: 120
+  dur: 15
+- m: electrolyzer
+  tier: HV
+  I:
+    glycerol: 1000
+  O:
+    '[recycle] carbon dust': 3
+    '[recycle] oxygen': 3000
+    '[recycle] hydrogen': 8000
+  eut: 90
+  dur: 16.8

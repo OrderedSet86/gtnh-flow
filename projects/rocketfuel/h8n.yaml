@@ -1,0 +1,163 @@
+- m: exxonmobil
+  tier: IV
+  I:
+    1,1-dimethylhydrazine: 2000
+    nitrogen tetroxide: 2000
+  O:
+    h8n4c2o4 rocket fuel: 5000
+  eut: 480
+  dur: 60
+  coils: tungstensteel
+  pipe_casings: steel
+  number: 1
+- m: 70% eff iv rocket fuel gen
+  tier: LV
+  I: 
+    h8n4c2o4 rocket fuel: 1000
+  O:
+    EU: 8811600
+  eut: 0
+  dur: 0.05
+- m: exxonmobil
+  tier: EV
+  I:
+    nitric acid: 2000
+  O:
+    nitrogen tetroxide: 1000
+  eut: 480
+  dur: 30
+  coils: tungstensteel
+  pipe_casings: steel
+- m: LCR
+  tier: LuV
+  I:
+    nitrogen: 1000
+    hydrogen: 3000
+  O:
+    '[nitric] ammonia': 1000
+  eut: 384
+  dur: 16
+- m: LCR
+  tier: IV
+  I:
+    '[nitric] ammonia': 1000
+    oxygen: 1000
+  O:
+    nitric acid: 1000
+  eut: 30
+  dur: 16
+- m: exxonmobil
+  tier: EV
+  I:
+    hydrazine: 2000
+    formaldehyde: 2000
+    hydrogen: 4000
+  O:
+    1,1-dimethylhydrazine: 2000
+  eut: 120
+  dur: 60
+  coils: tungstensteel
+  pipe_casings: steel
+- m: exxonmobil
+  tier: EV
+  I:
+    oxygen: 32000
+    methanol: 32000
+  O:
+    formaldehyde: 32000
+  eut: 120
+  dur: 90
+  coils: tungstensteel
+  pipe_casings: steel
+- m: LCR
+  tier: EV
+  I: 
+    carbon dust: 1
+    hydrogen: 4000
+    oxygen: 1000
+  O:
+    methanol: 1000
+  eut: 96
+  dur: 16
+- m: exxonmobil
+  tier: HV
+  I:
+    hydrogen peroxide: 1000
+    ammonia: 2000
+  O:
+    hydrazine: 1000
+  eut: 120
+  dur: 30
+  coils: tungstensteel
+  pipe_casings: steel
+- m: exxonmobil
+  tier: HV
+  I:
+    air: 20000
+    2-EAHQ: 5000
+    anthracene: 50
+  O:
+    hydrogen peroxide: 5000
+    2-EAQ: 5000
+  eut: 240
+  dur: 30
+  coils: tungstensteel
+  pipe_casings: steel
+- m: air intake hatch
+  tier: LV
+  I: {}
+  O:
+    air: 1000
+  eut: 0
+  dur: 0.2
+- m: exxonmobil
+  tier: HV
+  I:
+    2-EAQ: 1000
+    hydrogen: 2000
+  O:
+    2-EAHQ: 1000
+  eut: 120
+  dur: 40
+  coils: tungstensteel
+  pipe_casings: steel
+- m: distillation tower
+  tier: HV
+  I:
+    coal tar: 1200
+  O:
+    kerosene: 400
+    anthracene: 50
+    ethylbenzene: 150
+    naphtha: 100
+    coal tar oil: 500
+  eut: 60
+  dur: 45
+- m: industrial coke oven
+  tier: HV
+  I:
+    charcoal: 16
+  O:
+    dried earth dust: 0.25
+    coal tar: 400
+  eut: 120
+  dur: 7.2
+- m: industrial coke oven
+  tier: HV
+  I:
+    oak wood: 16
+    nitrogen: 1000
+  O:
+    charcoal: 20
+    wood tar: 1500
+  eut: 96
+  dur: 16
+- m: LCR
+  tier: LuV
+  I:
+    nitrogen: 1000
+    hydrogen: 3000
+  O:
+    ammonia: 1000
+  eut: 384
+  dur: 16

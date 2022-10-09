@@ -180,6 +180,8 @@ def modifyChemPlant(recipe):
         'titanium': 3,
         'tungstensteel': 4,
     }
+    if recipe.pipe_casings not in chem_plant_pipe_casings:
+        raise RuntimeError(f'Expected chem pipe casings in {list(chem_plant_pipe_casings)}\ngot "{recipe.pipe_casings}"')
 
     recipe.dur /= coil_multipliers[recipe.coils]
     throughput_multiplier = (2*chem_plant_pipe_casings[recipe.pipe_casings])

@@ -3,11 +3,11 @@
   I:
     coal tar: 1200
   O:
-    ethylbenzene: 150
-    anthracene: 50
     kerosene: 400
-    coal tar oil: 500
+    anthracene: 50
+    ethylbenzene: 150
     naphtha: 100
+    coal tar oil: 500
   eut: 60
   dur: 45
   number: 1
@@ -28,7 +28,7 @@
     rp-1 rocket fuel: 1500
   eut: 240
   dur: 15
-  coils: nichrome
+  coils: tungstensteel
   pipe_casings: steel
 - m: vacuum freezer
   tier: HV
@@ -47,9 +47,8 @@
     coal tar: 400
   eut: 120
   dur: 7.2
-- m: pyrolyse oven
-  tier: MV
-  coils: kanthal
+- m: industrial coke oven
+  tier: HV
   I:
     oak wood: 16
     nitrogen: 1000
@@ -58,3 +57,27 @@
     wood tar: 1500
   eut: 96
   dur: 16
+- m: centrifuge
+  tier: LV
+  I:
+    air: 10000
+  O:
+    nitrogen: 3900
+    '[recycle] oxygen': 1000
+  eut: 7
+  dur: 80
+- m: air intake hatch
+  tier: LV
+  I: {}
+  O:
+    air: 1000
+  eut: 0
+  dur: 0.2
+- m: 70% eff iv rocket fuel gen
+  tier: LV
+  I: 
+    rp-1 rocket fuel: 1000
+  O:
+    EU: 1075200
+  eut: 0
+  dur: 0.05
