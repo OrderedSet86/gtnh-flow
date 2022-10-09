@@ -9,6 +9,7 @@
   eut: 96
   dur: 3
   number: 1
+  group: benzene
 - m: distillation tower
   tier: EV
   I:
@@ -21,13 +22,7 @@
     creosote: 300
   eut: 256
   dur: 2
-- m: tree growth simulator
-  tier: HV
-  I: {}
-  O: {}
-  eut: 0
-  dur: 0
-  saw_type: saw
+  group: benzene
 - m: centrifuge
   tier: LV
   I:
@@ -37,6 +32,7 @@
     '[output] oxygen': 1000
   eut: 7
   dur: 80
+  group: benzene
 - m: compressor
   tier: LV
   I: {}
@@ -44,6 +40,7 @@
     air: 2000
   eut: 2
   dur: 15
+  group: benzene
 - m: exxonmobil
   tier: EV
   I:
@@ -93,9 +90,9 @@
     ammonia: 1000
   O:
     nitric acid: 1000
-    '[output] water': 1000
   eut: 30
   dur: 16
+  group: nitric acid
 - m: large chemical reactor
   tier: HV
   I:
@@ -105,6 +102,7 @@
     ammonia: 1000
   eut: 384
   dur: 16
+  group: nitric acid
 - m: centrifuge
   tier: LV
   I:
@@ -114,10 +112,12 @@
     '[output] oxygen': 1000
   eut: 7
   dur: 80
-- m: air intake hatch
+  group: nitric acid
+- m: compressor
   tier: LV
   I: {}
   O:
-    air 2: 1000
-  eut: 0
-  dur: 0.2
+    air 2: 2000
+  eut: 2
+  dur: 15
+  group: nitric acid

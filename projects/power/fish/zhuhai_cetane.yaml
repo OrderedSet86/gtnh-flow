@@ -6,6 +6,7 @@
     fish oil: 50
   eut: 4
   dur: 0.8
+  group: bio diesel
 - m: LCR
   tier: LV
   I:
@@ -17,6 +18,7 @@
     glycerol: 9000
   eut: 30
   dur: 270
+  group: bio diesel
 - m: LCR
   tier: MV
   I:
@@ -26,7 +28,7 @@
     methanol: 1000
   eut: 96
   dur: 6
-  group: methanol
+  group: bio diesel
 - m: LCR
   tier: LV
   I:
@@ -36,7 +38,7 @@
     carbon monoxide: 1000
   eut: 7
   dur: 2
-  group: methanol
+  group: bio diesel
 - m: LCR
   tier: LV
   I:
@@ -47,6 +49,7 @@
     '[recycle] hydrogen': 1000
   eut: 30
   dur: 10
+  group: bio diesel
 - m: zhuhai
   tier: EV
   I: {}
@@ -54,6 +57,7 @@
     pams fish: 0.8181818181
   eut: 16
   dur: 5
+  group: bio diesel
 - m: LCR
   tier: EV
   I: 

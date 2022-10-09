@@ -1,9 +1,0 @@
-- m: fluid extractor
-  tier: LV
-  I:
-    fish: 1
-  O:
-    fish oil: 50
-  eut: 4
-  dur: 0.8
-  number: 1

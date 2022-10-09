@@ -9,6 +9,7 @@
     wood tar: 1500
   eut: 96
   dur: 16
+  number: 1
 - m: fluid extractor
   tier: LV
   I:
@@ -18,7 +19,6 @@
     wood tar: 100
   eut: 16
   dur: 1.5
-  number: 1
 - m: distillery
   tier: MV
   I:
@@ -42,10 +42,3 @@
     air: 2000
   eut: 2
   dur: 15
-- m: tree growth simulator
-  tier: HV
-  I: {}
-  O:
-    oak wood: 48
-  eut: 480
-  dur: 5

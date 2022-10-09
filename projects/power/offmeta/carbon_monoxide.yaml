@@ -37,13 +37,6 @@
     air: 2000
   eut: 2
   dur: 15
-- m: tree growth simulator
-  tier: HV
-  I: {}
-  O:
-    oak wood: 48
-  eut: 512
-  dur: 5
 - m: large chemical reactor
   tier: EV
   I:
@@ -55,51 +48,20 @@
   eut: 7
   dur: 4
 - m: electrolyzer
-  tier: HV
-  I:
-    silicon dioxide: 5
-  O:
-    silicon dust: 2
-    oxygen: 3000
-  eut: 480
-  dur: 5
-- m: centrifuge
-  tier: LV
-  I:
-    glass dust: 1
-  O:
-    silicon dioxide: 1
-  eut: 5
-  dur: 4
-- m: forge hammer
-  tier: LV
-  I:
-    glass: 1
-  O:
-    glass dust: 1
-  eut: 10
-  dur: 0.5
-- m: arc furnace
   tier: MV
   I:
-    sand: 1
+    sugar: 32
   O:
-    glass: 2
-  eut: 85
-  dur: 1
-- m: forge hammer
+    carbon dust: 2
+    oxygen: 25000
+    water: 5000
+  eut: 60
+  dur: 22.4
+- m: extractor
   tier: LV
   I:
-    gravel: 1
+    sugar beet: 1
   O:
-    sand: 1
-  eut: 16
-  dur: 0.5
-- m: forge hammer
-  tier: LV
-  I:
-    cobblestone: 1
-  O:
-    gravel: 1
-  eut: 16
-  dur: 0.5
+    sugar: 8
+  eut: 7
+  dur: 8
