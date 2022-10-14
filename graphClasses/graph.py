@@ -42,8 +42,6 @@ class Graph:
         self.adj = None
         self.adj_machine = None
 
-        self.darkModeColor = '#043742'
-
         # TODO: Temporary until backend data import
         for i, rec in enumerate(recipes):
             recipes[i] = overclockRecipe(rec)
@@ -64,8 +62,8 @@ class Graph:
         '''
 
         # Create source and sink nodes
-        self.addNode('source', fillcolor='ghostwhite', label='source')
-        self.addNode('sink', fillcolor='ghostwhite', label='sink')
+        self.addNode('source', fillcolor=self.graph_config['SOURCESINK_COLOR'], label='source')
+        self.addNode('sink', fillcolor=self.graph_config['SOURCESINK_COLOR'], label='sink')
 
         # Compute {[ingredient name][IO direction] -> involved recipes} table
         involved_recipes = defaultdict(lambda: defaultdict(list))
@@ -94,7 +92,7 @@ class Graph:
             machine_label = '\n'.join(machine_label)
             self.addNode(
                 rec_id,
-                fillcolor='lightblue2',
+                fillcolor=self.graph_config['NONLOCKEDNODE_COLOR'],
                 label=machine_label
             )
         
@@ -252,7 +250,7 @@ class Graph:
                 self.recipes[rec_id] *= getattr(rec, 'number') # NOTE: Sets rec.multiplier
 
                 # Color edge as "locked"
-                self.nodes[rec_id].update({'fillcolor': 'green'})
+                self.nodes[rec_id].update({'fillcolor': self.graph_config['LOCKEDNODE_COLOR']})
                 existing_label = self.nodes[rec_id]['label']
                 self.nodes[rec_id]['label'] = '\n'.join([
                     f'{round(rec.multiplier, 2)}x {rec.user_voltage} {existing_label}',
@@ -288,7 +286,7 @@ class Graph:
             self.recipes[rec_id] *= machine_multiplier # NOTE: Sets rec.multiplier
 
             # Color edge as locked
-            self.nodes[rec_id].update({'fillcolor': 'green'})
+            self.nodes[rec_id].update({'fillcolor': self.graph_config['LOCKEDNODE_COLOR']})
             existing_label = self.nodes[rec_id]['label']
             self.nodes[rec_id]['label'] = '\n'.join([
                 f'{round(rec.multiplier, 2)}x {rec.user_voltage} {existing_label}',
@@ -510,7 +508,7 @@ class Graph:
                 self.addNode(
                     node_id,
                     label= node_name,
-                    fillcolor='lightblue2',
+                    fillcolor=self.graph_config['NONLOCKEDNODE_COLOR'],
                 )
 
                 # Fix edges to point at said node
@@ -592,7 +590,12 @@ class Graph:
         # Specifically, inputs are adj[source] and outputs are adj[sink]
 
         def makeLineHtml(color, text, amt_text):
-            return f'<tr><td align="left"><font color="{color}">{text}</font></td><td align ="right"><font color="{color}">{amt_text}</font></td></tr>'
+            return ''.join([
+                '<tr>'
+                f'<td align="left"><font color="{color}" face="{self.graph_config["SUMMARY_FONT"]}">{text}</font></td>'
+                f'<td align ="right"><font color="{color}" face="{self.graph_config["SUMMARY_FONT"]}">{amt_text}</font></td>'
+                '</tr>'
+            ])
 
         self.createAdjacencyList()
 
@@ -621,7 +624,7 @@ class Graph:
 
         # Create I/O lines
         io_label_lines = []
-        io_label_lines.append('<tr><td align="left"><font color="white">Summary</font></td></tr>')
+        io_label_lines.append(f'<tr><td align="left"><font color="white" face="{self.graph_config["SUMMARY_FONT"]}">Summary</font></td></tr>')
         for name, quant in sorted(total_io.items(), key=lambda x: x[1]):
             if name == 'EU':
                 continue
@@ -679,6 +682,30 @@ class Graph:
 
         io_label_lines.append(makeLineHtml('MediumSeaGreen', 'Total machine count:', round(sumval, 2)))
 
+        # Add peak power load in maximum voltage on chart
+        # Find maximum voltage
+        max_tier = -1
+        tiers = ['LV', 'MV', 'HV', 'EV', 'IV', 'LuV', 'ZPM', 'UV', 'UHV', 'UEV', 'UIV', 'UMV']
+        for rec in self.recipes.values():
+            tier = tiers.index(rec.user_voltage)
+            if tier > max_tier:
+                max_tier = tier
+        voltage_at_tier = 32 * pow(4, max_tier)
+
+        # Compute maximum draw
+        max_draw = 0
+        for rec in self.recipes.values():
+            max_draw += rec.base_eut * math.ceil(rec.multiplier)
+
+        io_label_lines.append(
+            makeLineHtml(
+                'red', 
+                'Peak power draw:', 
+                f'{round(max_draw/voltage_at_tier, 2)}A {tiers[max_tier]}'
+            )
+        )
+        
+
         # Create final table
         io_label = ''.join(io_label_lines)
         io_label = f'<<table border="0">{io_label}</table>>'
@@ -687,7 +714,7 @@ class Graph:
         self.addNode(
             'total_io_node',
             label=io_label,
-            fillcolor=self.darkModeColor,
+            fillcolor=self.graph_config['BACKGROUND_COLOR'],
         )
 
 
@@ -1161,6 +1188,8 @@ class Graph:
         node_style = {
             'shape': 'box',
             'style': 'filled',
+            'fontname': self.graph_config['GENERAL_FONT'],
+            'fontsize': str(self.graph_config['NODE_FONTSIZE']),
         }
         g = graphviz.Digraph(
             engine='dot',
@@ -1170,7 +1199,7 @@ class Graph:
                 'rankdir': 'TD',
                 'ranksep': '0.5',
                 # 'overlap': 'scale',
-                'bgcolor': self.darkModeColor,
+                'bgcolor': self.graph_config['BACKGROUND_COLOR'],
                 # 'mindist': '0.1',
                 # 'overlap': 'false',
                 'nodesep': '0.1',
@@ -1192,13 +1221,7 @@ class Graph:
                 groups['no-group'].append(repackaged)
 
         # Create color cycle object for group and edge coloring
-        color_cycle = [
-            'white',
-            'orange',
-            'yellow',
-            'green',
-            'violet',
-        ]
+        color_cycle = self.graph_config['EDGECOLOR_CYCLE']
         if self.graph_config.get('USE_RAINBOW_EDGES', None):
             cycle_obj = itertools.cycle(color_cycle)
         else:
@@ -1242,12 +1265,12 @@ class Graph:
                             )
 
                     payload = group.upper()
-                    ln = f'<tr><td align="left"><font color="{subgraph_color}" face="Verdana">{payload}</font></td></tr>'
+                    ln = f'<tr><td align="left"><font color="{subgraph_color}" face="{self.graph_config["GROUP_FONT"]}">{payload}</font></td></tr>'
                     tb = f'<<table border="0">{ln}</table>>'
                     c.attr(
                         color=subgraph_color,
                         label=tb,
-                        fontsize="20pt"
+                        fontsize=f'{self.graph_config["GROUP_FONTSIZE"]}pt'
                     )
 
         # Populate edges
@@ -1290,6 +1313,8 @@ class Graph:
                 label=f'{ing_name}\n({quant_label})',
                 fontcolor=ingredient_colors[ing_name],
                 color=ingredient_colors[ing_name],
+                fontname=self.graph_config['GENERAL_FONT'],
+                fontsize=str(self.graph_config['EDGE_FONTSIZE']),
                 **kwargs,
             )
 

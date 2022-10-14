@@ -80,8 +80,8 @@ GTpp_stats = {
     'industrial dehydrator': [1.2, 0.5, 4],
 }
 
-voltage_cutoffs = [33, 129, 513, 2049, 8193, 32769, 131_073, 524_289, 2_097_153]
-voltages = ['LV', 'MV', 'HV', 'EV', 'IV', 'LuV', 'ZPM', 'UV', 'UHV']
+voltages = ['LV', 'MV', 'HV', 'EV', 'IV', 'LuV', 'ZPM', 'UV', 'UHV', 'UEV', 'UIV', 'UMV']
+voltage_cutoffs = [32*pow(4, x) + 1 for x in range(len(voltages))]
 
 
 def require(recipe, requirements):

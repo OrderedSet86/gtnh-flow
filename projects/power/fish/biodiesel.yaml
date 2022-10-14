@@ -17,6 +17,8 @@
     glycerol: 9000
   eut: 30
   dur: 270
+  target:
+    bio diesel: 112
 - m: chemical reactor
   tier: MV
   I:
@@ -52,7 +54,6 @@
     methane: 96
   eut: 5
   dur: 19
-  number: 2
 - m: chemical reactor
   tier: LV
   I:

@@ -18,7 +18,7 @@
   eut: 30
   dur: 2
   target:
-    '[output] oxygen': 1000
+    '[output] oxygen': 1002
 - m: centrifuge
   tier: LV
   I:

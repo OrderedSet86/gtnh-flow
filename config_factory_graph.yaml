@@ -15,6 +15,25 @@ OUTPUT_FORMAT: png # png or pdf (pdf is searchable)
 USE_RAINBOW_EDGES: true # feature to help distinguish between overlapping edges
 DUR_FORMAT: sec # choose either "ticks" or "sec"
 
+# === VISUALS ===
+GENERAL_FONT: arial  # nodes and edges
+SUMMARY_FONT: arial
+GROUP_FONT: verdana
+NODE_FONTSIZE: 11
+EDGE_FONTSIZE: 10
+GROUP_FONTSIZE: 18
+BACKGROUND_COLOR: '#043742'
+EDGECOLOR_CYCLE:
+  - 'white'
+  - 'orange'
+  - 'yellow'
+  - 'green'
+  - 'violet'
+SOURCESINK_COLOR: 'ghostwhite'
+NONLOCKEDNODE_COLOR: 'lightblue2'
+LOCKEDNODE_COLOR: 'green'
+
+
 # { These settings are not added to backend yet
 PRECISION: 4
 ROUND_MACHINES_UP: false

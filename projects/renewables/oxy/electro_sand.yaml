@@ -14,11 +14,11 @@
     magnesia dust: 2
   O:
     magnesium dust: 1
-    '[output] oxygen': 1000
+    oxygen: 1000
   eut: 30
   dur: 2
   target:
-    '[output] oxygen': 1000
+    oxygen: 1000
 - m: electrolyzer
   tier: LV
   I:
