@@ -1306,19 +1306,26 @@ class Graph:
                 groups['no-group'].append(repackaged)
 
         def make_record(lab, inputs, outputs):
+            invert = self.graph_config['ORIENTATION'] in ['BT', 'RL']
             if inputs is None and outputs is None:
                 return (False, lab)
             elif inputs is None:
                 lab = '\\n'.join(lab.split('\n'))
                 output_str = '|'.join(outputs)
                 output_str = '{' + output_str + '}' if len(outputs) > 1 else output_str
-                cell_label = '{' + '|'.join([lab ,output_str]) + '}'
+                if invert:
+                    cell_label = '{' + '|'.join([output_str, lab]) + '}'
+                else:
+                    cell_label = '{' + '|'.join([lab ,output_str]) + '}'
                 return (True, cell_label)
             elif outputs is None:
                 lab = '\\n'.join(lab.split('\n'))
                 input_str = '|'.join(inputs)
                 input_str = '{' + input_str + '}' if len(inputs) > 1 else input_str
-                cell_label = '{' + '|'.join([input_str, lab]) + '}'
+                if invert:
+                    cell_label = '{' + '|'.join([lab, input_str]) + '}'
+                else:
+                    cell_label = '{' + '|'.join([input_str, lab]) + '}'
                 return (True, cell_label)
             else:
                 lab = '\\n'.join(lab.split('\n'))
@@ -1326,7 +1333,10 @@ class Graph:
                 output_str = '|'.join(outputs)
                 input_str = '{' + input_str + '}' if len(inputs) > 1 else input_str
                 output_str = '{' + output_str + '}' if len(outputs) > 1 else output_str
-                cell_label = '{' + '|'.join([input_str, lab ,output_str]) + '}'
+                if invert:
+                    cell_label = '{' + '|'.join([output_str, lab, input_str]) + '}'
+                else:
+                    cell_label = '{' + '|'.join([input_str, lab, output_str]) + '}'
                 return (True, cell_label)
 
         def make_port(ing, io_type):
