@@ -1248,8 +1248,14 @@ class Graph:
             self._color_dict[id] = next(self._color_cycler)
         return self._color_dict[id]
 
+    def getPortId(self, ing_name, port_type):
+        normal = re.sub(' ','_', ing_name).lower().strip()
+        return f'{port_type}_{normal}'
+
     def getIngId(self, ing_name):
-        id = re.sub(r'\[.*?\]', '', ing_name).strip()
+        id = ing_name
+        id = re.sub(r'\[.*?\]', '', id)
+        id = id.strip()
         id = re.sub(r' ', '_', id)
         return id.lower()
 
@@ -1319,7 +1325,6 @@ class Graph:
             num_outputs = len(outputs) if outputs is not None else 0
             has_input = num_inputs > 0
             has_output = num_outputs > 0
-            port_size = max(num_inputs, num_outputs)
             
             if not has_input and not has_output:
                 return (False, lab)
@@ -1346,9 +1351,9 @@ class Graph:
                     io.write('<tr>')
                     for cell in line:
                         if port_type:
-                            port_id = self.getIngId(cell)
+                            port_id = self.getPortId(cell, port_type)
                             ing_name = self.getIngLabel(cell)
-                            io.write(f'<td border="1" PORT="{port_type}_{port_id}">{ing_name}</td>')
+                            io.write(f'<td border="1" PORT="{port_id}">{ing_name}</td>')
                         else:
                             io.write(f'<td border="0">{cell}</td>')
                     io.write('</tr>')
@@ -1366,9 +1371,9 @@ class Graph:
                     for cell in line:
                         io.write('<tr>')
                         if port_type:
-                            port_id = self.getIngId(cell)
+                            port_id = self.getPortId(cell, port_type)
                             ing_name = self.getIngLabel(cell)
-                            io.write(f'<td border="1" PORT="{port_type}_{port_id}">{ing_name}</td>')
+                            io.write(f'<td border="1" PORT="{port_id}">{ing_name}</td>')
                         else:
                             io.write(f'<td border="0">{cell}</td>')
                         io.write('</tr>')
@@ -1457,8 +1462,11 @@ class Graph:
             src_has_port = self.nodeHasPort(src_node)
             dst_has_port = self.nodeHasPort(dst_node)
 
-            src_port = f'{src_node}:o_{ing_id}' if src_has_port else src_node
-            dst_port = f'{dst_node}:i_{ing_id}' if dst_has_port else dst_node
+            src_port_name = self.getPortId(ing_name, 'o')
+            dst_port_name = self.getPortId(ing_name, 'i')
+
+            src_port = f'{src_node}:{src_port_name}' if src_has_port else src_node
+            dst_port = f'{dst_node}:{dst_port_name}' if dst_has_port else dst_node
 
             src_port = f'{src_port}:{outPort}' if src_has_port else src_port
             dst_port = f'{dst_port}:{inPort}' if dst_has_port else dst_port
