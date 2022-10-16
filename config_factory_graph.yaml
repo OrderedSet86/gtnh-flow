@@ -37,7 +37,7 @@ NONLOCKEDNODE_COLOR: 'lightblue2'
 LOCKEDNODE_COLOR: 'green'
 # TB: Vertical, LR: Horizontal, BT: Vertical Inverted, RL: Horizontal Inverted
 # [TB, LR, BT, RL]
-ORIENTATION: 'LR'
+ORIENTATION: 'TB'
 # [line, spline, polyline, curved] 
 # don't use ortho it's buggy
 LINE_STYLE: 'spline'

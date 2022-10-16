@@ -49,12 +49,12 @@ class Graph:
 
     def addNode(self, recipe_id, **kwargs):
         self.nodes[recipe_id] = kwargs
+
     def addEdge(self, node_from, node_to, ing_name, quantity, **kwargs):
         self.edges[(node_from, node_to, ing_name)] = {
             'quant': quantity,
             'kwargs': kwargs
         }
-
 
     def connectGraph(self):
         '''
@@ -137,7 +137,6 @@ class Graph:
         if self.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
             self.outputGraphviz()
 
-
     def removeBackEdges(self):
         # Loops are possible in machine processing, but very difficult / NP-hard to solve properly
         # Want to make algorithm simple, so just break all back edges and send them to sink instead
@@ -181,7 +180,6 @@ class Graph:
 
                 del self.edges[edge_def]
 
-
     def createAdjacencyList(self):
         # Compute "adjacency list" (node -> {I: edges, O: edges}) for edges and machine-involved edges
         adj = defaultdict(lambda: defaultdict(list))
@@ -210,7 +208,6 @@ class Graph:
             for io_type, edges in io_group.items():
                 cprint(f'{io_type} {edges}', 'blue')
         print()
-
 
     def balanceGraph(self):
         # Applies locking info to existing graph
@@ -381,7 +378,34 @@ class Graph:
         if self.graph_config.get('POWER_LINE', False):
             self._addPowerLineNodes()
         self._addSummaryNode()
+        self._combineInputs()
 
+    def _combineInputs(self):
+        ings = defaultdict(list)
+        for src,dst,ing in self.edges.keys():
+            ings[(dst,ing)].append(src)
+        merge = {k:v for k,v in ings.items() if len(v) > 1}
+
+        n = 0
+        for t,lst in merge.items():
+            dst,ing = t
+            
+            joint_id = f'joint_{n}'
+            n = n+1
+
+            self.addNode(joint_id, shape='point')
+            qSum = 0
+            for src in lst:
+                k = (src,dst,ing)
+                info = self.edges[k]
+                self.edges.pop(k)
+                quant = info['quant']
+                kwargs = info['kwargs']
+                qSum = qSum + quant
+                self.addEdge(src, joint_id, ing, quant, **kwargs)
+            
+            self.addEdge(joint_id, dst, ing, qSum)
+        pass
 
     def _addPowerLineNodes(self):
         # This checks for burnables being put into sink and converts them to EU/t
@@ -715,8 +739,8 @@ class Graph:
             'total_io_node',
             label=io_label,
             fillcolor=self.graph_config['BACKGROUND_COLOR'],
+            shape='box'
         )
-
 
     @staticmethod
     def NDecimals(number, N):
@@ -724,7 +748,6 @@ class Graph:
             return round(number, N)
         else:
             return sigfig_round(number, N)
-
 
     def _lockMachine(self, rec_id, rec, determined=False):
         # Compute multipliers based on all locked edges (other I/O stream as well if available)
@@ -775,7 +798,6 @@ class Graph:
 
         # Lock ingredient edges using new quant
         self._lockMachineEdges(rec_id, rec)
-
 
     def _lockMachineEdges(self, rec_id, rec):
         # Lock all adjacent edges to a particular recipe
@@ -1115,7 +1137,6 @@ class Graph:
                             self.outputGraphviz()
                             exit(1)
 
-
     def _simpleLockMachineEdges(self, rec_id, rec):
         # _lockMachineEdges, but no information requirements - just force lock the edges
         for io_dir in ['I', 'O']:
@@ -1182,22 +1203,71 @@ class Graph:
         if self.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
             self.outputGraphviz()
 
+    def getOutputPortSide(self):
+        dir = self.graph_config['ORIENTATION']
+        if dir == 'TB':
+            return 's'
+        elif dir == 'BT':
+            return 'n'
+        elif dir == 'LR':
+            return 'e'
+        else:
+            return 'w'
+    
+    def getInputPortSide(self):
+        dir = self.graph_config['ORIENTATION']
+        if dir == 'TB':
+            return 'n'
+        elif dir == 'BT':
+            return 's'
+        elif dir == 'LR':
+            return 'w'
+        else:
+            return 'e'
+
+    def getIngId(self, ing_name):
+        id = re.sub(r'\[.*?\]', '', ing_name).strip()
+        id = re.sub(r' ', '_', id)
+        return id.lower()
+
+    def getIngLabel(self, ing_name):
+        capitalization_exceptions = {
+            'eu': 'EU',
+        }
+        ing_name = ing_name.lower()
+        if ing_name in capitalization_exceptions:
+            return capitalization_exceptions[ing_name]
+        else:
+            return ing_name.title()
+
+    def getQuantLabel(self, ing_name, ing_quant):
+        unit_exceptions = {
+            'eu': lambda eu: f'{int(math.floor(eu / 20))}/t'
+        }
+        if ing_name in unit_exceptions:
+            return unit_exceptions[ing_name](ing_quant)
+        else:
+            return f'{self.NDecimals(ing_quant, 2)}/s'
 
     def outputGraphviz(self):
         # Outputs a graphviz png using the graph info
         node_style = {
-            'shape': 'box',
             'style': 'filled',
             'fontname': self.graph_config['GENERAL_FONT'],
             'fontsize': str(self.graph_config['NODE_FONTSIZE']),
+        }
+        edge_style = {
+            'labeldistance': '0',
+            'fontname': self.graph_config['GENERAL_FONT'],
+            'fontsize': str(self.graph_config['EDGE_FONTSIZE']),
         }
         g = graphviz.Digraph(
             engine='dot',
             strict=False, # Prevents edge grouping
             graph_attr={
-                'splines': 'true',
-                'rankdir': 'TD',
-                'ranksep': '0.5',
+                'splines': self.graph_config['LINE_STYLE'],
+                'rankdir': self.graph_config['ORIENTATION'],
+                'ranksep': '1.0',
                 # 'overlap': 'scale',
                 'bgcolor': self.graph_config['BACKGROUND_COLOR'],
                 # 'mindist': '0.1',
@@ -1227,23 +1297,68 @@ class Graph:
         else:
             cycle_obj = itertools.cycle(['white'])
 
+        def make_record(lab, inputs, outputs):
+            if inputs is None and outputs is None:
+                return (False, lab)
+            elif inputs is None:
+                lab = '\\n'.join(lab.split('\n'))
+                output_str = '|'.join(outputs)
+                output_str = '{' + output_str + '}' if len(outputs) > 1 else output_str
+                cell_label = '{' + '|'.join([lab ,output_str]) + '}'
+                return (True, cell_label)
+            elif outputs is None:
+                lab = '\\n'.join(lab.split('\n'))
+                input_str = '|'.join(inputs)
+                input_str = '{' + input_str + '}' if len(inputs) > 1 else input_str
+                cell_label = '{' + '|'.join([input_str, lab]) + '}'
+                return (True, cell_label)
+            else:
+                lab = '\\n'.join(lab.split('\n'))
+                input_str = '|'.join(inputs)
+                output_str = '|'.join(outputs)
+                input_str = '{' + input_str + '}' if len(inputs) > 1 else input_str
+                output_str = '{' + output_str + '}' if len(outputs) > 1 else output_str
+                cell_label = '{' + '|'.join([input_str, lab ,output_str]) + '}'
+                return (True, cell_label)
+
+        def make_port(ing, io_type):
+            return f'<{io_type}_{self.getIngId(ing)}> {self.getIngLabel(ing)}'
+
+        def add_node_internal(graph, node_name, **kwargs):
+            label = kwargs['label'] if 'label' in kwargs else None
+            isRecord = False
+            newLabel = None
+            
+            if node_name == 'source':
+                names = set([name.lower() for src,_,name in self.edges.keys() if src == 'source'])
+                out_ports = [make_port(x, 'o') for x in names]
+                isRecord, newLabel = make_record(label, None, out_ports)
+            elif node_name == 'sink':
+                names = set([name.lower() for _,dst,name in self.edges.keys() if dst == 'sink'])
+                in_ports = [make_port(x, 'i') for x in names]
+                isRecord, newLabel = make_record(label, in_ports, None)
+            elif re.match(r'^\d+$', node_name):
+                rec = self.recipes[node_name]
+                in_ports = [make_port(ing.name, 'i') for ing in rec.I]
+                out_ports = [make_port(ing.name, 'o') for ing in rec.O]
+                isRecord, newLabel = make_record(label, in_ports, out_ports)
+
+            if isRecord:
+                kwargs['label'] = newLabel
+                kwargs['shape'] = 'record'
+            
+            graph.node(
+                f'{node_name}',
+                **kwargs,
+                **node_style
+            )
+
         # Populate nodes by group
         for group in groups:
             if group == 'no-group':
                 # Don't draw subgraph if not part of a group
                 for rec_id, kwargs in groups[group]:
-                    if isinstance(rec_id, int):
-                        g.node(
-                            str(rec_id),
-                            **kwargs,
-                            **node_style
-                        )
-                    elif isinstance(rec_id, str):
-                        g.node(
-                            str(rec_id),
-                            **kwargs,
-                            **node_style
-                        )
+                    add_node_internal(g, rec_id, **kwargs)
             else:
                 with g.subgraph(name=f'cluster_{group}') as c:
                     print(f'Creating subgraph {group}')
@@ -1251,18 +1366,7 @@ class Graph:
 
                     # Populate nodes
                     for rec_id, kwargs in groups[group]:
-                        if isinstance(rec_id, int):
-                            c.node(
-                                str(rec_id),
-                                **kwargs,
-                                **node_style
-                            )
-                        elif isinstance(rec_id, str):
-                            c.node(
-                                str(rec_id),
-                                **kwargs,
-                                **node_style
-                            )
+                        add_node_internal(c, rec_id, **kwargs)
 
                     payload = group.upper()
                     ln = f'<tr><td align="left"><font color="{subgraph_color}" face="{self.graph_config["GROUP_FONT"]}">{payload}</font></td></tr>'
@@ -1276,46 +1380,33 @@ class Graph:
         # Populate edges
         ingredient_colors = {}
 
-        capitalization_exceptions = {
-            'eu': 'EU',
-        }
-        unit_exceptions = {
-            'eu': lambda eu: f'{int(math.floor(eu / 20))}/t'
-        }
+        inPort = self.getInputPortSide()
+        outPort = self.getOutputPortSide()
+
         for io_info, edge_data in self.edges.items():
             node_from, node_to, ing_name = io_info
             ing_quant, kwargs = edge_data['quant'], edge_data['kwargs']
 
-            ing_name = ing_name.lower()
-
-            # Make quantity label
-            if ing_name in unit_exceptions:
-                quant_label = unit_exceptions[ing_name](ing_quant)
-            else:
-                quant_label = f'{self.NDecimals(ing_quant, 2)}/s'
-
-            # Make ingredient label
-            if ing_name in capitalization_exceptions:
-                ing_name = capitalization_exceptions[ing_name.lower()]
-            else:
-                ing_name = ing_name.title()
+            ing_id = self.getIngId(ing_name)
+            quant_label = self.getQuantLabel(ing_name, ing_quant)
+            # ing_label = self.getIngLabel(ing_name)
 
             # Strip bad arguments
             if 'locked' in kwargs:
                 del kwargs['locked']
 
             # Assign ing color if it doesn't already exist
-            if ing_name not in ingredient_colors:
-                ingredient_colors[ing_name] = next(cycle_obj)
+            if ing_id not in ingredient_colors:
+                ingredient_colors[ing_id] = next(cycle_obj)
+
             g.edge(
-                node_from,
-                node_to,
-                label=f'{ing_name}\n({quant_label})',
-                fontcolor=ingredient_colors[ing_name],
-                color=ingredient_colors[ing_name],
-                fontname=self.graph_config['GENERAL_FONT'],
-                fontsize=str(self.graph_config['EDGE_FONTSIZE']),
+                f'{node_from}:o_{ing_id}:{outPort}',
+                f'{node_to}:i_{ing_id}:{inPort}',
+                label=f'({quant_label})',
+                fontcolor=ingredient_colors[ing_id],
+                color=ingredient_colors[ing_id],
                 **kwargs,
+                **edge_style
             )
 
         # Output final graph
