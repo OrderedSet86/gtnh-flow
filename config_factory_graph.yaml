@@ -35,6 +35,8 @@ EDGECOLOR_CYCLE:
 SOURCESINK_COLOR: 'ghostwhite'
 NONLOCKEDNODE_COLOR: 'lightblue2'
 LOCKEDNODE_COLOR: 'green'
+POSITIVE_COLOR: '#859900'
+NEGATIVE_COLOR: '#dc322f'
 # TB: Vertical, LR: Horizontal, BT: Vertical Inverted, RL: Horizontal Inverted
 # [TB, LR, BT, RL]
 ORIENTATION: 'TB'

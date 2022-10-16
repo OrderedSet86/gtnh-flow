@@ -42,6 +42,12 @@ class Graph:
         self.adj = None
         self.adj_machine = None
 
+        self._color_dict = dict()
+        if self.graph_config.get('USE_RAINBOW_EDGES', None):
+            self._color_cycler = itertools.cycle(self.graph_config['EDGECOLOR_CYCLE'])
+        else:
+            self._color_cycler = itertools.cycle(['white'])
+
         # TODO: Temporary until backend data import
         for i, rec in enumerate(recipes):
             recipes[i] = overclockRecipe(rec)
@@ -393,7 +399,9 @@ class Graph:
             joint_id = f'joint_{n}'
             n = n+1
 
-            self.addNode(joint_id, shape='point')
+            ing_id = self.getIngId(ing)
+            ing_color = self.getUniqueColor(ing_id)
+            self.addNode(joint_id, shape='point', color=ing_color)
             qSum = 0
             for src in lst:
                 k = (src,dst,ing)
@@ -526,13 +534,14 @@ class Graph:
                 gen_name = generator_names[generator_idx].title()
 
                 # Add node
-                node_id = f'{generator_number}-{generator_idx}'
+                node_gen = f'power_{generator_number}_{generator_idx}'
                 generator_number += 1
                 node_name = f'{gen_name} (100% eff)'
                 self.addNode(
-                    node_id,
+                    node_gen,
                     label= node_name,
                     fillcolor=self.graph_config['NONLOCKEDNODE_COLOR'],
+                    shape='ellipse'
                 )
 
                 # Fix edges to point at said node
@@ -541,14 +550,14 @@ class Graph:
                 # Edge (old output) -> (generator)
                 self.addEdge(
                     node_from,
-                    node_id,
+                    node_gen,
                     ing_name,
                     quant,
                     **edge_data['kwargs'],
                 )
                 # Edge (generator) -> (EU sink)
                 self.addEdge(
-                    node_id,
+                    node_gen,
                     'sink',
                     'EU',
                     produced_eut,
@@ -613,11 +622,14 @@ class Graph:
         # Now that tree is fully locked, add I/O node
         # Specifically, inputs are adj[source] and outputs are adj[sink]
 
-        def makeLineHtml(color, text, amt_text):
+        color_positive = self.graph_config['POSITIVE_COLOR']
+        color_negative = self.graph_config['NEGATIVE_COLOR']
+        
+        def makeLineHtml(lab_text, amt_text, lab_color, amt_color):
             return ''.join([
                 '<tr>'
-                f'<td align="left"><font color="{color}" face="{self.graph_config["SUMMARY_FONT"]}">{text}</font></td>'
-                f'<td align ="right"><font color="{color}" face="{self.graph_config["SUMMARY_FONT"]}">{amt_text}</font></td>'
+                f'<td align="left"><font color="{lab_color}" face="{self.graph_config["SUMMARY_FONT"]}">{lab_text}</font></td>'
+                f'<td align ="right"><font color="{amt_color}" face="{self.graph_config["SUMMARY_FONT"]}">{amt_text}</font></td>'
                 '</tr>'
             ])
 
@@ -625,7 +637,7 @@ class Graph:
 
         # Compute I/O
         total_io = defaultdict(float)
-        bracket_prefix_re = re.compile(r'^\[.*\]\s*(.*)')
+        ing_names = defaultdict(str)
         for direction in [-1, 1]:
             if direction == -1:
                 # Inputs
@@ -635,22 +647,21 @@ class Graph:
                 edges = self.adj['sink']['I']
 
             for edge in edges:
-                from_node, to_node, ing_name = edge
+                _, _, ing_name = edge
                 edge_data = self.edges[edge]
                 quant = edge_data['quant']
 
-                # Check for bracket prefixes and strip
-                m = bracket_prefix_re.match(ing_name)
-                if m is not None:
-                    ing_name = m.group(1)
+                ing_id = self.getIngId(ing_name)
 
-                total_io[ing_name] += direction * quant
+                ing_names[ing_id] = self.getIngLabel(ing_name)
+                total_io[ing_id] += direction * quant
 
         # Create I/O lines
         io_label_lines = []
-        io_label_lines.append(f'<tr><td align="left"><font color="white" face="{self.graph_config["SUMMARY_FONT"]}">Summary</font></td></tr>')
-        for name, quant in sorted(total_io.items(), key=lambda x: x[1]):
-            if name == 'EU':
+        io_label_lines.append(f'<tr><td align="left"><font color="white" face="{self.graph_config["SUMMARY_FONT"]}"><b>Summary</b></font></td></tr><hr/>')
+
+        for id, quant in sorted(total_io.items(), key=lambda x: x[1]):
+            if id == 'eu':
                 continue
 
             # Skip if too small (intended to avoid floating point issues)
@@ -658,28 +669,27 @@ class Graph:
             if -near_zero_range < quant < near_zero_range:
                 continue
 
-            amt_text = f'{self.NDecimals(quant, 2)}/s'
-            if quant < 0:
-                io_label_lines.append(makeLineHtml('red', name.title(), amt_text))
-            else:
-                io_label_lines.append(makeLineHtml('MediumSeaGreen', name.title(), amt_text))
+            amt_text = self.getQuantLabel(id, quant)
+            name_text = '\u2588 ' + ing_names[id]
+            num_color = color_positive if quant >= 0 else color_negative
+            ing_color = self.getUniqueColor(id)
+            io_label_lines.append(makeLineHtml(name_text, amt_text, ing_color, num_color))
 
         # Compute total EU/t cost and (if power line) output
         total_eut = 0
         for rec in self.recipes.values():
             total_eut += rec.eut
-        io_label_lines.append('<HR/>')
-        eut_rounded = int(math.ceil(total_eut))
-        io_label_lines.append(makeLineHtml('red', 'Input EU/t:', eut_rounded))
-        if 'EU' in total_io:
-            produced_eut = int(math.floor(total_io['EU'] / 20))
-            io_label_lines.append(makeLineHtml('MediumSeaGreen', 'Output EU/t:', produced_eut))
-            io_label_lines.append('<HR/>')
+        io_label_lines.append('<hr/>')
+        eut_rounded = -int(math.ceil(total_eut))
+        io_label_lines.append(makeLineHtml('Input EU/t:', eut_rounded, 'white', color_negative))
+        if 'eu' in total_io:
+            produced_eut = int(math.floor(total_io['eu'] / 20))
+            io_label_lines.append(makeLineHtml('Output EU/t:', produced_eut, 'white', color_positive))
             net_eut = produced_eut - eut_rounded
-            if net_eut > 0:
-                io_label_lines.append(makeLineHtml('MediumSeaGreen', 'Net EU/t:', net_eut))
-            else:
-                io_label_lines.append(makeLineHtml('red', 'Net EU/t:', net_eut))
+            lab_color = 'white'
+            amt_color = color_positive if net_eut >= 0 else color_negative
+            io_label_lines.append(makeLineHtml('Net EU/t:', net_eut, lab_color, amt_color))
+            io_label_lines.append('<hr/>')
 
         # Add total machine multiplier count for oxygen table
         sumval = 0
@@ -695,7 +705,7 @@ class Graph:
         for rec_id in self.nodes:
             if rec_id in ['source', 'sink']:
                 continue
-            elif '-' in rec_id:
+            elif re.match(r'^power_\d+_\d+$', rec_id):
                 continue
             rec = self.recipes[rec_id]
 
@@ -704,7 +714,7 @@ class Graph:
                 machine_weight *= special_machine_weights[rec.machine]
             sumval += machine_weight
 
-        io_label_lines.append(makeLineHtml('MediumSeaGreen', 'Total machine count:', round(sumval, 2)))
+        io_label_lines.append(makeLineHtml('Total machine count:', round(sumval, 2), 'white', color_positive))
 
         # Add peak power load in maximum voltage on chart
         # Find maximum voltage
@@ -722,13 +732,13 @@ class Graph:
             max_draw += rec.base_eut * math.ceil(rec.multiplier)
 
         io_label_lines.append(
-            makeLineHtml(
-                'red', 
+            makeLineHtml( 
                 'Peak power draw:', 
-                f'{round(max_draw/voltage_at_tier, 2)}A {tiers[max_tier]}'
+                f'{round(max_draw/voltage_at_tier, 2)}A {tiers[max_tier]}',
+                'white',
+                color_negative
             )
         )
-        
 
         # Create final table
         io_label = ''.join(io_label_lines)
@@ -1225,6 +1235,11 @@ class Graph:
         else:
             return 'e'
 
+    def getUniqueColor(self, id):
+        if id not in self._color_dict:
+            self._color_dict[id] = next(self._color_cycler)
+        return self._color_dict[id]
+
     def getIngId(self, ing_name):
         id = re.sub(r'\[.*?\]', '', ing_name).strip()
         id = re.sub(r' ', '_', id)
@@ -1234,18 +1249,18 @@ class Graph:
         capitalization_exceptions = {
             'eu': 'EU',
         }
-        ing_name = ing_name.lower()
-        if ing_name in capitalization_exceptions:
-            return capitalization_exceptions[ing_name]
+        ing_id = self.getIngId(ing_name)
+        if ing_id in capitalization_exceptions:
+            return capitalization_exceptions[ing_id]
         else:
             return ing_name.title()
 
-    def getQuantLabel(self, ing_name, ing_quant):
+    def getQuantLabel(self, ing_id, ing_quant):
         unit_exceptions = {
             'eu': lambda eu: f'{int(math.floor(eu / 20))}/t'
         }
-        if ing_name in unit_exceptions:
-            return unit_exceptions[ing_name](ing_quant)
+        if ing_id in unit_exceptions:
+            return unit_exceptions[ing_id](ing_quant)
         else:
             return f'{self.NDecimals(ing_quant, 2)}/s'
 
@@ -1289,13 +1304,6 @@ class Graph:
                     groups['no-group'].append(repackaged)
             else:
                 groups['no-group'].append(repackaged)
-
-        # Create color cycle object for group and edge coloring
-        color_cycle = self.graph_config['EDGECOLOR_CYCLE']
-        if self.graph_config.get('USE_RAINBOW_EDGES', None):
-            cycle_obj = itertools.cycle(color_cycle)
-        else:
-            cycle_obj = itertools.cycle(['white'])
 
         def make_record(lab, inputs, outputs):
             if inputs is None and outputs is None:
@@ -1362,23 +1370,20 @@ class Graph:
             else:
                 with g.subgraph(name=f'cluster_{group}') as c:
                     print(f'Creating subgraph {group}')
-                    subgraph_color = next(cycle_obj)
+                    cluster_color = self.getUniqueColor(group)
 
                     # Populate nodes
                     for rec_id, kwargs in groups[group]:
                         add_node_internal(c, rec_id, **kwargs)
 
                     payload = group.upper()
-                    ln = f'<tr><td align="left"><font color="{subgraph_color}" face="{self.graph_config["GROUP_FONT"]}">{payload}</font></td></tr>'
+                    ln = f'<tr><td align="left"><font color="{cluster_color}" face="{self.graph_config["GROUP_FONT"]}">{payload}</font></td></tr>'
                     tb = f'<<table border="0">{ln}</table>>'
                     c.attr(
-                        color=subgraph_color,
+                        color=cluster_color,
                         label=tb,
                         fontsize=f'{self.graph_config["GROUP_FONTSIZE"]}pt'
                     )
-
-        # Populate edges
-        ingredient_colors = {}
 
         inPort = self.getInputPortSide()
         outPort = self.getOutputPortSide()
@@ -1388,7 +1393,7 @@ class Graph:
             ing_quant, kwargs = edge_data['quant'], edge_data['kwargs']
 
             ing_id = self.getIngId(ing_name)
-            quant_label = self.getQuantLabel(ing_name, ing_quant)
+            quant_label = self.getQuantLabel(ing_id, ing_quant)
             # ing_label = self.getIngLabel(ing_name)
 
             # Strip bad arguments
@@ -1396,15 +1401,14 @@ class Graph:
                 del kwargs['locked']
 
             # Assign ing color if it doesn't already exist
-            if ing_id not in ingredient_colors:
-                ingredient_colors[ing_id] = next(cycle_obj)
+            ing_color = self.getUniqueColor(ing_id)
 
             g.edge(
                 f'{node_from}:o_{ing_id}:{outPort}',
                 f'{node_to}:i_{ing_id}:{inPort}',
                 label=f'({quant_label})',
-                fontcolor=ingredient_colors[ing_id],
-                color=ingredient_colors[ing_id],
+                fontcolor=ing_color,
+                color=ing_color,
                 **kwargs,
                 **edge_style
             )
