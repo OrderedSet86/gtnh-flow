@@ -43,6 +43,9 @@ ORIENTATION: 'TB'
 # [line, spline, polyline, curved] 
 # don't use ortho it's buggy
 LINE_STYLE: 'spline'
+# Whether to create a new meta node before multi-input/after multi-output ports
+COMBINE_INPUTS: True
+COMBINE_OUTPUTS: True
 
 
 # { These settings are not added to backend yet

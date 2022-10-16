@@ -385,7 +385,39 @@ class Graph:
         if self.graph_config.get('POWER_LINE', False):
             self._addPowerLineNodes()
         self._addSummaryNode()
-        self._combineInputs()
+
+        if self.graph_config.get('COMBINE_INPUTS', False):
+            self._combineInputs()
+        if self.graph_config.get('COMBINE_OUTPUTS', False):
+            self._combineOutputs()
+
+    def _combineOutputs(self):
+        ings = defaultdict(list)
+        for src,dst,ing in self.edges.keys():
+            ings[(src,ing)].append(dst)
+        merge = {k:v for k,v in ings.items() if len(v) > 1}
+
+        n = 0
+        for t,lst in merge.items():
+            src,ing = t
+            
+            joint_id = f'joint_o_{n}'
+            n = n+1
+
+            ing_id = self.getIngId(ing)
+            ing_color = self.getUniqueColor(ing_id)
+            self.addNode(joint_id, shape='point', color=ing_color)
+            qSum = 0
+            for dst in lst:
+                k = (src,dst,ing)
+                info = self.edges[k]
+                self.edges.pop(k)
+                quant = info['quant']
+                kwargs = info['kwargs']
+                qSum = qSum + quant
+                self.addEdge(joint_id, dst, ing, quant, **kwargs)
+            
+            self.addEdge(src, joint_id, ing, qSum)
 
     def _combineInputs(self):
         ings = defaultdict(list)
@@ -397,7 +429,7 @@ class Graph:
         for t,lst in merge.items():
             dst,ing = t
             
-            joint_id = f'joint_{n}'
+            joint_id = f'joint_i_{n}'
             n = n+1
 
             ing_id = self.getIngId(ing)
@@ -414,7 +446,6 @@ class Graph:
                 self.addEdge(src, joint_id, ing, quant, **kwargs)
             
             self.addEdge(joint_id, dst, ing, qSum)
-        pass
 
     def _addPowerLineNodes(self):
         # This checks for burnables being put into sink and converts them to EU/t
@@ -1480,18 +1511,41 @@ class Graph:
             dist = 2.5 if is_vertical else 4
             port_style.update(labeldistance=str(dist), labelangle=str(angle))
 
+            lab = f'({quant_label})'
             if dst_has_port:
-                port_style.update(headlabel=f'({quant_label})')
                 port_style.update(arrowhead='normal')
-
+                port_style.update(headlabel=lab)
             if src_has_port:
-                port_style.update(taillabel=f'({quant_label})')
                 port_style.update(arrowtail='tee')
+                port_style.update(taillabel=lab)
+
+            src_is_joint_i = re.match('^joint_i', src_node)
+            dst_is_joint_i = re.match('^joint_i', dst_node)
+            src_is_joint_o = re.match('^joint_o', src_node)
+            dst_is_joint_o = re.match('^joint_o', dst_node)
+            
+            #if src_is_joint_o:
+            #    port_style.update(taillabel=f'{lab}')
+            if src_has_port and dst_is_joint_o:
+                port_style.update(headlabel=f'{lab}')
+            if src_is_joint_i and dst_has_port:
+                port_style.update(taillabel=f'{lab}')
+            #if dst_is_joint_i:
+            #    port_style.update(headlabel=f'{lab}')
+
+            def mulcolor(h, f):
+                h = h.lstrip('#')
+                r,g,b = tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
+                r = max(0,min(255,int(r * f)))
+                g = max(0,min(255,int(g * f)))
+                b = max(0,min(255,int(b * f)))
+                return '#' + ''.join(hex(x)[2:].zfill(2) for x in [r,g,b])
+
 
             g.edge(
                 src_port,
                 dst_port,
-                fontcolor=ing_color,
+                fontcolor=mulcolor(ing_color, 1.5),
                 color=ing_color,
                 **kwargs,
                 **port_style
