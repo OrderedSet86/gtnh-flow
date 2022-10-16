@@ -3,6 +3,7 @@
 # As a result, a special algorithm is required to connect all relevant edges in a factory.
 
 # Standard libraries
+from io import StringIO
 import itertools
 import math
 import re
@@ -1305,46 +1306,75 @@ class Graph:
             else:
                 groups['no-group'].append(repackaged)
 
-        def make_record(lab, inputs, outputs):
-            invert = self.graph_config['ORIENTATION'] in ['BT', 'RL']
-            if inputs is None and outputs is None:
+        def make_table(lab, inputs, outputs):
+            is_inverted = self.graph_config['ORIENTATION'] in ['BT', 'RL']
+            is_vertical = self.graph_config['ORIENTATION'] in ['TB', 'BT']
+            num_inputs = len(inputs) if inputs is not None else 0
+            num_outputs = len(outputs) if outputs is not None else 0
+            has_input = num_inputs > 0
+            has_output = num_outputs > 0
+            port_size = max(num_inputs, num_outputs)
+            
+            if not has_input and not has_output:
                 return (False, lab)
-            elif inputs is None:
-                lab = '\\n'.join(lab.split('\n'))
-                output_str = '|'.join(outputs)
-                output_str = '{' + output_str + '}' if len(outputs) > 1 else output_str
-                if invert:
-                    cell_label = '{' + '|'.join([output_str, lab]) + '}'
-                else:
-                    cell_label = '{' + '|'.join([lab ,output_str]) + '}'
-                return (True, cell_label)
-            elif outputs is None:
-                lab = '\\n'.join(lab.split('\n'))
-                input_str = '|'.join(inputs)
-                input_str = '{' + input_str + '}' if len(inputs) > 1 else input_str
-                if invert:
-                    cell_label = '{' + '|'.join([lab, input_str]) + '}'
-                else:
-                    cell_label = '{' + '|'.join([input_str, lab]) + '}'
-                return (True, cell_label)
-            else:
-                lab = '\\n'.join(lab.split('\n'))
-                input_str = '|'.join(inputs)
-                output_str = '|'.join(outputs)
-                input_str = '{' + input_str + '}' if len(inputs) > 1 else input_str
-                output_str = '{' + output_str + '}' if len(outputs) > 1 else output_str
-                if invert:
-                    cell_label = '{' + '|'.join([output_str, lab, input_str]) + '}'
-                else:
-                    cell_label = '{' + '|'.join([input_str, lab, output_str]) + '}'
-                return (True, cell_label)
 
-        def make_port(ing, io_type):
-            return f'<{io_type}_{self.getIngId(ing)}> {self.getIngLabel(ing)}'
+            machine_cell = ['<br />'.join(lab.split('\n'))]
+            lines = [
+                ('i',inputs), 
+                (None,machine_cell), 
+                ('o',outputs)
+            ]
+            if is_inverted:
+                lines.reverse()
+            lines = [(x,y) for x,y in lines if y]
+
+            
+            io = StringIO()
+            if is_vertical:
+                # Each Row is a table
+                io.write('<<table border="0" cellspacing="0">')
+                for port_type,line in lines:
+                    io.write('<tr>')
+                    io.write('<td>')
+                    io.write('<table border="0" cellspacing="0">')
+                    io.write('<tr>')
+                    for cell in line:
+                        if port_type:
+                            port_id = self.getIngId(cell)
+                            ing_name = self.getIngLabel(cell)
+                            io.write(f'<td border="1" PORT="{port_type}_{port_id}">{ing_name}</td>')
+                        else:
+                            io.write(f'<td border="0">{cell}</td>')
+                    io.write('</tr>')
+                    io.write('</table>')
+                    io.write('</td>')
+                    io.write('</tr>')
+                io.write('</table>>')
+            else:
+                # Each columns is a table
+                io.write('<<table border="0" cellspacing="0">')
+                io.write('<tr>')
+                for port_type,line in lines:
+                    io.write('<td>')
+                    io.write('<table border="0" cellspacing="0">')
+                    for cell in line:
+                        io.write('<tr>')
+                        if port_type:
+                            port_id = self.getIngId(cell)
+                            ing_name = self.getIngLabel(cell)
+                            io.write(f'<td border="1" PORT="{port_type}_{port_id}">{ing_name}</td>')
+                        else:
+                            io.write(f'<td border="0">{cell}</td>')
+                        io.write('</tr>')
+                    io.write('</table>')
+                    io.write('</td>')
+                io.write('</tr>')
+                io.write('</table>>')
+            return (True, io.getvalue())
 
         def add_node_internal(graph, node_name, **kwargs):
             label = kwargs['label'] if 'label' in kwargs else None
-            isRecord = False
+            isTable = False
             newLabel = None
 
             def unique(sequence):
@@ -1352,22 +1382,20 @@ class Graph:
                 return [x for x in sequence if not (x in seen or seen.add(x))]
             
             if node_name == 'source':
-                names = unique([name.lower() for src,_,name in self.edges.keys() if src == 'source'])
-                out_ports = [make_port(x, 'o') for x in names]
-                isRecord, newLabel = make_record(label, None, out_ports)
+                names = unique([name for src,_,name in self.edges.keys() if src == 'source'])
+                isTable, newLabel = make_table(label, None, names)
             elif node_name == 'sink':
-                names = unique([name.lower() for _,dst,name in self.edges.keys() if dst == 'sink'])
-                in_ports = [make_port(x, 'i') for x in names]
-                isRecord, newLabel = make_record(label, in_ports, None)
+                names = unique([name for _,dst,name in self.edges.keys() if dst == 'sink'])
+                isTable, newLabel = make_table(label, names, None)
             elif re.match(r'^\d+$', node_name):
                 rec = self.recipes[node_name]
-                in_ports = [make_port(ing.name, 'i') for ing in rec.I]
-                out_ports = [make_port(ing.name, 'o') for ing in rec.O]
-                isRecord, newLabel = make_record(label, in_ports, out_ports)
+                in_ports = [ing.name for ing in rec.I]
+                out_ports = [ing.name for ing in rec.O]
+                isTable, newLabel = make_table(label, in_ports, out_ports)
 
-            if isRecord:
+            if isTable:
                 kwargs['label'] = newLabel
-                kwargs['shape'] = 'record'
+                kwargs['shape'] = 'plain'
             
             graph.node(
                 f'{node_name}',
