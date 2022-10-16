@@ -1346,13 +1346,17 @@ class Graph:
             label = kwargs['label'] if 'label' in kwargs else None
             isRecord = False
             newLabel = None
+
+            def unique(sequence):
+                seen = set()
+                return [x for x in sequence if not (x in seen or seen.add(x))]
             
             if node_name == 'source':
-                names = set([name.lower() for src,_,name in self.edges.keys() if src == 'source'])
+                names = unique([name.lower() for src,_,name in self.edges.keys() if src == 'source'])
                 out_ports = [make_port(x, 'o') for x in names]
                 isRecord, newLabel = make_record(label, None, out_ports)
             elif node_name == 'sink':
-                names = set([name.lower() for _,dst,name in self.edges.keys() if dst == 'sink'])
+                names = unique([name.lower() for _,dst,name in self.edges.keys() if dst == 'sink'])
                 in_ports = [make_port(x, 'i') for x in names]
                 isRecord, newLabel = make_record(label, in_ports, None)
             elif re.match(r'^\d+$', node_name):
