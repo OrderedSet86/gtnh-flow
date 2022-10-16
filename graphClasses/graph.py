@@ -1288,19 +1288,22 @@ class Graph:
         edge_style = {
             'fontname': self.graph_config['GENERAL_FONT'],
             'fontsize': str(self.graph_config['EDGE_FONTSIZE']),
+            'dir': 'both',
+            'arrowtail': 'none',
+            'arrowhead': 'none'
         }
         g = graphviz.Digraph(
             engine='dot',
             strict=False, # Prevents edge grouping
             graph_attr={
+                'bgcolor': self.graph_config['BACKGROUND_COLOR'],
                 'splines': self.graph_config['LINE_STYLE'],
                 'rankdir': self.graph_config['ORIENTATION'],
-                'ranksep': '1.0',
+                'ranksep': '1.25',
+                'nodesep': '0.25',
                 # 'overlap': 'scale',
-                'bgcolor': self.graph_config['BACKGROUND_COLOR'],
                 # 'mindist': '0.1',
                 # 'overlap': 'false',
-                'nodesep': '0.1',
             }
         )
 
@@ -1472,15 +1475,22 @@ class Graph:
             dst_port = f'{dst_port}:{inPort}' if dst_has_port else dst_port
 
             port_style = dict(edge_style)
+            
+            angle = 60 if is_vertical else 20
+            dist = 2.5 if is_vertical else 4
+            port_style.update(labeldistance=str(dist), labelangle=str(angle))
+
             if dst_has_port:
-                angle = 60 if is_vertical else 20
-                dist = 2.5 if is_vertical else 3
-                port_style.update(labeldistance=str(dist), labelangle=str(angle))
+                port_style.update(headlabel=f'({quant_label})')
+                port_style.update(arrowhead='normal')
+
+            if src_has_port:
+                port_style.update(taillabel=f'({quant_label})')
+                port_style.update(arrowtail='tee')
 
             g.edge(
                 src_port,
                 dst_port,
-                headlabel=f'({quant_label})',
                 fontcolor=ing_color,
                 color=ing_color,
                 **kwargs,
