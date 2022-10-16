@@ -1214,6 +1214,13 @@ class Graph:
         if self.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
             self.outputGraphviz()
 
+    def nodeHasPort(self, node):
+        if node in ['source', 'sink']:
+            return True
+        if re.match(r'^\d+$', node):
+            return True
+        return False
+
     def getOutputPortSide(self):
         dir = self.graph_config['ORIENTATION']
         if dir == 'TB':
@@ -1431,7 +1438,7 @@ class Graph:
         outPort = self.getOutputPortSide()
 
         for io_info, edge_data in self.edges.items():
-            node_from, node_to, ing_name = io_info
+            src_node, dst_node, ing_name = io_info
             ing_quant, kwargs = edge_data['quant'], edge_data['kwargs']
 
             ing_id = self.getIngId(ing_name)
@@ -1445,9 +1452,18 @@ class Graph:
             # Assign ing color if it doesn't already exist
             ing_color = self.getUniqueColor(ing_id)
 
+            src_has_port = self.nodeHasPort(src_node)
+            dst_has_port = self.nodeHasPort(dst_node)
+
+            src_port = f'{src_node}:o_{ing_id}' if src_has_port else src_node
+            dst_port = f'{dst_node}:i_{ing_id}' if dst_has_port else dst_node
+
+            src_port = f'{src_port}:{outPort}'
+            dst_port = f'{dst_port}:{inPort}'
+
             g.edge(
-                f'{node_from}:o_{ing_id}:{outPort}',
-                f'{node_to}:i_{ing_id}:{inPort}',
+                src_port,
+                dst_port,
                 label=f'({quant_label})',
                 fontcolor=ing_color,
                 color=ing_color,
