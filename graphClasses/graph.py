@@ -1280,7 +1280,6 @@ class Graph:
             'fontsize': str(self.graph_config['NODE_FONTSIZE']),
         }
         edge_style = {
-            'labeldistance': '0',
             'fontname': self.graph_config['GENERAL_FONT'],
             'fontsize': str(self.graph_config['EDGE_FONTSIZE']),
         }
@@ -1436,6 +1435,9 @@ class Graph:
 
         inPort = self.getInputPortSide()
         outPort = self.getOutputPortSide()
+        
+        is_inverted = self.graph_config['ORIENTATION'] in ['BT', 'RL']
+        is_vertical = self.graph_config['ORIENTATION'] in ['TB', 'BT']
 
         for io_info, edge_data in self.edges.items():
             src_node, dst_node, ing_name = io_info
@@ -1458,17 +1460,23 @@ class Graph:
             src_port = f'{src_node}:o_{ing_id}' if src_has_port else src_node
             dst_port = f'{dst_node}:i_{ing_id}' if dst_has_port else dst_node
 
-            src_port = f'{src_port}:{outPort}'
-            dst_port = f'{dst_port}:{inPort}'
+            src_port = f'{src_port}:{outPort}' if src_has_port else src_port
+            dst_port = f'{dst_port}:{inPort}' if dst_has_port else dst_port
+
+            port_style = dict(edge_style)
+            if dst_has_port:
+                angle = 60 if is_vertical else 20
+                dist = 2.5 if is_vertical else 3
+                port_style.update(labeldistance=str(dist), labelangle=str(angle))
 
             g.edge(
                 src_port,
                 dst_port,
-                label=f'({quant_label})',
+                headlabel=f'({quant_label})',
                 fontcolor=ing_color,
                 color=ing_color,
                 **kwargs,
-                **edge_style
+                **port_style
             )
 
         # Output final graph
