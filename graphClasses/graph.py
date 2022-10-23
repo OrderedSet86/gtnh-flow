@@ -3,12 +3,12 @@
 # As a result, a special algorithm is required to connect all relevant edges in a factory.
 
 # Standard libraries
-from io import StringIO
 import itertools
 import math
 import re
 from collections import defaultdict
 from copy import deepcopy
+from io import StringIO
 
 # Pypi libraries
 import graphviz
