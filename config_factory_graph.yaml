@@ -11,7 +11,7 @@ DO_NOT_BURN: # If POWER_LINE is true, don't burn these
   - sulfuric light fuel
   - coal tar oil
   - naphtha
-OUTPUT_FORMAT: png # png or pdf (pdf is searchable)
+OUTPUT_FORMAT: pdf # png or pdf (pdf is searchable)
 USE_RAINBOW_EDGES: true # feature to help distinguish between overlapping edges
 DUR_FORMAT: sec # choose either "ticks" or "sec"
 VIEW_ON_COMPLETION: true
@@ -38,23 +38,26 @@ NONLOCKEDNODE_COLOR: 'lightblue2'
 LOCKEDNODE_COLOR: 'green'
 POSITIVE_COLOR: '#859900'
 NEGATIVE_COLOR: '#dc322f'
+
 ORIENTATION: 'TB'
 # TB: Vertical, LR: Horizontal, BT: Vertical Inverted, RL: Horizontal Inverted
 # [TB, LR, BT, RL]
+
 LINE_STYLE: 'spline'
 # [line, spline, polyline, curved] 
-# don't use ortho it's buggy
-COMBINE_INPUTS: True
-COMBINE_OUTPUTS: True
-# Whether to create a new meta node before multi-input/after multi-output ports
 
+RANKSEP: '1.25'
+NODESEP: '0.25'
+# Node separation size in X/Y. 
+# This is a suggestion, the graphing algorithm will ignore numbers that are too small.
 
-# { These settings are not added to backend yet
-PRECISION: 4
-ROUND_MACHINES_UP: false
-# }
+COMBINE_INPUTS: true
+COMBINE_OUTPUTS: true
+# Whether to (visually) create a new meta node before multi-input/after multi-output ports
+
 
 # { You should probably only modify these if you are dev
 DEBUG_SHOW_EVERY_STEP: false
 SHOW_MACHINE_INDICES: false
+STRIP_BRACKETS: true
 # }

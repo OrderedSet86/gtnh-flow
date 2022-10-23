@@ -30,6 +30,8 @@ def swapIO(io_type):
         raise RuntimeError(f'Improper I/O type: {io_type}')
 
 class Graph:
+
+
     def __init__(self, graph_name, recipes, graph_config=None):
         self.graph_name = graph_name
         self.recipes = {str(i): x for i, x in enumerate(recipes)}
@@ -54,14 +56,17 @@ class Graph:
             recipes[i] = overclockRecipe(rec)
             rec.base_eut = rec.eut
 
+
     def addNode(self, recipe_id, **kwargs):
         self.nodes[recipe_id] = kwargs
+
 
     def addEdge(self, node_from, node_to, ing_name, quantity, **kwargs):
         self.edges[(node_from, node_to, ing_name)] = {
             'quant': quantity,
             'kwargs': kwargs
         }
+
 
     def connectGraph(self):
         '''
@@ -144,6 +149,7 @@ class Graph:
         if self.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
             self.outputGraphviz()
 
+
     def removeBackEdges(self):
         # Loops are possible in machine processing, but very difficult / NP-hard to solve properly
         # Want to make algorithm simple, so just break all back edges and send them to sink instead
@@ -187,6 +193,7 @@ class Graph:
 
                 del self.edges[edge_def]
 
+
     def createAdjacencyList(self):
         # Compute "adjacency list" (node -> {I: edges, O: edges}) for edges and machine-involved edges
         adj = defaultdict(lambda: defaultdict(list))
@@ -215,6 +222,7 @@ class Graph:
             for io_type, edges in io_group.items():
                 cprint(f'{io_type} {edges}', 'blue')
         print()
+
 
     def balanceGraph(self):
         # Applies locking info to existing graph
@@ -391,6 +399,7 @@ class Graph:
         if self.graph_config.get('COMBINE_OUTPUTS', False):
             self._combineOutputs()
 
+
     def _combineOutputs(self):
         ings = defaultdict(list)
         for src,dst,ing in self.edges.keys():
@@ -418,6 +427,7 @@ class Graph:
                 self.addEdge(joint_id, dst, ing, quant, **kwargs)
             
             self.addEdge(src, joint_id, ing, qSum)
+
 
     def _combineInputs(self):
         ings = defaultdict(list)
@@ -573,7 +583,7 @@ class Graph:
                     node_gen,
                     label= node_name,
                     fillcolor=self.graph_config['NONLOCKEDNODE_COLOR'],
-                    shape='ellipse'
+                    shape='box'
                 )
 
                 # Fix edges to point at said node
@@ -650,6 +660,7 @@ class Graph:
             # 4. Update edge with new value
             self.edges[(UCFE_id, 'sink', 'EU')]['quant'] = output_eu
 
+
     def _addSummaryNode(self):
         # Now that tree is fully locked, add I/O node
         # Specifically, inputs are adj[source] and outputs are adj[sink]
@@ -660,7 +671,7 @@ class Graph:
         def makeLineHtml(lab_text, amt_text, lab_color, amt_color):
             return ''.join([
                 '<tr>'
-                f'<td align="left"><font color="{lab_color}" face="{self.graph_config["SUMMARY_FONT"]}">{lab_text}</font></td>'
+                f'<td align="left"><font color="{lab_color}" face="{self.graph_config["SUMMARY_FONT"]}">{self.stripBrackets(lab_text)}</font></td>'
                 f'<td align ="right"><font color="{amt_color}" face="{self.graph_config["SUMMARY_FONT"]}">{amt_text}</font></td>'
                 '</tr>'
             ])
@@ -850,6 +861,7 @@ class Graph:
 
         # Lock ingredient edges using new quant
         self._lockMachineEdges(rec_id, rec)
+
 
     def _lockMachineEdges(self, rec_id, rec):
         # Lock all adjacent edges to a particular recipe
@@ -1189,6 +1201,7 @@ class Graph:
                             self.outputGraphviz()
                             exit(1)
 
+
     def _simpleLockMachineEdges(self, rec_id, rec):
         # _lockMachineEdges, but no information requirements - just force lock the edges
         for io_dir in ['I', 'O']:
@@ -1255,12 +1268,27 @@ class Graph:
         if self.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
             self.outputGraphviz()
 
+
+    def stripBrackets(self, ing):
+        if self.graph_config['STRIP_BRACKETS']:
+            prefix = False
+            if ing[:2] == '\u2588 ':
+                prefix = True
+            stripped = ing.split(']')[-1].strip()
+            if prefix and stripped[:2] != '\u2588 ': 
+                stripped = '\u2588 ' + stripped
+            return stripped
+        else:
+            return ing
+
+
     def nodeHasPort(self, node):
         if node in ['source', 'sink']:
             return True
         if re.match(r'^\d+$', node):
             return True
         return False
+
 
     def getOutputPortSide(self):
         dir = self.graph_config['ORIENTATION']
@@ -1273,6 +1301,7 @@ class Graph:
         else:
             return 'w'
     
+
     def getInputPortSide(self):
         dir = self.graph_config['ORIENTATION']
         if dir == 'TB':
@@ -1284,14 +1313,17 @@ class Graph:
         else:
             return 'e'
 
+
     def getUniqueColor(self, id):
         if id not in self._color_dict:
             self._color_dict[id] = next(self._color_cycler)
         return self._color_dict[id]
 
+
     def getPortId(self, ing_name, port_type):
         normal = re.sub(' ','_', ing_name).lower().strip()
         return f'{port_type}_{normal}'
+
 
     def getIngId(self, ing_name):
         id = ing_name
@@ -1299,6 +1331,7 @@ class Graph:
         id = id.strip()
         id = re.sub(r' ', '_', id)
         return id.lower()
+
 
     def getIngLabel(self, ing_name):
         capitalization_exceptions = {
@@ -1310,6 +1343,7 @@ class Graph:
         else:
             return ing_name.title()
 
+
     def getQuantLabel(self, ing_id, ing_quant):
         unit_exceptions = {
             'eu': lambda eu: f'{int(math.floor(eu / 20))}/t'
@@ -1317,7 +1351,8 @@ class Graph:
         if ing_id in unit_exceptions:
             return unit_exceptions[ing_id](ing_quant)
         else:
-            return f'{self.userRound(ing_quant, 2)}/s'
+            return f'{self.userRound(ing_quant)}/s'
+
 
     def outputGraphviz(self):
         # Outputs a graphviz png using the graph info
@@ -1340,11 +1375,8 @@ class Graph:
                 'bgcolor': self.graph_config['BACKGROUND_COLOR'],
                 'splines': self.graph_config['LINE_STYLE'],
                 'rankdir': self.graph_config['ORIENTATION'],
-                'ranksep': '1.25',
-                'nodesep': '0.25',
-                # 'overlap': 'scale',
-                # 'mindist': '0.1',
-                # 'overlap': 'false',
+                'ranksep': self.graph_config['RANKSEP'],
+                'nodesep': self.graph_config['NODESEP'],
             }
         )
 
@@ -1397,7 +1429,7 @@ class Graph:
                         if port_type:
                             port_id = self.getPortId(cell, port_type)
                             ing_name = self.getIngLabel(cell)
-                            io.write(f'<td border="1" PORT="{port_id}">{ing_name}</td>')
+                            io.write(f'<td border="1" PORT="{port_id}">{self.stripBrackets(ing_name)}</td>')
                         else:
                             io.write(f'<td border="0">{cell}</td>')
                     io.write('</tr>')
@@ -1417,7 +1449,7 @@ class Graph:
                         if port_type:
                             port_id = self.getPortId(cell, port_type)
                             ing_name = self.getIngLabel(cell)
-                            io.write(f'<td border="1" PORT="{port_id}">{ing_name}</td>')
+                            io.write(f'<td border="1" PORT="{port_id}">{self.stripBrackets(ing_name)}</td>')
                         else:
                             io.write(f'<td border="0">{cell}</td>')
                         io.write('</tr>')
