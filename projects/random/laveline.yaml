@@ -1,0 +1,44 @@
+- m: assembler
+  tier: LV
+  I:
+    ztone tile: 4
+    ice: 1
+  O:
+    lave: 8
+  eut: 16
+  dur: 10
+- m: assembler
+  tier: LV
+  I:
+    stone slab: 4
+    stone: 1
+  O:
+    ztone tile: 8
+  eut: 4
+  dur: 8
+- m: cutting machine
+  tier: LV
+  I:
+    stone: 1
+    water: 4
+  O:
+    stone slab: 2
+  eut: 7
+  dur: 2.5
+- m: compressor
+  tier: LV
+  I:
+    snow: 1
+  O:
+    ice: 1
+  eut: 2
+  dur: 15
+- m: fluid solidifier
+  tier: LV
+  I:
+    water: 1000
+  O:
+    snow: 1
+  eut: 4
+  dur: 25.6
+  number: 2

@@ -1,13 +1,14 @@
 - m: electrolyzer
-  tier: IV
+  tier: LV
   I:
     water: 1000
   O:
     electrolysed water: 1000
   eut: 30
   dur: 73.5
+  number: 1
 - m: electrolyzer
-  tier: IV
+  tier: LV
   I:
     electrolysed water: 1000
   O:
@@ -15,5 +16,5 @@
     oxygen: 1000
   eut: 30
   dur: 1.5
-  target:
-    oxygen: 1000
+  # target:
+  #   oxygen: 1000

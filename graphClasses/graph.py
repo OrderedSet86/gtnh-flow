@@ -15,7 +15,7 @@ from sigfig import round as sigfig_round
 from termcolor import cprint
 
 # Internal libraries
-from dataClasses.base import Ingredient, IngredientCollection, Recipe
+from dataClasses.base import Recipe
 from graphClasses.backEdges import BasicGraph, dfs
 from gtnhClasses.overclocks import overclockRecipe
 
@@ -634,7 +634,7 @@ class Graph:
             if -near_zero_range < quant < near_zero_range:
                 continue
 
-            amt_text = f'{self.NDecimals(quant, 2)}/s'
+            amt_text = f'{self.userRound(quant)}/s'
             if quant < 0:
                 io_label_lines.append(makeLineHtml('red', name.title(), amt_text))
             else:
@@ -685,7 +685,7 @@ class Graph:
         # Add peak power load in maximum voltage on chart
         # Find maximum voltage
         max_tier = -1
-        tiers = ['LV', 'MV', 'HV', 'EV', 'IV', 'LuV', 'ZPM', 'UV', 'UHV', 'UEV', 'UIV', 'UMV']
+        tiers = ['LV', 'MV', 'HV', 'EV', 'IV', 'LuV', 'ZPM', 'UV', 'UHV', 'UEV', 'UIV', 'UMV', 'UXV']
         for rec in self.recipes.values():
             tier = tiers.index(rec.user_voltage)
             if tier > max_tier:
@@ -716,6 +716,22 @@ class Graph:
             label=io_label,
             fillcolor=self.graph_config['BACKGROUND_COLOR'],
         )
+
+    
+    @staticmethod
+    def userRound(number):
+        # Display numbers nicely for end user (eg. 814.3k)
+        # input int/float, return string
+        cutoffs = {
+            1_000_000_000: lambda x: f'{round(x/1_000_000_000, 2)}B',
+            1_000_000: lambda x: f'{round(x/1_000_000, 2)}M',
+            1_000: lambda x: f'{round(x/1_000, 2)}K',
+            0: lambda x: f'{round(x, 2)}'
+        }
+
+        for n, sfxn in cutoffs.items():
+            if abs(number) >= n:
+                return sfxn(number)
 
 
     @staticmethod
@@ -1292,7 +1308,7 @@ class Graph:
             if ing_name in unit_exceptions:
                 quant_label = unit_exceptions[ing_name](ing_quant)
             else:
-                quant_label = f'{self.NDecimals(ing_quant, 2)}/s'
+                quant_label = f'{self.userRound(ing_quant)}/s'
 
             # Make ingredient label
             if ing_name in capitalization_exceptions:
@@ -1322,7 +1338,7 @@ class Graph:
         g.render(
             self.graph_name,
             'output/',
-            view=True,
+            view=self.graph_config['VIEW_ON_COMPLETION'],
             format=self.graph_config['OUTPUT_FORMAT'],
         )
 

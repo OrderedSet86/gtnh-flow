@@ -8,7 +8,7 @@
     platinum concentrate: 9000
   eut: 30
   dur: 112.5
-  number: 1
+  number: 0.87719298245 # balanced to 1 pmp/s
   group: platinum
 - m: large chemical reactor
   tier: HV

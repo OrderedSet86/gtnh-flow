@@ -17,6 +17,9 @@ coil_multipliers = {
     'trinium': 4.5,
     'electrum flux': 5,
     'awakened draconium': 5.5,
+    'infinity': 6,
+    'hypogen': 6.5,
+    'eternal': 7
 }
 coil_heat = {
     'cupronickel': 1801,
@@ -30,6 +33,9 @@ coil_heat = {
     'trinium': 9001,
     'electrum flux': 9901,
     'awakened draconium': 10801,
+    'infinity': 11701,
+    'hypogen': 12601,
+    'eternal': 13501
 }
 
 # chem plant stuff
@@ -80,7 +86,7 @@ GTpp_stats = {
     'industrial dehydrator': [1.2, 0.5, 4],
 }
 
-voltages = ['LV', 'MV', 'HV', 'EV', 'IV', 'LuV', 'ZPM', 'UV', 'UHV', 'UEV', 'UIV', 'UMV']
+voltages = ['LV', 'MV', 'HV', 'EV', 'IV', 'LuV', 'ZPM', 'UV', 'UHV', 'UEV', 'UIV', 'UMV', 'UXV']
 voltage_cutoffs = [32*pow(4, x) + 1 for x in range(len(voltages))]
 
 
@@ -330,6 +336,29 @@ def modifyUtupu(recipe):
     return recipe
 
 
+def modifyFusion(recipe):
+    # Ignore "tier" and just use "mk" argument for OCs
+    # start is also in "mk" notation
+    require(
+        recipe,
+        [
+            ['mk', int],
+            ['start', int],
+        ]
+    )
+
+    mk_oc = recipe.mk - recipe.start
+
+    bonus = 1
+    if recipe.mk == 4 and mk_oc > 0:
+        bonus = 2
+    recipe.eut = recipe.eut * (2**mk_oc * bonus)
+    recipe.dur = recipe.dur / (2**mk_oc * bonus)
+    recipe.user_voltage = voltages[bisect_right(voltage_cutoffs, recipe.eut)]
+    recipe.machine = f'MK{recipe.mk} {recipe.machine}'
+    return recipe
+
+
 def calculateStandardOC(recipe):
     base_voltage = bisect_right(voltage_cutoffs, recipe.eut)
     user_voltage = voltages.index(recipe.user_voltage)
@@ -366,6 +395,10 @@ def overclockRecipe(recipe):
         'EBF': modifyEBF,
         'blast furnace': modifyEBF,
         'multi smelter': modifyMultiSmelter,
+        'circuit assembly line': modifyPerfect,
+        'CAL': modifyPerfect,
+        'fusion': modifyFusion,
+        'fusion reactor': modifyFusion,
 
         # Basic GT++ multis
         'industrial centrifuge': modifyGTpp,

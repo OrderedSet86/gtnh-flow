@@ -17,8 +17,8 @@
     oxygen: 1000
   eut: 30
   dur: 2
-  target:
-    oxygen: 1000
+  # target:
+  #   oxygen: 1000
 - m: electrolyzer
   tier: LV
   I:
@@ -50,3 +50,4 @@
     cobblestone: 1
   eut: 30
   dur: 0.8
+  number: 1

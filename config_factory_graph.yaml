@@ -14,6 +14,7 @@ DO_NOT_BURN: # If POWER_LINE is true, don't burn these
 OUTPUT_FORMAT: png # png or pdf (pdf is searchable)
 USE_RAINBOW_EDGES: true # feature to help distinguish between overlapping edges
 DUR_FORMAT: sec # choose either "ticks" or "sec"
+VIEW_ON_COMPLETION: true
 
 # === VISUALS ===
 GENERAL_FONT: arial  # nodes and edges

@@ -1,7 +1,8 @@
 - m: large chemical reactor
   tier: HV
   I:
-    hydrochloric acid: 30000
+    '[nonrecycle] hydrochloric acid': 3000
+    hydrochloric acid: 27000
     raw silicon dust: 10
   O:
     trichlorosilane: 9000
@@ -61,3 +62,12 @@
     '[recycle] chlorine': 2000
   eut: 60
   dur: 1.6
+- m: large chemical reactor
+  tier: HV
+  I:
+    hydrogen: 1000
+    chlorine: 1000
+  O:
+    '[nonrecycle] hydrochloric acid': 1000
+  eut: 7
+  dur: 3

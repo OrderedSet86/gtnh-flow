@@ -1,0 +1,3098 @@
+- m: assline
+  tier: UIV
+  I:
+    tritanium frame box: 8
+    bio mainframe: 2
+    osmd capacitor: 32
+    osmd resistor: 32
+    osmd transistor: 32
+    osmd diode: 32
+    ram chip: 64
+    nano power ic: 64
+    1x draconium wire: 64
+    2x superconductor uhv wire: 64
+    thin silicone rubber sheet: 64
+    pbi foil: 64
+    mutated living solder: 3744
+    molten naquadria: 4032
+    coolant: 20000
+  O:
+    nano circuit: 1
+  eut: 32000000
+  dur: 400
+  # number: 1
+  target:
+    nano circuit: 1
+- m: assline
+  tier: UHV
+  I:
+    tritanium frame box: 4
+    bioware supercomputer: 2
+    ultimate voltage coil: 16
+    osmd transistor: 24
+    osmd resistor: 24
+    osmd capacitor: 24
+    osmd diode: 24
+    ram chip: 64
+    1x superconductor uhv wire: 64
+    thin silicone rubber sheet: 64
+    pbi foil: 64
+    mutated living solder: 2880
+    sbc medium: 2880
+    super coolant: 20000
+  O:
+    bio mainframe: 1
+  eut: 2000000
+  dur: 300
+- m: assline
+  tier: UHV
+  I:
+    ubm circuit board: 2
+    biowareprocessor assembly: 2
+    osmd transistor: 4
+    osmd resistor: 4
+    osmd capacitor: 4
+    osmd diode: 4
+    nor memory chip: 32
+    ram chip: 64
+    fine niobium-titanium wire: 32
+    thin silicone rubber sheet: 64
+    mutated living solder: 1440
+    sbc medium: 1440
+    super coolant: 10000
+  O:
+    bioware supercomputer: 1
+  eut: 500000
+  dur: 200
+- m: CAL
+  tier: UHV
+  I:
+    wrap of ubm circuit boards: 1
+    bioprocessor: 32
+    wrap of osmd inductors: 3
+    wrap of osmd capacitors: 4
+    wrap of ram chips: 32
+    4x niobium-titanium wire: 24
+    molten indalloy 140: 144
+  O:
+    biowareprocessor assembly: 16
+  eut: 614400
+  dur: 30
+
+# Wraps
+- m: assembler
+  tier: IV
+  I:
+    ubm circuit board: 16
+    polyethylene: 72
+  O:
+    wrap of ubm circuit boards: 1
+  eut: 30
+  dur: 30
+- m: assembler
+  tier: IV
+  I:
+    osmd inductor: 16
+    polyethylene: 72
+  O:
+    wrap of osmd inductors: 1
+  eut: 30
+  dur: 30
+- m: assembler
+  tier: IV
+  I:
+    osmd capacitor: 16
+    polyethylene: 72
+  O:
+    wrap of osmd capacitors: 1
+  eut: 30
+  dur: 30
+- m: assembler
+  tier: IV
+  I:
+    ram chip: 16
+    polyethylene: 72
+  O:
+    wrap of ram chips: 1
+  eut: 30
+  dur: 30
+- m: assembler
+  tier: IV
+  I:
+    crystal soc: 16
+    polyethylene: 72
+  O:
+    wrap of crystal socs: 1
+  eut: 30
+  dur: 30
+- m: assembler
+  tier: IV
+  I:
+    elite circuit board: 16
+    polyethylene: 72
+  O:
+    wrap of elite circuit boards: 1
+  eut: 30
+  dur: 30
+
+
+- m: mixer
+  tier: UHV
+  I:
+    callisto ice dust: 1
+    ledox dust: 1
+    coolant: 2000
+  O:
+    crushed ice: 2
+    super coolant: 2000
+  eut: 480
+  dur: 10
+- m: LCR
+  tier: UHV
+  I:
+    iron 3 chloride: 7500
+    neutronium foil: 24
+    bio circuit board: 1
+  O:
+    ubm circuit board: 1
+  eut: 1920
+  dur: 180
+- m: circuit assembler
+  tier: UHV
+  I:
+    wetware lifesupport circuit board: 32
+    petri dish: 8
+    uv electric pump: 1
+    luv sensor: 2
+    any uv circuit: 1
+    neutronium foil: 32
+    sbc medium: 16000
+  O:
+    bio circuit board: 32
+  eut: 1920
+  dur: 180
+- m: circuit assembler
+  tier: UV
+  I:
+    mfr circuit board: 16
+    petri dish: 1
+    luv electric pump: 1
+    iv sensor: 1
+    crystalprocessor: 1
+    niobium-titanium foil: 16
+    growth catalyst medium: 4000
+  O:
+    wetware lifesupport circuit board: 16
+  eut: 30720
+  dur: 60
+- m: CAL
+  tier: UHV
+  I:
+    wrap of elite circuit boards: 1
+    wrap of crystal socs: 1
+    4x niobium-titanium wire: 8
+    ybc bolt: 64
+    molten indalloy 140: 72
+  O:
+    crystalprocessor: 16
+  eut: 153600
+  dur: 30
+- m: laser engraver
+  tier: UHV
+  I:
+    crystal processing unit: 1
+  O:
+    crystal soc: 1
+  eut: 40000
+  dur: 30
+- m: laser engraver
+  tier: UHV
+  I:
+    engraved crystal chip: 1
+  O:
+    crystal processing unit: 1
+  eut: 10000
+  dur: 30
+- m: EBF
+  tier: UHV
+  I:
+    raw crystal chip: 1
+    emerald plate: 1
+    radon: 1000
+  O:
+    engraved crystal chip: 1
+  eut: 480
+  dur: 26.1
+  heat: 5000
+  coils: electrum flux
+- m: autoclave
+  tier: UHV
+  I:
+    bacterial sludge: 250
+  O:
+    raw crystal chip: 0.35 # 60% - 25% from chip part
+  eut: 480
+  dur: 600
+- m: laser engraver
+  tier: UHV
+  I:
+    emerald block: 1
+    distilled water: 16
+  O:
+    emerald plate: 9
+  eut: 30
+  dur: 18
+- m: compressor
+  tier: UHV
+  I:
+    emerald: 9
+  O:
+    emerald block: 1
+  eut: 2
+  dur: 15
+- m: LCR
+  tier: UHV
+  I:
+    iron 3 chloride: 2000
+    platinum foil: 8
+    mfr circuit board: 1
+  O:
+    elite circuit board: 1
+  eut: 120
+  dur: 120
+- m: LCR
+  tier: UHV
+  I:
+    sulfuric acid: 500
+    palladium foil: 16
+    fr circuit board: 2
+  O:
+    mfr circuit board: 1
+  eut: 480
+  dur: 30
+- m: LCR
+  tier: ZPM
+  I:
+    sulfuric acid: 500
+    aluminium foil: 12
+    fr epoxy resin sheet: 1
+  O:
+    fr circuit board: 1
+  eut: 10
+  dur: 25
+- m: bending machine
+  tier: ZPM
+  I:
+    aluminium plate: 1
+  O:
+    aluminium foil: 4
+  eut: 24
+  dur: 1.3
+- m: bending machine
+  tier: ZPM
+  I:
+    aluminium ingot: 1
+  O:
+    aluminium plate: 1
+  eut: 24
+  dur: 1.3
+- m: chemical bath
+  tier: ZPM
+  I:
+    raw carbon fibre: 1
+    molten epoxid: 144
+  O:
+    fr epoxy resin sheet: 1
+  eut: 16
+  dur: 12
+- m: autoclave
+  tier: IV
+  I:
+    carbon dust: 4
+    molten epoxid: 9
+  O:
+    raw carbon fibre: 4
+  eut: 480
+  dur: 0.9
+
+
+- m: LCR
+  tier: UHV
+  I:
+    hydrochloric acid: 3000
+    iron dust: 1
+  O:
+    iron 3 chloride: 1000
+    '[recycle] hydrogen': 3000
+  eut: 30
+  dur: 20
+- m: LCR
+  tier: UHV
+  I:
+    hydrogen: 1000
+    chlorine: 1000
+  O:
+    hydrochloric acid: 1000
+  eut: 7
+  dur: 3
+
+- m: exxonmobil
+  tier: UEV
+  I:
+    tin plasma: 18000
+    bismuth plasma: 18000
+    gelid cryotheum: 4000
+  O:
+    mutated living solder: 40320
+  eut: 3842160
+  dur: 800
+  coils: tungstensteel
+  pipe_casings: steel
+
+- m: fluid heater
+  tier: UHV
+  I:
+    raw bio catalyst medium: 100
+  O:
+    sbc medium: 100
+  eut: 30720
+  dur: 1
+- m: bacterial vat
+  tier: UHV
+  I:
+    stemcells: 64
+    unknown crystal shard: 16
+    tcetie-seaweed extract: 4
+    tritanium dust: 4
+    raw growth catalyst medium: 8
+  O:
+    raw bio catalyst medium: 2000
+  eut: 30720
+  dur: 180
+- m: bacterial vat
+  tier: UHV
+  I:
+    mince meat: 4
+    salt: 4
+    calcium dust: 4
+    agar: 4
+    bacterial sludge: 4
+  O:
+    raw growth catalyst medium: 1000
+  eut: 7680
+  dur: 60
+- m: autoclave
+  tier: UHV
+  I:
+    mysterious crystal dust: 1
+    molten void: 200
+  O:
+    unknown crystal shard: 1
+  eut: 480
+  dur: 60
+- m: fluid extractor
+  tier: IV
+  I:
+    void metal ingot: 1
+  O:
+    molten void: 144
+  eut: 44
+  dur: 1.2
+- m: LCR
+  tier: UHV
+  I:
+    growth catalyst medium: 1000
+    osmiridium dust: 2
+    unknown crystal shard: 4
+  O:
+    stemcells: 64
+    '[recycle] bacterial sludge': 1000
+  eut: 30720
+  dur: 30
+- m: fluid heater
+  tier: UHV
+  I:
+    raw growth catalyst medium: 100
+  O:
+    growth catalyst medium: 100
+  eut: 7680
+  dur: 1
+
+
+- m: assline
+  tier: UHV
+  I:
+    uv electric motor: 1
+    large naquadah fluid pipe: 2
+    neutronium plate: 2
+    neutronium screw: 8
+    silicone rubber ring: 16
+    neutronium rotor: 2
+    4x naquadah alloy cable: 2
+    molten naquadria: 1296
+    molten indalloy 140: 1296
+    lubricant: 2000
+  O:
+    uv electric pump: 1
+  eut: 100000
+  dur: 30
+- m: assline
+  tier: UHV
+  I:
+    long magnetic samarium rod: 2
+    long neutronium rod: 4
+    neutronium ring: 4
+    neutronium round: 16
+    fine americium wire: 384
+    4x naquadah alloy cable: 2
+    molten naquadria: 1296
+    molten indalloy 140: 1296
+    lubricant: 2000
+  O:
+    uv electric motor: 1
+  eut: 100000
+  dur: 30
+
+
+- m: assembler
+  tier: IV
+  I:
+    quantum star: 1
+    tss plate: 4
+    iridium rod: 1
+    crystalprocessor: 1
+  O:
+    iv sensor: 1
+  eut: 30
+  dur: 1
+
+
+# Compressing all the long rods, rings, etc.
+- m: extruder
+  tier: IV
+  I:
+    iridium ingot: 1
+  O:
+    iridium rod: 2
+  eut: 360
+  dur: 19.2
+- m: electromagnetic polarizer
+  tier: IV
+  I:
+    long samarium rod: 1
+  O:
+    long magnetic samarium rod: 1
+  eut: 4096
+  dur: 6.4
+- m: forge hammer
+  tier: IV
+  I:
+    samarium rod: 2
+  O:
+    long samarium rod: 1
+  eut: 16
+  dur: 7.5
+- m: forge hammer
+  tier: IV
+  I:
+    samarium ingot: 1
+  O:
+    samarium rod: 2
+  eut: 90
+  dur: 15
+# neutronium foil, round, screw, long rod, ring, plate, rotor, rod
+- m: bending machine
+  tier: UHV
+  I:
+    neutronium plate: 1
+  O:
+    neutronium foil: 4
+  eut: 24
+  dur: 50
+- m: lathe
+  tier: IV
+  I:
+    neutronium nugget: 1
+  O:
+    neutronium round: 1
+  eut: 7
+  dur: 12.5
+- m: alloy smelter
+  tier: IV
+  I:
+    neutronium ingot: 1
+  O:
+    neutronium nugget: 9
+  eut: 1
+  dur: 5
+- m: lathe
+  tier: IV
+  I:
+    neutronium bolt: 1
+  O:
+    neutronium screw: 1
+  eut: 4
+  dur: 6.25
+- m: lathe
+  tier: ZPM
+  I:
+    neutronium ingot: 1
+  O:
+    neutronium bolt: 8
+  eut: 480
+  dur: 100
+- m: forge hammer
+  tier: IV
+  I:
+    neutronium rod: 2
+  O:
+    long neutronium rod: 1
+  eut: 16
+  dur: 50
+- m: bending machine
+  tier: UHV
+  I:
+    neutronium ingot: 1
+  O:
+    neutronium plate: 1
+  eut: 24
+  dur: 50
+- m: extruder
+  tier: IV
+  I:
+    neutronium ingot: 5
+  O:
+    neutronium rotor: 1
+  eut: 60
+  dur: 10
+- m: extruder
+  tier: IV
+  I:
+    neutronium ingot: 1
+  O:
+    neutronium ring: 4
+  eut: 360
+  dur: 100
+- m: extruder
+  tier: IV
+  I:
+    neutronium ingot: 1
+  O:
+    neutronium rod: 2
+  eut: 360
+  dur: 100
+- m: wiremill
+  tier: IV
+  I:
+    neutronium ingot: 1
+  O:
+    fine neutronium wire: 8
+  eut: 4
+  dur: 5
+- m: bending machine
+  tier: IV
+  I:
+    palladium plate: 1
+  O:
+    palladium foil: 4
+  eut: 24
+  dur: 5.3
+- m: bending machine
+  tier: IV
+  I:
+    palladium ingot: 1
+  O:
+    palladium plate: 1
+  eut: 24
+  dur: 5.3
+
+
+- m: assline
+  tier: UHV
+  I:
+    hss-s frame box: 1
+    luv electric motor: 1
+    ruridit plate: 8
+    quantum star: 1
+    any luv circuit: 4
+    gallium foil: 192
+    1x ybc cable: 7
+    molten indalloy 140: 576
+  O:
+    luv sensor: 1
+  eut: 6000
+  dur: 30
+- m: assline
+  tier: UHV
+  I:
+    magnetic samarium rod: 1
+    long hss-s rod: 2
+    fine ruridit wire: 128
+    1x ybc cable: 2
+    molten indalloy 140: 144
+    lubricant: 250
+  O:
+    luv electric motor: 1
+  eut: 6000
+  dur: 30
+- m: assline
+  tier: UHV
+  I:
+    luv electric motor: 1
+    small niobium-titanium fluid pipe: 2
+    hss-s plate: 2
+    hss-s screw: 8
+    silicone rubber ring: 4
+    hss-s rotor: 2
+    1x ybc cable: 2
+    molten indalloy 140: 144
+    lubricant: 250
+  O:
+    luv electric pump: 1
+  eut: 6000
+  dur: 30
+
+
+- m: assembler
+  tier: UHV
+  I:
+    magnetic samarium rod: 1
+    fine fluxed electrum wire: 16
+  O:
+    ultimate voltage coil: 1
+  eut: 491520
+  dur: 10
+- m: wiremill
+  tier: IV
+  I:
+    fluxed electrum ingot: 1
+  O:
+    fine fluxed electrum wire: 8
+  eut: 4
+  dur: 5
+- m: vacuum freezer
+  tier: ZPM
+  I:
+    hot fluxed electrum ingot: 1
+  O:
+    fluxed electrum ingot: 1
+  eut: 7680
+  dur: 14.7
+- m: EBF
+  tier: UHV
+  I:
+    fluxed electrum dust: 1
+    radon: 1000
+  O:
+    hot fluxed electrum ingot: 1
+  eut: 122880
+  dur: 33
+  heat: 9000
+  coils: trinium
+- m: mixer
+  tier: UHV
+  I:
+    rose gold dust: 1
+    infused gold dust: 1
+    astral silver dust: 1
+    sterling silver dust: 1
+    soldering alloy dust: 1
+    red steel dust: 1
+    blue steel dust: 1
+    naquadah dust: 1
+  O:
+    fluxed electrum dust: 4
+  eut: 900
+  dur: 2.5
+- m: mixer
+  tier: IV
+  I:
+    copper dust: 1
+    gold dust: 4
+  O:
+    rose gold dust: 5
+  eut: 120
+  dur: 10
+- m: mixer
+  tier: IV
+  I:
+    silver dust: 2
+    thaumium dust: 1
+  O:
+    astral silver dust: 3
+  eut: 480
+  dur: 3
+- m: mixer
+  tier: IV
+  I:
+    copper dust: 1
+    silver dust: 4
+  O:
+    sterling silver dust: 5
+  eut: 120
+  dur: 25
+- m: mixer
+  tier: IV
+  I:
+    tin dust: 9
+    antimony dust: 1
+  O:
+    soldering alloy dust: 10
+  eut: 7
+  dur: 5
+- m: mixer
+  tier: IV
+  I:
+    copper dust: 4
+    silver dust: 4
+    bismuth dust: 1
+    zinc dust: 1
+    black steel dust: 20
+    steel dust: 10
+  O:
+    red steel dust: 40
+  eut: 480
+  dur: 60
+- m: mixer
+  tier: IV
+  I:
+    copper dust: 3
+    gold dust: 1
+    silver dust: 1
+    nickel dust: 5
+    steel dust: 15
+  O:
+    black steel dust: 25
+  eut: 480
+  dur: 40
+- m: mixer
+  tier: IV
+  I:
+    copper dust: 31
+    gold dust: 4
+    zinc dust: 5
+    black steel dust: 80
+    steel dust: 40
+  O:
+    blue steel dust: 160
+  eut: 480
+  dur: 180
+
+
+- m: assembler
+  tier: IV
+  I:
+    1x superconductor uhv wire: 2
+  O:
+    2x superconductor uhv wire: 1
+  eut: 7
+  dur: 7.5
+- m: assembler
+  tier: UHV
+  I:
+    1x superconductor base uhv wire: 24
+    tiny bedrockium item pipe: 16
+    uhv electric pump: 1
+    liquid helium: 24000
+  O:
+    1x superconductor uhv wire: 24
+  eut: 1966080
+  dur: 128
+- m: vacuum freezer
+  tier: UHV
+  I:
+    helium: 1000
+  O:
+    liquid helium: 1000
+  eut: 480
+  dur: 90
+- m: assline
+  tier: UHV
+  I:
+    uhv electric motor: 1
+    large neutronium fluid pipe: 2
+    cosmic neutronium plate: 4
+    cosmic neutronium screw: 16
+    silicone rubber ring: 32
+    cosmic neutronium rotor: 4
+    4x bedrockium cable: 2
+    molten naquadria: 2592
+    molten indalloy 140: 2592
+    lubricant: 4000
+  O:
+    uhv electric pump: 1
+  eut: 500000
+  dur: 50
+- m: assline
+  tier: UHV
+  I:
+    long magnetic samarium rod: 4
+    long cosmic neutronium rod: 8
+    cosmic neutronium ring: 8
+    cosmic neutronium round: 32
+    fine neutronium wire: 512
+    4x bedrockium cable: 2
+    molten naquadria: 2592
+    molten indalloy 140: 2592
+    lubricant: 4000
+  O:
+    uhv electric motor: 1
+  eut: 500000
+  dur: 50
+- m: extruder
+  tier: UHV
+  I:
+    superconductor base uhv ingot: 1
+  O:
+    1x superconductor base uhv wire: 2
+  eut: 360
+  dur: 18.1
+
+
+- m: assembler
+  tier: UHV
+  I:
+    draconium foil: 4
+    cinobite a243 foil: 2
+    supercon base zpm foil: 1
+    1x supercon luv wire: 1
+    xenoxene: 144
+  O:
+    osmd capacitor: 32
+  eut: 120000
+  dur: 8
+- m: bacterial vat
+  tier: UEV
+  I:
+    antimony trioxide dust: 16
+    osmium dust: 16
+    oil: 20
+  O:
+    xenoxene: 20000
+  eut: 7864320
+  dur: 300
+- m: fluid solidifier
+  tier: UHV
+  I:
+    molten cinobite a243: 144
+  O:
+    cinobite a243 plate: 1
+  eut: 122880
+  dur: 1.6
+- m: bending machine
+  tier: UHV
+  I:
+    cinobite a243 plate: 1
+  O:
+    cinobite a243 foil: 4
+  eut: 122880
+  dur: 2.35
+- m: alloy blast smelter
+  tier: UHV
+  I:
+    zeron-100 dust: 16
+    naquadria dust: 7
+    gadolinium dust: 5
+    aluminium dust: 3
+    tin dust: 2
+    titanium dust: 12
+    osmiridium dust: 6
+    mercury: 2000
+  O:
+    molten cinobite a243: 7632
+  eut: 122880
+  dur: 420
+- m: alloy blast smelter
+  tier: UHV
+  I:
+    chrome dust: 13
+    nickel dust: 3
+    molybdenum dust: 2
+    copper dust: 10
+    tungsten dust: 2
+    steel dust: 20
+  O:
+    molten zeron-100: 7200
+  eut: 30720
+  dur: 360
+- m: fluid solidifier
+  tier: ZPM
+  I:
+    molten zeron-100: 144
+  O:
+    zeron-100 ingot: 1
+  eut: 30720
+  dur: 1.6
+- m: macerator
+  tier: IV
+  I:
+    zeron-100 ingot: 1
+  O:
+    zeron-100 dust: 1
+  eut: 2
+  dur: 20
+- m: mixer
+  tier: IV
+  I:
+    osmium dust: 1
+    iridium dust: 3
+  O:
+    osmiridium dust: 4
+  eut: 1920
+  dur: 20
+
+
+- m: assembler
+  tier: UHV
+  I:
+    tritanium foil: 4
+    lafium compound foil: 2
+    supercon base zpm foil: 1
+    1x supercon luv wire: 1
+    xenoxene: 144
+  O:
+    osmd diode: 64
+  eut: 120000
+  dur: 8
+
+
+- m: assembler
+  tier: UHV
+  I:
+    hikarium foil: 4
+    artherium-sn foil: 1
+    1x supercon luv wire: 1
+    xenoxene: 144
+  O:
+    osmd inductor: 32
+  eut: 120000
+  dur: 8
+
+
+- m: assembler
+  tier: UHV
+  I:
+    black plutonium foil: 4
+    arceus alloy 2b foil: 2
+    1x supercon luv wire: 1
+    xenoxene: 144
+  O:
+    osmd transistor: 32
+  eut: 120000
+  dur: 8
+
+
+- m: assembler
+  tier: UHV
+  I:
+    naquadria foil: 4
+    pikyonium 64b foil: 2
+    1x supercon luv wire: 1
+    xenoxene: 144
+  O:
+    osmd resistor: 32
+  eut: 120000
+  dur: 8
+- m: bending machine
+  tier: UHV
+  I:
+    pikyonium 64b plate: 1
+  O:
+    pikyonium 64b foil: 2
+  eut: 122880
+  dur: 2.4
+- m: fluid solidifier
+  tier: UHV
+  I:
+    molten pikyonium 64b: 144
+  O:
+    pikyonium 64b plate: 1
+  eut: 122880
+  dur: 1.6
+- m: alloy blast smelter
+  tier: UHV
+  I:
+    inconel-792 dust: 8
+    eglin steel dust: 5
+    enriched naquadah dust: 4
+    cerium dust: 3
+    antimony dust: 2
+    platinum dust: 2
+    ytterbium dust: 1
+    tss dust: 4
+  O:
+    molten pikyonium 64b: 4176
+  eut: 122880
+  dur: 420
+- m: mixer
+  tier: IV
+  I:
+    nickel dust: 2
+    niobium dust: 1
+    aluminium dust: 2
+    nichrome dust: 1
+  O:
+    inconel-792 dust: 6
+  eut: 480
+  dur: 2.6
+- m: mixer
+  tier: IV
+  I:
+    eglin steel base compound dust: 10
+    sulfur dust: 1
+    raw silicon dust: 4
+    carbon dust: 1
+  O:
+    eglin steel dust: 16
+  eut: 30
+  dur: 1.4
+- m: mixer
+  tier: IV
+  I:
+    iron dust: 4
+    kanthal dust: 1
+    invar dust: 5
+  O:
+    eglin steel base compound dust: 10
+  eut: 16
+  dur: 5.1
+
+
+- m: LCR
+  tier: UHV
+  I:
+    water: 1000
+    oxygen: 3000
+    sulfur dust: 1
+  O:
+    sulfuric acid: 1000
+  eut: 30
+  dur: 5.1
+- m: LCR
+  tier: UHV
+  I:
+    epichlorohydrin: 2000
+    hydrochloric acid: 1000
+    phenol: 2000
+    acetone: 1000
+    sodium hydroxide dust: 6
+  O:
+    molten epoxid: 1000
+    salt water: 2000
+  eut: 30
+  dur: 24
+- m: LCR
+  tier: UHV
+  I:
+    water: 1000
+    chlorine: 4000
+    propene: 1000
+    sodium hydroxide dust: 3
+  O:
+    epichlorohydrin: 1000
+    salt water: 1000
+    '[recycle] hydrochloric acid': 2000
+  eut: 30
+  dur: 32
+- m: LCR
+  tier: UHV
+  I:
+    acetic acid: 2000
+  O:
+    acetone: 1000
+    co2 gas: 1000
+    '[recycle] water': 1000
+  eut: 480
+  dur: 20
+- m: LCR
+  tier: UHV
+  I:
+    oxygen: 2000
+    hydrogen: 4000
+    carbon dust: 2
+  O:
+    acetic acid: 1000
+  eut: 30
+  dur: 24
+
+
+- m: chemical bath
+  tier: ZPM
+  I:
+    nether star: 1
+    radon: 1250
+  O:
+    quantum star: 1
+  eut: 384
+  dur: 96
+
+
+- m: fluid extractor
+  tier: ZPM
+  I:
+    naquadria ingot: 1
+  O:
+    molten naquadria: 144
+  eut: 134
+  dur: 1.2
+- m: vacuum freezer
+  tier: UHV
+  I:
+    hot naquadria ingot: 1
+  O:
+    naquadria ingot: 1
+  eut: 7680
+  dur: 14.7
+
+
+- m: alloy blast smelter
+  tier: UHV
+  I:
+    bismuth dust: 47
+    lead dust: 25
+    tin dust: 13
+    cadmium dust: 10
+    indium dust: 5
+  O:
+    molten indalloy 140: 14400
+  eut: 7680
+  dur: 40
+
+
+- m: fusion
+  tier: UHV
+  I:
+    helium-3: 375
+    molten silver: 144
+  O:
+    tin plasma: 144
+  eut: 49152
+  dur: 0.8
+  mk: 3
+  start: 2
+- m: fusion
+  tier: UHV
+  I:
+    zinc plasma: 72
+    molten tantalum: 144
+  O:
+    bismuth plasma: 144
+  eut: 98304
+  dur: 0.8
+  mk: 3
+  start: 3
+- m: fusion
+  tier: UHV
+  I:
+    tritium: 250
+    molten copper: 72
+  O:
+    zinc plasma: 72
+  eut: 49152
+  dur: 0.8
+  mk: 3
+  start: 2
+- m: centrifuge
+  tier: UHV
+  I:
+    deuterium: 16
+  O:
+    tritium: 4
+  eut: 80
+  dur: 0.8
+- m: fluid extractor
+  tier: IV
+  I:
+    silver ingot: 1
+  O:
+    molten silver: 144
+  eut: 49
+  dur: 1.2
+- m: fluid extractor
+  tier: IV
+  I:
+    tantalum ingot: 1
+  O:
+    molten tantalum: 144
+  eut: 81
+  dur: 1.2
+- m: fluid extractor
+  tier: IV
+  I:
+    copper ingot: 1
+  O:
+    molten copper: 144
+  eut: 52
+  dur: 1.2
+- m: fluid extractor
+  tier: ZPM
+  I:
+    cryotheum dust: 1
+  O:
+    gelid cryotheum: 250
+  eut: 240
+  dur: 10
+- m: LCR
+  tier: UHV
+  I:
+    ethylene: 144
+    oxygen: 1000
+  O:
+    polyethylene: 216
+  eut: 30
+  dur: 8
+
+
+- m: cutting machine
+  tier: UHV
+  I:
+    ram wafer: 1
+    lubricant: 67
+  O:
+    ram chip: 32
+  eut: 96
+  dur: 45
+- m: cutting machine
+  tier: UHV
+  I:
+    nor memory wafer: 1
+    lubricant: 135
+  O:
+    nor memory chip: 16
+  eut: 192
+  dur: 45
+- m: cutting machine
+  tier: UHV
+  I:
+    npic wafer: 1
+    lubricant: 250
+  O:
+    nano power ic: 2
+  eut: 122880
+  dur: 45
+
+
+- m: bending machine
+  tier: UHV
+  I:
+    silicone rubber sheet: 1
+  O:
+    thin silicone rubber sheet: 4
+  eut: 24
+  dur: 0.35
+- m: fluid solidifier
+  tier: UHV
+  I:
+    molten silicone rubber: 144
+  O:
+    silicone rubber sheet: 1
+  eut: 7
+  dur: 1.6
+- m: fluid solidifier
+  tier: UHV
+  I:
+    molten silicone rubber: 36
+  O:
+    silicone rubber ring: 1
+  eut: 12
+  dur: 5
+- m: LCR
+  tier: UHV
+  I:
+    sulfur dust: 1
+    polydimethylsiloxane pulp: 9
+  O:
+    molten silicone rubber: 1296
+  eut: 30
+  dur: 30
+- m: LCR
+  tier: UHV
+  I:
+    water: 1000
+    chlorine: 4000
+    methane: 2000
+    raw silicon dust: 1
+  O:
+    polydimethylsiloxane pulp: 3
+    '[recycle] hydrochloric acid': 2000
+    '[recycle] diluted hydrochloric acid': 2000
+  eut: 96
+  dur: 24
+
+
+- m: lathe
+  tier: IV
+  I:
+    cosmic neutronium nugget: 1
+  O:
+    cosmic neutronium round: 1
+  eut: 7
+  dur: 1.2
+- m: alloy smelter
+  tier: IV
+  I:
+    cosmic neutronium ingot: 1
+  O:
+    cosmic neutronium nugget: 9
+  eut: 1
+  dur: 5
+- m: lathe
+  tier: IV
+  I:
+    cosmic neutronium bolt: 1
+  O:
+    cosmic neutronium screw: 1
+  eut: 4
+  dur: 0.6
+- m: extruder
+  tier: IV
+  I:
+    cosmic neutronium ingot: 1
+  O:
+    cosmic neutronium bolt: 8
+  eut: 480
+  dur: 9.8
+- m: extruder
+  tier: IV
+  I:
+    cosmic neutronium ingot: 1
+  O:
+    cosmic neutronium ring: 4
+  eut: 360
+  dur: 9.8
+- m: forge hammer
+  tier: IV
+  I:
+    cosmic neutronium rod: 2
+  O:
+    long cosmic neutronium rod: 1
+  eut: 16
+  dur: 4.9
+- m: extruder
+  tier: IV
+  I:
+    cosmic neutronium ingot: 1
+  O:
+    cosmic neutronium rod: 2
+  eut: 360
+  dur: 9.8
+- m: bending machine
+  tier: IV
+  I:
+    cosmic neutronium ingot: 1
+  O:
+    cosmic neutronium plate: 1
+  eut: 24
+  dur: 4.9
+- m: extruder
+  tier: IV
+  I:
+    cosmic neutronium ingot: 5
+  O:
+    cosmic neutronium rotor: 1
+  eut: 60
+  dur: 10
+- m: wiremill
+  tier: IV
+  I:
+    ruridit ingot: 1
+  O:
+    fine ruridit wire: 8
+  eut: 480
+  dur: 6.55
+- m: bending machine
+  tier: IV
+  I:
+    ruridit ingot: 1
+  O:
+    ruridit plate: 1
+  eut: 24
+  dur: 6.55
+- m: vacuum freezer
+  tier: UHV
+  I:
+    hot ruridit ingot: 1
+  O:
+    ruridit ingot: 1
+  eut: 120
+  dur: 19.65
+- m: ebf
+  tier: UHV
+  I:
+    ruridit dust: 1
+    radon: 1000
+  O:
+    hot ruridit ingot: 1
+  eut: 480
+  dur: 445.5
+  heat: 4500
+  coils: fluxed electrum
+- m: mixer
+  tier: IV
+  I:
+    ruthenium dust: 2
+    iridium dust: 1
+  O:
+    ruridit dust: 3
+  eut: 10
+  dur: 3.25
+- m: wiremill
+  tier: ZPM
+  I:
+    americium ingot: 1
+  O:
+    fine americium wire: 8
+  eut: 4
+  dur: 5
+- m: fluid solidifier
+  tier: IV
+  I:
+    molten americium: 144
+  O:
+    americium ingot: 1
+  eut: 7
+  dur: 1.6
+# mudspaw advised that cooling americium plasma is the usual method mk3+
+# - m: fusion
+#   tier: UHV
+#   I:
+#     molten chrome: 16
+#     molten lutetium: 16
+#   O:
+#     molten americium: 16
+#   eut: 49152
+#   dur: 4.8
+#   mk: 3
+#   start: 2
+- m: fusion
+  tier: UHV
+  I:
+    molten plutonium-241: 144
+    hydrogen: 2000
+  O:
+    americium plasma: 144
+  eut: 98304
+  dur: 3.2
+  mk: 3
+  start: 3
+- m: vacuum freezer
+  tier: UHV
+  I:
+    americium plasma: 144
+  O:
+    molten americium: 144
+  eut: 30720
+  dur: 1
+- m: fluid extractor
+  tier: IV
+  I:
+    plutonium-241 dust: 1
+  O:
+    molten plutonium-241: 144
+  eut: 42
+  dur: 1.2
+- m: bending machine
+  tier: IV
+  I:
+    gallium plate: 1
+  O:
+    gallium foil: 4
+  eut: 24
+  dur: 3.5
+- m: bending machine
+  tier: IV
+  I:
+    gallium ingot: 1
+  O:
+    gallium plate: 1
+  eut: 24
+  dur: 3.5
+- m: bending machine
+  tier: IV
+  I:
+    pbi plate: 1
+  O:
+    pbi foil: 4
+  eut: 24
+  dur: 0.4
+- m: fluid solidifier
+  tier: IV
+  I:
+    molten pbi: 144
+  O:
+    pbi plate: 1
+  eut: 7
+  dur: 1.6
+- m: LCR
+  tier: UHV
+  I:
+    3,3-diaminobenzidine: 1000
+    diphenyl isophtalate: 1000
+  O:
+    molten pbi: 1000
+    '[recycle] phenol': 2000
+  eut: 7680
+  dur: 5
+- m: LCR
+  tier: UHV
+  I:
+    phenol: 2000
+    sulfuric acid: 1000
+    phthalic acid: 1000
+  O:
+    diphenyl isophtalate: 1000
+    '[recycle] diluted sulfuric acid': 1000
+  eut: 7680
+  dur: 5
+- m: LCR
+  tier: UHV
+  I:
+    3-3-dichlorobenzidine: 1000
+    ammonia: 2000
+    zinc dust: 1
+  O:
+    3,3-diaminobenzidine: 1000
+    '[recycle] hydrochloric acid': 2000
+  eut: 7680
+  dur: 5
+- m: LCR
+  tier: UHV
+  I:
+    2-nitrochlorobenzene: 18000
+    copper dust: 1
+  O:
+    3-3-dichlorobenzidine: 9000
+  eut: 1920
+  dur: 90
+- m: LCR
+  tier: UHV
+  I:
+    chlorobenzene: 1000
+    nitration mixture: 2000
+  O:
+    2-nitrochlorobenzene: 1000
+    '[recycle] diluted sulfuric acid': 1000
+  eut: 480
+  dur: 5
+- m: mixer
+  tier: ZPM
+  I:
+    nitric acid: 1000
+    sulfuric acid: 1000
+  O:
+    nitration mixture: 2000
+  eut: 2
+  dur: 24
+- m: LCR
+  tier: UHV
+  I:
+    oxygen: 4000
+    ammonia: 1000
+  O:
+    nitric acid: 1000
+    '[recycle] water': 1000
+  eut: 30
+  dur: 16
+
+
+- m: extruder
+  tier: IV
+  I:
+    bedrockium ingot: 1
+  O:
+    tiny bedrockium item pipe: 2
+  eut: 480
+  dur: 0.2
+
+
+- m: wiremill
+  tier: IV
+  I:
+    niobium-titanium ingot: 1
+  O:
+    fine niobium-titanium wire: 8
+  eut: 4
+  dur: 5
+- m: vacuum freezer
+  tier: UHV
+  I:
+    hot niobium-titanium ingot: 1
+  O:
+    niobium-titanium ingot: 1
+  eut: 480
+  dur: 10.65
+- m: EBF
+  tier: UHV
+  I:
+    niobium-titanium dust: 1
+    radon: 1000
+  O:
+    hot niobium-titanium ingot: 1
+  eut: 480
+  dur: 116
+  heat: 4500
+  coils: electrum flux
+- m: mixer
+  tier: ZPM
+  I:
+    niobium dust: 1
+    titanium dust: 1
+  O:
+    niobium-titanium dust: 2
+  eut: 1920
+  dur: 10
+
+
+- m: assembler
+  tier: IV
+  I:
+    4x bedrockium wire: 1
+    polyphenylene sulfide foil: 2
+    molten silicone rubber: 144
+  O:
+    4x bedrockium cable: 1
+  eut: 7
+  dur: 5
+- m: wiremill
+  tier: IV
+  I:
+    bedrockium ingot: 2
+  O:
+    4x bedrockium wire: 1
+  eut: 4
+  dur: 10
+- m: bending machine
+  tier: IV
+  I:
+    polyphenylene sulfide plate: 1
+  O:
+    polyphenylene sulfide foil: 4
+  eut: 24
+  dur: 0.45
+- m: fluid solidifier
+  tier: IV
+  I:
+    molten polyphenylene sulfide: 144
+  O:
+    polyphenylene sulfide plate: 1
+  eut: 7
+  dur: 1.6
+- m: LCR
+  tier: IV
+  I:
+    dichlorobenzene: 1000
+    oxygen: 8000
+    sodium sulfide dust: 3
+  O:
+    molten polyphenylene sulfide: 1500
+    '[recycle] salt': 2
+  eut: 360
+  dur: 12
+- m: LCR
+  tier: IV
+  I:
+    sulfur dust: 1
+    sodium dust: 2
+  O:
+    sodium sulfide dust: 3
+  eut: 30
+  dur: 3
+- m: LCR
+  tier: IV
+  I:
+    benzene: 1000
+    chlorine: 4000
+  O:
+    dichlorobenzene: 1000
+    '[recycle] hydrochloric acid': 2000
+  eut: 30
+  dur: 12
+
+
+- m: mixer
+  tier: ZPM
+  I:
+    gelatin: 1
+    distilled water: 1000
+  O:
+    agar: 1
+  eut: 480
+  dur: 30
+- m: centrifuge
+  tier: ZPM
+  I:
+    gelatinmixture: 6000
+  O:
+    gelatin: 4
+    '[recycle] phosphorus dust': 1
+  eut: 480
+  dur: 120
+- m: LCR
+  tier: ZPM
+  I:
+    phosphoric acid: 1000
+    water: 3000
+    collagen: 4
+  O:
+    gelatinmixture: 4000
+  eut: 480
+  dur: 80
+- m: LCR
+  tier: ZPM
+  I:
+    mince meat: 1
+    bone meal: 2
+    diluted sulfuric acid: 500
+  O:
+    collagen: 1
+    '[recycle] water': 500
+  eut: 480
+  dur: 40
+- m: LCR
+  tier: ZPM
+  I:
+    water: 1500
+    oxygen: 2500
+    phosphorus dust: 1
+  O:
+    phosphoric acid: 1000
+  eut: 480
+  dur: 80
+
+
+- m: extractor
+  tier: UHV
+  I:
+    t ceti e seaweed: 64
+  O:
+    tcetie-seaweed extract: 1
+  eut: 262144
+  dur: 180
+- m: centrifuge
+  tier: UHV
+  I:
+    seaweed broth: 500
+  O:
+    t ceti e seaweed: 32
+  eut: 491520
+  dur: 1
+- m: bacterial vat
+  tier: UHV
+  I:
+    energium dust: 8
+    mytryl dust: 1
+    seaweed: 64
+    unknown nutrient agar: 50
+  O:
+    seaweed broth: 50000
+  eut: 491520
+  dur: 60
+- m: LCR
+  tier: UHV
+  I:
+    meatextract: 1000
+    phthalic acid: 3000
+    unknown liquid: 4000
+    salt: 64
+    stemcells: 16
+    agar: 8
+  O:
+    unknown nutrient agar: 8000
+  eut: 491520
+  dur: 60
+- m: fluid extractor
+  tier: IV
+  I:
+    mince meat: 1
+  O:
+    meatextract: 125
+  eut: 120
+  dur: 15
+
+
+- m: LCR
+  tier: UHV
+  I:
+    sodium dust: 1
+    water: 1000
+  O:
+    sodium hydroxide dust: 3
+    '[recycle] hydrogen': 1000
+  eut: 30
+  dur: 10
+
+
+- m: wiremill
+  tier: IV
+  I:
+    draconium ingot: 1
+  O:
+    1x draconium wire: 2
+  eut: 4
+  dur: 5
+- m: polarizer
+  tier: ZPM
+  I:
+    samarium rod: 1
+  O:
+    magnetic samarium rod: 1
+  eut: 4096
+  dur: 3.2
+- m: extruder
+  tier: IV
+  I:
+    neutronium ingot: 6
+  O:
+    large neutronium fluid pipe: 1
+  eut: 480
+  dur: 2.4
+
+
+- m: CAL
+  tier: UHV
+  I:
+    wrap of bio processing units: 1
+    wrap of raw advanced crystal chips: 1
+    wrap of nano cpus: 1
+    wrap of osmd capacitors: 3
+    wrap of osmd transistors: 3
+    4x niobium-titanium wire: 16
+    molten indalloy 140: 72
+  O:
+    bioprocessor: 16
+  eut: 614400
+  dur: 22.2
+- m: laser engraver
+  tier: UHV
+  I:
+    crystal soc: 1
+  O:
+    raw advanced crystal chip: 1
+  eut: 80000
+  dur: 60
+- m: assline
+  tier: UHV
+  I:
+    ubm circuit board: 1
+    biocells: 16
+    reinforced glass tube: 16
+    tiny pbi fluid pipe: 16
+    fluxed electrum casing: 16
+    thin silicone rubber sheet: 64
+    hss-s bolt: 32
+    sbc medium: 500
+    uu-matter: 500
+    coolant: 2000
+  O:
+    bio processing unit: 1
+  eut: 600000
+  dur: 30
+- m: LCR
+  tier: UHV
+  I:
+    sbc medium: 2000
+    cosmic neutronium dust: 4
+    stemcells: 32
+  O:
+    biocells: 32
+    '[recycle] mutagen': 2000
+  eut: 491520
+  dur: 60
+- m: extruder
+  tier: IV
+  I:
+    fluxed electrum ingot: 1
+  O:
+    fluxed electrum casing: 2
+  eut: 45
+  dur: 4.9
+- m: fluid solidifier
+  tier: IV
+  I:
+    molten pbi: 72
+  O:
+    tiny pbi fluid pipe: 1
+  eut: 120
+  dur: 1
+- m: fluid solidifier
+  tier: IV
+  I:
+    molten reinforced glass: 288
+  O:
+    reinforced glass tube: 1
+  eut: 240
+  dur: 10
+- m: fluid extractor
+  tier: IV
+  I:
+    reinforced glass: 1
+  O:
+    molten reinforced glass: 144
+  eut: 1920
+  dur: 5
+- m: assembler
+  tier: IV
+  I:
+    raw advanced crystal chip: 16
+  O:
+    wrap of raw advanced crystal chips: 1
+  eut: 30
+  dur: 30
+- m: assembler
+  tier: IV
+  I:
+    osmd transistor: 16
+  O:
+    wrap of osmd transistors: 1
+  eut: 30
+  dur: 30
+- m: assembler
+  tier: IV
+  I:
+    nano cpu: 16
+  O:
+    wrap of nano cpus: 1
+  eut: 30
+  dur: 30
+- m: assembler
+  tier: IV
+  I:
+    bio processing unit: 16
+  O:
+    wrap of bio processing units: 1
+  eut: 30
+  dur: 30
+
+
+- m: extruder
+  tier: IV
+  I:
+    hss-s ingot: 1
+  O:
+    hss-s bolt: 8
+  eut: 480
+  dur: 12.9
+- m: vacuum freezer
+  tier: ZPM
+  I:
+    hot hss-s ingot: 1
+  O:
+    hss-s ingot: 1
+  eut: 1920
+  dur: 19.35
+- m: EBF
+  tier: ZPM
+  I:
+    hss-s dust: 1
+    radon: 1000
+  O:
+    hot hss-s ingot: 1
+  eut: 1920
+  dur: 87
+  heat: 5000
+  coils: electrum flux
+- m: mixer
+  tier: ZPM
+  I:
+    hss-g dust: 6
+    iridium dust: 2
+    osmium dust: 1
+  O:
+    hss-s dust: 9
+  eut: 7680
+  dur: 40
+- m: mixer
+  tier: ZPM
+  I:
+    tss dust: 5
+    chrome dust: 1
+    molybdenum dust: 2
+    vanadium dust: 1
+  O:
+    hss-g dust: 9
+  eut: 1920
+  dur: 30
+- m: lathe
+  tier: IV
+  I:
+    hss-s bolt: 1
+  O:
+    hss-s screw: 1
+  eut: 4
+  dur: 0.8
+
+
+- m: bending machine
+  tier: IV
+  I:
+    niobium-titanium plate: 1
+  O:
+    niobium-titanium foil: 4
+  eut: 24
+  dur: 3.55
+- m: bending machine
+  tier: IV
+  I:
+    platinum plate: 1
+  O:
+    platinum foil: 4
+  eut: 24
+  dur: 9.75
+- m: wiremill
+  tier: IV
+  I:
+    niobium-titanium ingot: 2
+  O:
+    4x niobium-titanium wire: 1
+  eut: 4
+  dur: 10
+
+
+- m: assembler
+  tier: IV
+  I:
+    1x ybc wire: 1
+    polyphenylene sulfide foil: 1
+    molten silicone rubber: 72
+  O:
+    1x ybc cable: 1
+  eut: 7
+  dur: 5
+- m: wiremill
+  tier: IV
+  I:
+    ybc ingot: 1
+  O:
+    1x ybc wire: 2
+  eut: 4
+  dur: 5
+- m: vacuum freezer
+  tier: ZPM
+  I:
+    hot ybc ingot: 1
+  O:
+    ybc ingot: 1
+  eut: 1920
+  dur: 7.65
+- m: EBF
+  tier: ZPM
+  I:
+    ybc dust: 1
+  O:
+    hot ybc ingot: 1
+  eut: 120
+  dur: 225
+  heat: 4500
+  coils: electrum flux
+- m: mixer
+  tier: ZPM
+  I:
+    yttrium dust: 1
+    barium dust: 2
+    copper dust: 3
+    oxygen: 7000
+  O:
+    ybc dust: 13
+  eut: 1920
+  dur: 30
+
+
+- m: mixer
+  tier: ZPM
+  I:
+    sulfuric acid: 2000
+    water: 1000
+  O:
+    diluted sulfuric acid: 3000
+  eut: 30
+  dur: 1.5
+- m: mixer
+  tier: UHV
+  I:
+    distilled water: 1000
+    lapis dust: 1
+  O:
+    coolant: 1000
+  eut: 48
+  dur: 12.8
+
+
+- m: LCR
+  tier: UHV
+  I:
+    uranium 238 dust: 1
+    air: 8000
+  O:
+    radon: 800
+  eut: 480
+  dur: 75
+- m: LCR
+  tier: UHV
+  I:
+    1,2-dimethylbenzen: 9000
+    oxygen: 54000
+    potassium dichromate dust: 1
+  O:
+    phthalic acid: 9000
+    '[recycle] water': 18000
+  eut: 1920
+  dur: 45
+- m: LCR
+  tier: UHV
+  I:
+    methane: 2000
+    benzene: 1000
+  O:
+    1,2-dimethylbenzen: 1000
+    '[recycle] hydrogen': 4000
+  eut: 120
+  dur: 200
+
+
+- m: assembler
+  tier: UHV
+  I:
+    1x supercon base luv wire: 15
+    tiny enderium fluid pipe: 10
+    luv electric pump: 1
+    helium: 12000
+  O:
+    1x supercon luv wire: 15
+  eut: 30720
+  dur: 40
+- m: wiremill
+  tier: IV
+  I:
+    supercon base luv ingot: 1
+  O:
+    1x supercon base luv wire: 2
+  eut: 4
+  dur: 5
+- m: vacuum freezer
+  tier: UHV
+  I:
+    hot supercon base luv ingot: 1
+  O:
+    supercon base luv ingot: 1
+  eut: 30720
+  dur: 20
+- m: EBF
+  tier: UHV
+  I:
+    supercon base luv dust: 1
+    radon: 1000
+  O:
+    hot supercon base luv ingot: 1
+  eut: 7680
+  dur: 145.2
+  heat: 6000
+  coils: electrum flux
+- m: mixer
+  tier: UHV
+  I:
+    indium dust: 4
+    tin dust: 2
+    barium dust: 2
+    titanium dust: 1
+    copper dust: 7
+    oxygen: 14000
+  O:
+    supercon base luv dust: 30
+  eut: 30720
+  dur: 10
+
+
+- m: EBF
+  tier: ZPM
+  I:
+    wrought iron dust: 1
+    oxygen: 1000
+  O:
+    steel ingot: 1
+  eut: 120
+  dur: 5
+  heat: 1000
+  coils: electrum flux
+- m: macerator
+  tier: IV
+  I:
+    steel ingot: 1
+  O:
+    steel dust: 1
+  eut: 4
+  dur: 2.8
+- m: macerator
+  tier: IV
+  I:
+    wrought iron ingot: 1
+  O:
+    wrought iron dust: 1
+  eut: 4
+  dur: 2.8
+- m: arc furnace
+  tier: IV
+  I:
+    iron dust: 1
+  O:
+    wrought iron ingot: 1
+  eut: 90
+  dur: 2.8
+
+
+- m: laser engraver
+  tier: UHV
+  I:
+    americium doped wafer: 1
+  O:
+    npic wafer: 4
+  eut: 122880
+  dur: 75
+- m: bending machine
+  tier: IV
+  I:
+    draconium plate: 1
+  O:
+    draconium foil: 4
+  eut: 24
+  dur: 4.9
+- m: bending machine
+  tier: IV
+  I:
+    draconium ingot: 1
+  O:
+    draconium plate: 1
+  eut: 24
+  dur: 4.9
+- m: laser engraver
+  tier: UHV
+  I:
+    americium doped wafer: 1
+  O:
+    ram wafer: 32
+  eut: 30720
+  dur: 7.5
+- m: cutting machine
+  tier: UHV
+  I:
+    americium doped msb: 1
+    lubricant: 250
+  O:
+    americium doped wafer: 128
+    '[recycle] sisg dust': 64
+  eut: 7680
+  dur: 160
+- m: EBF
+  tier: UHV
+  I:
+    block of sisg: 64
+    gallium arsenide crystal: 4
+    americium ingot: 4
+    radon: 16000
+  O:
+    americium doped msb: 1
+  eut: 30720
+  dur: 1050
+  heat: 9000
+  coils: infinity
+- m: mixer
+  tier: IV
+  I:
+    tungsten dust: 1
+    steel dust: 1
+  O:
+    tss dust: 2
+  eut: 480
+  dur: 10
+- m: extruder
+  tier: IV
+  I:
+    ybc ingot: 1
+  O:
+    ybc bolt: 8
+  eut: 480
+  dur: 5.1
+- m: mixer
+  tier: ZPM
+  I:
+    redstone: 5
+    ruby dust: 4
+  O:
+    energium dust: 9
+  eut: 120
+  dur: 30
+- m: cutting machine
+  tier: ZPM
+  I:
+    nanocpu wafer: 1
+    lubricant: 250
+  O:
+    nano cpu: 8
+  eut: 480
+  dur: 45
+- m: LCR
+  tier: UHV
+  I:
+    molten glowstone: 576
+    raw carbon fibre: 16
+    cpu wafer: 1
+  O:
+    nanocpu wafer: 1
+  eut: 1920
+  dur: 60
+- m: fluid extractor
+  tier: IV
+  I:
+    glowstone dust: 1
+  O:
+    molten glowstone: 144
+  eut: 44
+  dur: 1.2
+- m: laser engraver
+  tier: UHV
+  I:
+    americium doped wafer: 1
+  O:
+    cpu wafer: 32
+  eut: 30720
+  dur: 7.5
+- m: bending machine
+  tier: IV
+  I:
+    black plutonium plate: 1
+  O:
+    black plutonium foil: 4
+  eut: 24
+  dur: 4.9
+- m: bending machine
+  tier: IV
+  I:
+    black plutonium ingot: 1
+  O:
+    black plutonium plate: 1
+  eut: 24
+  dur: 4.9
+- m: vacuum freezer
+  tier: ZPM
+  I:
+    hot black plutonium ingot: 1
+  O:
+    black plutonium ingot: 1
+  eut: 7680
+  dur: 14.7
+- m: EBF
+  tier: ZPM
+  I:
+    black plutonium dust: 1
+    xenon: 1000
+  O:
+    hot black plutonium ingot: 1
+  eut: 122880
+  dur: 229.5
+  heat: 9000
+  coils: infinity
+
+
+- m: assembler
+  tier: IV
+  I:
+    tritanium rod: 4
+  O:
+    tritanium frame box: 1
+  eut: 7
+  dur: 3.2
+- m: fluid solidifier
+  tier: IV
+  I:
+    molten tritanium: 72
+  O:
+    tritanium rod: 1
+  eut: 480
+  dur: 7.5
+- m: fusion
+  tier: UHV
+  I:
+    molten duranium: 32
+    molten titanium: 48
+  O:
+    molten tritanium: 16
+  eut: 30720
+  dur: 3.2
+  mk: 3
+  start: 2
+- m: fusion
+  tier: UHV
+  I:
+    radon: 125
+    molten gallium: 16
+  O:
+    molten duranium: 16
+  eut: 16384
+  dur: 3.2
+  mk: 3
+  start: 1
+- m: fluid extractor
+  tier: IV
+  I:
+    titanium ingot: 1
+  O:
+    molten titanium: 144
+  eut: 62
+  dur: 1.2
+- m: fluid extractor
+  tier: IV
+  I:
+    gallium ingot: 1
+  O:
+    molten gallium: 144
+  eut: 24
+  dur: 1.2
+- m: fluid solidifier
+  tier: IV
+  I:
+    molten tritanium: 144
+  O:
+    tritanium ingot: 1
+  eut: 7
+  dur: 1.6
+- m: macerator
+  tier: IV
+  I:
+    tritanium ingot: 1
+  O:
+    tritanium dust: 1
+  eut: 4
+  dur: 16.5
+
+
+- m: bending machine
+  tier: IV
+  I:
+    naquadria plate: 1
+  O:
+    naquadria foil: 1
+  eut: 24
+  dur: 4.9
+- m: bending machine
+  tier: IV
+  I:
+    naquadria ingot: 1
+  O:
+    naquadria plate: 1
+  eut: 24
+  dur: 4.9
+- m: extruder
+  tier: IV
+  I:
+    enderium ingot: 1
+  O:
+    tiny enderium fluid pipe: 2
+  eut: 480
+  dur: 0.2
+- m: vacuum freezer
+  tier: IV
+  I:
+    hot enderium ingot: 1
+  O:
+    enderium ingot: 1
+  eut: 480
+  dur: 18.9
+- m: EBF
+  tier: ZPM
+  I:
+    enderium dust: 1
+    radon: 1000
+  O:
+    hot enderium ingot: 1
+  eut: 120
+  dur: 101.5
+  heat: 4500
+  coils: electrum flux
+- m: mixer
+  tier: IV
+  I:
+    enderium base dust: 2
+    thaumium dust: 1
+    enderpearl dust: 1
+  O:
+    enderium dust: 1
+  eut: 7
+  dur: 10
+- m: mixer
+  tier: IV
+  I:
+    tin dust: 2
+    silver dust: 1
+    platinum dust: 1
+  O:
+    enderium base dust: 4
+  eut: 7
+  dur: 20
+- m: forge hammer
+  tier: IV
+  I:
+    hss-s rod: 2
+  O:
+    long hss-s rod: 1
+  eut: 16
+  dur: 6.45
+- m: extruder
+  tier: IV
+  I:
+    hss-s ingot: 1
+  O:
+    hss-s rod: 2
+  eut: 360
+  dur: 12.9
+- m: bending machine
+  tier: IV
+  I:
+    tss ingot: 1
+  O:
+    tss plate: 1
+  eut: 24
+  dur: 5.95
+- m: bending machine
+  tier: UHV
+  I:
+    arceus alloy 2b plate: 1
+  O:
+    arceus alloy 2b foil: 4
+  eut: 122880
+  dur: 2.25
+- m: fluid solidifier
+  tier: UHV
+  I:
+    molten arceus alloy 2b: 144
+  O:
+    arceus alloy 2b plate: 1
+  eut: 122880
+  dur: 1.6
+- m: ABS
+  tier: UHV
+  I:
+    trinium dust: 3
+    maraging steel 350 dust: 4
+    tss dust: 2
+    osmiridium dust: 1
+    strontium dust: 1
+  O:
+    molten arceus alloy 2b: 1584
+  eut: 122880
+  dur: 420
+- m: macerator
+  tier: IV
+  I:
+    maraging steel 350 ingot: 1
+  O:
+    maraging steel 350 dust: 1
+  eut: 2
+  dur: 20
+- m: fluid solidifier
+  tier: IV
+  I:
+    molten maraging steel 350: 144
+  O:
+    maraging steel 350 ingot: 1
+  eut: 120
+  dur: 1.6
+- m: ABS
+  tier: IV
+  I:
+    steel dust: 16
+    aluminium dust: 1
+    molybdenum dust: 1
+    nickel dust: 4
+    cobalt dust: 2
+  O:
+    molten maraging steel 350: 3456
+  eut: 120
+  dur: 20
+- m: laser engraver
+  tier: UHV
+  I:
+    americium doped wafer: 1
+  O:
+    nor memory wafer: 16
+  eut: 30720
+  dur: 30
+- m: bending machine
+  tier: IV
+  I:
+    niobium-titanium ingot: 1
+  O:
+    niobium-titanium plate: 1
+  eut: 24
+  dur: 3.55
+- m: bending machine
+  tier: IV
+  I:
+    platinum ingot: 1
+  O:
+    platinum plate: 1
+  eut: 24
+  dur: 9.75
+- m: extruder
+  tier: IV
+  I:
+    niobium-titanium ingot: 1
+  O:
+    small niobium-titanium fluid pipe: 1
+  eut: 480
+  dur: 0.4
+- m: bending machine
+  tier: IV
+  I:
+    hss-s ingot: 1
+  O:
+    hss-s plate: 1
+  eut: 24
+  dur: 6.45
+- m: extruder
+  tier: IV
+  I:
+    hss-s ingot: 5
+  O:
+    hss-s rotor: 1
+  eut: 60
+  dur: 10
+- m: bending machine
+  tier: IV
+  I:
+    tritanium ingot: 1
+  O:
+    tritanium plate: 1
+  eut: 24
+  dur: 16.15
+- m: bending machine
+  tier: IV
+  I:
+    tritanium plate: 1
+  O:
+    tritanium foil: 1
+  eut: 24
+  dur: 16.15
+- m: extruder
+  tier: IV
+  I:
+    sisg ingot: 9
+  O:
+    block of sisg: 1
+  eut: 120
+  dur: 0.5
+- m: vacuum freezer
+  tier: ZPM
+  I:
+    hot sisg ingot: 1
+  O:
+    sisg ingot: 1
+  eut: 120
+  dur: 14.7
+- m: EBF
+  tier: ZPM
+  I:
+    sisg dust: 1
+  O:
+    hot sisg ingot: 1
+  eut: 120
+  dur: 227.3
+  heat: 2273
+  coils: electrum flux
+- m: EBF
+  tier: ZPM
+  I:
+    tss dust: 1
+    xenon: 1000
+  O:
+    hot tss ingot: 1
+  eut: 1920
+  dur: 95.6
+  heat: 3000
+  coils: electrum flux
+- m: vacuum freezer
+  tier: ZPM
+  I:
+    hot tss ingot: 1
+  O:
+    tss ingot: 1
+  eut: 1920
+  dur: 17.85
+- m: assembler
+  tier: IV
+  I:
+    4x naquadah alloy wire: 1
+    polyphenylene sulfide foil: 2
+    molten silicone rubber: 144
+  O:
+    4x naquadah alloy cable: 1
+  eut: 7
+  dur: 5
+- m: wiremill
+  tier: IV
+  I:
+    naquadah alloy ingot: 2
+  O:
+    4x naquadah alloy wire: 1
+  eut: 4
+  dur: 10
+- m: vacuum freezer
+  tier: ZPM
+  I:
+    hot naquadah alloy ingot: 1
+  O:
+    naquadah alloy ingot: 1
+  eut: 7680
+  dur: 14.7
+- m: EBF
+  tier: UHV
+  I:
+    naquadah alloy dust: 1
+    radon: 1000
+  O:
+    hot naquadah alloy ingot: 1
+  eut: 62880
+  dur: 33
+  heat: 7200
+  coils: electrum flux
+- m: mixer
+  tier: ZPM
+  I:
+    naquadah dust: 2
+    trinium dust: 1
+    carbon dust: 1
+  O:
+    naquadah alloy dust: 1
+  eut: 7680
+  dur: 20
+- m: bending machine
+  tier: IV
+  I:
+    supercon base zpm plate: 1
+  O:
+    supercon base zpm foil: 4
+  eut: 24
+  dur: 9.1
+- m: bending machine
+  tier: IV
+  I:
+    supercon base zpm ingot: 1
+  O:
+    supercon base zpm plate: 1
+  eut: 24
+  dur: 9.1
+- m: vacuum freezer
+  tier: UHV
+  I:
+    hot supercon base zpm ingot: 1
+  O:
+    supercon base zpm ingot: 1
+  eut: 122880
+  dur: 20
+- m: EBF
+  tier: UHV
+  I:
+    supercon base zpm dust: 1
+    radon: 1000
+  O:
+    hot supercon base zpm ingot: 1
+  eut: 7680
+  dur: 165
+  heat: 9000
+  coils: electrum flux
+- m: mixer
+  tier: UHV
+  I:
+    naquadah dust: 4
+    indium dust: 2
+    palladium dust: 6
+    osmium dust: 1
+  O:
+    supercon base zpm dust: 13
+  eut: 122880
+  dur: 10
+- m: extruder
+  tier: IV
+  I:
+    naquadah ingot: 6
+  O:
+    large naquadah fluid pipe: 1
+  eut: 480
+  dur: 2.4
+- m: assembler
+  tier: IV
+  I:
+    hss-s rod: 4
+  O:
+    hss-s frame box: 1
+  eut: 7
+  dur: 3.2
+- m: fluid solidifier
+  tier: IV
+  I:
+    molten ptfe: 36
+  O:
+    petri dish: 1
+  eut: 16
+  dur: 8
+- m: LCR
+  tier: UHV
+  I:
+    molten tfe: 144
+    oxygen: 1000
+  O:
+    molten ptfe: 216
+  eut: 30
+  dur: 8
+- m: LCR
+  tier: UHV
+  I:
+    chlorine: 12000
+    methane: 2000
+    hydrofluoric acid: 4000
+  O:
+    molten tfe: 1000
+    '[recycle] hydrochloric acid': 12000
+  eut: 240
+  dur: 27
+
+
+- m: bending machine
+  tier: ZPM
+  I:
+    lafium compound ingot: 1
+  O:
+    lafium compound plate: 1
+  eut: 30720
+  dur: 2.2
+- m: bending machine
+  tier: ZPM
+  I:
+    lafium compound plate: 1
+  O:
+    lafium compound foil: 4
+  eut: 30720
+  dur: 2.2
+- m: bending machine
+  tier: ZPM
+  I:
+    molten lafium compound: 144
+  O:
+    lafium compound ingot: 1
+  eut: 30720
+  dur: 1.6
+- m: ABS
+  tier: UHV
+  I:
+    hastelloy-n dust: 4
+    naquadah dust: 2
+    samarium dust: 1
+    tungsten dust: 2
+    aluminium dust: 3
+    nickel dust: 4
+    carbon dust: 1
+    argon: 1000
+  O:
+    molten lafium compound: 144
+  eut: 30720
+  dur: 360
+- m: bending machine
+  tier: ZPM
+  I:
+    hastelloy-n ingot: 1
+  O:
+    hastelloy-n dust: 1
+  eut: 2
+  dur: 20
+- m: fluid solidifier
+  tier: IV
+  I:
+    molten hastelloy-n: 144
+  O:
+    hastelloy-n ingot: 1
+  eut: 1920
+  dur: 1.6
+- m: ABS
+  tier: ZPM
+  I:
+    yttrium dust: 2
+    molybdenum dust: 4
+    chrome dust: 2
+    titanium dust: 2
+    nickel dust: 15
+  O:
+    molten hastelloy-n: 3600
+  eut: 1920
+  dur: 1.6
+- m: LCR
+  tier: IV
+  I:
+    chromium trioxide dust: 8
+    saltpeter: 10
+  O:
+    potassium dichromate dust: 11
+    '[recycle] nitric oxide': 2000
+    '[recycle] oxygen': 3000
+  eut: 480
+  dur: 5
+- m: LCR
+  tier: IV
+  I:
+    chromium dioxide dust: 3
+    oxygen: 1000
+  O:
+    chromium trioxide dust: 4
+  eut: 60
+  dur: 5
+- m: LCR
+  tier: IV
+  I:
+    chrome dust: 1
+    oxygen: 2000
+  O:
+    chromium dioxide dust: 3
+  eut: 30
+  dur: 40
+- m: LCR
+  tier: IV
+  I:
+    potassium dust: 1
+    nitric acid: 1000
+  O:
+    saltpeter: 5
+    '[recycle] hydrogen': 1000
+  eut: 30
+  dur: 5
+- m: bending machine
+  tier: IV
+  I:
+    hikarium plate: 1
+  O:
+    hikarium foil: 4
+  eut: 48
+  dur: 20.5
+- m: bending machine
+  tier: IV
+  I:
+    hikarium ingot: 1
+  O:
+    hikarium plate: 1
+  eut: 24
+  dur: 4.1
+- m: vacuum freezer
+  tier: IV
+  I:
+    hot hikarium ingot: 1
+  O:
+    hikarium ingot: 1
+  eut: 120
+  dur: 12.3
+- m: EBF
+  tier: UHV
+  I:
+    hikarium dust: 1
+    radon: 1000
+  O:
+    hot hikarium ingot: 1
+  eut: 30720
+  dur: 34.8
+  heat: 5400
+  coils: electrum flux
+- m: mixer
+  tier: IV
+  I:
+    lumiium dust: 18
+    silver dust: 8
+    sunnarium dust: 4
+  O:
+    hikarium dust: 30
+  eut: 120
+  dur: 12.3
+- m: mixer
+  tier: IV
+  I:
+    tin alloy dust: 4
+    sterling silver dust: 2
+    lumiinessence dust: 2
+    molten glowstone: 288
+  O:
+    lumiium dust: 1
+  eut: 120
+  dur: 12
+- m: alloy smelter
+  tier: IV
+  I:
+    tin dust: 1
+    iron dust: 1
+  O:
+    tin alloy ingot: 2
+  eut: 16
+  dur: 5
+- m: alloy smelter
+  tier: IV
+  I:
+    tin alloy ingot: 1
+  O:
+    tin alloy dust: 1
+  eut: 4
+  dur: 4.35
+- m: fluid solidifier
+  tier: IV
+  I:
+    phosphoric acid: 4000
+    high energy mixture: 2
+  O:
+    lumiinessence dust: 1
+  eut: 4
+  dur: 4.35
+- m: mixer
+  tier: IV
+  I:
+    glowstone dust: 4
+    redstone: 2
+    aluminium dust: 1
+  O:
+    high energy mixture: 4
+  eut: 120
+  dur: 12
+- m: LCR
+  tier: IV
+  I:
+    antimony dust: 2
+    oxygen: 3000
+  O:
+    antimony trioxide dust: 5
+  eut: 30
+  dur: 1
+
+
+- m: fluid solidifier
+  tier: IV
+  I:
+    molten superconductor base uhv: 144
+  O:
+    superconductor base uhv ingot: 1
+  eut: 7
+  dur: 1.6
+- m: dimensionally transcendent plasma forge
+  tier: UXV
+  I:
+    molten draconium: 145152
+    molten americium: 145152
+    molten cosmic neutronium: 169344
+    molten tritanium: 120960
+    excited dt exotic catalyst: 8654
+  O:
+    molten superconductor base uhv: 581608
+    dimensionally transcendent residue: 8654
+  eut: 250_871_808
+  dur: 39.35
+- m: dimensionally transcendent plasma forge
+  tier: UMV
+  I:
+    cosmicneutronium comb: 1
+    excited dt exotic catalyst: 1870
+    molten copper: 589824
+  O:
+    molten cosmic neutronium: 589824
+    dimensionally transcendent residue: 8654
+  eut: 56_922_697
+  dur: 13.1

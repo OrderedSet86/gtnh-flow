@@ -17,8 +17,7 @@
     glycerol: 9000
   eut: 30
   dur: 270
-  target:
-    bio diesel: 112
+  number: 1
 - m: chemical reactor
   tier: MV
   I:

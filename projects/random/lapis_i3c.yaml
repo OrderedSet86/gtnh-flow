@@ -1,0 +1,46 @@
+- m: centrifuge
+  tier: LV
+  I:
+    lapis dust: 16
+  O:
+    lazurite dust: 12
+    sodalite dust: 2
+    pyrite dust: 1
+    calcite dust: 1
+  eut: 20
+  dur: 89.6
+  group: chlorine
+  # number: 1
+- m: electrolyzer
+  tier: MV
+  I:
+    sodalite dust: 11
+  O:
+    aluminium dust: 3
+    raw silicon dust: 3
+    sodium dust: 4
+    chlorine: 1000
+  eut: 90
+  dur: 13.2
+  group: chlorine
+- m: chemical reactor
+  tier: LV
+  I:
+    hydrogen: 1000
+    chlorine: 1000
+  O:
+    hydrochloric acid: 1000
+  eut: 7
+  dur: 3
+- m: chemical reactor
+  tier: LV
+  I:
+    iron dust: 1
+    hydrochloric acid: 3000
+  O:
+    '[recycle] hydrogen': 3000
+    iron iii chloride: 1000
+  eut: 30
+  dur: 20
+  target:
+    iron iii chloride: 100
