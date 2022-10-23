@@ -25,14 +25,28 @@ EDGE_FONTSIZE: 10
 GROUP_FONTSIZE: 18
 BACKGROUND_COLOR: '#043742'
 EDGECOLOR_CYCLE:
-  - 'white'
-  - 'orange'
-  - 'yellow'
-  - 'green'
-  - 'violet'
+  - '#b58900' # 'yellow'
+  - '#cb4b16' # 'orange'
+  - '#dc322f' # 'red'
+  - '#d33682' # 'magenta'
+  - '#6c71c4' # 'violet'
+  - '#268bd2' # 'blue'
+  - '#2aa198' # 'cyan'
+  - '#859900' # 'green'
 SOURCESINK_COLOR: 'ghostwhite'
 NONLOCKEDNODE_COLOR: 'lightblue2'
 LOCKEDNODE_COLOR: 'green'
+POSITIVE_COLOR: '#859900'
+NEGATIVE_COLOR: '#dc322f'
+ORIENTATION: 'TB'
+# TB: Vertical, LR: Horizontal, BT: Vertical Inverted, RL: Horizontal Inverted
+# [TB, LR, BT, RL]
+LINE_STYLE: 'spline'
+# [line, spline, polyline, curved] 
+# don't use ortho it's buggy
+COMBINE_INPUTS: True
+COMBINE_OUTPUTS: True
+# Whether to create a new meta node before multi-input/after multi-output ports
 
 
 # { These settings are not added to backend yet
