@@ -12,7 +12,6 @@ from copy import deepcopy
 
 # Pypi libraries
 import graphviz
-from sigfig import round as sigfig_round
 from termcolor import cprint
 
 # Internal libraries
