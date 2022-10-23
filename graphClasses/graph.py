@@ -267,8 +267,8 @@ class Graph:
                 self.nodes[rec_id]['label'] = '\n'.join([
                     f'{round(rec.multiplier, 2)}x {rec.user_voltage} {existing_label}',
                     f'Cycle: {rec.dur/20}s',
-                    f'Amoritized: {round(rec.eut, 2)} EU/t',
-                    f'Per Machine: {round(rec.base_eut, 2)} EU/t',
+                    f'Amoritized: {self.userRound(int(round(rec.eut, 0)))} EU/t',
+                    f'Per Machine: {self.userRound(int(round(rec.base_eut, 0)))} EU/t',
                 ])
 
                 # Lock all adjacent ingredient edges
@@ -303,8 +303,8 @@ class Graph:
             self.nodes[rec_id]['label'] = '\n'.join([
                 f'{round(rec.multiplier, 2)}x {rec.user_voltage} {existing_label}',
                 f'Cycle: {rec.dur/20}s',
-                f'Amoritized: {round(rec.eut, 2)} EU/t',
-                f'Per Machine: {round(rec.base_eut, 2)} EU/t',
+                f'Amoritized: {self.userRound(int(round(rec.eut, 0)))} EU/t',
+                f'Per Machine: {self.userRound(int(round(rec.base_eut, 0)))} EU/t',
             ])
 
 
@@ -855,8 +855,8 @@ class Graph:
         self.nodes[rec_id]['label'] = '\n'.join([
             f'{round(rec.multiplier, 2)}x {rec.user_voltage} {existing_label}',
             f'Cycle: {rec.dur/20}s',
-            f'Amoritized: {round(rec.eut, 2)} EU/t',
-            f'Per Machine: {round(rec.base_eut, 2)} EU/t',
+            f'Amoritized: {self.userRound(int(round(rec.eut, 0)))} EU/t',
+            f'Per Machine: {self.userRound(int(round(rec.base_eut, 0)))} EU/t',
         ])
 
         # Lock ingredient edges using new quant
