@@ -27,7 +27,8 @@ A (beta) tool designed for complex GT packs. In specific, aims to achieve:
 
 #### Windows
 
-1. Clone repository `git clone https://github.com/OrderedSet86/gtnh-flow.git`
+(The next steps will ask you to run some commands - use Powershell or WSL for this.)
+1. Clone repository `git clone https://github.com/OrderedSet86/gtnh-flow.git` or download it using Code (green button) -> Download ZIP on Github, then unzip.
 2. Download Python 3 and install from `https://www.python.org/downloads/windows/`. `pip --version` and `python --version` should both return valid version numbers from the command line. Python should be version 3.
 3. Navigate to the cloned git repository in a command prompt and install the Python dependencies `pip install -r requirements.txt`
 5. Graphviz is an external library and will need to be downloaded separately. The graphviz maintainers have a guide: `https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224`. It is important that Graphviz is added to the System PATH for either all users or current users and you may need to restart Windows for this change to take effect.
