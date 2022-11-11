@@ -1,0 +1,292 @@
+# last updated 2.2.3
+rotor_size:
+  small:
+    multiplier: 1
+    efficiency: -50
+  normal:
+    multiplier: 2
+    efficiency: -25
+  large:
+    multiplier: 3
+    efficiency: 0
+  huge:
+    multiplier: 4
+    efficiency: 20
+
+steam_fuels:
+  steam: 0.5
+  sh steam: 1
+
+# todo: centralize this data so it's only in one place
+gas_fuels:
+  nitrobenzene: 1_250
+  naquadah gas: 1_024
+  ether: 537
+  tert-butylbenzene: 420
+  benzene: 360
+  # not doing the rest unless needed
+
+plasma_fuels:
+  americium: 501_760
+  radon: 450_560
+  bismuth: 425_984  
+  tin: 304_496
+  silver: 282_685
+  niobium: 269_516
+  zinc: 226_304
+  nickel: 213_811
+  iron: 206_438
+  titanium: 196_608
+  calcium: 188_416
+  sulfur: 170_393
+  oxygen: 131_072
+  nitrogen: 129_024
+  boron: 112_640
+  helium: 81_920
+  hydrogen: 20_480
+
+materials:
+  infinity:
+    tier: 17
+    mining speed: 256
+    durability: 262_144_000
+  cosmic neutronium:
+    tier: 12
+    mining speed: 96
+    durability: 16_384_000
+  infinity catalyst:
+    tier: 10
+    mining speed: 64
+    durability: 131_072_000
+  awakened draconium:
+    tier: 9
+    mining speed: 40
+    durability: 6_553_600
+  black plutonium:
+    tier: 8
+    mining speed: 36
+    durability: 819200
+  adamantium:
+    tier: 8
+    mining speed: 15
+    durability: 819200
+  trinium:
+    tier: 8
+    mining speed: 128
+    durability: 5120000
+  ichorium:
+    tier: 7
+    mining speed: 32
+    durability: 85000000
+  draconium:
+    tier: 7
+    mining speed: 20
+    durability: 3276800
+  stellar alloy:
+    tier: 7
+    mining speed: 96
+    durability: 1024000
+  neutronium:
+    tier: 6
+    mining speed: 24
+    durability: 65536000
+  tritanium:
+    tier: 6
+    mining speed: 20
+    durability: 1024000
+  oriharukon:
+    tier: 5
+    mining speed: 32
+    durability: 1024000
+  melodic alloy:
+    tier: 5
+    mining speed: 24
+    durability: 1024000
+  enhanced galgodorian:
+    tier: 5
+    mining speed: 32
+    durability: 720000
+  duranium:
+    tier: 5
+    mining speed: 16
+    durability: 512000
+  naquadah alloy:
+    tier: 5
+    mining speed: 8
+    durability: 512000
+  manyullyn:
+    tier: 5
+    mining speed: 25
+    durability: 204800
+  shadow:
+    tier: 4
+    mining speed: 32
+    durability: 819200
+  hss-e:
+    tier: 4
+    mining speed: 10
+    durability: 512000
+  vibrant alloy:
+    tier: 4
+    mining speed: 18
+    durability: 404800
+  hss-s:
+    tier: 4
+    mining speed: 14
+    durability: 300000
+  tungstensteel:
+    tier: 4
+    mining speed: 8
+    durability: 256000
+  quantium:
+    tier: 4
+    mining speed: 18
+    durability: 204800
+  ultimet:
+    tier: 4
+    mining speed: 9
+    durability: 204800
+  end steel:
+    tier: 4
+    mining speed: 12
+    durability: 200000
+  desh:
+    tier: 4
+    mining speed: 20
+    durability: 128000
+  osmium:
+    tier: 4
+    mining speed: 16
+    durability: 128000
+  tungstencarbide:
+    tier: 4
+    mining speed: 14
+    durability: 128000
+  naquadah:
+    tier: 4
+    mining speed: 6
+    durability: 128000
+  enriched naquadah:
+    tier: 4
+    mining speed: 6
+    durability: 128000
+  ardite:
+    tier: 4
+    mining speed: 18
+    durability: 102400
+  endium:
+    tier: 4
+    mining speed: 16
+    durability: 102400
+  ledox:
+    tier: 4
+    mining speed: 15
+    durability: 102400
+  callisto ice:
+    tier: 4
+    mining speed: 9
+    durability: 102400
+  blue steel:
+    tier: 4
+    mining speed: 7.5
+    durability: 102400
+  red steel:
+    tier: 4
+    mining speed: 7
+    durability: 89600
+  shadowsteel:
+    tier: 4
+    mining speed: 6
+    durability: 76800
+  meteoric steel:
+    tier: 4
+    mining speed: 6
+    durability: 76800
+  crystalline alloy:
+    tier: 4
+    mining speed: 18
+    durability: 76800
+  enderium base:
+    tier: 4
+    mining speed: 16
+    durability: 76800
+  vivid alloy:
+    tier: 4
+    mining speed: 12
+    durability: 76800
+  hss-g:
+    tier: 3
+    mining speed: 10
+    durability: 400000
+  galgodorian:
+    tier: 3
+    mining speed: 16
+    durability: 360000
+  orichalcum:
+    tier: 3
+    mining speed: 4.5
+    durability: 345600
+  haderoth:
+    tier: 3
+    mining speed: 10
+    durability: 320000
+  tungsten:
+    tier: 3
+    mining speed: 7
+    durability: 256000
+  iridium:
+    tier: 3
+    mining speed: 6
+    durability: 256000
+  eximite:
+    tier: 3
+    mining speed: 5
+    durability: 256000
+  inolashite:
+    tier: 3
+    mining speed: 8
+    durability: 206400
+  oureclase:
+    tier: 3
+    mining speed: 6
+    durability: 192000
+  vanadium steel:
+    tier: 3
+    mining speed: 3
+    durability: 192000
+  titanium:
+    tier: 3
+    mining speed: 7
+    durability: 160000
+  osmiridium:
+    tier: 3
+    mining speed: 7
+    durability: 160000
+  enderium:
+    tier: 3
+    mining speed: 8
+    durability: 150000
+  damascus steel:
+    tier: 3
+    mining speed: 8
+    durability: 128000
+  energetic alloy:
+    tier: 3
+    mining speed: 12
+    durability: 102400
+  knightmetal:
+    tier: 3
+    mining speed: 8
+    durability: 102400
+  vyroxeres:
+    tier: 3
+    mining speed: 9
+    durability: 76800
+  black steel:
+    tier: 3
+    mining speed: 6.5
+    durability: 76800
+  steeleaf:
+    tier: 3
+    mining speed: 8
+    durability: 76800

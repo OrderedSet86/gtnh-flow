@@ -1,5 +1,7 @@
+import math
 from bisect import bisect_right
 
+import yaml
 from termcolor import cprint
 
 from dataClasses.base import Ingredient, IngredientCollection
@@ -254,7 +256,6 @@ def modifyMultiSmelter(recipe):
 
 
 def modifyTGS(recipe):
-    # This enforces a known overclock chart - too lazy to look up the code
     require(
         recipe,
         [
@@ -267,11 +268,11 @@ def modifyTGS(recipe):
         'chainsaw': 4,
     }
     assert recipe.saw_type in saw_multipliers, f'"saw_type" must be in {saw_multipliers}'
-    assert recipe.user_voltage in {'LV', 'MV', 'HV', 'EV', 'IV', 'LuV', 'ZPM'}, 'Bother Order#0001 on Discord and tell him to read the code and stop being lazy'
 
-    TGS_outputs = [5, 9, 17, 29, 45, 65, 89]
     oc_idx = voltages.index(recipe.user_voltage)
-    TGS_wood_out = TGS_outputs[oc_idx] * saw_multipliers[recipe.saw_type]
+    tTier = oc_idx + 1
+    TGS_base_output = (2*(tTier**2) - (2*tTier) + 5) * 5
+    TGS_wood_out = TGS_base_output * saw_multipliers[recipe.saw_type]
 
     assert len(recipe.O) <= 1, 'Automatic TGS overclocking only supported for single output - contact dev for more details'
 
@@ -359,6 +360,72 @@ def modifyFusion(recipe):
     return recipe
 
 
+def modifyLGT(recipe):
+    require(
+        recipe,
+        [
+            ['material', str],
+            ['size', str],
+        ]
+    )
+
+    fuel = recipe.I._ings[0].name
+    material = recipe.material.lower()
+    size = recipe.size.lower()
+
+    with open('gtnhClasses/turbine_data.yaml', 'r') as f:
+        turbine_data = yaml.safe_load(f)
+    assert fuel in turbine_data['gas_fuels'], f'Unsupported fuel "{fuel}"'
+    assert material in turbine_data['materials'], f'Unsupported material "{material}"'
+    assert size in turbine_data['rotor_size'], f'Unsupported size "{size}"'
+
+    material_data = turbine_data['materials'][material]
+
+    # TODO: For now, assume optimal eut/flow as calculated on spreadsheet
+    if getattr(recipe, 'flow', None) is None:
+        # Calculate optimal gas flow for turbine (in EU/t)
+        optimal_eut = (
+            material_data['mining speed']
+                * turbine_data['rotor_size'][size]['multiplier']
+                * 50
+        )
+        efficiency = (
+            (material_data['tier'] * 10) 
+                + 100 
+                + turbine_data['rotor_size'][size]['efficiency']
+        )
+
+        burn_value = turbine_data['gas_fuels'][fuel]
+        optimal_flow_L_t = math.floor(optimal_eut / burn_value)
+        output_eut = math.floor(optimal_flow_L_t * burn_value * efficiency / 100)
+    else:
+        raise NotImplementedError('Specifying "flow" feature not implemented yet')
+    
+    # print(f'{optimal_eut=}')
+    # print(f'{optimal_flow_L_t=}')
+    # print(f'{efficiency=}')
+    # print(f'{output_eut=}')
+
+    recipe.eut = 0
+    recipe.dur = 1
+    recipe.I._ings[0].quant = optimal_flow_L_t
+    recipe.O = IngredientCollection(*[
+        Ingredient('EU', output_eut)
+    ])
+    recipe.efficiency = f'{efficiency}%'
+
+    return recipe
+
+
+def modifyXLGT(recipe):
+    recipe = modifyLGT(recipe)
+    recipe.I *= 16
+    recipe.O *= 16
+
+    return recipe
+
+
+
 def calculateStandardOC(recipe):
     base_voltage = bisect_right(voltage_cutoffs, recipe.eut)
     user_voltage = voltages.index(recipe.user_voltage)
@@ -399,6 +466,10 @@ def overclockRecipe(recipe):
         'CAL': modifyPerfect,
         'fusion': modifyFusion,
         'fusion reactor': modifyFusion,
+        'large gas turbine': modifyLGT,
+        'LGT': modifyLGT,
+        'XL turbo gas turbine': modifyXLGT,
+        'XLGT': modifyXLGT,
 
         # Basic GT++ multis
         'industrial centrifuge': modifyGTpp,
@@ -441,6 +512,10 @@ def overclockRecipe(recipe):
         'isamill': modifyPerfect,
         'isamill grinding machine': modifyPerfect,
     }
+
+    if getattr(recipe, 'do_not_overclock', False):
+        return recipe
+
     if recipe.machine in machine_overrides:
         return machine_overrides[recipe.machine](recipe)
     else:

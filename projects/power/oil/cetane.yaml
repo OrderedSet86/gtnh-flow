@@ -1,0 +1,88 @@
+- m: LCR
+  tier: HV
+  I:
+    diesel: 10000
+    tetranitromethane: 200
+  O:
+    cetane-boosted diesel: 10000
+  eut: 480
+  dur: 6
+  target:
+    cetane-boosted diesel: 1000
+- m: LCR
+  tier: HV
+  I:
+    nitric acid: 8000
+    ethenone: 1000
+  O:
+    tetranitromethane: 2000
+    '[recycle] water': 9000
+  eut: 120
+  dur: 24
+- m: LCR
+  tier: HV
+  I:
+    oxygen: 4000
+    ammonia: 1000
+  O:
+    nitric acid: 1000
+    '[recycle] water': 1000
+  eut: 30
+  dur: 16
+- m: LCR
+  tier: HV
+  I:
+    nitrogen: 1000
+    hydrogen: 3000
+  O:
+    ammonia: 1000
+  eut: 384
+  dur: 16
+- m: large combustion engine
+  tier: LV
+  I:
+    cetane-boosted diesel: 1000
+    oxygen: 488.2813
+    lubricant: 3.39
+  O:
+    EU: 1_500_000
+  eut: 0
+  dur: 12.21
+- m: mixer
+  tier: MV
+  I:
+    light fuel: 5000
+    heavy fuel: 1000
+  O:
+    diesel: 6000
+  eut: 120
+  dur: 0.8
+- m: LCR
+  tier: HV
+  I:
+    sulfuric acid: 500
+    acetic acid: 1000
+  O:
+    ethenone: 1000
+  eut: 120
+  dur: 8
+- m: LCR
+  tier: HV
+  I:
+    oxygen: 2000
+    hydrogen: 4000
+    carbon dust: 2
+  O:
+    acetic acid: 1000
+  eut: 30
+  dur: 24
+- m: LCR
+  tier: HV
+  I:
+    water: 1000
+    oxygen: 3000
+    sulfur dust: 1
+  O:
+    sulfuric acid: 1000
+  eut: 30
+  dur: 24

@@ -134,6 +134,7 @@
     wrap of elite circuit boards: 1
   eut: 30
   dur: 30
+  group: crystal circuits
 
 
 - m: mixer
@@ -143,7 +144,7 @@
     ledox dust: 1
     coolant: 2000
   O:
-    crushed ice: 2
+    # crushed ice: 2 # Ignoring this
     super coolant: 2000
   eut: 480
   dur: 10
@@ -197,6 +198,7 @@
     crystalprocessor: 16
   eut: 153600
   dur: 30
+  group: crystal circuits
 - m: laser engraver
   tier: UHV
   I:
@@ -205,6 +207,7 @@
     crystal soc: 1
   eut: 40000
   dur: 30
+  group: crystal circuits
 - m: laser engraver
   tier: UHV
   I:
@@ -213,6 +216,7 @@
     crystal processing unit: 1
   eut: 10000
   dur: 30
+  group: crystal circuits
 - m: EBF
   tier: UHV
   I:
@@ -225,6 +229,7 @@
   dur: 26.1
   heat: 5000
   coils: electrum flux
+  group: crystal circuits
 - m: autoclave
   tier: UHV
   I:
@@ -233,6 +238,7 @@
     raw crystal chip: 0.35 # 60% - 25% from chip part
   eut: 480
   dur: 600
+  group: crystal circuits
 - m: laser engraver
   tier: UHV
   I:
@@ -242,6 +248,7 @@
     emerald plate: 9
   eut: 30
   dur: 18
+  group: crystal circuits
 - m: compressor
   tier: UHV
   I:
@@ -250,6 +257,7 @@
     emerald block: 1
   eut: 2
   dur: 15
+  group: crystal circuits
 - m: LCR
   tier: UHV
   I:
@@ -260,6 +268,7 @@
     elite circuit board: 1
   eut: 120
   dur: 120
+  group: crystal circuits
 - m: LCR
   tier: UHV
   I:
@@ -357,6 +366,7 @@
     sbc medium: 100
   eut: 30720
   dur: 1
+  group: bio catalyst medium
 - m: bacterial vat
   tier: UHV
   I:
@@ -369,6 +379,7 @@
     raw bio catalyst medium: 2000
   eut: 30720
   dur: 180
+  group: bio catalyst medium
 - m: bacterial vat
   tier: UHV
   I:
@@ -381,6 +392,7 @@
     raw growth catalyst medium: 1000
   eut: 7680
   dur: 60
+  group: bio catalyst medium
 - m: autoclave
   tier: UHV
   I:
@@ -390,6 +402,7 @@
     unknown crystal shard: 1
   eut: 480
   dur: 60
+  group: bio catalyst medium
 - m: fluid extractor
   tier: IV
   I:
@@ -398,6 +411,7 @@
     molten void: 144
   eut: 44
   dur: 1.2
+  group: bio catalyst medium
 - m: LCR
   tier: UHV
   I:
@@ -409,6 +423,7 @@
     '[recycle] bacterial sludge': 1000
   eut: 30720
   dur: 30
+  group: bio catalyst medium
 - m: fluid heater
   tier: UHV
   I:
@@ -417,6 +432,7 @@
     growth catalyst medium: 100
   eut: 7680
   dur: 1
+  group: bio catalyst medium
 
 
 - m: assline
@@ -670,6 +686,7 @@
     fine fluxed electrum wire: 8
   eut: 4
   dur: 5
+  group: fluxed electrum
 - m: vacuum freezer
   tier: ZPM
   I:
@@ -678,6 +695,7 @@
     fluxed electrum ingot: 1
   eut: 7680
   dur: 14.7
+  group: fluxed electrum
 - m: EBF
   tier: UHV
   I:
@@ -689,6 +707,7 @@
   dur: 33
   heat: 9000
   coils: trinium
+  group: fluxed electrum
 - m: mixer
   tier: UHV
   I:
@@ -704,6 +723,7 @@
     fluxed electrum dust: 4
   eut: 900
   dur: 2.5
+  group: fluxed electrum
 - m: mixer
   tier: IV
   I:
@@ -713,6 +733,7 @@
     rose gold dust: 5
   eut: 120
   dur: 10
+  group: fluxed electrum
 - m: mixer
   tier: IV
   I:
@@ -722,6 +743,7 @@
     astral silver dust: 3
   eut: 480
   dur: 3
+  group: fluxed electrum
 - m: mixer
   tier: IV
   I:
@@ -731,6 +753,7 @@
     sterling silver dust: 5
   eut: 120
   dur: 25
+  group: fluxed electrum
 - m: mixer
   tier: IV
   I:
@@ -740,6 +763,7 @@
     soldering alloy dust: 10
   eut: 7
   dur: 5
+  group: fluxed electrum
 - m: mixer
   tier: IV
   I:
@@ -753,6 +777,7 @@
     red steel dust: 40
   eut: 480
   dur: 60
+  group: fluxed electrum
 - m: mixer
   tier: IV
   I:
@@ -765,6 +790,7 @@
     black steel dust: 25
   eut: 480
   dur: 40
+  group: fluxed electrum
 - m: mixer
   tier: IV
   I:
@@ -777,6 +803,7 @@
     blue steel dust: 160
   eut: 480
   dur: 180
+  group: fluxed electrum
 
 
 - m: assembler
@@ -861,6 +888,7 @@
     osmd capacitor: 32
   eut: 120000
   dur: 8
+  group: optical smds
 - m: bacterial vat
   tier: UEV
   I:
@@ -871,6 +899,7 @@
     xenoxene: 20000
   eut: 7864320
   dur: 300
+  group: optical smds
 - m: fluid solidifier
   tier: UHV
   I:
@@ -879,6 +908,7 @@
     cinobite a243 plate: 1
   eut: 122880
   dur: 1.6
+  group: optical smds
 - m: bending machine
   tier: UHV
   I:
@@ -887,6 +917,7 @@
     cinobite a243 foil: 4
   eut: 122880
   dur: 2.35
+  group: optical smds
 - m: alloy blast smelter
   tier: UHV
   I:
@@ -902,6 +933,7 @@
     molten cinobite a243: 7632
   eut: 122880
   dur: 420
+  group: optical smds
 - m: alloy blast smelter
   tier: UHV
   I:
@@ -915,6 +947,7 @@
     molten zeron-100: 7200
   eut: 30720
   dur: 360
+  group: optical smds
 - m: fluid solidifier
   tier: ZPM
   I:
@@ -923,6 +956,7 @@
     zeron-100 ingot: 1
   eut: 30720
   dur: 1.6
+  group: optical smds
 - m: macerator
   tier: IV
   I:
@@ -931,6 +965,7 @@
     zeron-100 dust: 1
   eut: 2
   dur: 20
+  group: optical smds
 - m: mixer
   tier: IV
   I:
@@ -940,6 +975,7 @@
     osmiridium dust: 4
   eut: 1920
   dur: 20
+  group: optical smds
 
 
 - m: assembler
@@ -954,6 +990,7 @@
     osmd diode: 64
   eut: 120000
   dur: 8
+  group: optical smds
 
 
 - m: assembler
@@ -967,6 +1004,7 @@
     osmd inductor: 32
   eut: 120000
   dur: 8
+  group: optical smds
 
 
 - m: assembler
@@ -980,6 +1018,7 @@
     osmd transistor: 32
   eut: 120000
   dur: 8
+  group: optical smds
 
 
 - m: assembler
@@ -993,6 +1032,7 @@
     osmd resistor: 32
   eut: 120000
   dur: 8
+  group: optical smds
 - m: bending machine
   tier: UHV
   I:
@@ -1001,6 +1041,7 @@
     pikyonium 64b foil: 2
   eut: 122880
   dur: 2.4
+  group: optical smds
 - m: fluid solidifier
   tier: UHV
   I:
@@ -1009,6 +1050,7 @@
     pikyonium 64b plate: 1
   eut: 122880
   dur: 1.6
+  group: optical smds
 - m: alloy blast smelter
   tier: UHV
   I:
@@ -1024,6 +1066,7 @@
     molten pikyonium 64b: 4176
   eut: 122880
   dur: 420
+  group: optical smds
 - m: mixer
   tier: IV
   I:
@@ -1035,6 +1078,7 @@
     inconel-792 dust: 6
   eut: 480
   dur: 2.6
+  group: optical smds
 - m: mixer
   tier: IV
   I:
@@ -1046,6 +1090,7 @@
     eglin steel dust: 16
   eut: 30
   dur: 1.4
+  group: optical smds
 - m: mixer
   tier: IV
   I:
@@ -1056,6 +1101,7 @@
     eglin steel base compound dust: 10
   eut: 16
   dur: 5.1
+  group: optical smds
 
 
 - m: LCR
@@ -1072,13 +1118,12 @@
   tier: UHV
   I:
     epichlorohydrin: 2000
-    hydrochloric acid: 1000
     phenol: 2000
     acetone: 1000
-    sodium hydroxide dust: 6
   O:
     molten epoxid: 1000
-    salt water: 2000
+    '[recycle] chlorine': 2000
+    '[recycle] hydrogen': 2000
   eut: 30
   dur: 24
 - m: LCR
@@ -1087,11 +1132,10 @@
     water: 1000
     chlorine: 4000
     propene: 1000
-    sodium hydroxide dust: 3
   O:
     epichlorohydrin: 1000
-    salt water: 1000
-    '[recycle] hydrochloric acid': 2000
+    '[recycle] chlorine': 2000
+    '[recycle] hydrogen': 2000
   eut: 30
   dur: 32
 - m: LCR
@@ -1100,7 +1144,8 @@
     acetic acid: 2000
   O:
     acetone: 1000
-    co2 gas: 1000
+    '[recycle] carbon dust': 1
+    '[recycle] oxygen': 2000
     '[recycle] water': 1000
   eut: 480
   dur: 20
@@ -1314,8 +1359,7 @@
     raw silicon dust: 1
   O:
     polydimethylsiloxane pulp: 3
-    '[recycle] hydrochloric acid': 2000
-    '[recycle] diluted hydrochloric acid': 2000
+    '[recycle] hydrochloric acid': 3000
   eut: 96
   dur: 24
 
@@ -1515,6 +1559,7 @@
     pbi foil: 4
   eut: 24
   dur: 0.4
+  group: pbi line
 - m: fluid solidifier
   tier: IV
   I:
@@ -1523,6 +1568,7 @@
     pbi plate: 1
   eut: 7
   dur: 1.6
+  group: pbi line
 - m: LCR
   tier: UHV
   I:
@@ -1533,6 +1579,7 @@
     '[recycle] phenol': 2000
   eut: 7680
   dur: 5
+  group: pbi line
 - m: LCR
   tier: UHV
   I:
@@ -1541,9 +1588,12 @@
     phthalic acid: 1000
   O:
     diphenyl isophtalate: 1000
-    '[recycle] diluted sulfuric acid': 1000
+    '[recycle] hydrogen': 1333.333333
+    '[recycle] sulfur dust': 0.6666666
+    '[recycle] oxygen': 2666.6666666
   eut: 7680
   dur: 5
+  group: pbi line
 - m: LCR
   tier: UHV
   I:
@@ -1555,6 +1605,7 @@
     '[recycle] hydrochloric acid': 2000
   eut: 7680
   dur: 5
+  group: pbi line
 - m: LCR
   tier: UHV
   I:
@@ -1564,6 +1615,7 @@
     3-3-dichlorobenzidine: 9000
   eut: 1920
   dur: 90
+  group: pbi line
 - m: LCR
   tier: UHV
   I:
@@ -1571,9 +1623,12 @@
     nitration mixture: 2000
   O:
     2-nitrochlorobenzene: 1000
-    '[recycle] diluted sulfuric acid': 1000
+    '[recycle] hydrogen': 1333.333333
+    '[recycle] sulfur dust': 0.6666666
+    '[recycle] oxygen': 2666.6666666
   eut: 480
   dur: 5
+  group: pbi line
 - m: mixer
   tier: ZPM
   I:
@@ -1583,6 +1638,7 @@
     nitration mixture: 2000
   eut: 2
   dur: 24
+  group: pbi line
 - m: LCR
   tier: UHV
   I:
@@ -1593,6 +1649,7 @@
     '[recycle] water': 1000
   eut: 30
   dur: 16
+  group: pbi line
 
 
 - m: extruder
@@ -1704,7 +1761,8 @@
     chlorine: 4000
   O:
     dichlorobenzene: 1000
-    '[recycle] hydrochloric acid': 2000
+    '[recycle] chlorine': 2000
+    '[recycle] hydrogen': 2000
   eut: 30
   dur: 12
 
@@ -1718,6 +1776,7 @@
     agar: 1
   eut: 480
   dur: 30
+  group: bio catalyst medium
 - m: centrifuge
   tier: ZPM
   I:
@@ -1727,6 +1786,7 @@
     '[recycle] phosphorus dust': 1
   eut: 480
   dur: 120
+  group: bio catalyst medium
 - m: LCR
   tier: ZPM
   I:
@@ -1737,17 +1797,19 @@
     gelatinmixture: 4000
   eut: 480
   dur: 80
+  group: bio catalyst medium
 - m: LCR
   tier: ZPM
   I:
     mince meat: 1
     bone meal: 2
-    diluted sulfuric acid: 500
+    sulfuric acid: 333.3333
   O:
     collagen: 1
     '[recycle] water': 500
   eut: 480
   dur: 40
+  group: bio catalyst medium
 - m: LCR
   tier: ZPM
   I:
@@ -1758,6 +1820,7 @@
     phosphoric acid: 1000
   eut: 480
   dur: 80
+  group: bio catalyst medium
 
 
 - m: extractor
@@ -1768,6 +1831,7 @@
     tcetie-seaweed extract: 1
   eut: 262144
   dur: 180
+  group: bio catalyst medium
 - m: centrifuge
   tier: UHV
   I:
@@ -1776,6 +1840,7 @@
     t ceti e seaweed: 32
   eut: 491520
   dur: 1
+  group: bio catalyst medium
 - m: bacterial vat
   tier: UHV
   I:
@@ -1787,6 +1852,7 @@
     seaweed broth: 50000
   eut: 491520
   dur: 60
+  group: bio catalyst medium
 - m: LCR
   tier: UHV
   I:
@@ -1800,6 +1866,7 @@
     unknown nutrient agar: 8000
   eut: 491520
   dur: 60
+  group: bio catalyst medium
 - m: fluid extractor
   tier: IV
   I:
@@ -1808,18 +1875,7 @@
     meatextract: 125
   eut: 120
   dur: 15
-
-
-- m: LCR
-  tier: UHV
-  I:
-    sodium dust: 1
-    water: 1000
-  O:
-    sodium hydroxide dust: 3
-    '[recycle] hydrogen': 1000
-  eut: 30
-  dur: 10
+  group: bio catalyst medium
 
 
 - m: wiremill
@@ -1906,6 +1962,7 @@
     fluxed electrum casing: 2
   eut: 45
   dur: 4.9
+  group: fluxed electrum
 - m: fluid solidifier
   tier: IV
   I:
@@ -2038,6 +2095,7 @@
     platinum foil: 4
   eut: 24
   dur: 9.75
+  group: crystal circuits
 - m: wiremill
   tier: IV
   I:
@@ -2098,15 +2156,6 @@
 
 
 - m: mixer
-  tier: ZPM
-  I:
-    sulfuric acid: 2000
-    water: 1000
-  O:
-    diluted sulfuric acid: 3000
-  eut: 30
-  dur: 1.5
-- m: mixer
   tier: UHV
   I:
     distilled water: 1000
@@ -2137,6 +2186,7 @@
     '[recycle] water': 18000
   eut: 1920
   dur: 45
+  group: pbi line
 - m: LCR
   tier: UHV
   I:
@@ -2147,6 +2197,7 @@
     '[recycle] hydrogen': 4000
   eut: 120
   dur: 200
+  group: pbi line
 
 
 - m: assembler
@@ -2255,6 +2306,7 @@
     draconium foil: 4
   eut: 24
   dur: 4.9
+  group: optical smds
 - m: bending machine
   tier: IV
   I:
@@ -2263,6 +2315,7 @@
     draconium plate: 1
   eut: 24
   dur: 4.9
+  group: optical smds
 - m: laser engraver
   tier: UHV
   I:
@@ -2311,6 +2364,7 @@
     ybc bolt: 8
   eut: 480
   dur: 5.1
+  group: crystal circuits
 - m: mixer
   tier: ZPM
   I:
@@ -2363,6 +2417,7 @@
     black plutonium foil: 4
   eut: 24
   dur: 4.9
+  group: optical smds
 - m: bending machine
   tier: IV
   I:
@@ -2371,6 +2426,7 @@
     black plutonium plate: 1
   eut: 24
   dur: 4.9
+  group: optical smds
 - m: vacuum freezer
   tier: ZPM
   I:
@@ -2379,6 +2435,7 @@
     black plutonium ingot: 1
   eut: 7680
   dur: 14.7
+  group: optical smds
 - m: EBF
   tier: ZPM
   I:
@@ -2390,6 +2447,7 @@
   dur: 229.5
   heat: 9000
   coils: infinity
+  group: optical smds
 
 
 - m: assembler
@@ -2559,6 +2617,7 @@
     arceus alloy 2b foil: 4
   eut: 122880
   dur: 2.25
+  group: optical smds
 - m: fluid solidifier
   tier: UHV
   I:
@@ -2567,6 +2626,7 @@
     arceus alloy 2b plate: 1
   eut: 122880
   dur: 1.6
+  group: optical smds
 - m: ABS
   tier: UHV
   I:
@@ -2579,6 +2639,7 @@
     molten arceus alloy 2b: 1584
   eut: 122880
   dur: 420
+  group: optical smds
 - m: macerator
   tier: IV
   I:
@@ -2587,6 +2648,7 @@
     maraging steel 350 dust: 1
   eut: 2
   dur: 20
+  group: optical smds
 - m: fluid solidifier
   tier: IV
   I:
@@ -2595,6 +2657,7 @@
     maraging steel 350 ingot: 1
   eut: 120
   dur: 1.6
+  group: optical smds
 - m: ABS
   tier: IV
   I:
@@ -2607,6 +2670,7 @@
     molten maraging steel 350: 3456
   eut: 120
   dur: 20
+  group: optical smds
 - m: laser engraver
   tier: UHV
   I:
@@ -2631,6 +2695,7 @@
     platinum plate: 1
   eut: 24
   dur: 9.75
+  group: crystal circuits
 - m: extruder
   tier: IV
   I:
@@ -2663,6 +2728,7 @@
     tritanium plate: 1
   eut: 24
   dur: 16.15
+  group: optical smds
 - m: bending machine
   tier: IV
   I:
@@ -2671,6 +2737,7 @@
     tritanium foil: 1
   eut: 24
   dur: 16.15
+  group: optical smds
 - m: extruder
   tier: IV
   I:
@@ -2771,6 +2838,7 @@
     supercon base zpm foil: 4
   eut: 24
   dur: 9.1
+  group: optical smds
 - m: bending machine
   tier: IV
   I:
@@ -2779,6 +2847,7 @@
     supercon base zpm plate: 1
   eut: 24
   dur: 9.1
+  group: optical smds
 - m: vacuum freezer
   tier: UHV
   I:
@@ -2787,6 +2856,7 @@
     supercon base zpm ingot: 1
   eut: 122880
   dur: 20
+  group: optical smds
 - m: EBF
   tier: UHV
   I:
@@ -2798,6 +2868,7 @@
   dur: 165
   heat: 9000
   coils: electrum flux
+  group: optical smds
 - m: mixer
   tier: UHV
   I:
@@ -2809,6 +2880,7 @@
     supercon base zpm dust: 13
   eut: 122880
   dur: 10
+  group: optical smds
 - m: extruder
   tier: IV
   I:
@@ -2863,6 +2935,7 @@
     lafium compound plate: 1
   eut: 30720
   dur: 2.2
+  group: optical smds
 - m: bending machine
   tier: ZPM
   I:
@@ -2871,6 +2944,7 @@
     lafium compound foil: 4
   eut: 30720
   dur: 2.2
+  group: optical smds
 - m: bending machine
   tier: ZPM
   I:
@@ -2879,6 +2953,7 @@
     lafium compound ingot: 1
   eut: 30720
   dur: 1.6
+  group: optical smds
 - m: ABS
   tier: UHV
   I:
@@ -2894,6 +2969,7 @@
     molten lafium compound: 144
   eut: 30720
   dur: 360
+  group: optical smds
 - m: bending machine
   tier: ZPM
   I:
@@ -2902,6 +2978,7 @@
     hastelloy-n dust: 1
   eut: 2
   dur: 20
+  group: optical smds
 - m: fluid solidifier
   tier: IV
   I:
@@ -2910,6 +2987,7 @@
     hastelloy-n ingot: 1
   eut: 1920
   dur: 1.6
+  group: optical smds
 - m: ABS
   tier: ZPM
   I:
@@ -2922,6 +3000,7 @@
     molten hastelloy-n: 3600
   eut: 1920
   dur: 1.6
+  group: optical smds
 - m: LCR
   tier: IV
   I:
@@ -2929,10 +3008,11 @@
     saltpeter: 10
   O:
     potassium dichromate dust: 11
-    '[recycle] nitric oxide': 2000
-    '[recycle] oxygen': 3000
+    '[recycle] nitrogen': 2000
+    '[recycle] oxygen': 5000
   eut: 480
   dur: 5
+  group: pbi line
 - m: LCR
   tier: IV
   I:
@@ -2942,6 +3022,7 @@
     chromium trioxide dust: 4
   eut: 60
   dur: 5
+  group: pbi line
 - m: LCR
   tier: IV
   I:
@@ -2951,6 +3032,7 @@
     chromium dioxide dust: 3
   eut: 30
   dur: 40
+  group: pbi line
 - m: LCR
   tier: IV
   I:
@@ -2969,6 +3051,7 @@
     hikarium foil: 4
   eut: 48
   dur: 20.5
+  group: optical smds
 - m: bending machine
   tier: IV
   I:
@@ -2977,6 +3060,7 @@
     hikarium plate: 1
   eut: 24
   dur: 4.1
+  group: optical smds
 - m: vacuum freezer
   tier: IV
   I:
@@ -2985,6 +3069,7 @@
     hikarium ingot: 1
   eut: 120
   dur: 12.3
+  group: optical smds
 - m: EBF
   tier: UHV
   I:
@@ -2996,6 +3081,7 @@
   dur: 34.8
   heat: 5400
   coils: electrum flux
+  group: optical smds
 - m: mixer
   tier: IV
   I:
@@ -3006,6 +3092,7 @@
     hikarium dust: 30
   eut: 120
   dur: 12.3
+  group: optical smds
 - m: mixer
   tier: IV
   I:
@@ -3017,6 +3104,7 @@
     lumiium dust: 1
   eut: 120
   dur: 12
+  group: optical smds
 - m: alloy smelter
   tier: IV
   I:
@@ -3026,6 +3114,7 @@
     tin alloy ingot: 2
   eut: 16
   dur: 5
+  group: optical smds
 - m: alloy smelter
   tier: IV
   I:
@@ -3034,6 +3123,7 @@
     tin alloy dust: 1
   eut: 4
   dur: 4.35
+  group: optical smds
 - m: fluid solidifier
   tier: IV
   I:
@@ -3043,6 +3133,7 @@
     lumiinessence dust: 1
   eut: 4
   dur: 4.35
+  group: optical smds
 - m: mixer
   tier: IV
   I:
@@ -3053,6 +3144,7 @@
     high energy mixture: 4
   eut: 120
   dur: 12
+  group: optical smds
 - m: LCR
   tier: IV
   I:
@@ -3062,6 +3154,7 @@
     antimony trioxide dust: 5
   eut: 30
   dur: 1
+  group: optical smds
 
 
 - m: fluid solidifier
@@ -3093,6 +3186,854 @@
     molten copper: 589824
   O:
     molten cosmic neutronium: 589824
-    dimensionally transcendent residue: 8654
+    dimensionally transcendent residue: 1870
   eut: 56_922_697
   dur: 13.1
+- m: fluid solidifier
+  tier: ZPM
+  I:
+    molten cosmic neutronium: 144
+  O:
+    cosmic neutronium ingot: 1
+  eut: 7
+  dur: 1.6
+- m: macerator
+  tier: ZPM
+  I:
+    cosmic neutronium ingot: 1
+  O:
+    cosmic neutronium dust: 1
+  eut: 4
+  dur: 4.9
+- m: dimensionally transcendent plasma forge
+  tier: UXV
+  I:
+    excited dt exotic catalyst: 4632
+    molten iron: 589824
+  O:
+    molten neutronium: 589824
+    dimensionally transcendent residue: 4632
+  eut: 201_326_592
+  dur: 15.6
+- m: fluid solidifier
+  tier: ZPM
+  I:
+    molten neutronium: 144
+  O:
+    neutronium ingot: 1
+  eut: 7
+  dur: 1.6
+- m: fluid extractor
+  tier: ZPM
+  I:
+    iron dust: 1
+  O:
+    molten iron: 144
+  eut: 60
+  dur: 1.2
+
+
+- m: laser engraver
+  tier: UMV
+  I:
+    dt exotic catalyst: 1000
+  O:
+    excited dt exotic catalyst: 1000
+  eut: 7_684_320
+  dur: 2500
+  group: exotic catalyst
+- m: mixer
+  tier: UMV
+  I:
+    dt resplendent catalyst: 1000
+    americium plasma: 1000
+    bismuth plasma: 1000
+    oxygen plasma: 1000
+    tin plasma: 1000
+  O:
+    dt exotic catalyst: 1000
+  eut: 8_000_000
+  dur: 2500
+  group: exotic catalyst
+- m: fusion
+  tier: UHV
+  I:
+    molten lithium: 144
+    boron plasma: 144
+  O:
+    oxygen plasma: 144
+  eut: 49_152
+  dur: 12
+  start: 2
+  mk: 3
+  group: exotic catalyst
+- m: fusion
+  tier: UHV
+  I:
+    molten lithium: 144
+    helium plasma: 144
+  O:
+    boron plasma: 144
+  eut: 10_240
+  dur: 12
+  start: 1
+  mk: 3
+  group: exotic catalyst
+- m: fusion
+  tier: UHV
+  I:
+    helium-3: 125
+    deuterium: 125
+  O:
+    helium plasma: 125
+  eut: 1_920
+  dur: 0.8
+  start: 1
+  mk: 3
+  group: exotic catalyst
+- m: fluid extractor
+  tier: IV
+  I:
+    lithium dust: 1
+  O:
+    molten lithium: 144
+  eut: 30
+  dur: 1.2
+  group: exotic catalyst
+- m: mixer
+  tier: UHV
+  I:
+    dt prosaic catalyst: 1000
+    nitrogen plasma: 1000
+    zinc plasma: 1000
+    silver plasma: 1000
+    titanium plasma: 1000
+  O:
+    dt resplendent catalyst: 1000
+  eut: 2_000_000
+  dur: 2500
+  group: exotic catalyst
+- m: fusion
+  tier: UHV
+  I:
+    deuterium: 375
+    molten beryllium: 16
+  O:
+    nitrogen plasma: 125
+  eut: 16_384
+  dur: 0.8
+  start: 2
+  mk: 3
+  group: exotic catalyst
+- m: fluid extractor
+  tier: IV
+  I:
+    beryllium dust: 1
+  O:
+    molten beryllium: 144
+  eut: 55
+  dur: 1.2
+  group: exotic catalyst
+- m: fusion
+  tier: UHV
+  I:
+    molten arsenic: 144
+    molten gold: 144
+  O:
+    silver plasma: 144
+  eut: 49_152
+  dur: 0.8
+  start: 3
+  mk: 3
+  group: exotic catalyst
+- m: fluid extractor
+  tier: IV
+  I:
+    arsenic dust: 1
+  O:
+    molten arsenic: 144
+  eut: 46
+  dur: 1.2
+  group: exotic catalyst
+- m: fluid extractor
+  tier: IV
+  I:
+    gold dust: 1
+  O:
+    molten gold: 144
+  eut: 51
+  dur: 1.2
+  group: exotic catalyst
+- m: fusion
+  tier: UHV
+  I:
+    fluorine: 144
+    molten aluminium: 144
+  O:
+    titanium plasma: 144
+  eut: 49_152
+  dur: 8
+  start: 2
+  mk: 3
+  group: exotic catalyst
+- m: fluid extractor
+  tier: IV
+  I:
+    aluminium dust: 1
+  O:
+    molten aluminium: 144
+  eut: 43
+  dur: 1.2
+  group: exotic catalyst
+- m: mixer
+  tier: UHV
+  I:
+    dt crude catalyst: 1000
+    radon plasma: 1000
+    nickel plasma: 1000
+    boron plasma: 1000
+    sulfur plasma: 1000
+  O:
+    dt prosaic catalyst: 1000
+  eut: 500_000
+  dur: 2500 
+  group: exotic catalyst
+- m: fusion
+  tier: UHV
+  I:
+    fluorine: 500
+    molten iridium: 144
+  O:
+    radon plasma: 144
+  eut: 98_304
+  dur: 1.6
+  start: 3
+  mk: 3
+  group: exotic catalyst
+- m: fluid extractor
+  tier: IV
+  I:
+    iridium ingot: 1
+  O:
+    molten iridium: 144
+  eut: 73
+  dur: 1.2
+  group: exotic catalyst
+- m: fusion
+  tier: UHV
+  I:
+    fluorine: 500
+    molten potassium: 16
+  O:
+    nickel plasma: 144
+  eut: 30_720
+  dur: 0.8
+  start: 3
+  mk: 3
+  group: exotic catalyst
+- m: fluid extractor
+  tier: IV
+  I:
+    potassium ingot: 1
+  O:
+    molten potassium: 144
+  eut: 25
+  dur: 1.2
+  group: exotic catalyst
+- m: fusion
+  tier: UHV
+  I:
+    molten lithium: 16
+    molten aluminium: 16
+  O:
+    sulfur plasma: 144
+  eut: 10_240
+  dur: 1.6
+  start: 2
+  mk: 3
+  group: exotic catalyst
+- m: mixer
+  tier: UHV
+  I:
+    helium plasma: 1000
+    iron plasma: 1000
+    calcium plasma: 1000
+    niobium plasma: 1000
+  O:
+    dt crude catalyst: 1000
+  eut: 125_000
+  dur: 2500 
+  group: exotic catalyst
+- m: fusion
+  tier: UHV
+  I:
+    molten magnesium: 16
+    molten raw silicon: 16
+  O:
+    iron plasma: 144
+  eut: 7_680
+  dur: 1.6
+  start: 3
+  mk: 3
+  group: exotic catalyst
+- m: fluid extractor
+  tier: IV
+  I:
+    magnesium dust: 1
+  O:
+    molten magnesium: 144
+  eut: 42
+  dur: 1.2
+  group: exotic catalyst
+- m: fluid extractor
+  tier: IV
+  I:
+    raw silicon dust: 1
+  O:
+    molten raw silicon: 144
+  eut: 67
+  dur: 1.2
+  group: exotic catalyst
+- m: fusion
+  tier: UHV
+  I:
+    oxygen: 128
+    molten magnesium: 128
+  O:
+    calcium plasma: 16
+  eut: 7_680
+  dur: 6.4
+  start: 1
+  mk: 3
+  group: exotic catalyst
+- m: fusion
+  tier: UHV
+  I:
+    molten raw silicon: 144
+    molten cobalt: 144
+  O:
+    niobium plasma: 144
+  eut: 49_152
+  dur: 0.8
+  start: 2
+  mk: 3
+  group: exotic catalyst
+- m: fluid extractor
+  tier: IV
+  I:
+    cobalt ingot: 1
+  O:
+    molten cobalt: 144
+  eut: 59
+  dur: 1.2
+  group: exotic catalyst
+
+
+- m: EBF 
+  tier: ZPM
+  I:
+    gallium dust: 1
+    arsenic dust: 1
+  O:
+    gallium arsenide crystal: 1
+  eut: 120
+  dur: 60
+  heat: 1511
+  coils: electrum flux
+- m: bending machine
+  tier: IV
+  I:
+    artherium-sn plate: 1
+  O:
+    artherium-sn foil: 4
+  eut: 48
+  dur: 41.5
+  group: optical smds
+- m: bending machine
+  tier: IV
+  I:
+    artherium-sn ingot: 1
+  O:
+    artherium-sn plate: 1
+  eut: 24
+  dur: 8.3
+  group: optical smds
+- m: vacuum freezer
+  tier: IV
+  I:
+    hot artherium-sn ingot: 1
+  O:
+    artherium-sn ingot: 1
+  eut: 120
+  dur: 24.9
+  group: optical smds
+- m: EBF 
+  tier: ZPM
+  I:
+    artherium-sn dust: 1
+    radon: 1000
+  O:
+    hot artherium-sn ingot: 1
+  eut: 122880
+  dur: 14.5
+  heat: 6500
+  coils: electrum flux
+  group: optical smds
+- m: mixer
+  tier: IV
+  I:
+    adamantium alloy dust: 12
+    orundum dust: 9
+    tin dust: 8
+    arsenic dust: 7
+    caesium dust: 4
+    osmiridium dust: 3
+  O:
+    artherium-sn dust: 43
+  eut: 20
+  dur: 1.35
+  group: optical smds
+- m: macerator
+  tier: IV
+  I:
+    orundum plate: 1
+  O:
+    orundum dust: 1
+  eut: 4
+  dur: 4.9
+  group: optical smds
+- m: forming press
+  tier: ZPM
+  I:
+    raw silicon plate: 8
+    tiberium plate: 4
+  O:
+    orundum plate: 1
+  eut: 3000
+  dur: 20
+  group: optical smds
+- m: vacuum freezer
+  tier: IV
+  I:
+    hot raw silicon ingot: 1
+  O:
+    raw silicon ingot: 1
+  eut: 120
+  dur: 4.2
+  group: optical smds
+- m: bending machine
+  tier: IV
+  I:
+    raw silicon ingot: 1
+  O:
+    raw silicon plate: 1
+  eut: 24
+  dur: 1.4
+  group: optical smds
+- m: EBF
+  tier: ZPM
+  I:
+    raw silicon dust: 1
+  O:
+    hot raw silicon ingot: 1
+  eut: 120
+  dur: 113.65
+  heat: 2273
+  coils: electrum flux
+  group: optical smds
+- m: cutting machine
+  tier: IV
+  I:
+    block of tiberium: 1
+    lubricant: 76
+  O:
+    tiberium plate: 9
+  eut: 30
+  dur: 163
+  group: optical smds
+- m: compressor
+  tier: IV
+  I:
+    tiberium: 9
+  O:
+    block of tiberium: 1
+  eut: 2
+  dur: 15
+  group: optical smds
+- m: mixer
+  tier: IV
+  I:
+    adamantium dust: 5
+    naquadah dust: 2
+    lanthanum dust: 3
+  O:
+    adamantium alloy dust: 10
+  eut: 15
+  dur: 2.6
+  group: optical smds
+- m: mixer
+  tier: IV
+  I:
+    iron dust: 2
+    nickel dust: 1
+  O:
+    invar dust: 3
+  eut: 8
+  dur: 15
+  group: optical smds
+- m: mixer
+  tier: IV
+  I:
+    iron dust: 1
+    aluminium dust: 1
+    chrome dust: 1
+  O:
+    kanthal dust: 1
+  eut: 120
+  dur: 15
+  group: optical smds
+- m: mixer
+  tier: IV
+  I:
+    nickel dust: 4
+    chrome dust: 1
+  O:
+    nichrome dust: 5
+  eut: 480
+  dur: 25
+  group: optical smds
+
+
+- m: choice
+  tier: LV
+  I:
+    crystalprocessor assembly: 1
+  O:
+    any luv circuit: 1
+  eut: 0
+  dur: 1
+  group: crystal circuits
+- m: CAL
+  tier: ZPM
+  I:
+    wrap of elite circuit boards: 1
+    crystalprocessor: 32
+    wrap of asmd inductors: 6
+    wrap of asmd capacitors: 8
+    wrap of ram chips: 24
+    4x niobium-titanium wire: 16
+    molten indalloy 140: 144
+  O:
+    crystalprocessor assembly: 16
+  eut: 9600
+  dur: 120
+  group: crystal circuits
+- m: assembler
+  tier: IV
+  I:
+    asmd inductor: 16
+    polyethylene: 72
+  O:
+    wrap of asmd inductors: 1
+  eut: 30
+  dur: 30
+- m: assembler
+  tier: IV
+  I:
+    asmd capacitor: 16
+    polyethylene: 72
+  O:
+    wrap of asmd capacitors: 1
+  eut: 30
+  dur: 30
+- m: assembler
+  tier: IV
+  I:
+    samarium ring: 1
+    fine hss-e wire: 32
+    tss bolt: 4
+    molten pbi: 576
+  O:
+    asmd inductor: 64
+  eut: 1920
+  dur: 8
+- m: assembler
+  tier: IV
+  I:
+    pbi foil: 2
+    hss-s foil: 1
+    tss bolt: 2
+    molten pbi: 288
+  O:
+    asmd capacitor: 32
+  eut: 1920
+  dur: 7.5
+- m: extruder
+  tier: IV
+  I:
+    samarium ingot: 1
+  O:
+    samarium ring: 4
+  eut: 90
+  dur: 15
+- m: wiremill
+  tier: IV
+  I:
+    hss-e ingot: 1
+  O:
+    fine hss-e wire: 8
+  eut: 4
+  dur: 5
+- m: extruder
+  tier: IV
+  I:
+    hss-s plate: 1
+  O:
+    hss-s foil: 4
+  eut: 24
+  dur: 6.45
+- m: vacuum freezer
+  tier: IV
+  I:
+    hot hss-e ingot: 1
+  O:
+    hss-e ingot: 1
+  eut: 480
+  dur: 12.5
+- m: EBF
+  tier: IV
+  I:
+    hss-e dust: 1
+    radon: 1000
+  O:
+    hot hss-e ingot: 1
+  eut: 1920
+  dur: 72.5
+  heat: 5000
+  coils: electrum flux
+- m: mixer
+  tier: IV
+  I:
+    hss-g dust: 6
+    cobalt dust: 1
+    manganese dust: 1
+    raw silicon dust: 1
+  O:
+    hss-e dust: 1
+  eut: 4096
+  dur: 35
+
+
+- m: choice
+  tier: LV
+  I:
+    crystalprocessor mainframe: 1
+  O:
+    any uv circuit: 1
+  eut: 0
+  dur: 1
+  group: crystal circuits
+- m: CAL
+  tier: ZPM
+  I:
+    aluminium frame box: 32
+    ultimate crystalcomputer: 32
+    wrap of asmd inductors: 8
+    wrap of asmd capacitors: 16
+    wrap of ram chips: 24
+    16x supercon luv wire: 1
+    molten indalloy 140: 288
+  O:
+    crystalprocessor mainframe: 16
+  eut: 30720
+  dur: 480
+  group: crystal circuits
+- m: assembler
+  tier: IV
+  I:
+    1x supercon luv wire: 16
+  O:
+    16x supercon luv wire: 1
+  eut: 7
+  dur: 25
+  group: crystal circuits
+- m: assembler
+  tier: IV
+  I:
+    aluminium rod: 4
+  O:
+    aluminium frame box: 1
+  eut: 7
+  dur: 3.2
+  group: crystal circuits
+- m: extruder
+  tier: IV
+  I:
+    aluminium ingot: 1
+  O:
+    aluminium rod: 2
+  eut: 30
+  dur: 10
+  group: crystal circuits
+- m: CAL
+  tier: ZPM
+  I:
+    wrap of elite circuit boards: 32
+    crystalprocessor assembly: 32
+    wrap of ram chips: 4
+    wrap of nor memory chips: 32
+    wrap of nand memory chips: 64
+    4x niobium-titanium wire: 32
+    molten indalloy 140: 144
+  O:
+    ultimate crystalcomputer: 16
+  eut: 9600
+  dur: 240
+  group: crystal circuits
+- m: assembler
+  tier: IV
+  I:
+    nor memory chip: 16
+    polyethylene: 72
+  O:
+    wrap of nor memory chips: 1
+  eut: 30
+  dur: 30
+  group: crystal circuits
+- m: assembler
+  tier: IV
+  I:
+    nand memory chip: 16
+    polyethylene: 72
+  O:
+    wrap of nand memory chips: 1
+  eut: 30
+  dur: 30
+  group: crystal circuits
+- m: assembler
+  tier: IV
+  I:
+    nand memory wafer: 1
+    lubricant: 135
+  O:
+    nand memory chip: 32
+  eut: 192
+  dur: 45
+  group: crystal circuits
+- m: laser engraver
+  tier: ZPM
+  I:
+    americium doped wafer: 1
+  O:
+    nand memory wafer: 1
+  eut: 30720
+  dur: 30
+  group: crystal circuits
+
+
+# Chem recycling
+- m: electrolyzer
+  tier: LV
+  I:
+    '[recycle] hydrochloric acid': 1000
+  O:
+    '[recycle] chlorine': 1000
+    '[recycle] hydrogen': 1000
+  eut: 30
+  dur: 36
+  group: chem recycling
+
+
+# Ingot & Dust Centralization
+- m: EBF
+  tier: IV
+  I:
+    raw aluminium: 1
+    nitrogen: 1000
+  O:
+    aluminium ingot: 1
+  eut: 120
+  dur: 60
+  heat: 1300
+  coils: electrum flux
+- m: compressor
+  tier: IV
+  I:
+    aluminium dust: 1
+  O:
+    raw aluminium: 1
+  eut: 2
+  dur: 5
+- m: multi smelter
+  tier: IV
+  I:
+    cobalt dust: 1
+  O:
+    cobalt ingot: 1
+  eut: -1
+  dur: -1
+  coils: electrum flux
+- m: multi smelter
+  tier: IV
+  I:
+    copper dust: 1
+  O:
+    copper ingot: 1
+  eut: -1
+  dur: -1
+  coils: electrum flux
+- m: multi smelter
+  tier: IV
+  I:
+    gallium dust: 1
+  O:
+    gallium ingot: 1
+  eut: -1
+  dur: -1
+  coils: electrum flux
+- m: fluid extractor
+  tier: ZPM
+  I:
+    draconium ingot: 1
+  O:
+    molten draconium: 144
+  eut: 100
+  dur: 1.2
+- m: vacuum freezer
+  tier: UHV
+  I:
+    hot draconium ingot: 1
+  O:
+    draconium ingot: 1
+  eut: 7680
+  dur: 14.7
+- m: EBF
+  tier: UHV
+  I:
+    draconium dust: 1
+    radon: 1000
+  O:
+    hot draconium ingot: 1
+  eut: 30720
+  dur: 132
+  heat: 7200
+  coils: electrum flux
+- m: multi smelter
+  tier: IV
+  I:
+    silver dust: 1
+  O:
+    silver ingot: 1
+  eut: -1
+  dur: -1
+  coils: electrum flux
+- m: bacterial vat
+  tier: ZPM
+  I:
+    mars stone dust: 16
+    distilled water: 4
+  O:
+    bacterial sludge: 1000
+  eut: 1920
+  dur: 30
+  group: bio catalyst medium

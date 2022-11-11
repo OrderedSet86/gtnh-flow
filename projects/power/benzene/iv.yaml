@@ -1,0 +1,55 @@
+- m: tree growth simulator
+  tier: EV
+  I: {}
+  O: {}
+  eut: 0
+  dur: 0
+  saw_type: saw
+- m: industrial coke oven
+  tier: IV
+  I:
+    wood: 4
+    nitrogen: 250
+  O:
+    charcoal: 5
+    wood tar: 375
+  eut: 96
+  dur: 3
+- m: distillation tower
+  tier: HV
+  I:
+    wood tar: 1000
+  O:
+    dimethylbenzene: 200
+    toluene: 75
+    benzene: 350
+    phenol: 75
+    creosote: 300
+  eut: 256
+  dur: 2
+- m: centrifuge
+  tier: LV
+  I:
+    air: 10000
+  O:
+    nitrogen: 3900
+  eut: 7
+  dur: 80
+- m: air intake hatch
+  tier: IV
+  I: {}
+  O:
+    air: 1000
+  eut: 0
+  dur: 0.2
+  do_not_overclock: true
+- m: XLGT
+  tier: LV
+  I:
+    benzene: 1
+  O: {}
+  eut: 0
+  dur: 0
+  material: shadow
+  size: large
+  number: 1

@@ -1,0 +1,88 @@
+- m: industrial coke oven
+  tier: EV
+  I:
+    wood pulp: 2
+    kerogen: 200
+  O:
+    oil: 200
+  eut: 480
+  dur: 0.8
+- m: LCR
+  tier: LV
+  I:
+    hydrogen gas: 2000
+    sulfuric light fuel: 12000
+  O:
+    hydrogen sulfide: 1000
+    light fuel: 12000
+  eut: 30
+  dur: 8
+  target:
+    light fuel: 1000
+- m: distillery
+  tier: LV
+  I:
+    oil: 25
+  O:
+    sulfuric light fuel: 25
+  eut: 24
+  dur: 1
+- m: electrolyzer
+  tier: LV
+  I:
+    water: 3000
+  O:
+    electrolysed water: 1000
+  eut: 30
+  dur: 24.5
+  group: hydrogen
+- m: electrolyzer
+  tier: LV
+  I:
+    electrolysed water: 3000
+  O:
+    hydrogen gas: 2000
+    oxygen gas: 1000
+  eut: 30
+  dur: 1.5
+  group: hydrogen
+- m: chemical reactor
+  tier: MV
+  I:
+    heated fulvic acid: 250
+  O:
+    kerogen: 250
+  eut: 120
+  dur: 0.9
+- m: macerator
+  tier: HV
+  I:
+    wood: 1
+  O:
+    wood pulp: 6.8
+  eut: 2
+  dur: 20
+- m: fluid heater
+  tier: MV
+  I:
+    fulvic acid: 200
+  O:
+    heated fulvic acid: 200
+  eut: 120
+  dur: 0.9
+- m: bacterial vat
+  tier: HV
+  I:
+    fermented biomass: 10000
+  O:
+    fulvic acid: 1000000
+  eut: 480
+  dur: 137.4
+- m: bacterial vat
+  tier: LV
+  I:
+    biomass: 100
+  O:
+    fermented biomass: 100000
+  eut: 2
+  dur: 7.5

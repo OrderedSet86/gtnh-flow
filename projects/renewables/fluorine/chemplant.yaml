@@ -1,22 +1,59 @@
+# - m: chemical bath
+#   tier: HV
+#   I:
+#     crushed fluorite (F) ore: 1
+#     hydrogen: 1000
+#   O:
+#     impure/purified fluorite (F) dust: 5.1
+#   eut: 240
+#   dur: 15
 - m: chemical bath
   tier: HV
   I:
     crushed fluorite (F) ore: 1
     hydrogen: 1000
   O:
-    impure/purified fluorite (F) dust: 5.1
+    purified crushed fluorite (F) ore: 4
+    impure fluorite (F) dust: 1
+    purified fluorite (F) dust: 0.1
   eut: 240
   dur: 15
-- m: centrifuge
-  tier: LV
+- m: thermal centrifuge
+  tier: HV
   I:
-    impure/purified fluorite (F) dust: 1
+    purified crushed fluorite (F) ore: 1
   O:
-    fluorite (F) dust: 1.1111111111
+    centrifuged crushed fluorite (F) ore: 1
+    fluorite (F) dust: 0.1111111111111111
+    stone dust: 1
+  eut: 48
+  dur: 25
+- m: macerator
+  tier: HV
+  I:
+    centrifuged crushed fluorite (F) ore: 1
+  O:
+    fluorite (F) dust: 1.1
+  eut: 7
+  dur: 20
+- m: centrifuge
+  tier: HV
+  I:
+    impure fluorite (F) dust: 1
+  O:
+    fluorite (F) dust: 1.1111111111111111111
+  eut: 7
+  dur: 5.6
+- m: centrifuge
+  tier: HV
+  I:
+    purified fluorite (F) dust: 1
+  O:
+    fluorite (F) dust: 1.1111111111111111111
   eut: 7
   dur: 5.6
 - m: dehydrator
-  tier: HV
+  tier: EV
   I:
     fluorite (F) dust: 37
     sulfuric acid: 8000
@@ -38,8 +75,8 @@
     fluorine: 1000
   eut: 60
   dur: 4
-  target:
-    fluorine: 1000
+  # target:
+  #   fluorine: 1000
 - m: macerator
   tier: LV
   I:
@@ -60,6 +97,7 @@
   dur: 10
   coils: nichrome
   pipe_casings: steel
+  number: 1
 - m: forge hammer
   tier: LV
   I:

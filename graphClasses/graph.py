@@ -95,6 +95,10 @@ class Graph:
             line_if_attr_exists = {
                 'heat': (lambda rec: f'Base Heat: {rec.heat}K'),
                 'coils': (lambda rec: f'Coils: {rec.coils.title()}'),
+                'saw_type': (lambda rec: f'Saw Type: {rec.saw_type.title()}'),
+                'material': (lambda rec: f'Turbine Material: {rec.material.title()}'),
+                'size': (lambda rec: f'Size: {rec.size.title()}'),
+                'efficiency': (lambda rec: f'Efficiency: {rec.efficiency}'),
             }
             for lookup, line_generator in line_if_attr_exists.items():
                 if hasattr(rec, lookup):
@@ -723,14 +727,14 @@ class Graph:
             total_eut += rec.eut
         io_label_lines.append('<hr/>')
         eut_rounded = -int(math.ceil(total_eut))
-        io_label_lines.append(makeLineHtml('Input EU/t:', eut_rounded, 'white', color_negative))
+        io_label_lines.append(makeLineHtml('Input EU/t:', self.userRound(eut_rounded), 'white', color_negative))
         if 'eu' in total_io:
             produced_eut = int(math.floor(total_io['eu'] / 20))
-            io_label_lines.append(makeLineHtml('Output EU/t:', produced_eut, 'white', color_positive))
-            net_eut = produced_eut - eut_rounded
+            io_label_lines.append(makeLineHtml('Output EU/t:', self.userRound(produced_eut), 'white', color_positive))
+            net_eut = produced_eut + eut_rounded
             lab_color = 'white'
             amt_color = color_positive if net_eut >= 0 else color_negative
-            io_label_lines.append(makeLineHtml('Net EU/t:', net_eut, lab_color, amt_color))
+            io_label_lines.append(makeLineHtml('Net EU/t:', self.userRound(net_eut), lab_color, amt_color))
             io_label_lines.append('<hr/>')
 
         # Add total machine multiplier count for oxygen table
@@ -756,7 +760,7 @@ class Graph:
                 machine_weight *= special_machine_weights[rec.machine]
             sumval += machine_weight
 
-        io_label_lines.append(makeLineHtml('Total machine count:', round(sumval, 2), 'white', color_positive))
+        io_label_lines.append(makeLineHtml('Total machine count:', self.userRound(sumval), 'white', color_positive))
 
         # Add peak power load in maximum voltage on chart
         # Find maximum voltage

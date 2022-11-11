@@ -1,0 +1,24 @@
+- m: distillation tower
+  tier: HV
+  I:
+    wood tar: 1000
+  O:
+    dimethylbenzene: 200
+    toluene: 75
+    benzene: 350
+    phenol: 75
+    creosote: 300
+  eut: 256
+  dur: 2
+  # target:
+  #   benzene: 1000
+- m: XLGT
+  tier: LV
+  I:
+    benzene: 1
+  O: {}
+  eut: 0
+  dur: 0
+  material: shadow
+  size: large
+  number: 1
