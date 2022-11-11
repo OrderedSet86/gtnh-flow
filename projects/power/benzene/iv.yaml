@@ -44,7 +44,7 @@
   dur: 0.2
   do_not_overclock: true
 - m: XLGT
-  tier: LV
+  tier: IV
   I:
     benzene: 1
   O: {}
@@ -52,4 +52,34 @@
   dur: 0
   material: shadow
   size: large
-  number: 1
+  number: 0.42857142857
+- m: fluid extractor
+  tier: LV
+  I:
+    charcoal: 1
+  O:
+    ashes: 0.1
+    charcoal wood tar: 100
+  eut: 16
+  dur: 1.5
+- m: distillation tower
+  tier: HV
+  I:
+    charcoal wood tar: 1000
+  O:
+    dimethylbenzene: 200
+    toluene: 75
+    charcoal benzene: 350
+    phenol: 75
+    creosote: 300
+  eut: 256
+  dur: 2
+- m: XLGT
+  tier: IV
+  I:
+    charcoal benzene: 1
+  O: {}
+  eut: 0
+  dur: 0
+  material: shadow
+  size: large

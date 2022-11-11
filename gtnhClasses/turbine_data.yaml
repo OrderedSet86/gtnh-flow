@@ -24,6 +24,7 @@ gas_fuels:
   ether: 537
   tert-butylbenzene: 420
   benzene: 360
+  charcoal benzene: 360
   # not doing the rest unless needed
 
 plasma_fuels:
