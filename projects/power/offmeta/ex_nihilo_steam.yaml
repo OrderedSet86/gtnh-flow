@@ -1,0 +1,27 @@
+# With a high enough turbine rotor, fluid heater is power positive :troll:
+# - m: fluid heater
+#   tier: LV
+#   I: 
+#     water: 6
+#   O:
+#     steam: 960
+#   eut: 30
+#   dur: 1.5
+- m: thermic heating device
+  tier: EV
+  I: 
+    distilled water: 6
+  O:
+    steam: 960
+  eut: 30
+  dur: 1.5
+- m: xl turbo steam turbine
+  tier: IV
+  I:
+    steam: 1
+  O: {}
+  eut: 0
+  dur: 0
+  material: manyullyn
+  size: large
+  number: 1

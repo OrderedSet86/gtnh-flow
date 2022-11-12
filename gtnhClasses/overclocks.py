@@ -86,6 +86,8 @@ GTpp_stats = {
     'utupu-tanuri': [1.2, 0.5, 4],
     'utupu tanuri': [1.2, 0.5, 4],
     'industrial dehydrator': [1.2, 0.5, 4],
+
+    'thermic heating device': [1.2, 0.9, 8],
 }
 
 voltages = ['LV', 'MV', 'HV', 'EV', 'IV', 'LuV', 'ZPM', 'UV', 'UHV', 'UEV', 'UIV', 'UMV', 'UXV']
@@ -128,7 +130,7 @@ def modifyGTpp(recipe):
         OC_EUT = TOTAL_EUT * 4
         OC_DUR = NEW_RECIPE_TIME / 2
         if OC_EUT <= available_eut:
-            if OC_DUR < 20:
+            if OC_DUR < 1:
                 break
             cprint('OC to', 'yellow')
             cprint(f'{OC_EUT=} {OC_DUR=}', 'yellow')
@@ -360,7 +362,7 @@ def modifyFusion(recipe):
     return recipe
 
 
-def modifyLGT(recipe):
+def modifyTurbine(recipe, fuel_type):
     require(
         recipe,
         [
@@ -375,7 +377,7 @@ def modifyLGT(recipe):
 
     with open('gtnhClasses/turbine_data.yaml', 'r') as f:
         turbine_data = yaml.safe_load(f)
-    assert fuel in turbine_data['gas_fuels'], f'Unsupported fuel "{fuel}"'
+    assert fuel in turbine_data[fuel_type], f'Unsupported fuel "{fuel}"'
     assert material in turbine_data['materials'], f'Unsupported material "{material}"'
     assert size in turbine_data['rotor_size'], f'Unsupported size "{size}"'
 
@@ -395,7 +397,7 @@ def modifyLGT(recipe):
                 + turbine_data['rotor_size'][size]['efficiency']
         )
 
-        burn_value = turbine_data['gas_fuels'][fuel]
+        burn_value = turbine_data[fuel_type][fuel]
         optimal_flow_L_t = math.floor(optimal_eut / burn_value)
         output_eut = math.floor(optimal_flow_L_t * burn_value * efficiency / 100)
     else:
@@ -406,19 +408,24 @@ def modifyLGT(recipe):
     # print(f'{efficiency=}')
     # print(f'{output_eut=}')
 
+    additional = []
+    if fuel_type == 'steam_fuels':
+        additional.append(Ingredient('[recycle] distilled water', optimal_flow_L_t//160))
+
     recipe.eut = 0
     recipe.dur = 1
     recipe.I._ings[0].quant = optimal_flow_L_t
     recipe.O = IngredientCollection(*[
-        Ingredient('EU', output_eut)
+        Ingredient('EU', output_eut),
+        *additional
     ])
     recipe.efficiency = f'{efficiency}%'
 
     return recipe
 
 
-def modifyXLGT(recipe):
-    recipe = modifyLGT(recipe)
+def modifyXT(recipe, fuel_type):
+    recipe = modifyTurbine(recipe, fuel_type)
     recipe.I *= 16
     recipe.O *= 16
 
@@ -466,10 +473,15 @@ def overclockRecipe(recipe):
         'CAL': modifyPerfect,
         'fusion': modifyFusion,
         'fusion reactor': modifyFusion,
-        'large gas turbine': modifyLGT,
-        'LGT': modifyLGT,
-        'XL turbo gas turbine': modifyXLGT,
-        'XLGT': modifyXLGT,
+
+        'large gas turbine': lambda recipe: modifyTurbine(recipe, 'gas_fuels'),
+        'LGT': lambda recipe: modifyTurbine(recipe, 'gas_fuels'),
+        'XL turbo gas turbine': lambda recipe: modifyXT(recipe, 'gas_fuels'),
+        'XLGT': lambda recipe: modifyXT(recipe, 'gas_fuels'),
+
+        'large steam turbine': lambda recipe: modifyTurbine(recipe, 'steam_fuels'),
+        'xl turbo steam turbine': lambda recipe: modifyXT(recipe, 'steam_fuels'),
+        'XLST': lambda recipe: modifyXT(recipe, 'steam_fuels'),
 
         # Basic GT++ multis
         'industrial centrifuge': modifyGTpp,
@@ -493,6 +505,7 @@ def overclockRecipe(recipe):
         'boldarnator': modifyGTpp,
         'industrial rock breaker': modifyGTpp,
         'dangote - distillery': modifyGTpp,
+        'thermic heating device': modifyGTpp,
 
         # Special GT++ multis
         'industrial coke oven': lambda recipe: modifyGTppSetParallel(recipe, 24, speed_per_tier=0.96),
