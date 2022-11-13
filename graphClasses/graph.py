@@ -4,6 +4,7 @@
 
 # Standard libraries
 import itertools
+import logging
 import math
 import re
 from collections import defaultdict
@@ -12,7 +13,7 @@ from io import StringIO
 
 # Pypi libraries
 import graphviz
-from termcolor import cprint
+from termcolor import colored, cprint
 
 # Internal libraries
 from dataClasses.base import Recipe
@@ -27,6 +28,7 @@ def swapIO(io_type):
         return 'I'
     else:
         raise RuntimeError(f'Improper I/O type: {io_type}')
+
 
 class Graph:
 
@@ -50,10 +52,26 @@ class Graph:
         else:
             self._color_cycler = itertools.cycle(['white'])
 
-        # TODO: Temporary until backend data import
         for i, rec in enumerate(recipes):
             recipes[i] = overclockRecipe(rec)
             rec.base_eut = rec.eut
+        
+        logging.basicConfig(level=logging.INFO)
+
+        for rec in recipes:
+            self.cLog(rec)
+        self.cLog('')
+
+
+    @staticmethod
+    def cLog(msg, color='white', level=logging.DEBUG):
+        # Not sure how to level based on a variable, so just if statements for now
+        if level == logging.DEBUG:
+            logging.debug(colored(msg, color))
+        elif level == logging.INFO:
+            logging.info(colored(msg, color))
+        elif level == logging.WARNING:
+            logging.warning(colored(msg, color))
 
 
     def addNode(self, recipe_id, **kwargs):
@@ -175,7 +193,7 @@ class Graph:
 
             for edge_def, edge_data in relevant_edges:
                 node_from, node_to, ing_name = edge_def
-                cprint(f'Fixing factory cycle by redirecting "{ing_name.title()}" to sink', 'yellow')
+                self.cLog(f'Fixing factory cycle by redirecting "{ing_name.title()}" to sink', 'yellow', level=logging.INFO)
 
                 # Redirect looped ingredient to sink
                 self.addEdge(
@@ -213,18 +231,17 @@ class Graph:
         self.adj = adj
         self.adj_machine = adj_machine
 
-        # TODO: Add to debug print only
-        cprint('Recomputing adjacency list...', 'blue')
+        self.cLog('Recomputing adjacency list...', 'blue')
         for machine, io_group in self.adj_machine.items():
             machine_name = ''
             recipe_obj = self.recipes.get(machine)
             if isinstance(recipe_obj, Recipe):
                 machine_name = recipe_obj.machine
 
-            cprint(f'{machine} {machine_name}', 'blue')
+            self.cLog(f'{machine} {machine_name}', 'blue')
             for io_type, edges in io_group.items():
-                cprint(f'{io_type} {edges}', 'blue')
-        print()
+                self.cLog(f'{io_type} {edges}', 'blue')
+        self.cLog('')
 
 
     def balanceGraph(self):
@@ -237,12 +254,12 @@ class Graph:
         adj_machine = self.adj_machine
 
         # Debug
-        print('All machine-machine edges:')
+        self.cLog('All machine-machine edges:')
         for node, adj_edges in adj_machine.items():
             if node in ['sink', 'source']:
                 continue
-            print(node, dict(adj_edges))
-        print()
+            self.cLog(f'{node} {dict(adj_edges)}')
+        self.cLog('')
 
         # Locking rules:
         # If all machine-involved edges are locked, then machine itself can be 100% locked
@@ -320,8 +337,8 @@ class Graph:
         elif ln != 0 and lt != 0:
             raise NotImplementedError('mixed targeted nodes and numbered nodes not supported')
 
-        cprint(f'Still need locking: {need_locking}', 'red')
-        print()
+        self.cLog(f'Still need locking: {need_locking}', 'red')
+        self.cLog('')
 
         while need_locking:
             # Now propagate updates throughout the tree
@@ -339,7 +356,7 @@ class Graph:
                     len(self.adj_machine[rec_id]['O']),
                 ]
 
-            cprint(f'Edge determination data:\n{determined_edge_count}', 'green')
+            self.cLog(f'Edge determination data:\n{determined_edge_count}', 'green')
 
             # Now pick in this order:
             # 1. Edges with complete side determination, using total edge determination ratio as tiebreaker
@@ -388,7 +405,7 @@ class Graph:
                 if self.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
                     self.outputGraphviz()
             else:
-                cprint('Unable to compute some of the tree due to missing information; refer to output graph.', 'red')
+                self.cLog('Unable to compute some of the tree due to missing information; refer to output graph.', 'red', level=logging.WARNING)
                 break
 
             self.createAdjacencyList()
@@ -459,6 +476,7 @@ class Graph:
                 self.addEdge(src, joint_id, ing, quant, **kwargs)
             
             self.addEdge(joint_id, dst, ing, qSum)
+
 
     def _addPowerLineNodes(self):
         # This checks for burnables being put into sink and converts them to EU/t
@@ -574,7 +592,7 @@ class Graph:
             quant = edge_data['quant']
 
             if ing_name in known_burnables and not ing_name in self.graph_config['DO_NOT_BURN']:
-                cprint(f'Detected burnable: {ing_name.title()}! Adding to chart.', 'blue')
+                self.cLog(f'Detected burnable: {ing_name.title()}! Adding to chart.', 'blue', level=logging.INFO)
                 generator_idx, eut_per_cell = known_burnables[ing_name]
                 gen_name = generator_names[generator_idx].title()
 
@@ -591,7 +609,6 @@ class Graph:
 
                 # Fix edges to point at said node
                 produced_eut = eut_per_cell * quant / 1000
-                print(quant, eut_per_cell, produced_eut)
                 # Edge (old output) -> (generator)
                 self.addEdge(
                     node_from,
@@ -619,10 +636,7 @@ class Graph:
                 UCFE_id = rec_id
 
         if UCFE_id is not None:
-            cprint('Detected UCFE, autobalancing...', 'green')
-            # for rec in self.recipes:
-            #     print(self.recipes[rec])
-            # cprint(self.recipes[UCFE_id], 'green')
+            self.cLog('Detected UCFE, autobalancing...', 'green', level=logging.INFO)
 
             # 2. Determine whether non-combustion promoter input is combustable or gas
             input_ingredient_collection = self.recipes[UCFE_id].I
@@ -654,10 +668,10 @@ class Graph:
             combustion_promoter_quant = input_ingredient_collection['combustion promoter'][0]
             fuel_quant = input_ingredient_collection[fuel_name][0]
             ratio = combustion_promoter_quant / fuel_quant
-            cprint(f'UCFE power ratio: {ratio}', 'green')
+            self.cLog(f'UCFE power ratio: {ratio}', 'green', level=logging.INFO)
 
             efficiency = math.exp(-coefficient*ratio) * 1.5
-            cprint(f'Efficiency stat: {efficiency}', 'green')
+            self.cLog(f'Efficiency stat: {efficiency}', 'green', level=logging.INFO)
             output_eu = efficiency * burn_value_table[fuel_name] * (fuel_quant / 1000)
 
             # 4. Update edge with new value
@@ -798,7 +812,7 @@ class Graph:
             shape='box'
         )
 
-    
+
     @staticmethod
     def userRound(number):
         # Display numbers nicely for end user (eg. 814.3k)
@@ -821,11 +835,11 @@ class Graph:
             'I': [x for x in self.adj_machine[rec_id]['I'] if self.edges[x].get('locked', False)],
             'O': [x for x in self.adj_machine[rec_id]['O'] if self.edges[x].get('locked', False)],
         }
-        print(f'Locking {rec.machine}...')
-        cprint(all_relevant_edges, 'yellow')
+        self.cLog(f'Locking {rec.machine}...', 'green')
+        self.cLog(all_relevant_edges, 'yellow')
 
         if all(len(y) == 0 for x, y in all_relevant_edges.items()):
-            cprint(f'No locked machine edges adjacent to {rec.machine.title()}. Cannot balance.', 'red')
+            self.cLog(f'No locked machine edges adjacent to {rec.machine.title()}. Cannot balance.', 'red', level=logging.WARNING)
             self.outputGraphviz()
             exit(1)
 
@@ -850,7 +864,10 @@ class Graph:
                 base_speed = sum(getattr(rec, io_type)[ing]) / (rec.dur / 20)
                 multipliers.append(quant_per_s / base_speed)
 
-        print(rec.machine, multipliers)
+        if len(multipliers) == 1:
+            self.cLog(f'{rec.machine} {multipliers}', 'white', level=logging.DEBUG)
+        else:
+            self.cLog(f'{rec.machine} {multipliers}', 'red', level=logging.WARNING)
         final_multiplier = max(multipliers)
         self.recipes[rec_id] *= final_multiplier
 
@@ -1501,7 +1518,7 @@ class Graph:
                     add_node_internal(g, rec_id, **kwargs)
             else:
                 with g.subgraph(name=f'cluster_{group}') as c:
-                    print(f'Creating subgraph {group}')
+                    self.cLog(f'Creating subgraph {group}')
                     cluster_color = self.getUniqueColor(group)
 
                     # Populate nodes
