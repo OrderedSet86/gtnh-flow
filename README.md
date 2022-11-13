@@ -22,7 +22,7 @@ A (beta) tool designed for complex GT packs. In specific, aims to achieve:
 2. Download Python and dependencies (`pip install -r requirements.txt`)
 3. Graphviz is an external library and will need to be downloaded separately (on Debian-based Linux this is `sudo apt-get install graphviz`)
 3. Create a project file under `projects/`. You can look at existing projects to see how to structure it. In `flow`'s current form, you need to specify exact I/O and eut/duration in ticks, as well as which voltage you wish to actually run the machine at (for calculating overclocks). In addition, at least one machine will need a `number` or `target` argument to be specified, which tells the program how to balance the rest of the machines in the network. (The green nodes in the example above are the `number`ed nodes.)
-4. Run the project by name using `python3 factory_graph.py myProjectName`. Replace myProjectName with whatever your project is called.
+4. Run the project by name using `python factory_graph.py`, then inputting whatever your project is called (eg "power/benzene/iv").
 5. Output graph will pop up and also be available in `output/`!
 
 #### Windows
@@ -33,7 +33,7 @@ A (beta) tool designed for complex GT packs. In specific, aims to achieve:
 3. Navigate to the cloned git repository in a command prompt and install the Python dependencies `pip install -r requirements.txt`
 5. Graphviz is an external library and will need to be downloaded separately. The graphviz maintainers have a guide: `https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224`. It is important that Graphviz is added to the System PATH for either all users or current users and you may need to restart Windows for this change to take effect.
 6. Create a project file under `projects/`. You can look at existing projects to see how to structure it. In `flow`'s current form, you need to specify exact I/O and eut/duration in ticks, as well as which voltage you wish to actually run the machine at (for calculating overclocks). In addition, at least one machine will need a `number` or `target` argument to be specified, which tells the program how to balance the rest of the machines in the network. (The green nodes in the example above are the `number`ed nodes.)
-7. Run the project by name using `python factory_graph.py myProjectName`. Replace myProjectName with whatever your project is called.
+4. Run the project by name using `python factory_graph.py`, then inputting whatever your project is called (eg "power/benzene/iv").
 8. Output graph will pop up and also be available in `output/`!
 
 ## How do I use it?

@@ -1,14 +1,21 @@
 # Standard libraries
 import logging
-import sys
+import os
+from pathlib import Path
 
 # Pypi libraries
 import yaml
-from termcolor import colored
+from termcolor import colored, cprint
 
 # Internal libraries
 from graphClasses.graph import Graph
 from dataClasses.load import recipesFromConfig
+
+# Conditional imports based on OS
+try: # Linux
+    import readline
+except ImportError: # Windows
+    import pyreadline as readline
 
 
 class ProgramContext:
@@ -32,19 +39,46 @@ class ProgramContext:
     def run(self):
         with open('config_factory_graph.yaml', 'r') as f:
             graph_config = yaml.safe_load(f)
+        
+        # Set up autcompletion config
+        projects_path = Path('projects')
+        readline.parse_and_bind('tab: complete')
+        readline.set_completer_delims('')
 
-        if len(sys.argv) > 1:
-            project_name = sys.argv[1]
-        else:
-            raise RuntimeError('Need a project config name as an argument! Will be pulled from projects/{name}.json')
+        while True:
+            def completer(text, state):
+                prefix = ''
+                suffix = text
+                if '/' in text:
+                    parts = text.split('/')
+                    prefix = '/'.join(parts[:-1])
+                    suffix = parts[-1]
 
-        recipes = recipesFromConfig(project_name)
+                target_path = projects_path / prefix
+                valid_tabcompletes = os.listdir(target_path)
+                valid_completions = [x for x in valid_tabcompletes if x.startswith(suffix)]
+                if state < len(valid_completions): # Only 1 match
+                    completion = valid_completions[state]
+                    if prefix != '':
+                        completion = ''.join([prefix, '/', completion])
+                    if not completion.endswith('.yaml'):
+                        completion += '/'
+                    return completion
+                else:
+                    return None
 
-        # Create graph and render
-        g = Graph(project_name, recipes, self, graph_config=graph_config)
-        g.connectGraph()
-        g.balanceGraph()
-        g.outputGraphviz()
+            readline.set_completer(completer)
+
+            cprint('Please enter project path (example: "power/oil/light_fuel", tab autocomplete allowed)', 'blue')
+            project_name = input(colored('> ', 'green'))
+
+            recipes = recipesFromConfig(project_name)
+
+            # Create graph and render
+            g = Graph(project_name, recipes, self, graph_config=graph_config)
+            g.connectGraph()
+            g.balanceGraph()
+            g.outputGraphviz()
 
 
 if __name__ == '__main__':

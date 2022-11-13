@@ -7,7 +7,7 @@ from dataClasses.base import Ingredient, IngredientCollection, Recipe
 
 def recipesFromConfig(project_name, project_folder='projects'):
     # Load config file
-    CONFIG_FILE_PATH = Path(project_folder) / f'{project_name}.yaml'
+    CONFIG_FILE_PATH = Path(project_folder) / f'{project_name}'
     project_name = CONFIG_FILE_PATH.name.split('.')[0]
     with open(CONFIG_FILE_PATH, 'r') as f:
         config = yaml.safe_load(f)
