@@ -8,7 +8,7 @@ import yaml
 from termcolor import colored, cprint
 
 # Internal libraries
-from src.graph.graph import Graph
+from src.graph import Graph
 from src.data.loadMachines import recipesFromConfig
 
 # Conditional imports based on OS
@@ -69,7 +69,7 @@ class ProgramContext:
 
             readline.set_completer(completer)
 
-            cprint('Please enter project path (example: "power/oil/light_fuel", tab autocomplete allowed)', 'blue')
+            cprint('Please enter project path (example: "power/oil/light_fuel.yaml", tab autocomplete allowed)', 'blue')
             project_name = input(colored('> ', 'green'))
 
             recipes = recipesFromConfig(project_name)
