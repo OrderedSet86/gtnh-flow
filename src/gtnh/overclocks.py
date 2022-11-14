@@ -6,7 +6,7 @@ from bisect import bisect_right
 import yaml
 
 # Internal libraries
-from dataClasses.base import Ingredient, IngredientCollection
+from src.data.basicTypes import Ingredient, IngredientCollection
 
 
 def require(recipe, requirements):

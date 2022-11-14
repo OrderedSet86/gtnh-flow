@@ -2,7 +2,7 @@ from pathlib import Path
 
 import yaml
 
-from dataClasses.base import Ingredient, IngredientCollection, Recipe
+from src.data.basicTypes import Ingredient, IngredientCollection, Recipe
 
 
 def recipesFromConfig(project_name, project_folder='projects'):
@@ -12,7 +12,7 @@ def recipesFromConfig(project_name, project_folder='projects'):
     with open(CONFIG_FILE_PATH, 'r') as f:
         config = yaml.safe_load(f)
 
-    user_config_path = Path(__file__).absolute().parent.parent / 'config_factory_graph.yaml'
+    user_config_path = Path(__file__).absolute().parent.parent.parent / 'config_factory_graph.yaml'
     with open(user_config_path, 'r') as f:
         graph_config = yaml.safe_load(f)
 

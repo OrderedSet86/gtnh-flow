@@ -8,8 +8,8 @@ import yaml
 from termcolor import colored, cprint
 
 # Internal libraries
-from graphClasses.graph import Graph
-from dataClasses.load import recipesFromConfig
+from src.graph.graph import Graph
+from src.data.loadMachines import recipesFromConfig
 
 # Conditional imports based on OS
 try: # Linux

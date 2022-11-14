@@ -16,9 +16,9 @@ import graphviz
 from termcolor import cprint
 
 # Internal libraries
-from dataClasses.base import Recipe
-from graphClasses.backEdges import BasicGraph, dfs
-from gtnhClasses.overclocks import OverclockHandler
+from src.data.basicTypes import Recipe
+from src.graph.backEdges import BasicGraph, dfs
+from src.gtnh.overclocks import OverclockHandler
 
 
 def swapIO(io_type):
