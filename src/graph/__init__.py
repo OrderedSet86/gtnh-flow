@@ -37,7 +37,8 @@ class Graph:
             self.parent_context.cLog(rec)
         self.parent_context.cLog('')
 
-    # Imports from class definitions
+
+    # Graph utility functions
     from ._utils import (
         userRound,
         addNode,

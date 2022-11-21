@@ -14,8 +14,8 @@ from src.data.loadMachines import recipesFromConfig
 # Conditional imports based on OS
 try: # Linux
     import readline
-except ImportError: # Windows
-    import pyreadline as readline
+except Exception: # Windows
+    import pyreadline3 as readline
 
 
 class ProgramContext:

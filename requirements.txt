@@ -3,4 +3,4 @@ jsmin>=2.2.2
 pytest>=6.2.5
 termcolor>=1.1.0
 pyyaml>=6.0
-pyreadline>=2.1
+pyreadline3>=3.4.1
