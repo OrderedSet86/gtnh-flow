@@ -10,12 +10,12 @@ from src.data.basicTypes import Ingredient, IngredientCollection
 
 
 def require(recipe, requirements):
-    # requirements should be a list of [key, type]
+    # requirements should be a list of [key, type, reason]
     for req in requirements:
-        key, req_type = req
-        pass_conditions = [key in vars(recipe), isinstance(getattr(recipe, key), req_type)]
+        key, req_type, reason = req
+        pass_conditions = [key in vars(recipe), isinstance(getattr(recipe, key, None), req_type)]
         if not all(pass_conditions):
-            raise RuntimeError(f'Improper config! Ensure {recipe.machine} has key {key} of type {req_type}.')
+            raise RuntimeError(f'Improper config! "{recipe.machine}" requires key "{key}" - it is used for {reason}.')
 
 
 class OverclockHandler:
@@ -108,21 +108,21 @@ class OverclockHandler:
 
 
     def modifyChemPlant(self, recipe):
-        assert 'coils' in dir(recipe), 'Chem plant requires "coils" argument (eg "nichrome")'
-        assert 'pipe_casings' in dir(recipe), 'Chem plant requires "pipe_casings" argument (eg "steel")'
+        require(
+            recipe,
+            [
+                ['coils', str, 'calculating recipe duration (eg "nichrome").'],
+                ['pipe_casings', str, 'calculating throughput multiplier (eg "steel").']
+            ]
+        )
         # assert 'solid_casings' in dir(recipe), 'Chem plant requires "solid_casings" argument (eg "vigorous laurenium")'
 
-        chem_plant_pipe_casings = {
-            'bronze': 1,
-            'steel': 2,
-            'titanium': 3,
-            'tungstensteel': 4,
-        }
+        chem_plant_pipe_casings = self.overclock_data['pipe_casings']
         if recipe.pipe_casings not in chem_plant_pipe_casings:
-            raise RuntimeError(f'Expected chem pipe casings in {list(chem_plant_pipe_casings)}\ngot "{recipe.pipe_casings}"')
+            raise RuntimeError(f'Expected chem pipe casings in {list(chem_plant_pipe_casings)}\ngot "{recipe.pipe_casings}". (More are allowed, I just haven\'t added them yet.)')
 
         recipe.dur /= self.overclock_data['coil_multipliers'][recipe.coils]
-        throughput_multiplier = (2*chem_plant_pipe_casings[recipe.pipe_casings])
+        throughput_multiplier = chem_plant_pipe_casings[recipe.pipe_casings]
         recipe.I *= throughput_multiplier
         recipe.O *= throughput_multiplier
 
@@ -142,8 +142,8 @@ class OverclockHandler:
         require(
             recipe,
             [
-                ['coils', str],
-                ['heat', int],
+                ['coils', str, 'calculating heat and perfect OCs for recipes (eg "nichrome").'],
+                ['heat', int, 'calculating perfect OCs and heat requirement (eg "4300").'],
             ]
         )
         base_voltage = bisect_right(self.voltage_cutoffs, recipe.eut)
@@ -165,7 +165,7 @@ class OverclockHandler:
         require(
             recipe,
             [
-                ['coils', str]
+                ['coils', str, 'calculating recipe time (eg "nichrome").']
             ]
         )
         oc_count = self.calculateStandardOC(recipe)
@@ -190,7 +190,7 @@ class OverclockHandler:
         require(
             recipe,
             [
-                ['saw_type', str]
+                ['saw_type', str, 'calculating throughput of TGS (eg "saw", "buzzsaw").']
             ]
         )
         saw_multipliers = {
@@ -205,7 +205,7 @@ class OverclockHandler:
         TGS_base_output = (2*(tTier**2) - (2*tTier) + 5) * 5
         TGS_wood_out = TGS_base_output * saw_multipliers[recipe.saw_type]
 
-        assert len(recipe.O) <= 1, 'Automatic TGS overclocking only supported for single output - contact dev for more details'
+        assert len(recipe.O) <= 1, 'Automatic TGS overclocking only supported for single output - ask dev to support saplings'
 
         # Mutate final recipe
         if len(recipe.O) == 0:
@@ -223,8 +223,8 @@ class OverclockHandler:
         require(
             recipe,
             [
-                ['coils', str],
-                ['heat', int],
+                ['coils', str, 'calculating heat and perfect OCs for recipes (eg "nichrome").'],
+                ['heat', int, 'calculating heat and perfect OCs for recipes (eg "4300").'],
             ]
         )
 
@@ -274,8 +274,8 @@ class OverclockHandler:
         require(
             recipe,
             [
-                ['mk', int],
-                ['start', int],
+                ['mk', int, 'overclocking fusion. mk = actual mark run at, start = base mk. (eg mk=3, start=2)'],
+                ['start', int, 'overclocking fusion. mk = actual mark run at, start = base mk. (eg mk=3, start=2)'],
             ]
         )
 
@@ -295,8 +295,8 @@ class OverclockHandler:
         require(
             recipe,
             [
-                ['material', str],
-                ['size', str],
+                ['material', str, 'calculating power output (eg "infinity").'],
+                ['size', str, 'calculating power output (eg "large").'],
             ]
         )
 
