@@ -30,6 +30,7 @@ def connectGraph(self):
             machine_label = [rec.machine.title()]
 
         # Add lines for the special arguments
+        # TODO: Split into its own fxn
         line_if_attr_exists = {
             'heat': (lambda rec: f'Base Heat: {rec.heat}K'),
             'coils': (lambda rec: f'Coils: {rec.coils.title()}'),

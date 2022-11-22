@@ -27,7 +27,7 @@ class OverclockHandler:
         with open('data/overclock_data.yaml', 'r') as f:
             self.overclock_data = yaml.safe_load(f)
 
-        self.voltages = ['LV', 'MV', 'HV', 'EV', 'IV', 'LuV', 'ZPM', 'UV', 'UHV', 'UEV', 'UIV', 'UMV', 'UXV']
+        self.voltages = self.overclock_data['voltage_data']['tiers']
         self.voltage_cutoffs = [32*pow(4, x) + 1 for x in range(len(self.voltages))]
 
 
@@ -304,7 +304,7 @@ class OverclockHandler:
         material = recipe.material.lower()
         size = recipe.size.lower()
 
-        with open('gtnhClasses/turbine_data.yaml', 'r') as f:
+        with open('data/turbine_data.yaml', 'r') as f:
             turbine_data = yaml.safe_load(f)
         assert fuel in turbine_data[fuel_type], f'Unsupported fuel "{fuel}"'
         assert material in turbine_data['materials'], f'Unsupported material "{material}"'

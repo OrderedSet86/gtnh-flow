@@ -79,3 +79,18 @@ GTpp_stats:
 
   thermic heating device: [1.2, 0.9, 8]
 
+voltage_data:
+  tiers:
+    - LV
+    - MV
+    - HV
+    - EV
+    - IV
+    - LuV
+    - ZPM
+    - UV
+    - UHV
+    - UEV
+    - UIV
+    - UMV
+    - UXV

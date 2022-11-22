@@ -4,6 +4,8 @@ import re
 from collections import defaultdict
 from copy import deepcopy
 
+import yaml
+
 
 def _addPowerLineNodes(self):
     # This checks for burnables being put into sink and converts them to EU/t
@@ -15,100 +17,16 @@ def _addPowerLineNodes(self):
         4: 'rocket engine fuel',
         5: 'large naquadah reactor',
     }
-    turbineables = {
-        'hydrogen': 20_000,
-        'natural gas': 20_000,
-        'carbon monoxide': 24_000,
-        'wood gas': 24_000,
-        'sulfuric gas': 25_000,
-        'biogas': 40_000,
-        'sulfuric naphtha': 40_000,
-        'cyclopentadiene': 70_000,
-        'coal gas': 96_000,
-        'methane': 104_000,
-        'ethylene': 128_000,
-        'refinery gas': 160_000,
-        'ethane': 168_000,
-        'propene': 192_000,
-        'butadiene': 206_000,
-        'propane': 232_000,
-        'rocket fuel': 250_000,
-        'butene': 256_000,
-        'phenol': 288_000,
-        'benzene': 360_000,
-        'butane': 296_000,
-        'lpg': 320_000,
-        'naphtha': 320_000,
-        'toluene': 328_000,
-        'tert-butylbenzene': 420_000,
-        'naquadah gas': 1_024_000,
-        'nitrobenzene': 1_250_000,
-    }
-    combustables = {
-        'fish oil': 2_000,
-        'short mead': 4_000,
-        'biofuel': 6_000,
-        'creosote oil': 8_000,
-        'biomass': 8_000,
-        'oil': 16_000,
-        'sulfuric light fuel': 40_000,
-        'octane': 80_000,
-        'methanol': 84_000,
-        'ethanol': 192_000,
-        'bio diesel': 320_000,
-        'light fuel': 305_000,
-        'diesel': 480_000,
-        'ether': 537_000,
-        'gasoline': 576_000,
-        'cetane-boosted diesel': 1_000_000,
-        'ethanol gasoline': 750_000,
-        'butanol': 1_125_000,
-        'jet fuel no.3': 1_324_000,
-        'high octane gasoline': 2_500_000,
-        'jet fuel A': 2_048_000,
-    }
-    semifluids = {
-        'seed oil': 4_000,
-        'fish oil': 4_000,
-        'raw animal waste': 12_000,
-        'biomass': 16_000,
-        'coal tar': 16_000,
-        'manure slurry': 24_000,
-        'coal tar oil': 32_000,
-        'fertile manure slurry': 32_000,
-        'oil': 40_000,
-        'light oil': 40_000,
-        'creosote oil': 48_000,
-        'raw oil': 60_000,
-        'heavy oil': 60_000,
-        'sulfuric coal tar oil': 64_000,
-        'sulfuric heavy fuel': 80_000,
-        'heavy fuel': 360_000,
-    }
-    rocket_fuels = {
-        'rp-1 rocket fuel': 1_536_000,
-        'lmp-103s': 1_998_000,
-        'dense hydrazine fuel mixture': 3_072_000,
-        'monomethylhydrazine fuel mix': 4_500_000,
-        'cn3h7o3 rocket fuel': 6_144_000,
-        'unsymmetrical dimethylhydrazine fuel mix': 9_000_000,
-        'h8n4c2o4 rocket fuel': 12_588_000,
-    }
-    naqline_fuels = {
-        'naquadah based liquid fuel mkI': 220_000*20*1000,
-        'naquadah based liquid fuel mkII': 380_000*20*1000,
-        'naquadah based liquid fuel mkIII': 9_511_000*80*1000,
-        'naquadah based liquid fuel mkIV': 88_540_000*100*1000,
-        'naquadah based liquid fuel mkV': 399_576_000*8*20*1000,
-        'uranium based liquid fuel (excited state)': 12_960*100*1000,
-        'plutonium based liquid fuel (excited state)': 32_400*7.5*20*1000,
-        'thorium based liquid fuel (excited state)': 2_200*25*20*1000,
-        'naquadah fuel mk1': 220_000*20*1000,
-        'naquadah fuel mk2': 380_000*20*1000,
-        'naquadah fuel mk3': 9_511_000*80*1000,
-        'naquadah fuel mk4': 88_540_000*100*1000,
-        'naquadah fuel mk5': 399_576_000*8*20*1000
-    }
+
+    with open('data/power_data.yaml', 'r') as f:
+        power_data = yaml.safe_load(f)
+
+    turbineables = power_data['turbine_fuels']
+    combustables = power_data['combustion_fuels']
+    semifluids = power_data['semifluids']
+    rocket_fuels = power_data['rocket_fuels']
+    naqline_fuels = power_data['naqline_fuels']
+
     known_burnables = {x: [0, y] for x,y in turbineables.items()}
     known_burnables.update({x: [1, y] for x,y in combustables.items()})
     known_burnables.update({x: [2, y] for x,y in semifluids.items()})
@@ -213,6 +131,10 @@ def _addPowerLineNodes(self):
 def _addSummaryNode(self):
     # Now that tree is fully locked, add I/O node
     # Specifically, inputs are adj[source] and outputs are adj[sink]
+    with open('data/misc.yaml', 'r') as f:
+        misc_data = yaml.safe_load(f)
+    with open('data/overclock_data.yaml', 'r') as f:
+        overclock_data = yaml.safe_load(f)
 
     color_positive = self.graph_config['POSITIVE_COLOR']
     color_negative = self.graph_config['NEGATIVE_COLOR']
@@ -283,17 +205,9 @@ def _addSummaryNode(self):
         io_label_lines.append(makeLineHtml('Net EU/t:', self.userRound(net_eut), lab_color, amt_color))
         io_label_lines.append('<hr/>')
 
-    # Add total machine multiplier count for oxygen table
+    # Add total machine multiplier count for renewables spreadsheet numbers
+    special_machine_weights = misc_data['special_machine_weights']
     sumval = 0
-    special_machine_weights = {
-        'distillation tower': 10,
-        'pyrolyse oven': 5,
-        'electric blast furnace': 5,
-        'multi smelter': 3,
-        'zhuhai': 3,
-        'vacuum freezer': 3,
-        'electric blast furnace': 5,
-    }
     for rec_id in self.nodes:
         if rec_id in ['source', 'sink']:
             continue
@@ -311,7 +225,7 @@ def _addSummaryNode(self):
     # Add peak power load in maximum voltage on chart
     # Find maximum voltage
     max_tier = -1
-    tiers = ['LV', 'MV', 'HV', 'EV', 'IV', 'LuV', 'ZPM', 'UV', 'UHV', 'UEV', 'UIV', 'UMV', 'UXV']
+    tiers = overclock_data['voltage_data']['tiers']
     for rec in self.recipes.values():
         tier = tiers.index(rec.user_voltage)
         if tier > max_tier:

@@ -1,0 +1,12 @@
+# Some machines are harder to build than others, like multiblocks
+# This adds a weight multiplier for the final "machine count" number in the summary node
+# These are balanced relative to the difficulty of making a singleblock in roughly IV and 
+#   are intended for the renewables spreadsheet calcs.
+special_machine_weights:
+  distillation tower: 10
+  pyrolyse oven: 5
+  electric blast furnace: 5
+  ebf: 5
+  multi smelter: 3
+  zhuhai: 3
+  vacuum freezer: 3
