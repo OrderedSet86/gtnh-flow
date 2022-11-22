@@ -1,0 +1,208 @@
+- m: naquadah fuel refinery factory
+  tier: UMV
+  I:
+    atomic separation catalyst dust: 32
+    infinity dust: 16
+    heavy radox: 1000
+    naquadah fuel mk4: 2000
+  O:
+    naquadah fuel mk5: 100
+  eut: 100000000
+  dur: 10
+  target:
+    naquadah fuel mk5: 10
+- m: naquadah fuel refinery factory
+  tier: UMV
+  I:
+    extremely unstable naquadah dust: 27
+    nether star dust: 64
+    awakened draconium dust: 64
+    orundum dust: 32
+    molten praseodymium: 9216
+    naquadah fuel mk3: 2000
+  O:
+    naquadah fuel mk4: 100
+  eut: 46000000
+  dur: 8
+- m: naquadah fuel refinery factory
+  tier: UHV
+  I:
+    extremely unstable naquadah dust: 4
+    tiberium: 27
+    high density uranium: 2
+    high density plutonium: 1
+    light naquadah fuel: 1000
+    heavy naquadah fuel: 800
+  O:
+    naquadah fuel mk3: 100
+  eut: 1100000
+  dur: 10
+- m: distillation tower
+  tier: EV
+  I:
+    naquadah solution: 20
+  O:
+    naquadah asphalt: 2
+    heavy naquadah fuel: 5
+    light naquadah fuel: 10
+    water: 10
+    naquadah gas: 60
+  eut: 1920
+  dur: 1
+- m: centrifuge
+  tier: MV
+  I:
+    naquadah emulsion: 1000
+  O:
+    naquadah solution: 500
+  eut: 120
+  dur: 40
+- m: large chemical reactor
+  tier: LV
+  I:
+    acid naquadah emulsion: 1000
+    quicklime: 32
+  O:
+    fluorspar: 4
+    antimony trioxide: 0.25
+    naquadah emulsion: 1000
+  eut: 30
+  dur: 12
+- m: electric blast furnace
+  coils: nichrome
+  heat: 3400
+  tier: IV
+  I:
+    fluoroantimonic acid: 4000
+    naquadria: 32
+  O:
+    acid naquadah emulsion: 8000
+    '[output] extremely unstable naquadah dust': 17
+  eut: 4080
+  dur: 180
+- m: compressor
+  tier: HV
+  I:
+    high density uranium nugget: 9
+  O:
+    high density uranium: 1
+  eut: 480
+  dur: 30
+- m: compressor
+  tier: MV
+  I:
+    high density plutonium nugget: 9
+  O:
+    high density plutonium: 1
+  eut: 120
+  dur: 60
+- m: electric implosion compressor
+  tier: UEV
+  I:
+    wrapped uranium ingot: 4
+  O:
+    high density uranium nugget: 1
+    tungsten carbide dust: 0.88
+  eut: 7864320
+  dur: 0.05
+- m: electric implosion compressor
+  tier: UEV
+  I:
+    wrapped plutonium ingot: 2
+  O:
+    high density plutonium nugget: 1
+    hss-s dust: 0.88
+  eut: 7864320
+  dur: 0.05
+- m: assembler
+  tier: HV
+  I:
+    graphite-uranium mixture dust: 4
+    tungstencarbide foil: 2
+  O:
+    wrapped uranium ingot: 1
+  eut: 480
+  dur: 70
+- m: assembler
+  tier: EV
+  I:
+    plutonium oxide-uranium mixture dust: 4
+    hss-s foil: 2
+  O:
+    wrapped plutonium ingot: 1
+  eut: 1920
+  dur: 90
+- m: mixer
+  tier: LV
+  I:
+    graphite dust: 3
+    uranium 238 dust: 1
+  O:
+   graphite-uranium mixture dust: 4
+  eut: 10
+  dur: 1.7
+- m: mixer
+  tier: LV
+  I:
+    plutonium 239 dust: 10
+    uranium 238 dust: 2
+    carbon dust: 8
+    oxygen: 12000
+  O:
+    plutonium oxide-uranium mixture dust: 32
+  eut: 20
+  dur: 1.25
+- m: fluid extractor
+  tier: LV
+  I:
+    praseodymium dust: 1
+  O:
+    molten praseodymium: 144
+  eut: 30
+  dur: 1.2
+- m: centrifuge
+  tier: UV
+  I:
+    super heavy radox: 1
+  O:
+    heavy radox: 2
+  eut: 491520
+  dur: 3
+- m: distillation tower
+  tier: UHV
+  I:
+    raw radox: 5000
+  O:
+    heavy oil: 600
+    '[output] oil': 300
+    creosote oil: 1000
+    water: 1400
+    fermented bacterial sludge: 50
+    fermented biomass: 50
+    super heavy radox: 100
+    heavy radox: 150
+    diluted xenoxene: 50
+    light radox: 30
+    super light radox: 500
+  eut: 1966080
+  dur: 40
+- m: pyrolose oven
+  coils: eternal
+  tier: UV
+  I:
+    barnada c wood: 64
+    xenoxene: 1000
+  O:
+    raw radox: 1000
+  eut: 491520
+  dur: 180
+- m: bacterial vat
+  tier: UEV
+  I:
+    iridium dust: 16
+    osmium dust: 16
+    oil: 2020
+  O:
+    xenoxene: 2020
+  eut: 7864320
+  dur: 300
