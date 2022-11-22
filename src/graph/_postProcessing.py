@@ -103,6 +103,11 @@ def _addPowerLineNodes(self):
         'uranium based liquid fuel (excited state)': 12_960*100*1000,
         'plutonium based liquid fuel (excited state)': 32_400*7.5*20*1000,
         'thorium based liquid fuel (excited state)': 2_200*25*20*1000,
+        'naquadah fuel mk1': 220_000*20*1000,
+        'naquadah fuel mk2': 380_000*20*1000,
+        'naquadah fuel mk3': 9_511_000*80*1000,
+        'naquadah fuel mk4': 88_540_000*100*1000,
+        'naquadah fuel mk5': 399_576_000*8*20*1000
     }
     known_burnables = {x: [0, y] for x,y in turbineables.items()}
     known_burnables.update({x: [1, y] for x,y in combustables.items()})

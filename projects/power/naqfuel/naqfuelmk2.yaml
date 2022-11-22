@@ -1,0 +1,68 @@
+- m: large chemical reactor
+  tier: UV
+  I:
+    naquadah gas: 2500
+    naquadah fuel mk1: 1000
+    fluxed electrum: 32
+    samarium: 24
+    praseodymium: 16
+  O:
+    naquadah fuel mk2: 1000
+  eut: 480000
+  dur: 10
+  target:
+    naquadah fuel mk2: 10
+- m: fusion reactor
+  tier: LuV
+  start: 1
+  mk: 1
+  I:
+    heavy naquadah fuel: 30
+    light naquadah fuel: 65
+  O:
+    naquadah fuel mk1: 100
+  eut: 26000
+  dur: 0.25
+- m: distillation tower
+  tier: EV
+  I:
+    naquadah solution: 20
+  O:
+    naquadah asphalt: 2
+    heavy naquadah fuel: 5
+    light naquadah fuel: 10
+    water: 10
+    naquadah gas: 60
+  eut: 1920
+  dur: 1
+- m: centrifuge
+  tier: MV
+  I:
+    naquadah emulsion: 1000
+  O:
+    naquadah solution: 500
+  eut: 120
+  dur: 40
+- m: large chemical reactor
+  tier: LV
+  I:
+    acid naquadah emulsion: 1000
+    quicklime: 32
+  O:
+    fluorspar: 4
+    antimony trioxide: 0.25
+    naquadah emulsion: 1000
+  eut: 30
+  dur: 12
+- m: electric blast furnace
+  coils: nichrome
+  heat: 3400
+  tier: IV
+  I:
+    fluoroantimonic acid: 4000
+    naquadria: 32
+  O:
+    acid naquadah emulsion: 8000
+    extremely unstable naquadah dust: 17
+  eut: 4080
+  dur: 180
