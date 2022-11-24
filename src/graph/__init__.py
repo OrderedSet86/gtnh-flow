@@ -43,7 +43,8 @@ class Graph:
         userRound,
         addNode,
         addEdge,
-        createAdjacencyList
+        createAdjacencyList,
+        _iterateOverMachines,
     )
     userRound = staticmethod(userRound)
 
@@ -85,4 +86,5 @@ class Graph:
     from ._postProcessing import (
         _addSummaryNode,
         _addPowerLineNodes,
+        bottleneckPrint,
     )

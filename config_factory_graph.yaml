@@ -19,6 +19,11 @@ USE_RAINBOW_EDGES: true # feature to help distinguish between overlapping edges
 DUR_FORMAT: sec # choose either "ticks" or "sec"
 VIEW_ON_COMPLETION: true
 
+PRINT_BOTTLENECKS: true
+USE_BOTTLENECK_MIN_VOLTAGE: true
+BOTTLENECK_MIN_VOLTAGE: IV
+MAX_BOTTLENECKS: 5
+
 # === VISUALS ===
 GENERAL_FONT: arial  # nodes and edges
 SUMMARY_FONT: arial

@@ -5,6 +5,9 @@ from collections import defaultdict
 from copy import deepcopy
 
 import yaml
+from termcolor import colored, cprint
+
+from src.graph._utils import _iterateOverMachines
 
 
 def _addPowerLineNodes(self):
@@ -257,3 +260,21 @@ def _addSummaryNode(self):
         fillcolor=self.graph_config['BACKGROUND_COLOR'],
         shape='box'
     )
+
+
+def bottleneckPrint(self):
+    # Prints bottlenecks normalized to an input voltage.
+    machine_recipes = [x for x in _iterateOverMachines(self)]
+    machine_recipes.sort(
+        key=lambda rec: rec.multiplier,
+        reverse=True,
+    )
+
+    max_print = self.graph_config.get('MAX_BOTTLENECKS')
+    number_to_print = max(len(machine_recipes)//10, max_print)
+
+    # Print actual bottlenecks
+    for i, rec in zip(range(number_to_print), machine_recipes):
+        cprint(f'{round(rec.multiplier, 2)}x {rec.user_voltage} {rec.machine}', 'red')
+        for out in rec.O:
+            cprint(f'    {out.name.title()} ({round(out.quant, 2)})', 'green')

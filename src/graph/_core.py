@@ -432,3 +432,6 @@ def outputGraphviz(self):
 
     if self.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
         input()
+    
+    if self.graph_config.get('PRINT_BOTTLENECKS'):
+        self.bottleneckPrint()

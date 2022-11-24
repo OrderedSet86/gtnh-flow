@@ -525,7 +525,7 @@
   dur: 10
   group: palladium
 - m: large chemical reactor
-  tier: HV
+  tier: EV
   I:
     nitrogen: 1000
     '[source] hydrogen': 3000
@@ -551,8 +551,8 @@
     '[source] chlorine': 1000
   O:
     '[ruth] hydrochloric acid': 1000
-  eut: 384
-  dur: 16
+  eut: 7
+  dur: 3
   group: ruthenium
 - m: mixer
   tier: HV

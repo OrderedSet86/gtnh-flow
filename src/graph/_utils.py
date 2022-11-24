@@ -1,3 +1,4 @@
+import re
 from collections import defaultdict
 
 from src.data.basicTypes import Recipe
@@ -64,3 +65,14 @@ def createAdjacencyList(self):
         for io_type, edges in io_group.items():
             self.parent_context.cLog(f'{io_type} {edges}', 'blue')
     self.parent_context.cLog('')
+
+
+def _iterateOverMachines(self):
+    # Iterate over non-source/sink noedes and non power nodes
+    for rec_id in self.nodes:
+        if rec_id in {'source', 'sink', 'total_io_node'}:
+            continue
+        elif rec_id.startswith(('power_', 'joint_')):
+            continue
+        yield self.recipes[rec_id]
+
