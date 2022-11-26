@@ -23,6 +23,8 @@ class OverclockHandler:
 
     def __init__(self, parent_context):
         self.parent_context = parent_context
+        self.ignore_underclock = False # Whether to throw an error or actually underclock if
+                                       # USER_VOLTAGE < EUT
 
         with open('data/overclock_data.yaml', 'r') as f:
             self.overclock_data = yaml.safe_load(f)
@@ -361,7 +363,6 @@ class OverclockHandler:
         return recipe
 
 
-
     def calculateStandardOC(self, recipe):
         base_voltage = bisect_right(self.voltage_cutoffs, recipe.eut)
         user_voltage = self.voltages.index(recipe.user_voltage)
@@ -385,10 +386,12 @@ class OverclockHandler:
         return recipe
 
 
-    def overclockRecipe(self, recipe):
+    def overclockRecipe(self, recipe, ignore_underclock=False):
         ### Modifies recipe according to overclocks
         # By the time that the recipe arrives here, it should have a "user_voltage" argument which indicates
         # what the user is actually providing.
+        self.ignore_underclock = ignore_underclock
+
         machine_overrides = {
             # GT multis
             'pyrolyse oven': self.modifyPyrolyse,

@@ -36,7 +36,10 @@ class ProgramContext:
             logging.warning(colored(msg, color))
 
     
-    def run(self):
+    def run(self, graph_gen=None):
+        if graph_gen == None:
+            graph_gen = self.standardGraphGen
+
         with open('config_factory_graph.yaml', 'r') as f:
             graph_config = yaml.safe_load(f)
         
@@ -74,11 +77,16 @@ class ProgramContext:
 
             recipes = recipesFromConfig(project_name)
 
-            # Create graph and render
-            g = Graph(project_name, recipes, self, graph_config=graph_config)
-            g.connectGraph()
-            g.balanceGraph()
-            g.outputGraphviz()
+            graph_gen(self, project_name, recipes, graph_config)
+
+
+    @staticmethod
+    def standardGraphGen(self, project_name, recipes, graph_config):
+        # Create graph and render
+        g = Graph(project_name, recipes, self, graph_config=graph_config)
+        g.connectGraph()
+        g.balanceGraph()
+        g.outputGraphviz()
 
 
 if __name__ == '__main__':

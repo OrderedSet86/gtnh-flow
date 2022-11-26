@@ -236,7 +236,7 @@
     zinc sulfate dust: 6
   O:
     zinc dust: 1
-    recycled sulfuric acid: 1000
+    '[electrolyze] sulfuric acid': 1000
   eut: 90
   dur: 1.3
   group: rhodium
@@ -436,8 +436,7 @@
 - m: large chemical reactor
   tier: HV
   I:
-    recycled sulfuric acid: 560
-    fresh sulfuric acid: 440
+    sulfuric acid: 1000
     sodium formate: 2000
   O:
     sodium sulfate dust: 7
@@ -484,16 +483,6 @@
   eut: 7
   dur: 2
   group: palladium
-- m: large chemical reactor
-  tier: HV
-  I:
-    oxygen: 3000
-    sulfur dust: 1
-  O:
-    fresh sulfuric acid: 1000
-  eut: 30
-  dur: 24
-  group: palladium
 - m: centrifuge
   tier: LV
   I:
@@ -503,16 +492,16 @@
   eut: 10
   dur: 2.25
   group: iridium
-- m: electrolyzer
+- m: large chemical reactor
   tier: HV
   I:
     sodium sulfate dust: 7
+    '[source] hydrogen': 2000
   O:
-    '[recycle] sulfur dust': 1
-    '[recycle] oxygen': 4000
-    sodium dust: 2
-  eut: 90
-  dur: 1.15
+    '[recycle] sulfuric acid': 1000
+    '[recycle] sodium dust': 2
+  eut: 30
+  dur: 1.5
   group: palladium
 - m: large chemical reactor
   tier: HV
@@ -570,7 +559,7 @@
     '[source] sodium dust': 1
   O:
     sodium nitrate dust: 5
-    hydrogen: 1000
+    '[recycle] hydrogen': 1000
   eut: 60
   dur: 0.4
   group: rhodium
@@ -581,7 +570,7 @@
     '[rep] nitric acid': 1000
   O:
     saltpeter: 5
-    hydrogen: 1000
+    '[recycle] hydrogen': 1000
   eut: 30
   dur: 5
   group: rare element prep
@@ -664,3 +653,14 @@
     '[rhod] hydrochloric acid': 1000
   eut: 7
   dur: 3
+- m: electrolyzer
+  tier: HV
+  I:
+    '[electrolyze] sulfuric acid': 1000
+  O:
+    '[recycle] hydrogen': 2000
+    '[recycle] sulfur dust': 1
+    '[recycle] oxygen': 4000
+  eut: 90
+  dur: 19.6
+  group: rhodium

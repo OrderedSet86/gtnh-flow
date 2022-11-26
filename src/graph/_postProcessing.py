@@ -8,6 +8,7 @@ import yaml
 from termcolor import colored, cprint
 
 from src.graph._utils import _iterateOverMachines
+from src.gtnh.overclocks import OverclockHandler
 
 
 def _addPowerLineNodes(self):
@@ -272,6 +273,18 @@ def bottleneckPrint(self):
 
     max_print = self.graph_config.get('MAX_BOTTLENECKS')
     number_to_print = max(len(machine_recipes)//10, max_print)
+
+    if self.graph_config.get('USE_BOTTLENECK_EXACT_VOLTAGE'):
+        # Want to overclock and underclock to force the specific voltage
+        chosen_voltage = self.graph_config.get('BOTTLENECK_MIN_VOLTAGE')
+
+        oh = OverclockHandler(self.parent_context)
+        raise NotImplementedError() # FIXME: Add negative overclocking
+        for i, rec in enumerate(self.recipes):
+            rec.user_voltage = chosen_voltage
+
+            self.recipes[i] = oh.overclockRecipe(rec)
+            rec.base_eut = rec.eut
 
     # Print actual bottlenecks
     for i, rec in zip(range(number_to_print), machine_recipes):
