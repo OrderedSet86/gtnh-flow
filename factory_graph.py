@@ -77,6 +77,9 @@ class ProgramContext:
 
             recipes = recipesFromConfig(project_name)
 
+            if project_name.endswith('.yaml'):
+                project_name = project_name[:-5]
+
             graph_gen(self, project_name, recipes, graph_config)
 
 
