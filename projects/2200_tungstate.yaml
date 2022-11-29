@@ -77,6 +77,6 @@
     water: 1000
   O:
     sodium hydroxide dust: 1
-    hydrogen: 500
+    '[output] hydrogen': 500
   eut: 30
   dur: 10

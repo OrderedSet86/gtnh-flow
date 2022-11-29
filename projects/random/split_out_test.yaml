@@ -1,0 +1,34 @@
+
+- m: large chemical reactor
+  tier: HV
+  I:
+    hydrogen: 1000
+    chlorine: 1000
+  O:
+    hydrochloric acid: 1000
+  eut: 7
+  dur: 3
+
+- m: LCR
+  tier: LV
+  I:
+    hafnia dust: 1
+    hydrochloric acid: 4000
+  O:
+    hafnium tetrachloride dust: 1
+    water: 2000
+  eut: 30
+  dur: 15
+  number: 1
+
+- m: LCR
+  tier: LV
+  I:
+    hafnia dust2: 1
+    hydrochloric acid: 4000
+  O:
+    hafnium tetrachloride dust2: 1
+    water: 2000
+  eut: 30
+  dur: 15
+  number: 1

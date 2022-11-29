@@ -2,9 +2,11 @@
 # this prototype explores this.
 
 import logging
+import multiprocessing
 from copy import deepcopy
 from math import isclose
 from string import ascii_uppercase
+from time import sleep
 
 import yaml
 from sympy import linsolve, nonlinsolve, symbols
@@ -29,8 +31,7 @@ def sympySolver(self):
             num_variables += len(rec.I) + len(rec.O)
 
     symbols_str = ', '.join([str(x) for x in range(num_variables)])
-    variables = symbols(symbols_str)
-
+    variables = symbols(symbols_str, positive=True, real=True)
 
     # Create rule for which ingredient => which symbol index
     # Need to invert this later on when populating graph
@@ -149,8 +150,26 @@ def sympySolver(self):
     res = linsolve(system, variables)
     print(res)
     if isinstance(res, EmptySet):
-        # self.parent_context.cLog('Unable to solve with linear solver - attempting nonlinear solve', 'red', level=logging.WARNING)
-        raise NotImplementedError('Linear solver found empty set, so system of equations has no solutions -- report to dev.')
+        self.parent_context.cLog('Unable to solve with linear solver - attempting nonlinear solve for 5s...', 'red', level=logging.WARNING)
+
+        def worker(args, returndict):
+            result = nonlinsolve(*args)
+            returndict['result'] = result
+
+        manager = multiprocessing.Manager()
+        returndict = manager.dict()
+        proc = multiprocessing.Process(target=worker, args=((system, variables), returndict))
+        # FIXME: ^^ This will raise errors on Windows - see comments https://stackoverflow.com/a/7752174
+        # It's pickling, of course...
+        proc.start()
+        proc.join(5)
+        if 'result' in returndict:
+            res = returndict['result']
+        else:
+            proc.terminate()
+            raise NotImplementedError('Both linear and nonlinear solver found empty set, so system of equations has no solutions -- report to dev.')
+        
+        print(res)
 
     lstres = list(res)
     if len(lstres) > 1:
@@ -213,7 +232,7 @@ def addMachineMultipliers(self):
 
                 # Look up edge value from sympy solver
                 solved_quant_per_s = 0
-                for edge in self.adj_machine[rec_id][io_dir]:
+                for edge in self.adj[rec_id][io_dir]:
                     if edge[2] == ing_name:
                         # print(edge, self.edges[edge]['quant'])
                         solved_quant_per_s += self.edges[edge]['quant']
@@ -499,6 +518,7 @@ def systemOfEquationsSolverGraphGen(self, project_name, recipes, graph_config):
     g = Graph(project_name, recipes, self, graph_config=graph_config)
 
     graphPreProcessing(g)
+    g.parent_context.cLog('Running linear solver...', 'green', level=logging.INFO)
     sympySolver(g)
     graphPostProcessing(g)
 
