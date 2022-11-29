@@ -45,11 +45,12 @@ class Graph:
         addEdge,
         createAdjacencyList,
         _iterateOverMachines,
+        _checkIfMachine,
     )
     userRound = staticmethod(userRound)
 
     # Setup of graph - connect edges and remove cycles
-    from ._setup import (
+    from ._preProcessing import (
         connectGraph,
         removeBackEdges,
     )

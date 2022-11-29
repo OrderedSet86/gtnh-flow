@@ -34,9 +34,10 @@ def userRound(number):
         0: lambda x: f'{round(x, 2)}'
     }
 
-    for n, sfxn in cutoffs.items():
+    for n, roundfxn in cutoffs.items():
         if abs(number) >= n:
-            return sfxn(number)
+            rounded = roundfxn(number)
+            return rounded
 
 def createAdjacencyList(self):
     # Compute "adjacency list" (node -> {I: edges, O: edges}) for edges and machine-involved edges
@@ -67,12 +68,18 @@ def createAdjacencyList(self):
     self.parent_context.cLog('')
 
 
+def _checkIfMachine(self, rec_id):
+    # TODO: Memoize calls
+    if rec_id in {'source', 'sink', 'total_io_node'}:
+        return False
+    elif rec_id.startswith(('power_', 'joint_')):
+        return False
+    return True
+
+
 def _iterateOverMachines(self):
     # Iterate over non-source/sink noedes and non power nodes
     for rec_id in self.nodes:
-        if rec_id in {'source', 'sink', 'total_io_node'}:
-            continue
-        elif rec_id.startswith(('power_', 'joint_')):
-            continue
-        yield self.recipes[rec_id]
+        if self._checkIfMachine(rec_id):
+            yield self.recipes[rec_id]
 
