@@ -1,12 +1,15 @@
 # In theory solving the machine flow as a linear program is fast and simple -
 # this prototype explores this.
 
+import logging
+from copy import deepcopy
 from math import isclose
 from string import ascii_uppercase
 
 import yaml
 from sympy import linsolve, symbols
 
+from src.data.basicTypes import Ingredient, IngredientCollection, Recipe
 from src.graph import Graph
 
 
@@ -221,6 +224,7 @@ def addMachineMultipliers(self):
         
         final_multiplier = max(multipliers)
         rec.multiplier = final_multiplier
+        rec.eut = rec.multiplier * rec.eut
 
 
 def capitalizeMachine(machine):
@@ -248,7 +252,13 @@ def createMachineLabels(self):
     # Amoritized: 1.46K EU/t
     # Per Machine: 256EU/t
     
-    for rec_id, rec in self.recipes.items():
+    for node_id in self.nodes:
+        if self._checkIfMachine(node_id):
+            rec_id = node_id
+            rec = self.recipes[rec_id]
+        else:
+            continue
+
         label_lines = []
 
         # Standard label
@@ -260,17 +270,21 @@ def createMachineLabels(self):
         ])
 
         # Edits for power machines
-        # FIXME: Move createMachineLabels after _addPowerLineNodes
         recognized_basic_power_machines = {
             # "basic" here means "doesn't cost energy to run"
             'gas turbine',
             'combustion gen',
             'semifluid gen',
             'steam turbine',
-            'rocket engine fuel',
+            'rocket engine',
+
             'large naquadah reactor',
-            'lgt',
-            'xlgt',
+            'large gas turbine',
+            'large steam turbine',
+            'large combustion engine',
+            'extreme combustion engine',
+            'XL Turbo Gas Turbine',
+            'XL Turbo Steam Turbine',
         }
         if rec.machine in recognized_basic_power_machines:
             # Remove power input data
@@ -292,18 +306,19 @@ def createMachineLabels(self):
 
 
 def addPowerLineNodesV2(self):
-    # This checks for burnables being put into sink and converts them to EU/t
     generator_names = {
         0: 'gas turbine',
         1: 'combustion gen',
         2: 'semifluid gen',
         3: 'steam turbine',
-        4: 'rocket engine fuel',
+        4: 'rocket engine',
         5: 'large naquadah reactor',
     }
 
     with open('data/power_data.yaml', 'r') as f:
         power_data = yaml.safe_load(f)
+    with open('data/overclock_data.yaml', 'r') as f:
+        overclock_data = yaml.safe_load(f)
 
     turbineables = power_data['turbine_fuels']
     combustables = power_data['combustion_fuels']
@@ -318,9 +333,129 @@ def addPowerLineNodesV2(self):
     known_burnables.update({x: [4, y] for x,y in rocket_fuels.items()})
     known_burnables.update({x: [5, y] for x,y in naqline_fuels.items()})
 
-    # Add new burn machines to graph
+    # Add new burn machines to graph - they will be computed for using new solver
+    # 1. Find highest voltage on the chart - use this for burn generator tier
+    # 2. Figure out highest node index on the chart - use this for adding generator nodes
+    voltages = overclock_data['voltage_data']['tiers']
+    highest_voltage = 0
+    highest_node_index = 0
+    for rec_id, rec in self.recipes.items():
 
-    pass
+        rec_voltage = voltages.index(rec.user_voltage)
+        if rec_voltage > highest_voltage:
+            highest_voltage = rec_voltage
+
+        int_index = int(rec_id)
+        if int_index > highest_node_index:
+            highest_node_index = int_index
+
+    highest_node_index += 1
+
+    # 3. Redirect burnables currently going to sink and redirect them to a new burn machine
+    outputs = self.adj['sink']['I']
+    for edge in deepcopy(outputs):
+        node_from, _, ing_name = edge
+        edge_data = self.edges[edge]
+        quant_s = edge_data['quant']
+
+        if ing_name in known_burnables and not ing_name in self.graph_config['DO_NOT_BURN']:
+            self.parent_context.cLog(f'Detected burnable: {ing_name.title()}! Adding to chart.', 'blue', level=logging.INFO)
+            generator_idx, eut_per_cell = known_burnables[ing_name]
+            gen_name = generator_names[generator_idx]
+
+            # Add node
+            node_idx = f'{highest_node_index}'
+
+            # Burn gen is a singleblock
+            def findClosestVoltage(voltage_list, voltage):
+                nonlocal voltages
+                leftmost = voltages.index(voltage_list[0])
+                rightmost = voltages.index(voltage_list[-1])
+                target = voltages.index(voltage)
+
+                # First try to voltage down
+                if rightmost < target:
+                    return voltages[rightmost]
+                elif leftmost <= target <= rightmost:
+                    return voltages[target]
+                elif leftmost > target:
+                    return voltages[leftmost]
+
+            available_efficiencies = power_data['simple_generator_efficiencies'][gen_name]
+            gen_voltage = findClosestVoltage(list(available_efficiencies), voltages[highest_voltage])
+            efficiency = available_efficiencies[gen_voltage]
+
+            node_name = f'{gen_name.title()} ({int(efficiency*100)}% eff)'
+
+            # Compute I/O for a single tick
+            gen_voltage_index = voltages.index(gen_voltage)
+            output_eut = 32 * (4 ** gen_voltage_index)
+            loss_on_singleblock_output = (2 ** gen_voltage_index)
+            expended_eut = output_eut + loss_on_singleblock_output
+
+            expended_fuel_t = (eut_per_cell/1000 * efficiency) / expended_eut
+
+            gen_input = IngredientCollection(
+                Ingredient(
+                    ing_name,
+                    expended_fuel_t
+                )
+            )
+            gen_output = IngredientCollection(
+                Ingredient(
+                    'EU',
+                    output_eut
+                )
+            )
+
+            # Append to recipes
+            self.recipes[str(highest_node_index)] = Recipe(
+                gen_name,
+                gen_voltage,
+                gen_input,
+                gen_output,
+                0,
+                1,
+            )
+
+            produced_eut_s = quant_s/expended_fuel_t*output_eut 
+            self.parent_context.cLog(
+                ''.join([
+                    f'Added {gen_voltage} generator burning {quant_s} {ing_name} for '
+                    f'{self.userRound(produced_eut_s/20)}EU/t at {output_eut}EU/t each.'
+                ]),
+                'blue',
+                level=logging.INFO,
+            )
+
+            self.addNode(
+                node_idx,
+                label= node_name,
+                fillcolor=self.graph_config['NONLOCKEDNODE_COLOR'],
+                shape='box'
+            )
+
+            # Fix edges to point at said node
+            # Edge (old output) -> (generator)
+            self.addEdge(
+                node_from,
+                node_idx,
+                ing_name,
+                quant_s,
+                **edge_data['kwargs'],
+            )
+            # Edge (generator) -> (EU sink)
+            self.addEdge(
+                node_idx,
+                'sink',
+                'EU',
+                produced_eut_s,
+            )
+            # Remove old edge and repopulate adjacency list
+            del self.edges[edge]
+            self.createAdjacencyList()
+
+            highest_node_index += 1
 
 
 def graphPreProcessing(self):
@@ -330,11 +465,10 @@ def graphPreProcessing(self):
 
 
 def graphPostProcessing(self):
-    addMachineMultipliers(self)
-
     if self.graph_config.get('POWER_LINE', False):
         addPowerLineNodesV2(self)
 
+    addMachineMultipliers(self)
     createMachineLabels(self)
 
     self._addSummaryNode()

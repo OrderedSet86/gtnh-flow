@@ -91,3 +91,28 @@ naqline_fuels:
   naquadah mk3: 724_088_000_000
   naquadah mk4: 8_800_540_000_000
   naquadah mk5: 63_849_216_000_000
+
+simple_generator_efficiencies:
+  gas turbine:
+    lv: 0.95 # This might be a 2.2.3 thing? seems high
+    mv: 0.9
+    hv: 0.85
+  combustion gen:
+    lv: 0.95
+    mv: 0.9
+    hv: 0.85
+    ev: 0.6
+    iv: 0.5
+  semifluid gen:
+    lv: 0.95
+    mv: 0.9
+    hv: 0.85
+  steam turbine:
+    lv: 0.85
+    mv: 0.75
+    hv: 0.66
+  rocket engine:
+    ev: 0.8
+    iv: 0.7
+    luv: 0.6
+  

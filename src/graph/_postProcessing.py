@@ -215,7 +215,7 @@ def _addSummaryNode(self):
     for rec_id in self.nodes:
         if rec_id in ['source', 'sink']:
             continue
-        elif re.match(r'^power_\d+_\d+$', rec_id):
+        elif rec_id.startswith('power_'):
             continue
         rec = self.recipes[rec_id]
 
@@ -244,7 +244,7 @@ def _addSummaryNode(self):
     io_label_lines.append(
         makeLineHtml( 
             'Peak power draw:', 
-            f'{round(max_draw/voltage_at_tier, 2)}A {tiers[max_tier]}',
+            f'{round(max_draw/voltage_at_tier, 2)}A {tiers[max_tier].upper()}',
             'white',
             color_negative
         )
