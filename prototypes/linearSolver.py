@@ -47,7 +47,7 @@ def sympySolver(self):
 
     system = []
 
-    
+
     # Add user-determined locked inputs
     targeted_nodes = [i for i, x in self.recipes.items() if getattr(x, 'target', False) != False]
     numbered_nodes = [i for i, x in self.recipes.items() if getattr(x, 'number', False) != False]
@@ -221,7 +221,7 @@ def addMachineMultipliers(self):
 
                 machine_multiplier = solved_quant_per_s / base_quant_s
                 multipliers.append(machine_multiplier)
-        
+
         final_multiplier = max(multipliers)
         rec.multiplier = final_multiplier
         rec.eut = rec.multiplier * rec.eut
@@ -458,6 +458,15 @@ def addPowerLineNodesV2(self):
             highest_node_index += 1
 
 
+def addUserNodeColor(self):
+    targeted_nodes = [i for i, x in self.recipes.items() if getattr(x, 'target', False) != False]
+    numbered_nodes = [i for i, x in self.recipes.items() if getattr(x, 'number', False) != False]
+    all_user_nodes = set(targeted_nodes) | set(numbered_nodes)
+
+    for rec_id in all_user_nodes:
+        self.nodes[rec_id].update({'fillcolor': self.graph_config['LOCKEDNODE_COLOR']})
+
+
 def graphPreProcessing(self):
     self.connectGraph()
     self.removeBackEdges()
@@ -472,6 +481,8 @@ def graphPostProcessing(self):
     createMachineLabels(self)
 
     self._addSummaryNode()
+
+    addUserNodeColor(self)
 
     if self.graph_config.get('COMBINE_INPUTS', False):
         self._combineInputs()

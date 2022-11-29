@@ -47,6 +47,11 @@ def standardizeMachineName(name):
         'industrial thermal centrifuge': 'large thermal refinery',
 
         'industrial rock breaker': 'boldarnator',
+
+        'xl turbo steam turbine': 'XL Turbo Steam Turbine',
+        'xl steam turbine': 'XL Turbo Steam Turbine',
+        'xl turbo gas turbine': 'XL Turbo Gas Turbine',
+        'xl gas turbine': 'XL Turbo Gas Turbine',
     }
     
     if name in replacements:
