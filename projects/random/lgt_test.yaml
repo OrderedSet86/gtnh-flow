@@ -10,9 +10,9 @@
     creosote: 300
   eut: 256
   dur: 2
-  # target:
-  #   benzene: 1000
-- m: XLGT
+  target:
+    benzene: 1000
+- m: LGT
   tier: LV
   I:
     benzene: 1
@@ -21,4 +21,3 @@
   dur: 0
   material: shadow
   size: large
-  number: 1

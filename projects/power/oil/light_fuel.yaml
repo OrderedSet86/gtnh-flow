@@ -29,7 +29,7 @@
   eut: 30
   dur: 50
   group: hydrogen
-- m: combustion generator
+- m: combustion gen
   tier: LV
   I:
     light fuel: 0.11734253667

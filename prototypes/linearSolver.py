@@ -1,10 +1,13 @@
 # In theory solving the machine flow as a linear program is fast and simple -
 # this prototype explores this.
 
+from math import isclose
+from string import ascii_uppercase
+
+import yaml
 from sympy import linsolve, symbols
 
 from src.graph import Graph
-from src.graph._utils import swapIO
 
 
 def sympySolver(self):
@@ -68,11 +71,11 @@ def sympySolver(self):
                 raise RuntimeError(f'{rec} has no inputs or outputs!')
 
             # Solve for ingredient quantity and add to system of equations
-            solved_quant = core_ing.quant * rec.number
+            solved_quant_s = core_ing.quant * rec.number / (rec.dur/20)
             system.append(
                 variables[arrayIndex(rec_id, core_ing.name, core_direction)]
                 -
-                solved_quant
+                solved_quant_s
             )
 
         # Add targetted nodes
@@ -164,13 +167,16 @@ def sympySolver(self):
             a_quant = solved_vars[a_index]
             b_quant = solved_vars[b_index]
 
-            if a_quant == b_quant: # TODO: Be less strict about equality
+            if isclose(a_quant, b_quant, rel_tol=0.05):
                 relevant_edge = self.edges[edge]
                 relevant_edge['quant'] = float(a_quant)
                 relevant_edge['locked'] = True # TODO: Legacy - check if can be removed
             else:
-                # TODO: Increase error verbosity
-                raise RuntimeError('Mismatched edges')
+                raise RuntimeError('\n'.join([
+                    'Mismatched machine-edge quantities:',
+                    f'{a_quant}',
+                    f'{b_quant}',
+                ]))
 
         elif a_machine or b_machine:
             # Assume a_machine for now
@@ -201,20 +207,37 @@ def addMachineMultipliers(self):
                 solved_quant_per_s = 0
                 for edge in self.adj_machine[rec_id][io_dir]:
                     if edge[2] == ing_name:
-                        print(edge, self.edges[edge]['quant'])
+                        # print(edge, self.edges[edge]['quant'])
                         solved_quant_per_s += self.edges[edge]['quant']
 
                 base_quant_s = base_quant / (rec.dur/20)
                 
-                print(io_dir, rec_id, ing_name, getattr(rec, io_dir))
-                print(solved_quant_per_s, base_quant_s, rec.dur)
-                print()
+                # print(io_dir, rec_id, ing_name, getattr(rec, io_dir))
+                # print(solved_quant_per_s, base_quant_s, rec.dur)
+                # print()
 
                 machine_multiplier = solved_quant_per_s / base_quant_s
                 multipliers.append(machine_multiplier)
         
         final_multiplier = max(multipliers)
         rec.multiplier = final_multiplier
+
+
+def capitalizeMachine(machine):
+    # check if machine has capitals, and if so, preserve them
+    capitals = set(ascii_uppercase)
+    machine_capitals = [ch for ch in machine if ch in capitals]
+
+    capitalization_exceptions = {
+
+    }
+    
+    if len(machine_capitals) > 0:
+        return machine
+    elif machine in capitalization_exceptions:
+        return capitalization_exceptions[machine]
+    else:
+        return machine.title()
 
 
 def createMachineLabels(self):
@@ -230,23 +253,90 @@ def createMachineLabels(self):
 
         # Standard label
         label_lines.extend([
-            f'{round(rec.multiplier, 2)}x {rec.user_voltage} {rec.machine.title()}',
+            f'{round(rec.multiplier, 2)}x {rec.user_voltage.upper()} {capitalizeMachine(rec.machine)}',
             f'Cycle: {rec.dur/20}s',
             f'Amoritized: {self.userRound(int(round(rec.eut, 0)))} EU/t',
             f'Per Machine: {self.userRound(int(round(rec.base_eut, 0)))} EU/t',
         ])
 
-        # TODO: Add remaining machine label stuff
+        # Edits for power machines
+        # FIXME: Move createMachineLabels after _addPowerLineNodes
+        recognized_basic_power_machines = {
+            # "basic" here means "doesn't cost energy to run"
+            'gas turbine',
+            'combustion gen',
+            'semifluid gen',
+            'steam turbine',
+            'rocket engine fuel',
+            'large naquadah reactor',
+            'lgt',
+            'xlgt',
+        }
+        if rec.machine in recognized_basic_power_machines:
+            # Remove power input data
+            label_lines = label_lines[:-2]
+        
+        line_if_attr_exists = {
+            'heat': (lambda rec: f'Base Heat: {rec.heat}K'),
+            'coils': (lambda rec: f'Coils: {rec.coils.title()}'),
+            'saw_type': (lambda rec: f'Saw Type: {rec.saw_type.title()}'),
+            'material': (lambda rec: f'Turbine Material: {rec.material.title()}'),
+            'size': (lambda rec: f'Size: {rec.size.title()}'),
+            'efficiency': (lambda rec: f'Efficiency: {rec.efficiency}'),
+        }
+        for lookup, line_generator in line_if_attr_exists.items():
+            if hasattr(rec, lookup):
+                label_lines.append(line_generator(rec))
 
         self.nodes[rec_id]['label'] = '\n'.join(label_lines)
 
 
+def addPowerLineNodesV2(self):
+    # This checks for burnables being put into sink and converts them to EU/t
+    generator_names = {
+        0: 'gas turbine',
+        1: 'combustion gen',
+        2: 'semifluid gen',
+        3: 'steam turbine',
+        4: 'rocket engine fuel',
+        5: 'large naquadah reactor',
+    }
+
+    with open('data/power_data.yaml', 'r') as f:
+        power_data = yaml.safe_load(f)
+
+    turbineables = power_data['turbine_fuels']
+    combustables = power_data['combustion_fuels']
+    semifluids = power_data['semifluids']
+    rocket_fuels = power_data['rocket_fuels']
+    naqline_fuels = power_data['naqline_fuels']
+
+    known_burnables = {x: [0, y] for x,y in turbineables.items()}
+    known_burnables.update({x: [1, y] for x,y in combustables.items()})
+    known_burnables.update({x: [2, y] for x,y in semifluids.items()})
+    known_burnables['steam'] = [3, 500]
+    known_burnables.update({x: [4, y] for x,y in rocket_fuels.items()})
+    known_burnables.update({x: [5, y] for x,y in naqline_fuels.items()})
+
+    # Add new burn machines to graph
+
+    pass
+
+
+def graphPreProcessing(self):
+    self.connectGraph()
+    self.removeBackEdges()
+    self.createAdjacencyList()
+
+
 def graphPostProcessing(self):
     addMachineMultipliers(self)
-    createMachineLabels(self)
 
     if self.graph_config.get('POWER_LINE', False):
-        self._addPowerLineNodes()
+        addPowerLineNodesV2(self)
+
+    createMachineLabels(self)
+
     self._addSummaryNode()
 
     if self.graph_config.get('COMBINE_INPUTS', False):
@@ -257,10 +347,8 @@ def graphPostProcessing(self):
 
 def systemOfEquationsSolverGraphGen(self, project_name, recipes, graph_config):
     g = Graph(project_name, recipes, self, graph_config=graph_config)
-    g.connectGraph()
-    g.removeBackEdges()
-    g.createAdjacencyList()
 
+    graphPreProcessing(g)
     sympySolver(g)
     graphPostProcessing(g)
 
