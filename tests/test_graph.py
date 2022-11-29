@@ -5,7 +5,6 @@ from dataClasses.load import recipesFromConfig
 from graphClasses.graph import Graph
 
 import json
-from jsmin import jsmin
 def loadTestConfig():
     with open('config_factory_graph.yaml', 'r') as f:
         graph_config = yaml.safe_load(f)

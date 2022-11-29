@@ -1,5 +1,4 @@
 graphviz>=0.17
-jsmin>=2.2.2
 pytest>=6.2.5
 pyyaml>=6.0
 pyreadline3>=3.4.1

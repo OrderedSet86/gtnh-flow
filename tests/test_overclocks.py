@@ -7,7 +7,6 @@ from dataClasses.base import Ingredient, Recipe, IngredientCollection
 from gtnhClasses.overclocks import overclockRecipe
 
 import json
-from jsmin import jsmin
 def loadTestConfig():
     with open('config_factory_graph.yaml', 'r') as f:
         graph_config = yaml.safe_load(f)
