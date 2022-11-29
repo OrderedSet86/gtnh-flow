@@ -6,7 +6,6 @@ import multiprocessing
 from copy import deepcopy
 from math import isclose
 from string import ascii_uppercase
-from time import sleep
 
 import yaml
 from sympy import linsolve, nonlinsolve, symbols
@@ -30,7 +29,7 @@ def sympySolver(self):
             # one for each input/output ingredient
             num_variables += len(rec.I) + len(rec.O)
 
-    symbols_str = ', '.join([str(x) for x in range(num_variables)])
+    symbols_str = ', '.join(['v' + str(x) for x in range(num_variables)])
     variables = symbols(symbols_str, positive=True, real=True)
 
     # Create rule for which ingredient => which symbol index
@@ -147,6 +146,8 @@ def sympySolver(self):
             )
 
     # Do linear solve
+    for expr in system:
+        print(expr)
     res = linsolve(system, variables)
     print(res)
     if isinstance(res, EmptySet):
@@ -167,9 +168,14 @@ def sympySolver(self):
             res = returndict['result']
         else:
             proc.terminate()
-            raise NotImplementedError('Both linear and nonlinear solver found empty set, so system of equations has no solutions -- report to dev.')
+            raise NotImplementedError('Nonlinear solver took too long')
         
         print(res)
+        if isinstance(res, EmptySet):
+            self.debugLookup = lookup
+            debugAddVarsToEdges(self)
+            self.outputGraphviz()
+            raise NotImplementedError('Both linear and nonlinear solver found empty set, so system of equations has no solutions -- report to dev.')
 
     lstres = list(res)
     if len(lstres) > 1:
@@ -413,7 +419,7 @@ def addPowerLineNodesV2(self):
             # Compute I/O for a single tick
             gen_voltage_index = voltages.index(gen_voltage)
             output_eut = 32 * (4 ** gen_voltage_index)
-            loss_on_singleblock_output = (2 ** gen_voltage_index)
+            loss_on_singleblock_output = (2 ** (gen_voltage_index+1))
             expended_eut = output_eut + loss_on_singleblock_output
 
             expended_fuel_t = expended_eut / (eut_per_cell/1000 * efficiency)
@@ -489,6 +495,37 @@ def addUserNodeColor(self):
 
     for rec_id in all_user_nodes:
         self.nodes[rec_id].update({'fillcolor': self.graph_config['LOCKEDNODE_COLOR']})
+
+
+def debugAddVarsToEdges(self):
+    # This gets called if linsolve and nonlinsolve fail and need to manually solve by hand to check errors
+    lookup = self.debugLookup
+
+    # Lookup is a dictionary defined like this:
+    #   def arrayIndex(machine, product, direction):
+    # Edges in self.edges are defined like:
+    #   rec_id_a, rec_id_b, product
+
+    for edge_data, variableIndex in lookup.items():
+        rec_id, product, direction = edge_data
+
+        # Need to find other side of the edge
+        for edge in self.adj[rec_id][direction]:
+            if edge[2] == product:
+                # connected edge - should only be 1?
+                connected = edge
+                break
+        
+        self_index = connected.index(rec_id)
+        if self_index == 0:
+            other_rec_id = connected[1]
+        elif self_index == 1:
+            other_rec_id = connected[0]
+        
+        if direction == 'I':
+            self.edges[edge]['debugHead'] = f'v{variableIndex}'
+        elif direction == 'O':
+            self.edges[edge]['debugTail'] = f'v{variableIndex}'
 
 
 def graphPreProcessing(self):

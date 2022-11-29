@@ -9,7 +9,7 @@
   dur: 50
   number: 1
 - m: implosion compressor
-  tier: LV
+  tier: HV
   I:
     wrapped thorium ingot: 1
     iTNT: 1

@@ -29,3 +29,11 @@
   eut: 96
   dur: 8
   coils: kanthal
+- m: extractor
+  tier: MV
+  I:
+    sugar beet: 1
+  O:
+    sugar: 8
+  eut: 7
+  dur: 8

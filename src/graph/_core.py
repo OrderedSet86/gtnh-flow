@@ -384,11 +384,17 @@ def outputGraphviz(self):
 
         lab = f'({quant_label})'
         if dst_has_port:
+            debugHead = ''
+            if 'debugHead' in edge_data:
+                debugHead = f'\n{edge_data["debugHead"]}'
             port_style.update(arrowhead='normal')
-            port_style.update(headlabel=lab)
+            port_style.update(headlabel=f'{lab}{debugHead}')
         if src_has_port:
+            debugTail = ''
+            if 'debugTail' in edge_data:
+                debugTail = f'\n{edge_data["debugTail"]}'
             port_style.update(arrowtail='tee')
-            port_style.update(taillabel=lab)
+            port_style.update(taillabel=f'{lab}{debugTail}')
 
         src_is_joint_i = re.match('^joint_i', src_node)
         dst_is_joint_i = re.match('^joint_i', dst_node)

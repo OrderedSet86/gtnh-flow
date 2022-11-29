@@ -15,9 +15,9 @@
     oil: 25
   O:
     sulfuric light fuel: 25
-  number: 1
   eut: 24
   dur: 1
+  number: 1
   group: oil
 - m: electrolyzer
   tier: MV

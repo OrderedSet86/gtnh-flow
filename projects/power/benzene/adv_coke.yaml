@@ -29,11 +29,3 @@
   dur: 2
   target:
     benzene: 1000
-- m: tree growth simulator
-  tier: HV
-  I: {}
-  O:
-    oak wood: 48
-  eut: 480
-  dur: 5
-  saw_type: saw

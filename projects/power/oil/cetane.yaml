@@ -39,7 +39,7 @@
   eut: 384
   dur: 16
 - m: large combustion engine
-  tier: LV
+  tier: EV
   I:
     cetane-boosted diesel: 1000
     oxygen: 488.2813
@@ -48,6 +48,7 @@
     EU: 1_500_000
   eut: 0
   dur: 12.21
+  do_not_overclock: true
 - m: mixer
   tier: MV
   I:

@@ -113,14 +113,6 @@
     wood tar: 1500
   eut: 96
   dur: 16
-- m: 70% eff iv rocket fuel gen
-  tier: LV
-  I: 
-    cn3h7o3 rocket fuel: 1000
-  O:
-    EU: 4300800
-  eut: 0
-  dur: 0.05
 - m: LCR
   tier: IV
   I:

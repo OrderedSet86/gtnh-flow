@@ -34,7 +34,7 @@
   eut: 180
   dur: 3.75
 - m: large chemical reactor
-  tier: LV
+  tier: MV
   I:
     oxygen: 4000
     ammonia: 1000

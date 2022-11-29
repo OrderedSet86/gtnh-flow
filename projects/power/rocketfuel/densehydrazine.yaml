@@ -11,14 +11,6 @@
   pipe_casings: steel
   target:
     dense hydrazine fuel mixture: 1000
-- m: 70% eff iv rocket fuel gen
-  tier: LV
-  I: 
-    dense hydrazine fuel mixture: 1000
-  O:
-    EU: 2150400
-  eut: 0
-  dur: 0.05
 - m: LCR
   tier: EV
   I: 

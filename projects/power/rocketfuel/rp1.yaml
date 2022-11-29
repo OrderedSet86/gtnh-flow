@@ -73,11 +73,3 @@
     air: 1000
   eut: 0
   dur: 0.2
-- m: 70% eff iv rocket fuel gen
-  tier: LV
-  I: 
-    rp-1 rocket fuel: 1000
-  O:
-    EU: 1075200
-  eut: 0
-  dur: 0.05

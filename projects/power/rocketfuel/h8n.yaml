@@ -10,14 +10,6 @@
   coils: tungstensteel
   pipe_casings: steel
   number: 1
-- m: 70% eff iv rocket fuel gen
-  tier: LV
-  I: 
-    h8n4c2o4 rocket fuel: 1000
-  O:
-    EU: 8811600
-  eut: 0
-  dur: 0.05
 - m: exxonmobil
   tier: EV
   I:

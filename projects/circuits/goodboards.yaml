@@ -8,7 +8,8 @@
     good circuit board: 1
   eut: 30
   dur: 30
-  number: 1
+  target:
+    good circuit board: 1
 - m: bending machine
   tier: LV
   I:

@@ -13,7 +13,7 @@
   target:
     high octane gasoline: 1000
 - m: extreme combustion engine
-  tier: LV
+  tier: IV
   I:
     high octane gasoline: 8.72
     liquid oxygen: 4
@@ -21,6 +21,7 @@
     EU: 32700
   eut: 0
   dur: 0.05
+  do_not_overclock: true
 - m: vacuum freezer
   tier: HV
   I:
