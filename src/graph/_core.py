@@ -355,7 +355,6 @@ def outputGraphviz(self):
 
         ing_id = self.getIngId(ing_name)
         quant_label = self.getQuantLabel(ing_id, ing_quant)
-        print(quant_label)
         # ing_label = self.getIngLabel(ing_name)
 
         # Strip bad arguments

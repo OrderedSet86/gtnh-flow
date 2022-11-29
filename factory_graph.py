@@ -8,6 +8,7 @@ import yaml
 from termcolor import colored, cprint
 
 # Internal libraries
+from prototypes.linearSolver import systemOfEquationsSolverGraphGen
 from src.graph import Graph
 from src.data.loadMachines import recipesFromConfig
 
@@ -42,6 +43,9 @@ class ProgramContext:
 
         with open('config_factory_graph.yaml', 'r') as f:
             graph_config = yaml.safe_load(f)
+        
+        if graph_config['USE_NEW_SOLVER']:
+            graph_gen = systemOfEquationsSolverGraphGen
         
         # Set up autcompletion config
         projects_path = Path('projects')

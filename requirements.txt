@@ -1,6 +1,7 @@
 graphviz>=0.17
 jsmin>=2.2.2
 pytest>=6.2.5
-termcolor>=1.1.0
 pyyaml>=6.0
 pyreadline3>=3.4.1
+sympy>=1.11.1
+termcolor>=1.1.0

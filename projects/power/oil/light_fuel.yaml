@@ -32,8 +32,8 @@
 - m: combustion generator
   tier: LV
   I:
-    light fuel: 1000
+    light fuel: 0.11734253667
   O:
-    EU: 274500
+    EU: 32
   eut: 0
   dur: 0.05

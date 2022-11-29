@@ -63,7 +63,7 @@ class Recipe:
         self.O = outputs
         self.eut = eut
         self.dur = dur
-        self.multiplier = 1
+        self.multiplier = -1
         self.base_eut = eut # Used for final graph output
         for key, value in kwargs.items():
             setattr(self, key, value)
@@ -73,7 +73,7 @@ class Recipe:
 
     def __mul__(self, mul_num):
         assert isinstance(mul_num, (int, float))
-        assert self.multiplier == 1 # Undefined behavior with multiple multiplications
+        assert self.multiplier == -1 # Undefined behavior with multiple multiplications
 
         self.I *= mul_num
         self.O *= mul_num
