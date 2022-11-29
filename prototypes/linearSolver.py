@@ -7,7 +7,8 @@ from math import isclose
 from string import ascii_uppercase
 
 import yaml
-from sympy import linsolve, symbols
+from sympy import linsolve, nonlinsolve, symbols
+from sympy.sets.sets import EmptySet
 
 from src.data.basicTypes import Ingredient, IngredientCollection, Recipe
 from src.graph import Graph
@@ -146,12 +147,16 @@ def sympySolver(self):
 
     # Do linear solve
     res = linsolve(system, variables)
+    print(res)
+    if isinstance(res, EmptySet):
+        # self.parent_context.cLog('Unable to solve with linear solver - attempting nonlinear solve', 'red', level=logging.WARNING)
+        raise NotImplementedError('Linear solver found empty set, so system of equations has no solutions -- report to dev.')
+
     lstres = list(res)
     if len(lstres) > 1:
         raise NotImplementedError('Multiple solutions - no code written to deal with this scenario yet')
     solved_vars = res.args[0]
 
-    print(res)
 
     # for machine_info, index in lookup.items():
     #     print(machine_info, solved_vars[index])
@@ -297,6 +302,7 @@ def createMachineLabels(self):
             'material': (lambda rec: f'Turbine Material: {rec.material.title()}'),
             'size': (lambda rec: f'Size: {rec.size.title()}'),
             'efficiency': (lambda rec: f'Efficiency: {rec.efficiency}'),
+            'wasted_fuel': (lambda rec: f'Wasted Fuel: {rec.wasted_fuel}'),
         }
         for lookup, line_generator in line_if_attr_exists.items():
             if hasattr(rec, lookup):
@@ -385,15 +391,13 @@ def addPowerLineNodesV2(self):
             gen_voltage = findClosestVoltage(list(available_efficiencies), voltages[highest_voltage])
             efficiency = available_efficiencies[gen_voltage]
 
-            node_name = f'{gen_name.title()} ({int(efficiency*100)}% eff)'
-
             # Compute I/O for a single tick
             gen_voltage_index = voltages.index(gen_voltage)
             output_eut = 32 * (4 ** gen_voltage_index)
             loss_on_singleblock_output = (2 ** gen_voltage_index)
             expended_eut = output_eut + loss_on_singleblock_output
 
-            expended_fuel_t = (eut_per_cell/1000 * efficiency) / expended_eut
+            expended_fuel_t = expended_eut / (eut_per_cell/1000 * efficiency)
 
             gen_input = IngredientCollection(
                 Ingredient(
@@ -416,6 +420,8 @@ def addPowerLineNodesV2(self):
                 gen_output,
                 0,
                 1,
+                efficiency=f'{efficiency*100}%',
+                wasted_fuel=f'{self.userRound(loss_on_singleblock_output)}EU/t/amp',
             )
 
             produced_eut_s = quant_s/expended_fuel_t*output_eut 
@@ -430,7 +436,6 @@ def addPowerLineNodesV2(self):
 
             self.addNode(
                 node_idx,
-                label= node_name,
                 fillcolor=self.graph_config['NONLOCKEDNODE_COLOR'],
                 shape='box'
             )
