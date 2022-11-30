@@ -3,6 +3,7 @@
 
 import logging
 import multiprocessing
+from collections import Counter
 from copy import deepcopy
 from math import isclose
 from string import ascii_uppercase
@@ -13,6 +14,7 @@ from sympy.sets.sets import EmptySet
 
 from src.data.basicTypes import Ingredient, IngredientCollection, Recipe
 from src.graph import Graph
+from src.graph._utils import swapIO
 
 
 def sympySolver(self):
@@ -30,19 +32,20 @@ def sympySolver(self):
             num_variables += len(rec.I) + len(rec.O)
 
     symbols_str = ', '.join(['v' + str(x) for x in range(num_variables)])
-    variables = symbols(symbols_str, positive=True, real=True)
+    variables = list(symbols(symbols_str, positive=True, real=True))
 
     # Create rule for which ingredient => which symbol index
     # Need to invert this later on when populating graph
     lookup = {}
-    idx_counter = 0
-    def arrayIndex(machine, product, direction):
-        nonlocal lookup, idx_counter
-        key = (machine, product, direction)
+    variable_idx_counter = 0
+    def arrayIndex(machine, product, direction, multi_idx=0):
+        nonlocal lookup, variable_idx_counter
+        key = (machine, product, direction, multi_idx)
         if key not in lookup:
-            lookup[key] = idx_counter
-            idx_counter += 1
-            return idx_counter - 1
+            # print(f'Unique key {key}')
+            lookup[key] = variable_idx_counter
+            variable_idx_counter += 1
+            return variable_idx_counter - 1
         else:
             return lookup[key]
 
@@ -134,20 +137,199 @@ def sympySolver(self):
                         )
 
 
-    # Add machine-machine edges
+    # Populate edge_from_perspective_to_index for all edges - so there's something consistent to call for all edges
+    # TODO: Merge lookup and edge_from_perspective_to_index - they describe mostly the same thing
+    edge_from_perspective_to_index = {}
     for edge in self.edges:
+        a, b, product = edge
+
+        if self._checkIfMachine(a):
+            if (edge, a) not in edge_from_perspective_to_index:
+                edge_from_perspective_to_index[(edge, a)] = arrayIndex(a, product, 'O')
+                # print(f'Wrote index {arrayIndex(a, product, "O")}')
+
+        if self._checkIfMachine(b):
+            if (edge, b) not in edge_from_perspective_to_index:
+                edge_from_perspective_to_index[(edge, b)] = arrayIndex(b, product, 'I')
+                # print(f'Wrote index {arrayIndex(b, product, "I")}')
+
+
+    # Add machine-machine edges
+    # Need to be careful about how these are added - multi input and multi output can
+    #   require arbitrarily many variables per equation
+    # See https://github.com/OrderedSet86/gtnh-flow/issues/7#issuecomment-1331312996 for an example
+    # Solution is below the linked comment
+    computed_edges = set()
+    for edge in self.edges:
+        if edge in computed_edges:
+            continue
         a, b, product = edge
         if self._checkIfMachine(a) and self._checkIfMachine(b):
             # print(f'Machine edge detected! {edge}')
-            system.append(
-                variables[arrayIndex(a, product, 'O')]
-                -
-                variables[arrayIndex(b, product, 'I')]
-            )
+
+            # Run DFS to find all connected machine edges using the same product
+            involved_machines = Counter()
+            involved_edges = set()
+            q = [edge]
+            while q:
+                dfs_edge = q.pop()
+                if dfs_edge in involved_edges:
+                    continue
+                dfs_a, dfs_b, _ = dfs_edge
+
+                involved_edges.add(dfs_edge)
+                involved_machines[dfs_a] += 1
+                involved_machines[dfs_b] += 1
+
+                # Check for all adjacent I/O edges using the same product
+                for edge in self.adj[a]['O']: # Multi-output
+                    if edge[2] == product:
+                        q.append(edge)
+                for edge in self.adj[b]['I']: # Multi-input
+                    if edge[2] == product:
+                        q.append(edge)
+            
+            if len(involved_edges) == 1:
+                # Simple version - all A output fulfills all B input
+
+                system.append(
+                    variables[arrayIndex(a, product, 'O')]
+                    -
+                    variables[arrayIndex(b, product, 'I')]
+                )
+            else:
+                # Hard version - A and B fulfill some percentage of each other and other machines in a network
+                # Each multi-input and multi-output will require the creation of minimum 2 new variables
+                print(involved_machines)
+                print(involved_edges)
+
+                # Assume no loops since DAG was enforced earlier
+                for rec_id, count in involved_machines.most_common(): # most_common so multi-IO variables are created first
+                    if count > 1:
+                        # Multi-input or multi-output
+                        # Old variable is now the collected amount for that side
+                        # Then, add new variable for each input/output (minimum 2)
+
+                        # Add new variables
+                        new_symbols = ', '.join(['v' + str(x + num_variables) for x in range(count)])
+                        # print(len(variables))
+                        variables.extend(list(symbols(new_symbols, positive=True, real=True)))
+                        # print(len(variables))
+
+                        # Associate new variables with an edge
+                        variable_index = num_variables
+                        direction = None
+                        for edge in involved_edges:
+                            multi_a, multi_b, multi_product = edge
+                            if rec_id in edge[:2]:
+                                if rec_id == edge[0]:
+                                    flow_direction = 'O'
+                                    multi_machine = multi_a
+                                else:
+                                    flow_direction = 'I'
+                                    multi_machine = multi_b
+
+                                # print(f'added {product} with {variable_index=}')
+                                edge_from_perspective_to_index[(edge, multi_machine)] = variable_index
+                                arrayIndex(multi_machine, product, flow_direction, multi_idx=variable_index) # Index for later
+                                variable_index += 1
+
+                        # Create new variable association with old variable
+                        # if flow_direction == 'O':
+                        #     multi_machine = a
+                        # elif flow_direction == 'I':
+                        #     multi_machine = b
+
+                        base = variables[arrayIndex(multi_machine, product, flow_direction, multi_idx=0)]
+                        for multi_idx in range(count):
+                            base -= variables[arrayIndex(multi_machine, product, flow_direction, multi_idx=num_variables + multi_idx)]
+                        system.append(base)
+
+                        num_variables += count
+
+                        # NOTE: Don't actually add machine-machine equation here - want to wait until all variables are determined
+
+                    else:
+                        # Still "simple" - can keep old self variable, but opposite end of edge must point at correct multi-IO variable
+
+                        # print('Pre-efpti')
+                        # for k, v in edge_from_perspective_to_index.items():
+                        #     print(k, v)
+                        # print()
+
+                        # Figure out if simple machine is a or b
+                        for edge in involved_edges:
+                            if rec_id in edge[:2]:
+                                relevant_edge = edge
+                        
+                        a, b, product = relevant_edge
+
+                        # Add equation
+                        # for k, v in edge_from_perspective_to_index:
+                        #     print(k, v)
+                        # print()
+
+                        if rec_id == a: # a is simple machine
+                            multi_idx = edge_from_perspective_to_index[(relevant_edge, b)]
+                            # print(relevant_edge, rec_id, flush=True)
+                            # try:
+                            system.append(
+                                variables[arrayIndex(a, product, 'O')]
+                                -
+                                variables[arrayIndex(b, product, 'I', multi_idx=multi_idx)]
+                            )
+                        elif rec_id == b: # b is simple machine
+                            multi_idx = edge_from_perspective_to_index[(relevant_edge, a)]
+                            system.append(
+                                variables[arrayIndex(a, product, 'O', multi_idx=multi_idx)]
+                                -
+                                variables[arrayIndex(b, product, 'I')]
+                            )
+
+                for rec_id, count in involved_machines.items():
+                    # Now that all variables are determined, 
+                    #   actually insert equations for machine-machine between multi-IO machines.
+                    if count == 1:
+                        continue
+                    elif count > 1:
+                        # Connected edge also needs to be going to another multi-IO machine
+
+                        for edge in involved_edges:
+                            if rec_id in edge[:2]:
+                                # Find whether current machine is a or b
+                                if rec_id == edge[0]:
+                                    other_id = edge[1]
+                                    base_direction = 'O'
+                                else:
+                                    other_id = edge[0]
+                                    base_direction = 'I'
+                        
+                            if involved_machines[other_id] == 1:
+                                continue
+                            else:
+                                # Found multi-IO to multi-IO edge
+                                system.append(
+                                    variables[arrayIndex(
+                                        rec_id,
+                                        product,
+                                        base_direction, 
+                                        multi_idx=edge_from_perspective_to_index[(edge, rec_id)]
+                                    )]
+                                    -
+                                    variables[arrayIndex(
+                                        other_id,
+                                        product,
+                                        swapIO(base_direction),
+                                        multi_idx=edge_from_perspective_to_index[(edge, other_id)]
+                                    )]
+                                )
+
+            computed_edges.update(involved_edges)
+
 
     # Do linear solve
-    for expr in system:
-        print(expr)
+    # for expr in system:
+    #     print(expr)
     res = linsolve(system, variables)
     print(res)
     if isinstance(res, EmptySet):
@@ -172,7 +354,7 @@ def sympySolver(self):
         
         print(res)
         if isinstance(res, EmptySet):
-            self.debugLookup = lookup
+            self.debugEdgeFromPerspectiveToIndex = edge_from_perspective_to_index
             debugAddVarsToEdges(self)
             self.outputGraphviz()
             raise NotImplementedError('Both linear and nonlinear solver found empty set, so system of equations has no solutions -- report to dev.')
@@ -182,11 +364,11 @@ def sympySolver(self):
         raise NotImplementedError('Multiple solutions - no code written to deal with this scenario yet')
     solved_vars = res.args[0]
 
-
     # for machine_info, index in lookup.items():
     #     print(machine_info, solved_vars[index])
 
     # Update graph edge values
+    # FIXME: Needs to be adjusted for new variable system for multi IO
     for edge in self.edges:
         a, b, product = edge
         a_machine = self._checkIfMachine(a)
@@ -194,8 +376,8 @@ def sympySolver(self):
 
         if a_machine and b_machine:
             # Sanity check both edges and make sure they match
-            a_index = lookup[(a, product, 'O')]
-            b_index = lookup[(b, product, 'I')]
+            a_index = edge_from_perspective_to_index[(edge, a)]
+            b_index = edge_from_perspective_to_index[(edge, b)]
             
             a_quant = solved_vars[a_index]
             b_quant = solved_vars[b_index]
@@ -214,9 +396,9 @@ def sympySolver(self):
         elif a_machine or b_machine:
             # Assume a_machine for now
             if a_machine:
-                solution_index = lookup[(a, product, 'O')]
+                solution_index = edge_from_perspective_to_index[(edge, a)]
             elif b_machine:
-                solution_index = lookup[(b, product, 'I')]
+                solution_index = edge_from_perspective_to_index[(edge, b)]
 
             quant = solved_vars[solution_index]
             relevant_edge = self.edges[edge]
@@ -499,33 +681,39 @@ def addUserNodeColor(self):
 
 def debugAddVarsToEdges(self):
     # This gets called if linsolve and nonlinsolve fail and need to manually solve by hand to check errors
-    lookup = self.debugLookup
+    edge_from_perspective_to_index = self.debugEdgeFromPerspectiveToIndex
 
     # Lookup is a dictionary defined like this:
     #   def arrayIndex(machine, product, direction):
     # Edges in self.edges are defined like:
     #   rec_id_a, rec_id_b, product
 
-    for edge_data, variableIndex in lookup.items():
-        rec_id, product, direction = edge_data
+    for edge_perspective_data, variableIndex in edge_from_perspective_to_index.items():
+        edge, perspective = edge_perspective_data
+        rec_id, product, direction = edge
 
         # Need to find other side of the edge
-        for edge in self.adj[rec_id][direction]:
-            if edge[2] == product:
-                # connected edge - should only be 1?
-                connected = edge
-                break
+        # for edge in self.adj[perspective][direction]:
+        #     if edge[2] == product:
+        #         # connected edge - should only be 1?
+        #         connected = edge
+        #         break
         
-        self_index = connected.index(rec_id)
-        if self_index == 0:
-            other_rec_id = connected[1]
-        elif self_index == 1:
-            other_rec_id = connected[0]
+        # self_index = connected.index(rec_id)
+        # if self_index == 0:
+        #     other_rec_id = connected[1]
+        # elif self_index == 1:
+        #     other_rec_id = connected[0]
         
+        if 'debugHead' not in self.edges[edge]:
+            self.edges[edge]['debugHead'] = ''
+        if 'debugTail' not in self.edges[edge]:
+            self.edges[edge]['debugTail'] = ''
+
         if direction == 'I':
-            self.edges[edge]['debugHead'] = f'v{variableIndex}'
+            self.edges[edge]['debugHead'] += f'v{variableIndex}'
         elif direction == 'O':
-            self.edges[edge]['debugTail'] = f'v{variableIndex}'
+            self.edges[edge]['debugTail'] += f'v{variableIndex}'
 
 
 def graphPreProcessing(self):
