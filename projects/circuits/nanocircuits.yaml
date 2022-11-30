@@ -1470,7 +1470,7 @@
   eut: 480
   dur: 445.5
   heat: 4500
-  coils: fluxed electrum
+  coils: electrum flux
 - m: mixer
   tier: IV
   I:

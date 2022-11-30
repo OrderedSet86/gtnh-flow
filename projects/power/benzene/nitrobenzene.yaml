@@ -9,20 +9,20 @@
   eut: 96
   dur: 3
   number: 1
-  group: benzene
+  #group: benzene
 - m: distillation tower
   tier: EV
   I:
     wood tar: 1000
   O:
-    dimethylbenzene: 200
-    toluene: 75
-    benzene: 350
-    phenol: 75
-    creosote: 300
+    dimethylbenzene: 150
+    toluene: 100
+    benzene: 400
+    phenol: 100
+    creosote: 250
   eut: 256
   dur: 2
-  group: benzene
+  #group: benzene
 - m: centrifuge
   tier: LV
   I:
@@ -32,7 +32,6 @@
     '[output] oxygen': 1000
   eut: 7
   dur: 80
-  group: benzene
 - m: compressor
   tier: LV
   I: {}
@@ -40,7 +39,6 @@
     air: 2000
   eut: 2
   dur: 15
-  group: benzene
 - m: exxonmobil
   tier: EV
   I:
@@ -92,32 +90,24 @@
     nitric acid: 1000
   eut: 30
   dur: 16
-  group: nitric acid
+  #group: nitric acid
 - m: large chemical reactor
   tier: HV
   I:
-    nitrogen 2: 1000
+    nitrogen: 1000
     hydrogen: 3000
   O:
     ammonia: 1000
   eut: 384
   dur: 16
-  group: nitric acid
-- m: centrifuge
+  #group: nitric acid
+- m: fluid extractor
   tier: LV
   I:
-    air 2: 10000
+    charcoal: 1
   O:
-    nitrogen 2: 3900
-    '[output] oxygen': 1000
-  eut: 7
-  dur: 80
-  group: nitric acid
-- m: compressor
-  tier: LV
-  I: {}
-  O:
-    air 2: 2000
-  eut: 2
-  dur: 15
-  group: nitric acid
+    ashes: 0.1
+    wood tar: 100
+  eut: 16
+  dur: 1.5
+  #group: benzene

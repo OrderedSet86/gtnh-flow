@@ -181,7 +181,7 @@ class OverclockHandler:
         recipe.eut = 4
         recipe.dur = 500
         recipe = self.modifyStandard(recipe)
-        coil_list = list(self.overlock_data['coil_multipliers'])
+        coil_list = list(self.overclock_data['coil_multipliers'])
         batch_size = 8 * 2**max(4, coil_list.index(recipe.coils))
         recipe.I *= batch_size
         recipe.O *= batch_size

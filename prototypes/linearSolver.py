@@ -200,8 +200,8 @@ def sympySolver(self):
             else:
                 # Hard version - A and B fulfill some percentage of each other and other machines in a network
                 # Each multi-input and multi-output will require the creation of minimum 2 new variables
-                print(involved_machines)
-                print(involved_edges)
+                # print(involved_machines)
+                # print(involved_edges)
 
                 # Assume no loops since DAG was enforced earlier
                 for rec_id, count in involved_machines.most_common(): # most_common so multi-IO variables are created first
@@ -234,12 +234,12 @@ def sympySolver(self):
                                 arrayIndex(multi_machine, product, flow_direction, multi_idx=variable_index) # Index for later
                                 variable_index += 1
 
-                        # Create new variable association with old variable
-                        # if flow_direction == 'O':
-                        #     multi_machine = a
-                        # elif flow_direction == 'I':
-                        #     multi_machine = b
+                        if flow_direction == 'O':
+                            self.parent_context.cLog(f'Detected multi-output scenario involving {product}!', 'green', level=logging.INFO)
+                        if flow_direction == 'I':
+                            self.parent_context.cLog(f'Detected multi-input scenario involving {product}!', 'green', level=logging.INFO)
 
+                        # Create equation for scenario
                         base = variables[arrayIndex(multi_machine, product, flow_direction, multi_idx=0)]
                         for multi_idx in range(count):
                             base -= variables[arrayIndex(multi_machine, product, flow_direction, multi_idx=num_variables + multi_idx)]
@@ -368,7 +368,6 @@ def sympySolver(self):
     #     print(machine_info, solved_vars[index])
 
     # Update graph edge values
-    # FIXME: Needs to be adjusted for new variable system for multi IO
     for edge in self.edges:
         a, b, product = edge
         a_machine = self._checkIfMachine(a)
@@ -497,6 +496,8 @@ def createMachineLabels(self):
             'extreme combustion engine',
             'XL Turbo Gas Turbine',
             'XL Turbo Steam Turbine',
+
+            'air intake hatch',
         }
         if rec.machine in recognized_basic_power_machines:
             # Remove power input data
