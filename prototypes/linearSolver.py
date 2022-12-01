@@ -9,7 +9,7 @@ from math import isclose
 from string import ascii_uppercase
 
 import yaml
-from sympy import Eq, linsolve, nonlinsolve, symbols
+from sympy import linsolve, nonlinsolve, symbols
 from sympy.solvers import solve
 from sympy.sets.sets import EmptySet
 
@@ -848,13 +848,26 @@ def searchForInconsistency(self, system):
             # TODO: Automate solution process fully
 
             # selection = input() # TODO: Verify input
+            selection = None
 
-            # if selection == '1':
-            #     # Create a new edge for product -> sink
-            #     pass
-            # elif selection == '2':
-            #     # Pull more of each other input from source
-            #     pass
+            if selection == '1':
+                # Send excess to sink
+                # 1. Similar to multi-IO: (a-c could probably be spun off into another fxn)
+                #       a. reassociate old variable with machine sum of product
+                #       b. create a new variable for old edge
+                #       c. create a new variable for machine -> sink
+                # 2. Redo linear solve
+                # 3. Give option for user to add new I/O association to YAML config (will delete comments)
+                pass
+            elif selection == '2':
+                # Pull more of each other input from source
+                # 1. Similar to multi-IO: (a-c could probably be spun off into another fxn)
+                #       a. reassociate each old variable on all sides of machine with machine sum of product
+                #       b. create a new variable for each old edge
+                #       c. create a new variable for each source -> machine
+                # 2. Redo linear solve
+                # 3. Give option for user to add new I/O association to YAML config (will delete comments)
+                pass
 
 
 def graphPreProcessing(self):

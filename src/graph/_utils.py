@@ -1,4 +1,3 @@
-import re
 from collections import defaultdict
 
 from src.data.basicTypes import Recipe
