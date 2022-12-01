@@ -1,5 +1,5 @@
 # === FUNCTIONALITY SETTINGS ===
-POWER_LINE: true # Automatically burns all leftover fuels
+POWER_LINE: false # Automatically burns all leftover fuels
 DO_NOT_BURN: # If POWER_LINE is true, don't burn these
   - toluene
   - phenol

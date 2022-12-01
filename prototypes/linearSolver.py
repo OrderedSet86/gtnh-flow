@@ -3,13 +3,14 @@
 
 import logging
 import multiprocessing
-from collections import Counter
+from collections import Counter, deque
 from copy import deepcopy
 from math import isclose
 from string import ascii_uppercase
 
 import yaml
-from sympy import linsolve, nonlinsolve, symbols
+from sympy import Eq, linsolve, nonlinsolve, symbols
+from sympy.solvers import solve
 from sympy.sets.sets import EmptySet
 
 from src.data.basicTypes import Ingredient, IngredientCollection, Recipe
@@ -333,31 +334,36 @@ def sympySolver(self):
     res = linsolve(system, variables)
     print(res)
     if isinstance(res, EmptySet):
-        self.parent_context.cLog('Unable to solve with linear solver - attempting nonlinear solve for 5s...', 'red', level=logging.WARNING)
+        # FIXME: Disabling nonlinear solve for now
 
-        def worker(args, returndict):
-            result = nonlinsolve(*args)
-            returndict['result'] = result
+        # self.parent_context.cLog('Unable to solve with linear solver - attempting nonlinear solve for 5s...', 'red', level=logging.WARNING)
 
-        manager = multiprocessing.Manager()
-        returndict = manager.dict()
-        proc = multiprocessing.Process(target=worker, args=((system, variables), returndict))
-        # FIXME: ^^ This will raise errors on Windows - see comments https://stackoverflow.com/a/7752174
-        # It's pickling, of course...
-        proc.start()
-        proc.join(5)
-        if 'result' in returndict:
-            res = returndict['result']
-        else:
-            proc.terminate()
-            raise NotImplementedError('Nonlinear solver took too long')
+        # def worker(args, returndict):
+        #     result = nonlinsolve(*args)
+        #     returndict['result'] = result
+
+        # manager = multiprocessing.Manager()
+        # returndict = manager.dict()
+        # proc = multiprocessing.Process(target=worker, args=((system, variables), returndict))
+        # # FIXME: ^^ This will raise errors on Windows - see comments https://stackoverflow.com/a/7752174
+        # # It's pickling, of course...
+        # proc.start()
+        # proc.join(5)
+        # if 'result' in returndict:
+        #     res = returndict['result']
+        # else:
+        #     proc.terminate()
+        #     raise NotImplementedError('Nonlinear solver took too long')
         
-        print(res)
+        # print(res)
         if isinstance(res, EmptySet):
             self.debugEdgeFromPerspectiveToIndex = edge_from_perspective_to_index
+            self.lookup = lookup
+            searchForInconsistency(self, system)
             debugAddVarsToEdges(self)
             self.outputGraphviz()
-            raise NotImplementedError('Both linear and nonlinear solver found empty set, so system of equations has no solutions -- report to dev.')
+            exit(1)
+            # raise NotImplementedError('Both linear and nonlinear solver found empty set, so system of equations has no solutions -- report to dev.')
 
     lstres = list(res)
     if len(lstres) > 1:
@@ -683,6 +689,7 @@ def addUserNodeColor(self):
 def debugAddVarsToEdges(self):
     # This gets called if linsolve and nonlinsolve fail and need to manually solve by hand to check errors
     edge_from_perspective_to_index = self.debugEdgeFromPerspectiveToIndex
+    # print(edge_from_perspective_to_index)
 
     # Lookup is a dictionary defined like this:
     #   def arrayIndex(machine, product, direction):
@@ -691,7 +698,7 @@ def debugAddVarsToEdges(self):
 
     for edge_perspective_data, variableIndex in edge_from_perspective_to_index.items():
         edge, perspective = edge_perspective_data
-        rec_id, product, direction = edge
+        a, b, product = edge
 
         # Need to find other side of the edge
         # for edge in self.adj[perspective][direction]:
@@ -711,10 +718,143 @@ def debugAddVarsToEdges(self):
         if 'debugTail' not in self.edges[edge]:
             self.edges[edge]['debugTail'] = ''
 
-        if direction == 'I':
+        if perspective == b:
             self.edges[edge]['debugHead'] += f'v{variableIndex}'
-        elif direction == 'O':
+        elif perspective == a:
             self.edges[edge]['debugTail'] += f'v{variableIndex}'
+        # print(self.edges[edge])
+
+
+def searchForInconsistency(self, system):
+    # Solve each equation stepwise until inconsistency is found, then report to end user
+
+    self.parent_context.cLog('Searching for inconsistency in system of equations...', 'blue', level=logging.INFO)
+
+    # for expr in system:
+    #     print(expr)
+    # print()
+
+    equations_to_check = deque(system)
+    max_iter = len(system) ** 2 + 1
+    iterations = 0
+
+    solved_values = {}
+    inconsistent_variables = []
+
+    while equations_to_check and iterations < max_iter:
+        expr = equations_to_check.popleft()
+
+        # Detect variable or variables in equation
+        involved_variables = expr.as_terms()[-1]
+
+        # Solve if feasible, otherwise go to next
+        # Can be solved if only 1 unknown variable
+        unsolved = [x for x in involved_variables if x not in solved_values]
+        solved = [x for x in involved_variables if x in solved_values]
+
+        if len(unsolved) <= 1:
+            preexpr = expr
+            for var in solved:
+                expr = expr.subs(var, solved_values[var])
+            # print('   ', expr)
+            
+            # If expr is a nonzero constant, inconsistency is found
+            if expr.is_constant():
+                constant_diff = float(expr)
+                if not isclose(constant_diff, 0.0, abs_tol=0.00000001):
+                    # self.parent_context.cLog(f'Inconsistency found in {preexpr}!', 'red', level=logging.WARNING)
+                    # Now print what the variables are referring to and output debug graph
+                    inconsistent_variables.append((involved_variables, constant_diff))
+                    iterations += 1
+                    continue
+
+            unvar = unsolved[0]
+            solution = solve(expr, unvar)
+
+            if len(unsolved) == 1:
+                if len(solution) == 1:
+                    sval = solution[0]
+                    solved_values[unvar] = sval
+                    # print(sval)
+                else:
+                    raise NotImplementedError(f'{solution=}')
+            else:
+                raise NotImplementedError(f'{expr} {sorted(solved_values.items(), key=lambda tup: str(tup[0]))}')
+
+        else:
+            equations_to_check.append(expr)
+        
+        iterations += 1
+    
+    if inconsistent_variables == []:
+        raise NotImplementedError('Both linear and nonlinear solver found empty set, so system of equations has no solutions -- report to dev.')
+
+    # Check inconsistent equations to see if products on both sides are the same - these are the core issues
+    def var_to_idx(var):
+        return int(str(var).strip('v'))
+
+    edge_from_perspective_to_index = self.debugEdgeFromPerspectiveToIndex
+    # for k, v in edge_from_perspective_to_index.items():
+    #     print(k, v)
+
+    idx_to_mpdm = {idx: mpdm for mpdm, idx in self.lookup.items()}
+    for group, constant_diff in inconsistent_variables:
+        assert len(group) == 2 # TODO: NotImplemented
+
+        # Reverse lookup using var
+        products = set()
+        mpdm_cache = []
+        for var in group:
+            idx = var_to_idx(var)
+            mpdm = idx_to_mpdm[idx]
+            mpdm_cache.append(mpdm)
+            machine, product, direction, multi_idx = mpdm
+            products.add(product)
+        
+        # When problematic inconsistency is found...
+        if len(products) == 1:
+            self.parent_context.cLog(f'Major inconsistency: {group}', 'red', level=logging.WARNING)
+
+            self.parent_context.cLog(f'Between output={self.recipes[mpdm_cache[0][0]].O}', 'red', level=logging.WARNING)
+            self.parent_context.cLog(f'    and  input={self.recipes[mpdm_cache[1][0]].I}', 'red', level=logging.WARNING)
+
+            self.parent_context.cLog('Please fix by either:', 'green', level=logging.INFO)
+
+            # if constant_diff < 0:
+            #     parent_group_idx = 0
+            #     child_group_idx = 1
+            # else:
+            parent_group_idx = 0
+            child_group_idx = 1
+
+            # Negative means too much of right side, or too few of other sided inputs
+            self.parent_context.cLog(f'1. Sending excess {group[parent_group_idx]} {product} to sink', 'blue', level=logging.INFO)
+
+            # Check other sided inputs
+            machine, product, direction, multi_idx = idx_to_mpdm[var_to_idx(group[child_group_idx])]
+            nonself_product = []
+            for edge in self.adj[machine][direction]:
+                # print(self.adj[machine])
+                # print(edge)
+                a, b, edgeproduct = edge
+                if edgeproduct != product:
+                    nonself_product.append((
+                        edgeproduct,
+                        'v' + f'{edge_from_perspective_to_index[(edge, machine)]}',
+                    ))
+
+            self.parent_context.cLog(f'2. Pulling more {nonself_product} from source', 'blue', level=logging.INFO)
+
+            # TODO: Automate solution process fully
+
+            # selection = input() # TODO: Verify input
+
+            # if selection == '1':
+            #     # Create a new edge for product -> sink
+            #     pass
+            # elif selection == '2':
+            #     # Pull more of each other input from source
+            #     pass
 
 
 def graphPreProcessing(self):

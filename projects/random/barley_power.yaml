@@ -7,6 +7,7 @@
   eut: 2
   dur: 15
   number: 1
+
 - m: maceration stack
   tier: IV
   I:
@@ -15,6 +16,7 @@
     plant mass: 2.75
   eut: 30
   dur: 10
+
 - m: industrial centrifuge
   tier: IV
   I:
@@ -23,6 +25,7 @@
     bio chaff: 1
   eut: 4
   dur: 15
+
 - m: industrial coke oven
   tier: IV
   I:
@@ -31,6 +34,7 @@
     fermented biomass: 1500
   eut: 10
   dur: 8
+
 - m: dangote - distillation tower
   tier: EV
   I:
@@ -45,6 +49,7 @@
     fertiliser: 1
   eut: 180
   dur: 3.75
+
 - m: zhuhai
   tier: IV
   I: {}
@@ -52,6 +57,7 @@
     zhuhai fish: 1
   eut: 16
   dur: 5
+
 - m: fluid extractor
   tier: LV
   I:
@@ -60,6 +66,7 @@
     fish oil: 50
   eut: 4
   dur: 0.8
+
 - m: large chemical reactor
   tier: IV
   I:
@@ -71,6 +78,7 @@
     bio diesel: 54000
   eut: 30
   dur: 270
+
 - m: electrolyzer
   tier: LV
   I:
@@ -79,6 +87,7 @@
     sodium hydroxide dust: 1
   eut: 30
   dur: 36
+
 - m: large chemical reactor
   tier: HV
   I:
@@ -89,6 +98,8 @@
     salt water: 9000
   eut: 30
   dur: 180
+
+# 10
 - m: large chemical reactor
   tier: HV
   I:
@@ -98,6 +109,8 @@
     cetane-boosted diesel: 7500
   eut: 480
   dur: 6
+
+# 11
 - m: large chemical reactor
   tier: EV
   I:
