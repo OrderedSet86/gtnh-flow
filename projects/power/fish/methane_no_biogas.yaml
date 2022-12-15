@@ -1,0 +1,9 @@
+- m: centrifuge
+  tier: LV
+  I:
+    pams fish: 1
+  O:
+    methane: 96
+  eut: 5
+  dur: 19
+  number: 1

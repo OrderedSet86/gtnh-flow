@@ -1,0 +1,119 @@
+- m: crafting
+  tier: LV
+  I:
+    edible salt: 1
+    milk: 1000
+  O:
+    cheese ingot: 1
+  eut: 0
+  dur: 0.05
+- m: crafting
+  tier: LV
+  I:
+    water: 1000
+  O:
+    edible salt: 1
+  eut: 0
+  dur: 0.05
+- m: meteor ritual
+  tier: LV
+  I:
+    cheese ingot: 1
+  O:
+    moon soil: 2040
+  eut: 0
+  dur: 60
+- m: macerator
+  tier: HV
+  I:
+    moon soil: 1
+  O:
+    moon stone dust: 1
+    silicon dioxide dust: 0.125
+  eut: 30
+  dur: 20
+- m: centrifuge
+  tier: HV
+  I:
+    moon stone dust: 36
+  O:
+    silicon dioxide dust: 4.5
+    manganese dust: 1.8
+    olivine dust: 0.9
+    rare earth: 0.3
+    pmp dust: 0.4
+    tungstate dust: 0.1
+  eut: 120
+  dur: 162
+  target:
+    rare earth: 1
+- m: centrifuge
+  tier: MV
+  I:
+    milk: 10_000
+  O:
+    sugar: 5.5
+    calcium dust: 0.111111111
+    magnesium dust: 0.0111111111
+    potassium dust: 0.0111111111
+    sodium dust: 0.0444444444
+    phosphorus dust: 0.0111111111
+    water: 8832
+  eut: 120
+  dur: 2.5
+- m: chemical bath
+  tier: IV
+  I:
+    rare earth: 3
+    hydrofluoric acid: 2000
+  O:
+    crushed rare earth (III) ore: 2.4
+  eut: 7680
+  dur: 10
+- m: macerator
+  tier: IV
+  I:
+    crushed rare earth (III) ore: 1
+  O:
+    impure rare earth (III) dust: 1
+    cerium-rich mixture dust: 0.2
+  eut: 3840
+  dur: 20
+- m: macerator
+  tier: IV
+  I:
+    impure rare earth (III) dust: 1
+  O:
+    rare earth (III) dust: 1
+    erbium dust: 1
+  eut: 3840
+  dur: 14.4
+- m: mixer
+  tier: MV
+  I:
+    cerium-rich mixture dust: 3
+    nitrogenated monazite rare earth concentrate: 1000
+  O:
+    nitric-leached monazite mixture: 2000
+  eut: 120
+  dur: 11
+- m: dehydrator
+  tier: IV
+  I:
+    rare earth (III) dust: 9
+  O:
+    florencite dust: 1
+  eut: 7680
+  dur: 7.2
+- m: electrolyzer
+  tier: LV
+  I:
+    florencite dust: 21
+  O:
+    samarium ore concentrate dust: 1
+    aluminium dust: 3
+    phosphorus dust: 1
+    oxygen: 10_000
+    hydrogen: 6_000
+  eut: 16
+  dur: 8.55

@@ -195,7 +195,8 @@ def outputGraphviz(self):
         'fontsize': str(self.graph_config['EDGE_FONTSIZE']),
         'dir': 'both',
         'arrowtail': 'none',
-        'arrowhead': 'none'
+        'arrowhead': 'none',
+        'penwidth': '1',
     }
     g = graphviz.Digraph(
         engine='dot',
