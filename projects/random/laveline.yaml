@@ -33,6 +33,7 @@
     ice: 1
   eut: 2
   dur: 15
+  number: 1
 - m: fluid solidifier
   tier: LV
   I:
@@ -41,4 +42,10 @@
     snow: 1
   eut: 4
   dur: 25.6
-  number: 2
+- m: rock breaker
+  tier: LV
+  I: {}
+  O:
+    stone: 1
+  eut: 30
+  dur: 0.8

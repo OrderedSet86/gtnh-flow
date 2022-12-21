@@ -1,0 +1,59 @@
+- m: cutting machine
+  tier: LV
+  I:
+    framing sheet: 1
+    lubricant: 1
+  O:
+    framing board: 4
+  eut: 4
+  dur: 1.25
+  # target:
+  #   framing board: 100
+- m: cutting machine
+  tier: LV
+  I:
+    oak plank: 1
+    lubricant: 1
+  O:
+    framing sheet: 4
+  eut: 4
+  dur: 1.25
+- m: cutting machine
+  tier: LV
+  I:
+    oak wood slab: 1
+    lubricant: 1
+  O:
+    oak plank: 2
+  eut: 7
+  dur: 2.5
+- m: cutting machine
+  tier: LV
+  I:
+    oak wood plank: 1
+    lubricant: 1
+  O:
+    oak wood slab: 2
+  eut: 4
+  dur: 1.25
+- m: cutting machine
+  tier: LV
+  I:
+    oak wood: 1
+    lubricant: 1
+  O:
+    oak wood plank: 6
+    wood pulp: 1
+  eut: 7
+  dur: 10
+  target:
+    oak wood: 1
+- m: brewing machine
+  tier: LV
+  I:
+    creosote oil: 750
+    redstone: 1
+  O:
+    lubricant: 750
+  eut: 4
+  dur: 6.4
