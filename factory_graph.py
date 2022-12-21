@@ -78,6 +78,10 @@ class ProgramContext:
 
             cprint('Please enter project path (example: "power/oil/light_fuel.yaml", tab autocomplete allowed)', 'blue')
             project_name = input(colored('> ', 'green'))
+            if not project_name.endswith('.yaml'):
+                # Assume when the user wrote "power/fish/methane", they meant "power/fish/methane.yaml"
+                # This happens because autocomplete will not add .yaml if there are alternatives (like "power/fish/methane_no_biogas")
+                project_name += '.yaml'
 
             recipes = recipesFromConfig(project_name)
 
