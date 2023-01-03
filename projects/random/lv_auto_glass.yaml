@@ -1,0 +1,66 @@
+- m: macerator
+  tier: LV
+  I:
+    sand: 1
+  O:
+    quartz sand: 1
+  eut: 7
+  dur: 10
+- m: auto crafting bench
+  tier: LV
+  I:
+    quartz sand: 8
+    flint dust: 1
+  O:
+    glass dust: 8
+  eut: 0
+  dur: 3
+- m: forming press
+  tier: LV
+  I:
+    glass dust: 1
+  O:
+    glass: 1
+  eut: 30
+  dur: 5
+  target:
+    glass: 0.2
+- m: rock breaker
+  tier: LV
+  I: {}
+  O:
+    cobblestone: 1
+  eut: 30
+  dur: 0.8
+- m: forge hammer
+  tier: LV
+  I:
+    gravel: 1
+  O:
+    sand: 1
+  eut: 16
+  dur: 0.5
+- m: forge hammer
+  tier: LV
+  I:
+    cobblestone: 1
+  O:
+    gravel: 1
+  eut: 16
+  dur: 0.5
+- m: auto crafting bench
+  tier: LV
+  I:
+    gravel: 3
+  O:
+    flint: 1
+  eut: 0
+  dur: 3
+- m: macerator
+  tier: LV
+  I:
+    flint: 2
+  O:
+    flint dust: 1
+  eut: 2
+  dur: 10

@@ -19,6 +19,7 @@ except Exception: # Windows
     import pyreadline3 as readline
 
 
+
 class ProgramContext:
 
 
@@ -36,16 +37,13 @@ class ProgramContext:
         elif level == logging.WARNING:
             logging.warning(colored(msg, color))
 
-    
+
     def run(self, graph_gen=None):
         if graph_gen == None:
-            graph_gen = self.standardGraphGen
+            graph_gen = systemOfEquationsSolverGraphGen
 
         with open('config_factory_graph.yaml', 'r') as f:
             graph_config = yaml.safe_load(f)
-        
-        if graph_config['USE_NEW_SOLVER']:
-            graph_gen = systemOfEquationsSolverGraphGen
         
         # Set up autcompletion config
         projects_path = Path('projects')
@@ -90,14 +88,6 @@ class ProgramContext:
 
             graph_gen(self, project_name, recipes, graph_config)
 
-
-    @staticmethod
-    def standardGraphGen(self, project_name, recipes, graph_config):
-        # Create graph and render
-        g = Graph(project_name, recipes, self, graph_config=graph_config)
-        g.connectGraph()
-        g.balanceGraph()
-        g.outputGraphviz()
 
 
 if __name__ == '__main__':

@@ -7,8 +7,8 @@
     polyethylene: 216
   eut: 30
   dur: 8
-  target:
-    polyethylene: 100
+  # target:
+  #   polyethylene: 100
 - m: distillery
   tier: MV
   I:
@@ -28,6 +28,7 @@
   eut: 96
   dur: 16
   coils: cupronickel
+  number: 1
 - m: centrifuge
   tier: LV
   I:
@@ -37,7 +38,7 @@
     '[recycle] oxygen': 1000
   eut: 7
   dur: 80
-- m: centrifuge
+- m: compressor
   tier: LV
   I: {}
   O:
