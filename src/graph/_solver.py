@@ -481,7 +481,7 @@ class SympySolver:
 
                 # Output graph for end user to view
                 self._debugAddVarsToEdges()
-                self.graph.outputGraphviz()
+                outputGraphviz(self.graph)
 
                 # TODO: Automate solution process fully
 
@@ -602,6 +602,8 @@ def graphPostProcessing(self):
 
 def systemOfEquationsSolverGraphGen(self, project_name, recipes, graph_config):
     g = Graph(project_name, recipes, self, graph_config=graph_config)
+    self._graph = g # For test access
+
     graphPreProcessing(g)
 
     g.parent_context.cLog('Running linear solver...', 'green', level=logging.INFO)

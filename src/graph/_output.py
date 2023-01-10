@@ -256,8 +256,8 @@ def outputGraphviz(self):
 
     # Output final graph
     g.render(
-        self.graph_name,
-        'output/',
+        filename=self.graph_name,
+        directory='output/',
         view=self.graph_config['VIEW_ON_COMPLETION'],
         format=self.graph_config['OUTPUT_FORMAT'],
     )

@@ -1,0 +1,71 @@
+# === FUNCTIONALITY SETTINGS ===
+POWER_LINE: true # Automatically burns all leftover fuels
+DO_NOT_BURN: # If POWER_LINE is true, don't burn these
+  - toluene
+  - phenol
+  - hydrogen
+  - creosote oil
+  - sulfuric naphtha
+  - sulfuric gas
+  - sulfuric heavy fuel
+  - sulfuric light fuel
+  - coal tar oil
+  - naphtha
+  - creosote oil
+  - biomass
+  - oil
+OUTPUT_FORMAT: png # png or pdf (pdf is searchable)
+USE_RAINBOW_EDGES: true # feature to help distinguish between overlapping edges
+DUR_FORMAT: sec # choose either "ticks" or "sec"
+VIEW_ON_COMPLETION: false
+
+PRINT_BOTTLENECKS: false
+USE_BOTTLENECK_EXACT_VOLTAGE: false
+BOTTLENECK_MIN_VOLTAGE: IV
+MAX_BOTTLENECKS: 5
+
+# === VISUALS ===
+GENERAL_FONT: arial  # nodes and edges
+SUMMARY_FONT: arial
+GROUP_FONT: verdana
+NODE_FONTSIZE: 11
+EDGE_FONTSIZE: 10
+GROUP_FONTSIZE: 18
+BACKGROUND_COLOR: '#043742'
+EDGECOLOR_CYCLE:
+  - '#b58900' # 'yellow'
+  - '#cb4b16' # 'orange'
+  - '#dc322f' # 'red'
+  - '#d33682' # 'magenta'
+  - '#6c71c4' # 'violet'
+  - '#268bd2' # 'blue'
+  - '#2aa198' # 'cyan'
+  - '#859900' # 'green'
+SOURCESINK_COLOR: 'ghostwhite'
+NONLOCKEDNODE_COLOR: 'lightblue2'
+LOCKEDNODE_COLOR: 'green'
+POSITIVE_COLOR: '#859900'
+NEGATIVE_COLOR: '#dc322f'
+
+ORIENTATION: 'TB'
+# TB: Vertical, LR: Horizontal, BT: Vertical Inverted, RL: Horizontal Inverted
+# [TB, LR, BT, RL]
+
+LINE_STYLE: 'spline'
+# [line, spline, polyline, curved] 
+
+RANKSEP: '1.25'
+NODESEP: '0.25'
+# Node separation size in X/Y. 
+# This is a suggestion, the graphing algorithm will ignore numbers that are too small.
+
+COMBINE_INPUTS: true
+COMBINE_OUTPUTS: true
+# Whether to (visually) create a new meta node before multi-input/after multi-output ports
+
+
+# { You should probably only modify these if you are dev
+DEBUG_SHOW_EVERY_STEP: false
+SHOW_MACHINE_INDICES: false
+STRIP_BRACKETS: true
+# }
