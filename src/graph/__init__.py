@@ -49,17 +49,6 @@ class Graph:
     )
     userRound = staticmethod(userRound)
 
-    # Setup of graph - connect edges and remove cycles
-    from ._preProcessing import (
-        connectGraph,
-        removeBackEdges,
-    )
-
-    # Main runtime - describes primary behavior
-    from ._output import (
-        outputGraphviz
-    )
-
     # Utilities for "port node" style graphviz nodes
     from ._portNodes import (
         stripBrackets,
@@ -73,11 +62,4 @@ class Graph:
         getQuantLabel,
         _combineInputs,
         _combineOutputs,
-    )
-
-    # Add summary and power burning machines
-    from ._postProcessing import (
-        _addSummaryNode,
-        _addPowerLineNodes,
-        bottleneckPrint,
     )

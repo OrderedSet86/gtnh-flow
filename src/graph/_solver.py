@@ -3,17 +3,27 @@
 
 import logging
 from collections import Counter, deque
-from copy import deepcopy
 from math import isclose
-from string import ascii_uppercase
 
-import yaml
 from sympy import linsolve, symbols
 from sympy.solvers import solve
 from sympy.sets.sets import EmptySet
 
-from src.data.basicTypes import Ingredient, IngredientCollection, Recipe
 from src.graph import Graph
+from src.graph._preProcessing import (
+    connectGraph,
+    removeBackEdges,
+)
+from src.graph._postProcessing import (
+    addMachineMultipliers,
+    addPowerLineNodesV2,
+    addSummaryNode,
+    addUserNodeColor,
+    createMachineLabels,
+)
+from src.graph._output import (
+    outputGraphviz
+)
 
 
 
@@ -569,284 +579,9 @@ class SympySolver:
 
 
 
-def addMachineMultipliers(self):
-    # Compute machine multiplier based on solved ingredient quantities
-    # FIXME: If multipliers disagree, sympy solver might have failed on an earlier step
-    
-    for rec_id, rec in self.recipes.items():
-        multipliers = []
-
-        for io_dir in ['I', 'O']:
-            for ing in getattr(rec, io_dir):
-                ing_name = ing.name
-                base_quant = ing.quant
-
-                # Look up edge value from sympy solver
-                solved_quant_per_s = 0
-                for edge in self.adj[rec_id][io_dir]:
-                    if edge[2] == ing_name:
-                        # print(edge, self.edges[edge]['quant'])
-                        solved_quant_per_s += self.edges[edge]['quant']
-
-                base_quant_s = base_quant / (rec.dur/20)
-                
-                # print(io_dir, rec_id, ing_name, getattr(rec, io_dir))
-                # print(solved_quant_per_s, base_quant_s, rec.dur)
-                # print()
-
-                machine_multiplier = solved_quant_per_s / base_quant_s
-                multipliers.append(machine_multiplier)
-
-        final_multiplier = max(multipliers)
-        rec.multiplier = final_multiplier
-        rec.eut = rec.multiplier * rec.eut
-
-
-def capitalizeMachine(machine):
-    # check if machine has capitals, and if so, preserve them
-    capitals = set(ascii_uppercase)
-    machine_capitals = [ch for ch in machine if ch in capitals]
-
-    capitalization_exceptions = {
-
-    }
-    
-    if len(machine_capitals) > 0:
-        return machine
-    elif machine in capitalization_exceptions:
-        return capitalization_exceptions[machine]
-    else:
-        return machine.title()
-
-
-def createMachineLabels(self):
-    # Distillation Tower
-    # ->
-    # 5.71x HV Distillation Tower
-    # Cycle: 2.0s
-    # Amoritized: 1.46K EU/t
-    # Per Machine: 256EU/t
-    
-    for node_id in self.nodes:
-        if self._checkIfMachine(node_id):
-            rec_id = node_id
-            rec = self.recipes[rec_id]
-        else:
-            continue
-
-        label_lines = []
-
-        # Standard label
-        label_lines.extend([
-            f'{round(rec.multiplier, 2)}x {rec.user_voltage.upper()} {capitalizeMachine(rec.machine)}',
-            f'Cycle: {rec.dur/20}s',
-            f'Amoritized: {self.userRound(int(round(rec.eut, 0)))} EU/t',
-            f'Per Machine: {self.userRound(int(round(rec.base_eut, 0)))} EU/t',
-        ])
-
-        # Edits for power machines
-        recognized_basic_power_machines = {
-            # "basic" here means "doesn't cost energy to run"
-            'gas turbine',
-            'combustion gen',
-            'semifluid gen',
-            'steam turbine',
-            'rocket engine',
-
-            'large naquadah reactor',
-            'large gas turbine',
-            'large steam turbine',
-            'large combustion engine',
-            'extreme combustion engine',
-            'XL Turbo Gas Turbine',
-            'XL Turbo Steam Turbine',
-
-            'air intake hatch',
-        }
-        if rec.machine in recognized_basic_power_machines:
-            # Remove power input data
-            label_lines = label_lines[:-2]
-        
-        line_if_attr_exists = {
-            'heat': (lambda rec: f'Base Heat: {rec.heat}K'),
-            'coils': (lambda rec: f'Coils: {rec.coils.title()}'),
-            'saw_type': (lambda rec: f'Saw Type: {rec.saw_type.title()}'),
-            'material': (lambda rec: f'Turbine Material: {rec.material.title()}'),
-            'size': (lambda rec: f'Size: {rec.size.title()}'),
-            'efficiency': (lambda rec: f'Efficiency: {rec.efficiency}'),
-            'wasted_fuel': (lambda rec: f'Wasted Fuel: {rec.wasted_fuel}'),
-        }
-        for lookup, line_generator in line_if_attr_exists.items():
-            if hasattr(rec, lookup):
-                label_lines.append(line_generator(rec))
-
-        self.nodes[rec_id]['label'] = '\n'.join(label_lines)
-
-
-def addPowerLineNodesV2(self):
-    generator_names = {
-        0: 'gas turbine',
-        1: 'combustion gen',
-        2: 'semifluid gen',
-        3: 'steam turbine',
-        4: 'rocket engine',
-        5: 'large naquadah reactor',
-    }
-
-    with open('data/power_data.yaml', 'r') as f:
-        power_data = yaml.safe_load(f)
-    with open('data/overclock_data.yaml', 'r') as f:
-        overclock_data = yaml.safe_load(f)
-
-    turbineables = power_data['turbine_fuels']
-    combustables = power_data['combustion_fuels']
-    semifluids = power_data['semifluids']
-    rocket_fuels = power_data['rocket_fuels']
-    naqline_fuels = power_data['naqline_fuels']
-
-    known_burnables = {x: [0, y] for x,y in turbineables.items()}
-    known_burnables.update({x: [1, y] for x,y in combustables.items()})
-    known_burnables.update({x: [2, y] for x,y in semifluids.items()})
-    known_burnables['steam'] = [3, 500]
-    known_burnables.update({x: [4, y] for x,y in rocket_fuels.items()})
-    known_burnables.update({x: [5, y] for x,y in naqline_fuels.items()})
-
-    # Add new burn machines to graph - they will be computed for using new solver
-    # 1. Find highest voltage on the chart - use this for burn generator tier
-    # 2. Figure out highest node index on the chart - use this for adding generator nodes
-    voltages = overclock_data['voltage_data']['tiers']
-    highest_voltage = 0
-    highest_node_index = 0
-    for rec_id, rec in self.recipes.items():
-
-        rec_voltage = voltages.index(rec.user_voltage)
-        if rec_voltage > highest_voltage:
-            highest_voltage = rec_voltage
-
-        int_index = int(rec_id)
-        if int_index > highest_node_index:
-            highest_node_index = int_index
-
-    highest_node_index += 1
-
-    # 3. Redirect burnables currently going to sink and redirect them to a new burn machine
-    outputs = self.adj['sink']['I']
-    for edge in deepcopy(outputs):
-        node_from, _, ing_name = edge
-        edge_data = self.edges[edge]
-        quant_s = edge_data['quant']
-
-        if ing_name in known_burnables and not ing_name in self.graph_config['DO_NOT_BURN']:
-            self.parent_context.cLog(f'Detected burnable: {ing_name.title()}! Adding to chart.', 'blue', level=logging.INFO)
-            generator_idx, eut_per_cell = known_burnables[ing_name]
-            gen_name = generator_names[generator_idx]
-
-            # Add node
-            node_idx = f'{highest_node_index}'
-
-            # Burn gen is a singleblock
-            def findClosestVoltage(voltage_list, voltage):
-                nonlocal voltages
-                leftmost = voltages.index(voltage_list[0])
-                rightmost = voltages.index(voltage_list[-1])
-                target = voltages.index(voltage)
-
-                # First try to voltage down
-                if rightmost < target:
-                    return voltages[rightmost]
-                elif leftmost <= target <= rightmost:
-                    return voltages[target]
-                elif leftmost > target:
-                    return voltages[leftmost]
-
-            available_efficiencies = power_data['simple_generator_efficiencies'][gen_name]
-            gen_voltage = findClosestVoltage(list(available_efficiencies), voltages[highest_voltage])
-            efficiency = available_efficiencies[gen_voltage]
-
-            # Compute I/O for a single tick
-            gen_voltage_index = voltages.index(gen_voltage)
-            output_eut = 32 * (4 ** gen_voltage_index)
-            loss_on_singleblock_output = (2 ** (gen_voltage_index+1))
-            expended_eut = output_eut + loss_on_singleblock_output
-
-            expended_fuel_t = expended_eut / (eut_per_cell/1000 * efficiency)
-
-            gen_input = IngredientCollection(
-                Ingredient(
-                    ing_name,
-                    expended_fuel_t
-                )
-            )
-            gen_output = IngredientCollection(
-                Ingredient(
-                    'EU',
-                    output_eut
-                )
-            )
-
-            # Append to recipes
-            self.recipes[str(highest_node_index)] = Recipe(
-                gen_name,
-                gen_voltage,
-                gen_input,
-                gen_output,
-                0,
-                1,
-                efficiency=f'{efficiency*100}%',
-                wasted_fuel=f'{self.userRound(loss_on_singleblock_output)}EU/t/amp',
-            )
-
-            produced_eut_s = quant_s/expended_fuel_t*output_eut 
-            self.parent_context.cLog(
-                ''.join([
-                    f'Added {gen_voltage} generator burning {quant_s} {ing_name} for '
-                    f'{self.userRound(produced_eut_s/20)}EU/t at {output_eut}EU/t each.'
-                ]),
-                'blue',
-                level=logging.INFO,
-            )
-
-            self.addNode(
-                node_idx,
-                fillcolor=self.graph_config['NONLOCKEDNODE_COLOR'],
-                shape='box'
-            )
-
-            # Fix edges to point at said node
-            # Edge (old output) -> (generator)
-            self.addEdge(
-                node_from,
-                node_idx,
-                ing_name,
-                quant_s,
-                **edge_data['kwargs'],
-            )
-            # Edge (generator) -> (EU sink)
-            self.addEdge(
-                node_idx,
-                'sink',
-                'EU',
-                produced_eut_s,
-            )
-            # Remove old edge and repopulate adjacency list
-            del self.edges[edge]
-            self.createAdjacencyList()
-
-            highest_node_index += 1
-
-
-def addUserNodeColor(self):
-    targeted_nodes = [i for i, x in self.recipes.items() if getattr(x, 'target', False) != False]
-    numbered_nodes = [i for i, x in self.recipes.items() if getattr(x, 'number', False) != False]
-    all_user_nodes = set(targeted_nodes) | set(numbered_nodes)
-
-    for rec_id in all_user_nodes:
-        self.nodes[rec_id].update({'fillcolor': self.graph_config['LOCKEDNODE_COLOR']})
-
-
 def graphPreProcessing(self):
-    self.connectGraph()
-    self.removeBackEdges()
+    connectGraph(self)
+    removeBackEdges(self)
     self.createAdjacencyList()
 
 
@@ -856,9 +591,7 @@ def graphPostProcessing(self):
 
     addMachineMultipliers(self)
     createMachineLabels(self)
-
-    self._addSummaryNode()
-
+    addSummaryNode(self)
     addUserNodeColor(self)
 
     if self.graph_config.get('COMBINE_INPUTS', False):
@@ -876,7 +609,7 @@ def systemOfEquationsSolverGraphGen(self, project_name, recipes, graph_config):
     solver.run()
 
     graphPostProcessing(g)
-    g.outputGraphviz()
+    outputGraphviz(g)
 
 
 if __name__ == '__main__':

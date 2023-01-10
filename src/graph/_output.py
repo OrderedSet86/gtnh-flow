@@ -4,6 +4,8 @@ from collections import defaultdict
 
 import graphviz
 
+from src.graph._postProcessing import bottleneckPrint
+
 
 
 def outputGraphviz(self):
@@ -264,4 +266,4 @@ def outputGraphviz(self):
         input()
     
     if self.graph_config.get('PRINT_BOTTLENECKS'):
-        self.bottleneckPrint()
+        bottleneckPrint(self)
