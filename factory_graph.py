@@ -8,9 +8,8 @@ import yaml
 from termcolor import colored, cprint
 
 # Internal libraries
-from prototypes.linearSolver import systemOfEquationsSolverGraphGen
-from src.graph import Graph
 from src.data.loadMachines import recipesFromConfig
+from src.graph._solver import systemOfEquationsSolverGraphGen
 
 # Conditional imports based on OS
 try: # Linux

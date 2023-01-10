@@ -1,0 +1,96 @@
+- m: centrifuge
+  tier: LV
+  I:
+    garnet sand: 2
+  O:
+    yellow garnet dust: 1
+    red garnet dust: 1
+  eut: 10
+  dur: 9.2
+- m: centrifuge
+  tier: LV
+  I:
+    yellow garnet dust: 16
+  O:
+    andradite dust: 5
+    grossular dust: 8
+    uvarovite dust: 3
+  eut: 15
+  dur: 73.6
+  number: 1
+- m: centrifuge
+  tier: LV
+  I:
+    red garnet dust: 16
+  O:
+    pyrope dust: 3
+    almandine dust: 5
+    spessartine dust: 8
+  eut: 15
+  dur: 73.6
+- m: electrolyzer
+  tier: MV
+  I:
+    andradite dust: 20
+  O:
+    calcium dust: 3
+    iron dust: 2
+    raw silicon dust: 3
+    oxygen: 12000
+  eut: 90
+  dur: 24
+- m: electrolyzer
+  tier: MV
+  I:
+    grossular dust: 20
+  O:
+    calcium dust: 3
+    aluminium dust: 2
+    raw silicon dust: 3
+    oxygen: 12000
+  eut: 90
+  dur: 22
+- m: electrolyzer
+  tier: MV
+  I:
+    uvarovite dust: 20
+  O:
+    calcium dust: 3
+    chrome dust: 2
+    raw silicon dust: 3
+    oxygen: 12000
+  eut: 90
+  dur: 24
+- m: electrolyzer
+  tier: MV
+  I:
+    pyrope dust: 20
+  O:
+    aluminium dust: 3
+    magnesium dust: 2
+    raw silicon dust: 3
+    oxygen: 12000
+  eut: 90
+  dur: 20
+- m: electrolyzer
+  tier: MV
+  I:
+    almandine dust: 20
+  O:
+    aluminium dust: 3
+    iron dust: 2
+    raw silicon dust: 3
+    oxygen: 12000
+  eut: 90
+  dur: 24
+- m: electrolyzer
+  tier: MV
+  I:
+    spessartine dust: 20
+  O:
+    aluminium dust: 2
+    manganese dust: 3
+    raw silicon dust: 3
+    oxygen: 12000
+  eut: 90
+  dur: 22

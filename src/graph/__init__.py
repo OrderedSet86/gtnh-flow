@@ -56,16 +56,8 @@ class Graph:
     )
 
     # Main runtime - describes primary behavior
-    from ._core import (
-        balanceGraph,
+    from ._output import (
         outputGraphviz
-    )
-
-    # Machine locking - core autobalancing functionality
-    from ._machineLocking import (
-        _lockMachine,
-        _lockMachineEdges,
-        _simpleLockMachineEdges,
     )
 
     # Utilities for "port node" style graphviz nodes

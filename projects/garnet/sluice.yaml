@@ -1,0 +1,181 @@
+- m: centrifuge
+  tier: LV
+  I:
+    garnet sand: 2
+  O:
+    yellow garnet dust: 1
+    red garnet dust: 1
+  eut: 10
+  dur: 9.2
+  target:
+    garnet sand: 200
+- m: centrifuge
+  tier: LV
+  I:
+    yellow garnet dust: 16
+  O:
+    andradite dust: 5
+    grossular dust: 8
+    uvarovite dust: 3
+  eut: 15
+  dur: 73.6
+- m: centrifuge
+  tier: LV
+  I:
+    red garnet dust: 16
+  O:
+    pyrope dust: 3
+    almandine dust: 5
+    spessartine dust: 8
+  eut: 15
+  dur: 73.6
+- m: centrifuge
+  tier: MV
+  I:
+    sluice juice: 1000
+  O:
+    stone dust: 1
+    iron dust: 0.4
+    copper dust: 0.2
+    tin dust: 0.2
+    nickel dust: 0.2
+    antimony dust: 0.2
+  eut: 120
+  dur: 2
+- m: centrifuge
+  tier: MV
+  I:
+    andradite dust: 9
+    nitric acid: 90
+  O:
+    quicklime dust: 4.5
+    iron dust: 3.6
+    rutile dust: 0.2
+    gold dust: 0.2
+    alumina dust: 0.2
+    vanadium dust: 0.2
+    sluice juice: 90
+  eut: 120
+  dur: 20.25
+- m: centrifuge
+  tier: MV
+  I:
+    grossular dust: 9
+    nitric acid: 90
+  O:
+    quicklime dust: 4.5
+    alumina dust: 3.6
+    gold dust: 0.2
+    iron dust: 0.2
+    calcite dust: 0.2
+    vanadium dust: 0.2
+    sluice juice: 90
+  eut: 120
+  dur: 20.25
+- m: centrifuge
+  tier: MV
+  I:
+    uvarovite dust: 9
+    nitric acid: 90
+  O:
+    quicklime dust: 4.5
+    chrome dust: 3.6
+    gold dust: 0.2
+    iron dust: 0.2
+    alumina dust: 0.2
+    manganese dust: 0.2
+    sluice juice: 90
+  eut: 120
+  dur: 20.25
+- m: centrifuge
+  tier: MV
+  I:
+    pyrope dust: 9
+    nitric acid: 90
+  O:
+    alumina dust: 4.5
+    magnesia dust: 3.6
+    silver dust: 0.2
+    iron dust: 0.2
+    calcite dust: 0.2
+    vanadium dust: 0.2
+    sluice juice: 90
+  eut: 120
+  dur: 20.25
+- m: centrifuge
+  tier: MV
+  I:
+    almandine dust: 9
+    nitric acid: 90
+  O:
+    alumina dust: 4.5
+    iron dust: 3.6
+    gold dust: 0.2
+    chrome dust: 0.2
+    calcite dust: 0.2
+    vanadium dust: 0.2
+    sluice juice: 90
+  eut: 120
+  dur: 20.25
+- m: centrifuge
+  tier: MV
+  I:
+    spessartine dust: 9
+    nitric acid: 90
+  O:
+    alumina dust: 4.5
+    pyrolusite dust: 3.6
+    tantalum dust: 0.2
+    iron dust: 0.2
+    calcite dust: 0.2
+    magnesium dust: 0.2
+    sluice juice: 90
+  eut: 120
+  dur: 20.25
+- m: chemical reactor
+  tier: LV
+  I:
+    nitrogen dioxide: 3000
+    water: 1000
+  O:
+    '[recycle] nitric oxide': 1000
+    nitric acid: 2000
+  eut: 30
+  dur: 12
+- m: chemical reactor
+  tier: LV
+  I:
+    '[recycled] nitric oxide': 333.3333333333333333333
+    nitric oxide: 666.6666666666666666666
+    oxygen: 1000
+  O:
+    nitrogen dioxide: 1000
+  eut: 30
+  dur: 12
+- m: chemical reactor
+  tier: LV
+  I:
+    ammonia: 4000
+    oxygen: 10000
+  O:
+    nitric oxide: 4000
+  eut: 30
+  dur: 16
+- m: centrifuge
+  tier: HV
+  I:
+    hydrogen: 3000
+    nitrogen: 1000
+  O:
+    ammonia: 1000
+  eut: 384
+  dur: 16
+- m: electrolyzer
+  tier: LV
+  I:
+    pyrolusite dust: 3
+  O:
+    manganese dust: 1
+    '[output] oxygen': 2000
+  eut: 30
+  dur: 3.9
