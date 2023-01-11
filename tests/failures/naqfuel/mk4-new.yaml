@@ -1,4 +1,19 @@
 - m: naquadah fuel refinery factory
+  tier: UMV
+  I:
+    extremely unstable naquadah dust: 27
+    bedrockium dust: 64
+    awakened draconium dust: 64
+    orundum dust: 64
+    molten hypogen: 1440
+    naquadah fuel mk3: 2000
+  O:
+    naquadah fuel mk4: 500
+  eut: 75000000
+  dur: 8
+  target:
+    naquadah fuel mk4: 10
+- m: naquadah fuel refinery factory
   tier: UHV
   I:
     extremely unstable naquadah dust: 4
@@ -11,8 +26,6 @@
     naquadah fuel mk3: 100
   eut: 1100000
   dur: 10
-  target:
-    naquadah fuel mk3: 10
 - m: distillation tower
   tier: EV
   I:
@@ -20,8 +33,7 @@
   O:
     naquadah asphalt: 2
     heavy naquadah fuel: 5
-    light naquadah fuel: 6.25
-    '[output] light naquadah fuel': 2.75
+    light naquadah fuel: 10
     water: 10
     naquadah gas: 60
   eut: 1920
@@ -57,23 +69,25 @@
     '[output] extremely unstable naquadah dust': 17
   eut: 4080
   dur: 180
-- m: compressor
-  tier: HV
+- m: electric implosion compressor
+  tier: UEV
   I:
-    high density uranium nugget: 9
+    high density uranium nugget: 5
+    molten infinity: 9
   O:
     high density uranium: 1
-  eut: 480
-  dur: 30
-- m: compressor
-  tier: MV
+  eut: 7864320
+  dur: 0.05
+- m: electric implosion compressor
+  tier: UEV
   I:
-    high density plutonium nugget: 9
+    high density plutonium nugget: 5
+    molten infinity: 9
   O:
     high density plutonium: 1
-  eut: 120
-  dur: 60
-- m: electric implosion compressort
+  eut: 7864320
+  dur: 0.05
+- m: electric implosion compressor
   tier: UEV
   I:
     wrapped uranium ingot: 4
@@ -82,7 +96,7 @@
     tungsten carbide dust: 0.88
   eut: 7864320
   dur: 0.05
-- m: electric implosion compressort
+- m: electric implosion compressor
   tier: UEV
   I:
     wrapped plutonium ingot: 2

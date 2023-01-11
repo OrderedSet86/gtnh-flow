@@ -88,9 +88,9 @@ naqline_fuels:
   thorium based liquid fuel (excited state): 1_010_000_000
   naquadah fuel mk1: 4_400_000_000
   naquadah fuel mk2: 7_600_000_000
-  naquadah mk3: 724_088_000_000
-  naquadah mk4: 8_800_540_000_000
-  naquadah mk5: 63_849_216_000_000
+  naquadah fuel mk3: 724_088_000_000
+  naquadah fuel mk4: 8_800_540_000_000
+  naquadah fuel mk5: 63_849_216_000_000
 
 simple_generator_efficiencies:
   gas turbine:
@@ -115,4 +115,13 @@ simple_generator_efficiencies:
     ev: 0.8
     iv: 0.7
     luv: 0.6
-  
+  large naquadah reactor:
+    lv: 1
+    mv: 1
+    hv: 1
+    ev: 1
+    iv: 1
+    luv: 1
+    zpm: 1
+    uv: 1
+    uhv: 1

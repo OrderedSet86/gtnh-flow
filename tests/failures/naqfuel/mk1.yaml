@@ -17,9 +17,8 @@
     naquadah solution: 20
   O:
     naquadah asphalt: 2
-    heavy naquadah fuel: 4.61538461538
-    '[output] heavy naquadah fuel': 0.38461538461
-    '[output] light naquadah fuel': 10
+    heavy naquadah fuel: 5
+    light naquadah fuel: 10
     water: 10
     naquadah gas: 60
   eut: 1920

@@ -1,3 +1,17 @@
+- m: large chemical reactor
+  tier: UV
+  I:
+    naquadah gas: 2500
+    naquadah fuel mk1: 1000
+    fluxed electrum: 32
+    samarium: 24
+    praseodymium: 16
+  O:
+    naquadah fuel mk2: 1000
+  eut: 480000
+  dur: 10
+  target:
+    naquadah fuel mk2: 10
 - m: fusion reactor
   tier: LuV
   start: 1
@@ -9,17 +23,14 @@
     naquadah fuel mk1: 100
   eut: 26000
   dur: 0.25
-  target:
-    naquadah fuel mk1: 10
 - m: distillation tower
   tier: EV
   I:
     naquadah solution: 20
   O:
     naquadah asphalt: 2
-    heavy naquadah fuel: 4.61538461538
-    '[output] heavy naquadah fuel': 0.38461538461
-    '[output] light naquadah fuel': 10
+    heavy naquadah fuel: 5
+    light naquadah fuel: 10
     water: 10
     naquadah gas: 60
   eut: 1920

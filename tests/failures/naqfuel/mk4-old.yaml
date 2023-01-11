@@ -1,4 +1,19 @@
 - m: naquadah fuel refinery factory
+  tier: UMV
+  I:
+    extremely unstable naquadah dust: 27
+    nether star dust: 64
+    awakened draconium dust: 64
+    orundum dust: 32
+    molten praseodymium: 9216
+    naquadah fuel mk3: 2000
+  O:
+    naquadah fuel mk4: 100
+  eut: 46000000
+  dur: 8
+  target:
+    naquadah fuel mk4: 10
+- m: naquadah fuel refinery factory
   tier: UHV
   I:
     extremely unstable naquadah dust: 4
@@ -11,8 +26,6 @@
     naquadah fuel mk3: 100
   eut: 1100000
   dur: 10
-  target:
-    naquadah fuel mk3: 10
 - m: distillation tower
   tier: EV
   I:
@@ -20,8 +33,7 @@
   O:
     naquadah asphalt: 2
     heavy naquadah fuel: 5
-    light naquadah fuel: 6.25
-    '[output] light naquadah fuel': 2.75
+    light naquadah fuel: 10
     water: 10
     naquadah gas: 60
   eut: 1920
@@ -73,7 +85,7 @@
     high density plutonium: 1
   eut: 120
   dur: 60
-- m: electric implosion compressort
+- m: electric implosion compressor
   tier: UEV
   I:
     wrapped uranium ingot: 4
@@ -82,7 +94,7 @@
     tungsten carbide dust: 0.88
   eut: 7864320
   dur: 0.05
-- m: electric implosion compressort
+- m: electric implosion compressor
   tier: UEV
   I:
     wrapped plutonium ingot: 2
@@ -129,3 +141,11 @@
     plutonium oxide-uranium mixture dust: 32
   eut: 20
   dur: 1.25
+- m: fluid extractor
+  tier: LV
+  I:
+    praseodymium dust: 1
+  O:
+    molten praseodymium: 144
+  eut: 30
+  dur: 1.2
