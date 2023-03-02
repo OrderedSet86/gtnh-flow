@@ -64,7 +64,7 @@ def recipesFromConfig(project_name, project_folder='projects'):
     # Load config file
     CONFIG_FILE_PATH = Path(project_folder) / f'{project_name}'
     project_name = CONFIG_FILE_PATH.name.split('.')[0]
-    with open(CONFIG_FILE_PATH, 'r') as f:
+    with open(CONFIG_FILE_PATH, 'rb') as f:
         config = yaml.safe_load(f)
 
     user_config_path = Path(__file__).absolute().parent.parent.parent / 'config_factory_graph.yaml'
