@@ -1,0 +1,308 @@
+- m: centrifuge
+  tier: LV
+  I:
+    yellow garnet dust: 16
+  O:
+    andradite dust: 5
+    grossular dust: 8
+    uvarovite dust: 3
+  eut: 15
+  dur: 73.6
+- m: centrifuge
+  tier: LV
+  I:
+    red garnet dust: 16
+  O:
+    pyrope dust: 3
+    almandine dust: 5
+    spessartine dust: 8
+  eut: 15
+  dur: 73.6
+
+- m: centrifuge
+  tier: MV
+  I:
+    sluice juice: 1000
+  O:
+    stone dust: 1
+    iron dust: 0.4
+    copper dust: 0.2
+    tin dust: 0.2
+    nickel dust: 0.2
+    antimony dust: 0.2
+  eut: 120
+  dur: 2
+
+- m: centrifuge
+  tier: MV
+  I:
+    almandine dust: 9
+    nitric acid: 90
+  O:
+    alumina dust: 4.5
+    iron dust: 3.6
+    gold dust: 0.2
+    chrome dust: 0.2
+    calcite dust: 0.2
+    vanadium dust: 0.2
+    sluice juice: 90
+  eut: 120
+  dur: 20.25
+- m: centrifuge
+  tier: MV
+  I:
+    spessartine dust: 9
+    nitric acid: 90
+  O:
+    alumina dust: 4.5
+    pyrolusite dust: 3.6
+    tantalum dust: 0.2
+    iron dust: 0.2
+    calcite dust: 0.2
+    magnesium dust: 0.2
+    sluice juice: 90
+  eut: 120
+  dur: 20.25
+
+- m: centrifuge
+  tier: MV
+  I:
+    andradite dust: 9
+    nitric acid: 90
+  O:
+    quicklime dust: 4.5
+    iron dust: 3.6
+    rutile dust: 0.2
+    gold dust: 0.2
+    alumina dust: 0.2
+    vanadium dust: 0.2
+    sluice juice: 90
+  eut: 120
+  dur: 20.25
+- m: centrifuge
+  tier: MV
+  I:
+    grossular dust: 9
+    nitric acid: 90
+  O:
+    quicklime dust: 4.5
+    alumina dust: 3.6
+    gold dust: 0.2
+    iron dust: 0.2
+    calcite dust: 0.2
+    vanadium dust: 0.2
+    sluice juice: 90
+  eut: 120
+  dur: 20.25
+- m: centrifuge
+  tier: MV
+  I:
+    uvarovite dust: 9
+    nitric acid: 90
+  O:
+    quicklime dust: 4.5
+    chrome dust: 3.6
+    gold dust: 0.2
+    iron dust: 0.2
+    alumina dust: 0.2
+    manganese dust: 0.2
+    sluice juice: 90
+  eut: 120
+  dur: 20.25
+- m: centrifuge
+  tier: MV
+  I:
+    pyrope dust: 9
+    nitric acid: 90
+  O:
+    alumina dust: 4.5
+    magnesia dust: 3.6
+    silver dust: 0.2
+    iron dust: 0.2
+    calcite dust: 0.2
+    vanadium dust: 0.2
+    sluice juice: 90
+  eut: 120
+  dur: 20.25
+
+- m: 111x hydrated + fertilized garnydinias (21/31/0)
+  tier: LV
+  I: {}
+  O:
+    exquisite red garnet: 119.46
+    exquisite yellow garnet: 124.33
+    red garnet gem: 418.11
+    yellow garnet gem: 435.18
+    purified garnet sand: 60.95
+    red garnet dust: 1134.9
+    yellow garnet dust: 1181.2
+    small red garnet dust: 537.57
+    small yellow garnet dust: 559.52
+    purified red garnet ore: 89.60
+    purified yellow garnet ore: 93.25
+    tiny red garnet dust: 537.57
+    tiny yellow garnet dust: 559.52
+  eut: 0
+  dur: 3600
+  number: 1
+
+- m: chemical reactor
+  tier: LV
+  I:
+    nitrogen dioxide: 3000
+    water: 1000
+  O:
+    '[recycle] nitric oxide': 1000
+    nitric acid: 2000
+  eut: 30
+  dur: 12
+  group: nitric acid
+- m: chemical reactor
+  tier: LV
+  I:
+    '[recycled] nitric oxide': 333.3333333333333333333
+    nitric oxide: 666.6666666666666666666
+    '[source] oxygen': 1000
+  O:
+    nitrogen dioxide: 1000
+  eut: 30
+  dur: 12
+  group: nitric acid
+- m: chemical reactor
+  tier: HV
+  I:
+    hydrogen: 3000
+    nitrogen: 1000
+  O:
+    ammonia: 1000
+  eut: 384
+  dur: 16
+  group: nitric acid
+- m: chemical reactor
+  tier: LV
+  I:
+    ammonia: 4000
+    '[source] oxygen': 10000
+  O:
+    nitric oxide: 4000
+  eut: 30
+  dur: 16
+  group: nitric acid
+
+
+- m: macerator
+  tier: LV
+  I:
+    yellow garnet gem: 1
+  O:
+    yellow garnet dust: 1
+  eut: 4
+  dur: 1.15
+- m: macerator
+  tier: LV
+  I:
+    red garnet gem: 1
+  O:
+    red garnet dust: 1
+  eut: 4
+  dur: 1.15
+- m: forge hammer
+  tier: LV
+  I:
+    flawless red garnet: 1
+  O:
+    red garnet gem: 2
+  eut: 15
+  dur: 3.2
+- m: forge hammer
+  tier: LV
+  I:
+    flawless yellow garnet: 1
+  O:
+    yellow garnet gem: 2
+  eut: 15
+  dur: 3.2
+- m: forge hammer
+  tier: LV
+  I:
+    exquisite red garnet: 1
+  O:
+    flawless red garnet: 2
+  eut: 16
+  dur: 3.2
+- m: forge hammer
+  tier: LV
+  I:
+    exquisite yellow garnet: 1
+  O:
+    flawless yellow garnet: 2
+  eut: 16
+  dur: 3.2
+
+- m: packager
+  tier: LV
+  I:
+    small red garnet dust: 4
+  O:
+    red garnet dust: 1
+  eut: 4
+  dur: 1
+- m: packager
+  tier: LV
+  I:
+    tiny red garnet dust: 9
+  O:
+    red garnet dust: 1
+  eut: 4
+  dur: 1
+- m: packager
+  tier: LV
+  I:
+    tiny yellow garnet dust: 9
+  O:
+    yellow garnet dust: 1
+  eut: 4
+  dur: 1
+- m: packager
+  tier: LV
+  I:
+    small yellow garnet dust: 4
+  O:
+    yellow garnet dust: 1
+  eut: 4
+  dur: 1
+
+- m: macerator
+  tier: LV
+  I:
+    purified red garnet ore: 1
+  O:
+    purified pile of red garnet dust: 1
+  eut: 2
+  dur: 20
+- m: centrifuge
+  tier: LV
+  I:
+    purified pile of red garnet dust: 1
+  O:
+    red garnet dust: 1
+    pyrope dust: 0.1111111
+  eut: 5
+  dur: 9.2
+- m: macerator
+  tier: LV
+  I:
+    purified yellow garnet ore: 1
+  O:
+    purified pile of yellow garnet dust: 1
+  eut: 2
+  dur: 20
+- m: centrifuge
+  tier: LV
+  I:
+    purified pile of yellow garnet dust: 1
+  O:
+    yellow garnet dust: 1
+    grossular dust: 0.1111111
+  eut: 5
+  dur: 9.2

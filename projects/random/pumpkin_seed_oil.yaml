@@ -1,0 +1,18 @@
+- m: macerator
+  tier: LV
+  I:
+    pumpkin: 1
+  O:
+    pumpkin seeds: 4
+  eut: 2
+  dur: 20
+  target:
+    pumpkin: 0.19
+- m: fluid extractor
+  tier: LV
+  I:
+    pumpkin seeds: 1
+  O:
+    seed oil: 10
+  eut: 2
+  dur: 1.6

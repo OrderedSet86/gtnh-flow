@@ -161,7 +161,7 @@
     nitric oxide: 4000
   eut: 30
   dur: 16
-- m: centrifuge
+- m: chemical reactor
   tier: HV
   I:
     hydrogen: 3000

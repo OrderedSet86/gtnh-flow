@@ -1,0 +1,30 @@
+# Alumino silicate is being generated passively separately
+- m: assembler
+  tier: LV
+  I:
+    2x cupronickel wire: 8
+    alumino silicate wool: 12
+    molten tin: 288
+  O:
+    cupronickel coil: 1
+  eut: 7
+  dur: 5
+  target:
+    cupronickel coil: 0.2
+- m: wiremill
+  tier: MV
+  I:
+    cupronickel ingot: 1
+  O:
+    2x cupronickel wire: 1
+  eut: 4
+  dur: 7.5
+- m: alloy smelter
+  tier: MV
+  I:
+    copper dust: 1
+    nickel dust: 1
+  O:
+    cupronickel ingot: 2
+  eut: 16
+  dur: 5
