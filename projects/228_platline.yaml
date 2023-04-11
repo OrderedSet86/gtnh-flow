@@ -8,7 +8,7 @@
     platinum concentrate: 9000
   eut: 30
   dur: 112.5
-  number: 125.313283207 # balanced to 1 pmp/s
+  number: 1.25551831687 # balanced to 1 pmp/s
   group: platinum
 - m: large chemical reactor
   tier: HV
@@ -282,10 +282,10 @@
   tier: HV
   I:
     calcium dust: 1
-    reprecipitated platinum dust: 2
+    reprecipitated platinum dust: 4
   O:
-    platinum dust: 1
-    calcium chloride dust: 1
+    platinum dust: 2
+    calcium chloride dust: 3
   eut: 30
   dur: 1.5
   group: platinum
@@ -458,8 +458,9 @@
   tier: HV
   I:
     '[plat] hydrochloric acid': 1000
-    '[platinum] ammonia': 278.51429
-    '[source] ammonia': 721.48571
+    # Manually handling partial recycling
+    '[platinum] ammonia': 171.714286
+    '[source] ammonia': 828.285714
   O:
     '[plat conc] ammonium chloride': 1000
   eut: 30
