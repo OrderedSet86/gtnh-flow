@@ -403,10 +403,10 @@ class SympySolver:
                         iterations += 1
                         continue
 
-                unvar = unsolved[0]
-                solution = solve(expr, unvar)
 
                 if len(unsolved) == 1:
+                    unvar = unsolved[0]
+                    solution = solve(expr, unvar)
                     if len(solution) == 1:
                         sval = solution[0]
                         solved_values[unvar] = sval
