@@ -1,0 +1,60 @@
+- m: large chemical reactor
+  tier: HV
+  I:
+    rutile dust: 1
+    carbon dust: 2
+    chlorine: 4000
+  O:
+    titanium tetrachloride: 1000
+    carbon monoxide: 2000
+  eut: 480
+  dur: 20
+- m: electric blast furnace
+  tier: HV
+  I:
+    magnesium dust: 2
+    titanium tetrachloride: 1000
+  O:
+    hot titanium ingot: 1
+    magnesium chloride dust: 6
+  eut: 480
+  dur: 40
+  coils: kanthal
+  heat: 2140
+  number: 1
+- m: vacuum freezer
+  tier: HV
+  I:
+    hot titanium ingot: 1
+  O:
+    titanium ingot: 1
+  eut: 480
+  dur: 7.2
+- m: chemical reactor
+  tier: HV
+  I:
+    magnesium chloride dust: 6
+    sodium dust: 4
+  O:
+    '[recycle] magnesium dust': 2
+    salt: 8
+  eut: 300
+  dur: 10
+- m: electrolyzer
+  tier: MV
+  I:
+    salt: 2
+  O:
+    sodium dust: 1
+    chlorine: 1000
+  eut: 30
+  dur: 16
+- m: electrolyzer
+  tier: MV
+  I:
+    carbon monoxide: 1000
+  O:
+    carbon dust: 1
+    oxygen: 1000
+  eut: 60
+  dur: 5.6

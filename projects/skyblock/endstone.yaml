@@ -1,0 +1,71 @@
+- m: centrifuge
+  tier: HV
+  I:
+    endstone dust: 36
+  O:
+    tungstate dust: 1.125
+    PMP: 0.5
+    sand: 32.4
+    helium: 4320
+  eut: 20
+  dur: 576
+  number: 12
+- m: autoclave
+  tier: EV
+  I:
+    tungstate dust: 7
+    sodium dust: 2
+    water: 4000
+  O:
+    lithium dust: 2
+    sodium tungstate: 1000
+  eut: 1920
+  dur: 5
+- m: large chemical reactor
+  tier: HV
+  I:
+    sodium tungstate: 1000
+    calcium chloride dust: 3
+  O:
+    scheelite dust: 6
+    salt: 4
+  eut: 480
+  dur: 5
+- m: large chemical reactor
+  tier: EV
+  I:
+    scheelite dust: 6
+    hydrochloric acid: 2000
+  O:
+    tungstic acid dust: 7
+    calcium chloride dust: 3
+  eut: 1920
+  dur: 2.5
+- m: electric blast furnace
+  tier: HV
+  I:
+    tungstic acid dust: 7
+  O:
+    tungsten trioxide dust: 4
+  eut: 480
+  dur: 10
+  heat: 1200
+  coils: cupronickel
+- m: electrolyzer
+  tier: LV
+  I:
+    salt: 2
+  O:
+    sodium dust: 1
+    chlorine: 1000
+  eut: 30
+  dur: 16
+- m: LCR
+  tier: LV
+  I:
+    chlorine: 1000
+    hydrogen: 1000
+  O:
+    '[recycle] hydrochloric acid': 1000
+  eut: 7
+  dur: 3

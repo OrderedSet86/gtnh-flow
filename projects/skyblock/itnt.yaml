@@ -1,0 +1,62 @@
+
+- m: LCR
+  tier: HV
+  I:
+    oxygen: 4000
+    ammonia: 1000
+  O:
+    nitric acid: 1000
+    '[recycle] water': 1000
+  eut: 30
+  dur: 16
+
+- m: LCR
+  tier: HV
+  I:
+    nitrogen: 1000
+    hydrogen: 3000
+  O:
+    ammonia: 1000
+  eut: 384
+  dur: 16
+
+- m: mixer
+  tier: LV
+  I:
+    sulfuric acid: 1000
+    nitric acid: 1000
+  O:
+    nitration mixture: 2000
+  eut: 2
+  dur: 24
+
+- m: LCR
+  tier: HV
+  I:
+    gelled toluene: 4
+    nitration mixture: 200
+  O:
+    itnt: 1
+    diluted sulfuric acid: 150
+  eut: 480
+  dur: 4
+  target:
+    itnt: 1
+
+- m: distillery
+  tier: LV
+  I:
+    diluted sulfuric acid: 75
+  O:
+    sulfuric acid: 50
+  eut: 30
+  dur: 1.5
+
+- m: fluid solidifier
+  tier: LV
+  I:
+    toluene: 100
+  O:
+    gelled toluene: 1
+  eut: 16
+  dur: 5
