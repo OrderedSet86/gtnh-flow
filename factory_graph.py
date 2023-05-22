@@ -1,6 +1,7 @@
 # Standard libraries
 import logging
 import os
+import argparse
 from pathlib import Path
 
 # Pypi libraries
@@ -18,12 +19,15 @@ except Exception: # Windows
     import pyreadline3 as readline
 
 
-
 class ProgramContext:
+    DEFAULT_CONFIG_PATH = 'config_factory_graph.yaml'
 
 
     def __init__(self):
         logging.basicConfig(level=logging.INFO)
+
+        self.load_graph_config(ProgramContext.DEFAULT_CONFIG_PATH)
+        self.graph_gen = systemOfEquationsSolverGraphGen
 
 
     @staticmethod
@@ -37,13 +41,24 @@ class ProgramContext:
             logging.warning(colored(msg, color))
 
 
-    def run(self, graph_gen=None):
-        if graph_gen == None:
-            graph_gen = systemOfEquationsSolverGraphGen
+    def load_graph_config(self, config_path):
+        with open(config_path, 'r') as f:
+            self.graph_config = yaml.safe_load(f)
 
-        with open('config_factory_graph.yaml', 'r') as f:
-            graph_config = yaml.safe_load(f)
-        
+
+    def generate_one(self, project_name):
+        if not project_name.endswith('.yaml'):
+            raise Exception(f'Invalid project file. *.yaml file expected. Got: {project_name}.')
+
+        recipes = recipesFromConfig(project_name)
+        self.graph_gen(self, project_name[:-5], recipes, self.graph_config)
+
+
+    def run_noninteractive(self, projects):
+        for project_name in projects:
+            self.generate_one(project_name)
+
+    def run_interactive(self):
         # Set up autcompletion config
         projects_path = Path('projects')
         readline.parse_and_bind('tab: complete')
@@ -80,13 +95,39 @@ class ProgramContext:
                 # This happens because autocomplete will not add .yaml if there are alternatives (like "power/fish/methane_no_biogas")
                 project_name += '.yaml'
 
-            recipes = recipesFromConfig(project_name)
+            self.generate_one(project_name)
 
-            if project_name.endswith('.yaml'):
-                project_name = project_name[:-5]
+    def run(self):
 
-            graph_gen(self, project_name, recipes, graph_config)
+        parser = argparse.ArgumentParser()
+        parser.add_argument('--config', type=str, default=ProgramContext.DEFAULT_CONFIG_PATH, help='Path to the global .yaml configuration file.')
+        parser.add_argument('--interactive', action='store_true', help='Force interactive mode.')
+        parser.add_argument('--graph_gen', type=str, default='systemOfEquationsSolverGraphGen', help='Type of the graph generator to use.')
+        parser.add_argument('--no_view_on_completion', action='store_true', help='Override the VIEW_ON_COMPLETION config setting to False. Useful when running mass jobs.')
+        parser.add_argument('projects', type=str, nargs='*', help='Paths to project files (.yaml) to be processed.')
 
+        args = parser.parse_args()
+
+        if args.graph_gen == 'systemOfEquationsSolverGraphGen':
+            self.graph_gen = systemOfEquationsSolverGraphGen
+        else:
+            raise Exception('Invalid graph generator.')
+
+        self.load_graph_config(args.config)
+
+        if args.no_view_on_completion:
+            self.graph_config['VIEW_ON_COMPLETION'] = False
+
+        # For backwards compatibility enter interactive mode when no project is specified.
+        if len(args.projects) == 0:
+            args.interactive = True
+
+        if args.interactive:
+            if len(args.projects) > 0:
+                raise Exception('Projects cannot be specified at this point in the interactive mode.')
+            self.run_interactive()
+        else:
+            self.run_noninteractive(args.projects)
 
 
 if __name__ == '__main__':
