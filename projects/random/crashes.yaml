@@ -1,0 +1,129 @@
+- m: mixer
+  tier: HV
+  I:
+    diesel: 1000
+    tetranitromethane: 20
+  O:
+    cetane-boosted diesel: 1000
+  eut: 480
+  dur: 1
+  target:
+    cetane-boosted diesel: 1000
+- m: chemical reactor
+  tier: MV
+  I:
+    nitric acid: 8000
+    ethenone: 1000
+  O:
+    tetranitromethane: 2000
+  eut: 120
+  dur: 24
+- m: chemical reactor
+  tier: LV
+  I:
+    sulfur trioxide: 1000
+    water: 1000
+  O:
+    sulfuric acid: 1000
+  eut: 7
+  dur: 16
+- m: chemical reactor
+  tier: MV
+  I:
+    acetic acid: 1000
+    sulfuric acid: 1000
+  O:
+    ethenone: 1000
+    diluted sulfuric acid: 1000
+  eut: 120
+  dur: 8
+- m: distillery
+  tier: LV
+  I:
+    diluted sulfuric acid: 75
+  O:
+    sulfuric acid: 50
+  eut: 30
+  dur: 1.5
+- m: chemical reactor
+  tier: LV
+  I:
+    methanol: 1000
+    carbon monoxide: 1000
+  O:
+    acetic acid: 1000
+  eut: 30
+  dur: 15
+- m: chemical reactor
+  tier: MV
+  I:
+    hydrogen: 4000
+    carbon monoxide: 1000
+  O:
+    methanol: 1000
+  eut: 96
+  dur: 6
+- m: chemical reactor
+  tier: LV
+  I:
+    charcoal: 1
+    oxygen: 1000
+  O:
+    carbon monoxide: 1000
+  eut: 7
+  dur: 4
+- m: chemical reactor
+  tier: LV
+  I:
+    sulfur dioxide: 1000
+    oxygen: 1000
+  O:
+    sulfur trioxide: 1000
+  eut: 30
+  dur: 10
+- m: chemical reactor
+  tier: LV
+  I:
+    sulfur: 1
+    oxygen: 2000
+  O:
+    sulfur dioxide: 1000
+  eut: 7
+  dur: 3
+- m: chemical reactor
+  tier: LV
+  I:
+    nitrogen dioxide: 2000
+    water: 1000
+  O:
+    nitric acid: 2000
+    nitric oxide: 1000
+  eut: 30
+  dur: 12
+- m: chemical reactor
+  tier: LV
+  I:
+    oxygen: 1000
+    nitric oxide: 1000
+  O:
+    nitrogen dioxide: 1000
+  eut: 30
+  dur: 8
+- m: chemical reactor
+  tier: LV
+  I:
+    oxygen: 5000
+    ammonia: 2000
+  O:
+    nitric oxide: 2000
+  eut: 30
+  dur: 8
+- m: chemical reactor
+  tier: HV
+  I:
+    nitrogen: 1000
+    hydrogen: 3000
+  O:
+    ammonia: 1000
+  eut: 384
+  dur: 16

@@ -19,7 +19,7 @@ OUTPUT_FORMAT: png # png or pdf (pdf is searchable)
 USE_RAINBOW_EDGES: true # feature to help distinguish between overlapping edges
 DUR_FORMAT: sec # choose either "ticks" or "sec"
 VIEW_ON_COMPLETION: true
-KEEP_BACK_EDGES: true
+KEEP_BACK_EDGES: false
 
 PRINT_BOTTLENECKS: true
 USE_BOTTLENECK_EXACT_VOLTAGE: false
