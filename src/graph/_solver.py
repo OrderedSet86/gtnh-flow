@@ -581,7 +581,8 @@ class SympySolver:
 
 def graphPreProcessing(self):
     connectGraph(self)
-    removeBackEdges(self)
+    if not self.graph_config.get('KEEP_BACK_EDGES', False):
+        removeBackEdges(self)
     self.createAdjacencyList()
 
 
