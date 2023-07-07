@@ -355,6 +355,15 @@ class OverclockHandler:
         return recipe
 
 
+    def modifyAAL(self, recipe):
+        # Huge approximation, will not be accurate for laser overclock energy cost
+        parallel_count = len(recipe.I)
+        recipe.I *= parallel_count
+        recipe.O *= parallel_count
+
+        return self.modifyStandard(recipe)
+
+
     def modifyXT(self, recipe, fuel_type):
         recipe = self.modifyTurbine(recipe, fuel_type)
         recipe.I *= 16
@@ -400,6 +409,11 @@ class OverclockHandler:
             'multi smelter': self.modifyMultiSmelter,
             'circuit assembly line': self.modifyPerfect,
             'fusion reactor': self.modifyFusion,
+            
+            'advanced assline': self.modifyAAL,
+            'advanced assembling line': self.modifyAAL,
+            'advanced assembly line': self.modifyAAL,
+            'AAL': self.modifyAAL,
 
             'large gas turbine': lambda recipe: self.modifyTurbine(recipe, 'gas_fuels'),
             'XL Turbo Gas Turbine': lambda recipe: self.modifyXT(recipe, 'gas_fuels'),

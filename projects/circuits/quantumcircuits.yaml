@@ -1,0 +1,76 @@
+
+- m: advanced assline
+  tier: UXV
+  I:
+    # neutronium frame box: 16
+    pico circuit: 2
+    # optical smd capacitor: 64
+    # optical smd diode: 64
+    # optical smd transistor: 64
+    # optical smd resistor: 64
+    # quantum power ic: 64
+    # shirabon foil: 64
+    # indium bolt: 64
+    # 1x spacetime wire: 8
+    # fine lanthanum wire: 16
+    # mutated living solder: 3744
+    # uum: 24000
+    # molten osmium: 2304
+  O:
+    quantum circuit: 1
+  eut: 512_000_000
+  dur: 1000
+  # target:
+  #   nano circuit: 1
+
+- m: advanced assline
+  tier: UMV
+  I:
+    # optical circuit board: 1
+    # pico wafer: 4
+    optical mainframe: 2
+    # optical smd transistor: 48
+    # optical smd resistor: 48
+    # optical smd capacitor: 48
+    # optical smd diode: 48
+    # piko power ic: 64
+    # niobium-titanium foil: 16
+    # osmium bolt: 32
+    # neutronium bolt: 16
+    # fine lanthanum wire: 64
+    # mutated living solder: 3744
+    # uum: 8000
+    # molten osmium: 1152
+  O:
+    pico circuit: 1
+  eut: 128_000_000
+  dur: 500
+
+- m: advanced assline
+  tier: UMV
+  I:
+    optical computer: 2
+  O:
+    optical mainframe: 1
+  eut: 8_000_000
+  dur: 300
+
+- m: advanced assline
+  tier: UMV
+  I:
+    optical assembly: 2
+  O:
+    optical computer: 1
+  eut: 2_000_000
+  dur: 200
+
+- m: advanced assline
+  tier: UMV
+  I:
+    optimal processor: 2
+  O:
+    optical assembly: 1
+  eut: 2_000_000
+  dur: 20
+  number: 1
+

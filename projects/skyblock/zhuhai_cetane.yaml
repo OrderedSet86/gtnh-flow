@@ -1,0 +1,148 @@
+
+
+- m: LCR
+  tier: HV
+  I:
+    bio diesel: 10000
+    tetranitromethane: 400
+  O:
+    cetane-boosted diesel: 10000
+  eut: 480
+  dur: 6
+
+- m: LCR
+  tier: HV
+  I:
+    nitric acid: 8000
+    ethenone: 1000
+  O:
+    tetranitromethane: 2000
+    '[recycle] water': 9000
+  eut: 120
+  dur: 24
+  group: tetranitromethane
+
+- m: LCR
+  tier: HV
+  I:
+    oxygen: 4000
+    ammonia: 1000
+  O:
+    nitric acid: 1000
+    '[recycle] water': 1000
+  eut: 30
+  dur: 16
+  group: tetranitromethane
+
+- m: LCR
+  tier: HV
+  I:
+    nitrogen: 1000
+    hydrogen: 3000
+  O:
+    ammonia: 1000
+  eut: 384
+  dur: 16
+  group: tetranitromethane
+
+- m: LCR
+  tier: HV
+  I:
+    sulfuric acid: 500
+    acetic acid: 1000
+  O:
+    ethenone: 1000
+  eut: 120
+  dur: 8
+  group: tetranitromethane
+
+- m: LCR
+  tier: HV
+  I:
+    oxygen: 2000
+    hydrogen: 4000
+    carbon dust: 2
+  O:
+    acetic acid: 1000
+  eut: 30
+  dur: 24
+  group: tetranitromethane
+
+- m: LCR
+  tier: HV
+  I:
+    water: 1000
+    oxygen: 3000
+    sulfur dust: 1
+  O:
+    sulfuric acid: 1000
+  eut: 30
+  dur: 24
+  group: tetranitromethane
+
+
+- m: fluid extractor
+  tier: LV
+  I:
+    pams fish: 1
+  O:
+    fish oil: 50
+  eut: 4
+  dur: 0.8
+  group: biodiesel
+
+- m: LCR
+  tier: LV
+  I:
+    fish oil: 54000
+    methanol: 9000
+    sodium hydroxide dust: 1
+  O:
+    bio diesel: 54000
+    glycerol: 9000
+  eut: 30
+  dur: 270
+  group: biodiesel
+
+- m: LCR
+  tier: MV
+  I:
+    carbon monoxide: 1000
+    hydrogen: 4000
+  O:
+    methanol: 1000
+  eut: 96
+  dur: 6
+  group: biodiesel
+
+- m: LCR
+  tier: LV
+  I:
+    carbon dust: 1
+    oxygen: 1000
+  O:
+    carbon monoxide: 1000
+  eut: 7
+  dur: 2
+  group: biodiesel
+
+- m: LCR
+  tier: LV
+  I:
+    water: 1000
+    sodium dust: 1
+  O:
+    sodium hydroxide dust: 3
+    '[recycle] hydrogen': 1000
+  eut: 30
+  dur: 10
+  group: biodiesel
+
+- m: zhuhai
+  tier: EV
+  I: {}
+  O:
+    pams fish: 0.8181818181
+  eut: 16
+  dur: 5
+  number: 1
