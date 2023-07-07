@@ -1,0 +1,14 @@
+- m: industrial centrifuge
+  tier: max+5
+  I:
+    stone dust: 36
+  O:
+    quartzite dust: 9
+    potassium feldspar dust: 9
+    marble dust: 8
+    biotite dust: 4
+    metal mixture dust: 3
+    sodalite dust: 2
+  eut: 30
+  dur: 432
+  number: 1
