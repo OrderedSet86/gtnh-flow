@@ -6,6 +6,7 @@ from collections import Counter, deque
 from math import isclose
 
 from sympy import linsolve, symbols
+from sympy.core.numbers import Float
 from sympy.solvers import solve
 from sympy.sets.sets import EmptySet
 
@@ -359,6 +360,13 @@ class SympySolver:
         if len(lstres) > 1:
             raise NotImplementedError('Multiple solutions - no code written to deal with this scenario yet')
         self.solved_vars = res.args[0]
+        any_unsolved = False
+        for i, var in enumerate(self.solved_vars):
+            if not isinstance(var, Float):
+                any_unsolved = True
+                print(i, var)
+        if any_unsolved:
+            raise RuntimeError('Unsolved variables - machine system is not well defined. Contact developer :)')
 
 
     def _searchForInconsistency(self):
