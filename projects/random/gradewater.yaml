@@ -12,11 +12,9 @@
 - m: Mega Distillation Tower
   tier: max+4
   I:
-    G6Water: 1000
+    G6Water: 860
   O:
     G7Water: 900
-    '[Output] G6Water': 50
-    '[Output] G5Water': 100
   eut: 1966080
   dur: 250
 
@@ -58,7 +56,7 @@
   dur: 250
 
 - m: Thermic Heating Device
-  tier: max+1
+  tier: max
   I:
     G1Water: 1000
   O:

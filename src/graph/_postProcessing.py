@@ -87,6 +87,7 @@ def createMachineLabels(self):
             'size': (lambda rec: f'Size: {rec.size.title()}'),
             'efficiency': (lambda rec: f'Efficiency: {rec.efficiency}'),
             'wasted_fuel': (lambda rec: f'Wasted Fuel: {rec.wasted_fuel}'),
+            'parallel': (lambda rec: f'Parallels: {rec.parallel}'),
         }
         for lookup, line_generator in line_if_attr_exists.items():
             if hasattr(rec, lookup):

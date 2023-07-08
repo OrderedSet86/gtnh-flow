@@ -49,6 +49,7 @@ class OverclockHandler:
         # Calculate current EU/t spend
         x = recipe.eut * EU_DISCOUNT
         y = min(int(available_eut/x), MAX_PARALLEL)
+        recipe.parallel = y
         TOTAL_EUT = x*y
 
         # Debug info
@@ -82,6 +83,7 @@ class OverclockHandler:
 
         x = recipe.eut
         y = min(int(available_eut/x), MAX_PARALLEL)
+        recipe.parallel = y
         TOTAL_EUT = x*y
         NEW_RECIPE_TIME = round(recipe.dur * (speed_per_tier)**(self.voltages.index(recipe.user_voltage) + 1), 2)
 
