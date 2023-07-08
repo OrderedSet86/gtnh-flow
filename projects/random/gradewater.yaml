@@ -9,7 +9,7 @@
   target:
     G8Water: 20000
 
-- m: Mega Distallation Tower
+- m: Mega Distillation Tower
   tier: max+4
   I:
     G6Water: 1000
@@ -51,10 +51,9 @@
 - m: Mega Distillation Tower
   tier: max+4
   I:
-    G2Water: 950
+    G2Water: 860
   O:
     G3Water: 900
-    G1Water: 100
   eut: 122880
   dur: 250
 

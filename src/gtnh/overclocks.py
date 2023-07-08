@@ -370,6 +370,15 @@ class OverclockHandler:
         recipe.O *= 16
 
         return recipe
+    
+
+    def modifyMega(self, recipe, baseModifierFunction):
+        recipe = baseModifierFunction(recipe)
+        recipe.I *= 256
+        recipe.O *= 256
+        recipe.eut *= 256
+
+        return recipe
 
 
     def calculateStandardOC(self, recipe):
@@ -395,12 +404,7 @@ class OverclockHandler:
         return recipe
 
 
-    def overclockRecipe(self, recipe, ignore_underclock=False):
-        ### Modifies recipe according to overclocks
-        # By the time that the recipe arrives here, it should have a "user_voltage" argument which indicates
-        # what the user is actually providing.
-        self.ignore_underclock = ignore_underclock
-
+    def getOverclockFunction(self, recipe):
         machine_overrides = {
             # GT multis
             'pyrolyse oven': self.modifyPyrolyse,
@@ -421,6 +425,17 @@ class OverclockHandler:
             'large steam turbine': lambda recipe: self.modifyTurbine(recipe, 'steam_fuels'),
             'XL Turbo Steam Turbine': lambda recipe: self.modifyXT(recipe, 'steam_fuels'),
 
+            # Megas
+            'mega blast furnace': lambda recipe: self.modifyMega(recipe, self.modifyEBF),
+            'MBF': lambda recipe: self.modifyMega(recipe, self.modifyEBF),
+            'mega large chemical reactor': lambda recipe: self.modifyMega(recipe, self.modifyPerfect),
+            'mega chemical reactor': lambda recipe: self.modifyMega(recipe, self.modifyPerfect),
+            'MCR': lambda recipe: self.modifyMega(recipe, self.modifyPerfect),
+            'mega distillation tower': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
+            'MDT': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
+            'mega vacuum freezer': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
+            'MVF': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
+
             # Basic GT++ multis
             'industrial centrifuge': self.modifyGTpp,
             'industrial material press': self.modifyGTpp,
@@ -429,8 +444,10 @@ class OverclockHandler:
             'wire factory': self.modifyGTpp,
             'industrial mixing machine': self.modifyGTpp,
             'industrial sifter': self.modifyGTpp,
+            'large sifter': self.modifyGTpp,
             'large thermal refinery': self.modifyGTpp,
             'industrial wash plant': self.modifyGTpp,
+            'ore washing plant': self.modifyGTpp,
             'industrial extrusion machine': self.modifyGTpp,
             'large processing factory': self.modifyGTpp,
             'industrial arc furnace': self.modifyGTpp,
@@ -439,6 +456,8 @@ class OverclockHandler:
             'boldarnator': self.modifyGTpp,
             'dangote - distillery': self.modifyGTpp,
             'thermic heating device': self.modifyGTpp,
+            'thermic heater': self.modifyGTpp,
+            'industrial fluid heater': self.modifyGTpp,
 
             # Special GT++ multis
             'industrial coke oven': lambda recipe: self.modifyGTppSetParallel(recipe, 24, speed_per_tier=0.96),
@@ -452,10 +471,19 @@ class OverclockHandler:
             'isamill grinding machine': self.modifyPerfect,
         }
 
-        if getattr(recipe, 'do_not_overclock', False):
-            return recipe
-
         if recipe.machine in machine_overrides:
             return machine_overrides[recipe.machine](recipe)
         else:
             return self.modifyStandard(recipe)
+
+
+    def overclockRecipe(self, recipe, ignore_underclock=False):
+        ### Modifies recipe according to overclocks
+        # By the time that the recipe arrives here, it should have a "user_voltage" argument which indicates
+        # what the user is actually providing.
+        self.ignore_underclock = ignore_underclock
+
+        if getattr(recipe, 'do_not_overclock', False):
+            return recipe
+
+        return self.getOverclockFunction(recipe)

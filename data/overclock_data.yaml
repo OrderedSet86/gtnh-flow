@@ -49,8 +49,10 @@ GTpp_stats:
   wire factory: [2.0, 0.75, 4]
   industrial mixing machine: [2.5, 1.0, 8]
   industrial sifter: [4, 0.75, 4]
+  large sifter: [4, 0.75, 4]
   large thermal refinery: [1.5, 0.8, 8]
   industrial wash plant: [4.0, 1.0, 4]
+  ore washing plant: [4.0, 1.0, 4]
   industrial extrusion machine: [2.5, 1.0, 4]
   large processing factory: [2.5, 0.8, 2]
   industrial arc furnace: [2.5, 1.0, 8]
@@ -60,6 +62,8 @@ GTpp_stats:
   dangote - distillery: [0, 1.0, 48]
   industrial dehydrator: [1.2, 0.5, 4]
   thermic heating device: [1.2, 0.9, 8]
+  thermic heater: [1.2, 0.9, 8]
+  industrial fluid heater: [1.2, 0.9, 8]
 
 
 voltage_data:
