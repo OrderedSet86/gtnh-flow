@@ -224,7 +224,7 @@ def addPowerLineNodesV2(self):
             # Compute I/O for a single tick
             gen_voltage_index = voltages.index(gen_voltage)
             output_eut = 32 * (4 ** gen_voltage_index)
-            loss_on_singleblock_output = (2 ** (gen_voltage_index+1))
+            loss_on_singleblock_output = (2 ** (gen_voltage_index+1-1))
             expended_eut = output_eut + loss_on_singleblock_output
 
             expended_fuel_t = expended_eut / (eut_per_cell/1000 * efficiency)
