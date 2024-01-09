@@ -3,6 +3,7 @@ coil_multipliers:
   kanthal: 1
   nichrome: 1.5
   tungstensteel: 2.0
+  tpv-alloy: 2.0
   hss-g: 2.5
   hss-s: 3.0
   naquadah: 3.5
@@ -20,6 +21,7 @@ coil_heat:
   kanthal: 2701
   nichrome: 3601
   tungstensteel: 4501
+  tpv-alloy: 4501
   HSS-G: 5401
   HSS-S: 6301
   naquadah: 7201
