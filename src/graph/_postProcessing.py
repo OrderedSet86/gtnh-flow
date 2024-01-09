@@ -338,20 +338,6 @@ def addSummaryNode(self):
             total_io[ing_id] += direction * quant
             if direction == -1:
                 input_flows[ing_id] += direction * quant
-    # input_edges = self.adj['source']['O']
-    # output_edges = self.adj['sink']['I']
-
-    # ing_names = {self.getIngId(ing_name): self.getIngLabel(ing_name) for _, _, ing_name in chain(input_edges, output_edges)}
-    # input_flows = {
-    #     self.getIngId(ing_name): -sum(self.edges[e]['quant'] for e in edges)
-    #     for ing_name, edges in groupby(input_edges, lambda e: e[2])
-    # }
-    # output_flows = {
-    #     self.getIngId(ing_name): sum(self.edges[e]['quant'] for e in edges)
-    #     for ing_name, edges in groupby(output_edges, lambda e: e[2])
-    # }
-
-    # io_ids = set(input_flows.keys()).union(output_flows.keys())
 
     def canonicalizeFlow(flow):
         # Set to 0 if too small (intended to avoid floating point issues)
