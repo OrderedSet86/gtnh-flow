@@ -48,6 +48,7 @@ NONLOCKEDNODE_COLOR: 'lightblue2'
 LOCKEDNODE_COLOR: 'green'
 POSITIVE_COLOR: '#859900'
 NEGATIVE_COLOR: '#dc322f'
+RECYCLABLE_COLOR: '#2aa198'
 
 ORIENTATION: 'TB'
 # TB: Vertical, LR: Horizontal, BT: Vertical Inverted, RL: Horizontal Inverted
