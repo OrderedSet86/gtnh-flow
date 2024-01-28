@@ -45,12 +45,14 @@ def connectGraph(self):
                 machine_label.append(line_generator(rec))
 
         machine_label = '\n'.join(machine_label)
+        machine_color = self.graph_config['MACHINE_COLORS'].get(
+            rec.machine, self.graph_config['DEFAULT_MACHINE_COLOR'])
         self.addNode(
             rec_id,
-            fillcolor=self.graph_config['NONLOCKEDNODE_COLOR'],
+            fillcolor=machine_color,
             label=machine_label
         )
-    
+
     # Add I/O connections
     added_edges = set()
     for rec_id, rec in self.recipes.items():
@@ -135,4 +137,3 @@ def removeBackEdges(self):
             )
 
             del self.edges[edge_def]
-

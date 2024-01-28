@@ -43,22 +43,23 @@ EDGECOLOR_CYCLE:
   - '#2aa198' # 'cyan'
   - '#859900' # 'green'
 SOURCESINK_COLOR: 'ghostwhite'
-NONLOCKEDNODE_COLOR: 'lightblue2'
-LOCKEDNODE_COLOR: 'green'
 POSITIVE_COLOR: '#859900'
 NEGATIVE_COLOR: '#dc322f'
 RECYCLABLE_COLOR: '#2aa198'
+DEFAULT_MACHINE_COLOR: aliceblue
+MACHINE_COLORS:
+  electric blast furnace: aliceblue
 
 ORIENTATION: 'TB'
 # TB: Vertical, LR: Horizontal, BT: Vertical Inverted, RL: Horizontal Inverted
 # [TB, LR, BT, RL]
 
 LINE_STYLE: 'spline'
-# [line, spline, polyline, curved] 
+# [line, spline, polyline, curved]
 
 RANKSEP: '1.25'
 NODESEP: '0.25'
-# Node separation size in X/Y. 
+# Node separation size in X/Y.
 # This is a suggestion, the graphing algorithm will ignore numbers that are too small.
 
 COMBINE_INPUTS: true
