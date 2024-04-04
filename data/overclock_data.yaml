@@ -64,6 +64,7 @@ GTpp_stats:
   thermic heating device: [1.2, 0.9, 8]
   thermic heater: [1.2, 0.9, 8]
   industrial fluid heater: [1.2, 0.9, 8]
+  volcanus: [1.2, 0.9, 8]
 
 
 voltage_data:
