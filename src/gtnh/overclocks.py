@@ -460,6 +460,7 @@ class OverclockHandler:
             'thermic heating device': self.modifyGTpp,
             'thermic heater': self.modifyGTpp,
             'industrial fluid heater': self.modifyGTpp,
+            'volcanus': self.modifyGTpp,
 
             # Special GT++ multis
             'industrial coke oven': lambda recipe: self.modifyGTppSetParallel(recipe, 24, speed_per_tier=0.96),
