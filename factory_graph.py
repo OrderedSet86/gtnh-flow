@@ -1,7 +1,8 @@
 # Standard libraries
+import argparse
 import logging
 import os
-import argparse
+import traceback
 from pathlib import Path
 
 # Pypi libraries
@@ -39,6 +40,8 @@ class ProgramContext:
             logging.info(colored(msg, color))
         elif level == logging.WARNING:
             logging.warning(colored(msg, color))
+        elif level == logging.ERROR:
+            logging.error(colored(msg, color))
 
 
     def load_graph_config(self, config_path):
@@ -51,8 +54,12 @@ class ProgramContext:
             raise Exception(f'Invalid project file. *.yaml file expected. Got: {project_name}.')
 
         recipes = recipesFromConfig(project_name)
-        self.graph_gen(self, project_name[:-5], recipes, self.graph_config)
-
+        try:
+            self.graph_gen(self, project_name[:-5], recipes, self.graph_config)
+        except Exception as e:
+            print(traceback.format_exc())
+            self.cLog(f'Error generating graph for project "{project_name}": {e}', 'red', logging.ERROR)
+            self.cLog('If error cause is not obvious, please notify dev: https://github.com/OrderedSet86/gtnh-flow/issues', 'red', logging.ERROR)
 
     def run_noninteractive(self, projects):
         for project_name in projects:
