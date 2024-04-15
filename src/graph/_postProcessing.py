@@ -318,6 +318,7 @@ def addSummaryNode(self):
     # Compute I/O
     total_io = defaultdict(float)
     ing_names = defaultdict(str)
+    input_flows = defaultdict(float)
     for direction in [-1, 1]:
         if direction == -1:
             # Inputs
@@ -335,25 +336,46 @@ def addSummaryNode(self):
 
             ing_names[ing_id] = self.getIngLabel(ing_name)
             total_io[ing_id] += direction * quant
+            if direction == -1:
+                input_flows[ing_id] += direction * quant
+
+    def canonicalizeFlow(flow):
+        # Set to 0 if too small (intended to avoid floating point issues)
+        return flow if abs(flow) > 1e-5 else 0
+    total_io = {ing: canonicalizeFlow(flow) for ing, flow in total_io.items()}
 
     # Create I/O lines
     io_label_lines = []
-    io_label_lines.append(f'<tr><td align="left"><font color="white" face="{self.graph_config["SUMMARY_FONT"]}"><b>Summary</b></font></td></tr><hr/>')
 
-    for id, quant in sorted(total_io.items(), key=lambda x: x[1]):
-        if id == 'eu':
-            continue
+    def makeIOTitle(title):
+        font = self.graph_config["SUMMARY_FONT"]
+        return f'<tr><td align="left"><font color="white" face="{font}"><b>{title}</b></font></td></tr><hr/>'
 
-        # Skip if too small (intended to avoid floating point issues)
-        near_zero_range = 10**-5
-        if -near_zero_range < quant < near_zero_range:
-            continue
+    def makeIOLines(flows, color):
+        for id, quant in sorted(flows, key=lambda x: -abs(x[1])):
+            amt_text = self.getQuantLabel(id, quant)
+            name_text = '\u2588 ' + ing_names[id]
+            num_color = color
+            ing_color = self.getUniqueColor(id)
+            yield makeLineHtml(name_text, amt_text, ing_color, num_color)
 
-        amt_text = self.getQuantLabel(id, quant)
-        name_text = '\u2588 ' + ing_names[id]
-        num_color = color_positive if quant >= 0 else color_negative
-        ing_color = self.getUniqueColor(id)
-        io_label_lines.append(makeLineHtml(name_text, amt_text, ing_color, num_color))
+    ## If one ingredient's net output is equal or greater than 0, it is recyclable
+    recyclable_flows = {id: quant for id, quant in total_io.items() if id != 'eu' and input_flows.get(id, 0) < 0 and total_io[id] >= 0}
+    color_recyclable = self.graph_config['RECYCLABLE_COLOR']
+    io_label_lines.append(makeIOTitle('Input'))
+    io_label_lines.extend(makeIOLines(
+        filter(lambda e: e[0] != 'eu' and e[0] not in recyclable_flows and e[1] < 0, total_io.items()),
+        color_negative
+    ))
+    io_label_lines.append(makeIOTitle('Output'))
+    io_label_lines.extend(makeIOLines(
+        filter(lambda e: e[0] != 'eu' and e[0] not in recyclable_flows and e[1] > 0, total_io.items()),
+        color_positive
+    ))
+    ## There might not be recyclable inputs
+    if recyclable_flows:
+        io_label_lines.append(makeIOTitle('Recyclable'))
+        io_label_lines.extend(makeIOLines(recyclable_flows.items(), color_recyclable))
 
     # Compute total EU/t cost and (if power line) output
     total_eut = 0
