@@ -1,5 +1,7 @@
 import itertools
 
+from termcolor import colored
+
 from src.gtnh.overclocks import OverclockHandler
 
 
@@ -34,8 +36,8 @@ class Graph:
 
         # DEBUG
         for rec in recipes:
-            self.parent_context.cLog(rec)
-        self.parent_context.cLog('')
+            self.parent_context.log.debug(rec)
+        self.parent_context.log.debug(colored(''))
 
     # Graph utility functions
     from ._utils import (

@@ -3,6 +3,7 @@ from io import StringIO
 from collections import defaultdict
 
 import graphviz
+from termcolor import colored
 
 from src.graph._postProcessing import bottleneckPrint
 
@@ -153,7 +154,7 @@ def outputGraphviz(self):
                 add_node_internal(g, rec_id, **kwargs)
         else:
             with g.subgraph(name=f'cluster_{group}') as c:
-                self.parent_context.cLog(f'Creating subgraph {group}')
+                self.parent_context.log.debug(colored(f'Creating subgraph {group}'))
                 cluster_color = self.getUniqueColor(group)
 
                 # Populate nodes

@@ -25,23 +25,19 @@ class ProgramContext:
 
 
     def __init__(self):
-        logging.basicConfig(level=logging.INFO)
+        self.log = logging.getLogger('flow.log')
+        self.log.setLevel(logging.DEBUG)
+        formatter = logging.Formatter(
+            fmt='%(filename)s:%(lineno)s %(levelname)s %(message)s',
+            datefmt='%Y-%m-%dT%H:%M:%S%z', # ISO 8601
+        )
+        handler = logging.StreamHandler() # outputs to stderr
+        handler.setFormatter(formatter)
+        handler.setLevel(logging.INFO)
+        self.log.addHandler(handler)
 
         self.load_graph_config(ProgramContext.DEFAULT_CONFIG_PATH)
         self.graph_gen = systemOfEquationsSolverGraphGen
-
-
-    @staticmethod
-    def cLog(msg, color='white', level=logging.DEBUG):
-        # Not sure how to level based on a variable, so just if statements for now
-        if level == logging.DEBUG:
-            logging.debug(colored(msg, color))
-        elif level == logging.INFO:
-            logging.info(colored(msg, color))
-        elif level == logging.WARNING:
-            logging.warning(colored(msg, color))
-        elif level == logging.ERROR:
-            logging.error(colored(msg, color))
 
 
     def load_graph_config(self, config_path):
@@ -58,8 +54,8 @@ class ProgramContext:
             self.graph_gen(self, project_name[:-5], recipes, self.graph_config)
         except Exception as e:
             print(traceback.format_exc())
-            self.cLog(f'Error generating graph for project "{project_name}": {e}', 'red', logging.ERROR)
-            self.cLog('If error cause is not obvious, please notify dev: https://github.com/OrderedSet86/gtnh-flow/issues', 'red', logging.ERROR)
+            self.log.error(colored(f'Error generating graph for project "{project_name}": {e}', 'red'))
+            self.log.error(colored('If error cause is not obvious, please notify dev: https://github.com/OrderedSet86/gtnh-flow/issues', 'red'))
 
 
     def run_noninteractive(self, projects):

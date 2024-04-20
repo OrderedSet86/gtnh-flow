@@ -1,5 +1,7 @@
 from collections import defaultdict
 
+from termcolor import colored
+
 from src.data.basicTypes import Recipe
 
 
@@ -54,17 +56,17 @@ def createAdjacencyList(self):
     self.adj = adj
     self.adj_machine = adj_machine
 
-    self.parent_context.cLog('Recomputing adjacency list...', 'blue')
+    self.parent_context.log.debug(colored('Recomputing adjacency list...', 'blue'))
     for machine, io_group in self.adj_machine.items():
         machine_name = ''
         recipe_obj = self.recipes.get(machine)
         if isinstance(recipe_obj, Recipe):
             machine_name = recipe_obj.machine
 
-        self.parent_context.cLog(f'{machine} {machine_name}', 'blue')
+        self.parent_context.log.debug(colored(f'{machine} {machine_name}', 'blue'))
         for io_type, edges in io_group.items():
-            self.parent_context.cLog(f'{io_type} {edges}', 'blue')
-    self.parent_context.cLog('')
+            self.parent_context.log.debug(colored(f'{io_type} {edges}', 'blue'))
+    self.parent_context.log.debug(colored(''))
 
 
 def _checkIfMachine(self, rec_id):

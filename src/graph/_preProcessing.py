@@ -1,5 +1,6 @@
-import logging
 from collections import defaultdict
+
+from termcolor import colored
 
 from src.graph._backEdges import BasicGraph, dfs
 from src.graph._utils import swapIO
@@ -114,7 +115,7 @@ def removeBackEdges(self):
 
         for edge_def, edge_data in relevant_edges:
             node_from, node_to, ing_name = edge_def
-            self.parent_context.cLog(f'Fixing factory cycle by redirecting "{ing_name.title()}" to sink', 'yellow', level=logging.INFO)
+            self.parent_context.log.info(colored(f'Fixing factory cycle by redirecting "{ing_name.title()}" to sink', 'yellow'))
 
             # Redirect looped ingredient to sink
             self.addEdge(

@@ -5,7 +5,7 @@ from copy import deepcopy
 from string import ascii_uppercase
 
 import yaml
-from termcolor import cprint
+from termcolor import colored, cprint
 
 from src.data.basicTypes import Ingredient, IngredientCollection, Recipe
 from src.graph._utils import _iterateOverMachines
@@ -195,7 +195,7 @@ def addPowerLineNodesV2(self):
         quant_s = edge_data['quant']
 
         if ing_name in known_burnables and not ing_name in self.graph_config['DO_NOT_BURN']:
-            self.parent_context.cLog(f'Detected burnable: {ing_name.title()}! Adding to chart.', 'blue', level=logging.INFO)
+            self.parent_context.log.info(colored(f'Detected burnable: {ing_name.title()}! Adding to chart.', 'blue'))
             generator_idx, eut_per_cell = known_burnables[ing_name]
             gen_name = generator_names[generator_idx]
 
@@ -255,13 +255,14 @@ def addPowerLineNodesV2(self):
             )
 
             produced_eut_s = quant_s/expended_fuel_t*output_eut 
-            self.parent_context.cLog(
-                ''.join([
-                    f'Added {gen_voltage} generator burning {quant_s} {ing_name} for '
-                    f'{self.userRound(produced_eut_s/20)}EU/t at {output_eut}EU/t each.'
-                ]),
-                'blue',
-                level=logging.INFO,
+            self.parent_context.log.info(
+                colored(
+                    ''.join([
+                        f'Added {gen_voltage} generator burning {quant_s} {ing_name} for '
+                        f'{self.userRound(produced_eut_s/20)}EU/t at {output_eut}EU/t each.'
+                    ]),
+                    'blue',
+                )
             )
 
             self.addNode(

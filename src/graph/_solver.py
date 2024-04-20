@@ -9,6 +9,7 @@ from sympy import linsolve, symbols
 from sympy.core.numbers import Float
 from sympy.solvers import solve
 from sympy.sets.sets import EmptySet
+from termcolor import colored
 
 from src.graph import Graph
 from src.graph._preProcessing import (
@@ -335,9 +336,9 @@ class SympySolver:
             variable_index += 1
         
         if direction == 'O':
-            self.graph.parent_context.cLog(f'Solving multi-output scenario involving {multi_product}!', 'green', level=logging.INFO)
+            self.graph.parent_context.log.info(colored(f'Solving multi-output scenario involving {multi_product}!', 'green'))
         elif direction == 'I':
-            self.graph.parent_context.cLog(f'Solving multi-input scenario involving {multi_product}!', 'green', level=logging.INFO)
+            self.graph.parent_context.log.info(colored(f'Solving multi-input scenario involving {multi_product}!', 'green'))
 
         # Add new equations for multi-IO
         # print(self.variables)
@@ -378,7 +379,7 @@ class SympySolver:
     def _searchForInconsistency(self):
         # Solve each equation stepwise until inconsistency is found, then report to end user
 
-        self.graph.parent_context.cLog('Searching for inconsistency in system of equations...', 'blue', level=logging.INFO)
+        self.graph.parent_context.log.info(colored('Searching for inconsistency in system of equations...', 'blue'))
 
         # for expr in system:
         #     print(expr)
@@ -411,7 +412,7 @@ class SympySolver:
                 if expr.is_constant():
                     constant_diff = float(expr)
                     if not isclose(constant_diff, 0.0, abs_tol=0.00000001):
-                        # self.graph.parent_context.cLog(f'Inconsistency found in {preexpr}!', 'red', level=logging.WARNING)
+                        # self.graph.parent_context.log.warning(colored(f'Inconsistency found in {preexpr}!', 'red'))
                         # Now print what the variables are referring to and output debug graph
                         inconsistent_variables.append((involved_variables, constant_diff))
                         iterations += 1
@@ -461,12 +462,12 @@ class SympySolver:
             
             # When problematic inconsistency is found...
             if len(products) == 1:
-                self.graph.parent_context.cLog(f'Major inconsistency: {group}', 'red', level=logging.WARNING)
+                self.graph.parent_context.log.warning(colored(f'Major inconsistency: {group}', 'red'))
 
-                self.graph.parent_context.cLog(f'Between output={self.graph.recipes[mpdm_cache[0][0]].O}', 'red', level=logging.WARNING)
-                self.graph.parent_context.cLog(f'    and  input={self.graph.recipes[mpdm_cache[1][0]].I}', 'red', level=logging.WARNING)
+                self.graph.parent_context.log.warning(colored(f'Between output={self.graph.recipes[mpdm_cache[0][0]].O}', 'red'))
+                self.graph.parent_context.log.warning(colored(f'    and  input={self.graph.recipes[mpdm_cache[1][0]].I}', 'red'))
 
-                self.graph.parent_context.cLog('Please fix by either:', 'green', level=logging.INFO)
+                self.graph.parent_context.log.info(colored('Please fix by either:', 'green'))
 
                 # if constant_diff < 0:
                 #     parent_group_idx = 0
@@ -476,7 +477,7 @@ class SympySolver:
                 child_group_idx = 1
 
                 # Negative means too much of right side, or too few of other sided inputs
-                self.graph.parent_context.cLog(f'1. Sending excess {group[parent_group_idx]} {product} to sink', 'blue', level=logging.INFO)
+                self.graph.parent_context.log.info(colored(f'1. Sending excess {group[parent_group_idx]} {product} to sink', 'blue'))
 
                 # Check other sided inputs
                 machine, product, direction, multi_idx = idx_to_mpdm[var_to_idx(group[child_group_idx])]
@@ -491,7 +492,7 @@ class SympySolver:
                             'v' + f'{self.edge_from_perspective_to_index[(edge, machine)]}',
                         ))
 
-                self.graph.parent_context.cLog(f'2. Pulling more {nonself_product} from source', 'blue', level=logging.INFO)
+                self.graph.parent_context.log.info(colored(f'2. Pulling more {nonself_product} from source', 'blue'))
 
                 # Output graph for end user to view
                 self._debugAddVarsToEdges()
@@ -621,7 +622,7 @@ def systemOfEquationsSolverGraphGen(self, project_name, recipes, graph_config):
 
     graphPreProcessing(g)
 
-    g.parent_context.cLog('Running linear solver...', 'green', level=logging.INFO)
+    g.parent_context.log.info(colored('Running linear solver...', 'green'))
     solver = SympySolver(g)
     solver.run()
 
