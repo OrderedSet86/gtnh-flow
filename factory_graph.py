@@ -61,9 +61,11 @@ class ProgramContext:
             self.cLog(f'Error generating graph for project "{project_name}": {e}', 'red', logging.ERROR)
             self.cLog('If error cause is not obvious, please notify dev: https://github.com/OrderedSet86/gtnh-flow/issues', 'red', logging.ERROR)
 
+
     def run_noninteractive(self, projects):
         for project_name in projects:
             self.generate_one(project_name)
+
 
     def run_interactive(self):
         # Set up autcompletion config
@@ -103,6 +105,7 @@ class ProgramContext:
                 project_name += '.yaml'
 
             self.generate_one(project_name)
+
 
     def run(self):
 

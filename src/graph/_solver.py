@@ -62,6 +62,10 @@ class SympySolver:
         self._addUserLocking() # add known equations from user "number" and "target" args
         self._addMachineInternalLocking() # add relations inside machines - eg 1000 wood tar -> 350 benzene
         self._populateEFPTI() # construct "edge_from_perspective_to_index" - a useful index lookup for next steps
+        if self.graph.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
+            self._debugAddVarsToEdges()
+            outputGraphviz(self.graph)
+
         self._addMachineMachineEdges() # add equations between machines, including complex situations - eg multi IO
 
         # Solve and if unsolvable, adjust until it is
@@ -279,6 +283,8 @@ class SympySolver:
                             if rec_id == a: # a is simple machine
                                 multi_idx = self.edge_from_perspective_to_index[(relevant_edge, b)]
                                 # print(relevant_edge, rec_id, flush=True)
+                                print(self.variables)
+                                print(self.arrayIndex(a, product, 'O'))
                                 self.system.append(
                                     self.variables[self.arrayIndex(a, product, 'O')]
                                     -
@@ -352,7 +358,7 @@ class SympySolver:
             print(res)
             if isinstance(res, EmptySet):
                 self._searchForInconsistency()
-                exit(1)
+                return
             else:
                 break
 

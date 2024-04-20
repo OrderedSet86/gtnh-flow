@@ -37,7 +37,6 @@ class Graph:
             self.parent_context.cLog(rec)
         self.parent_context.cLog('')
 
-
     # Graph utility functions
     from ._utils import (
         userRound,
@@ -62,4 +61,8 @@ class Graph:
         getQuantLabel,
         _combineInputs,
         _combineOutputs,
+    )
+
+    from ._output import (
+        outputGraphviz,
     )
