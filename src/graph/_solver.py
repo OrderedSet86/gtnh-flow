@@ -306,17 +306,12 @@ class SympySolver:
             self.graph.parent_context.log.warning(colored('EmptySet response - likely overdetermined', 'red'))
 
             # Check for water in inputs
-            water_inputs, water_outputs = 0, 0
             for edge in self.graph.edges:
                 a, b, product = edge
                 if product == 'water':
-                    if self.graph._checkIfMachine(a):
-                        water_outputs += 1
-                    if self.graph._checkIfMachine(b):
-                        water_inputs += 1
-            if water_outputs > 0 and water_outputs > 0:
-                self.graph.parent_context.log.warning(colored('Water detected in both machine inputs and outputs - possible cause of overdetermination', 'yellow'))
-
+                    if self.graph._checkIfMachine(a) and self.graph._checkIfMachine(b):
+                        self.graph.parent_context.log.warning(colored('Water detected on machine/machine edge - possible cause of overdetermination', 'yellow'))
+                        break
             self._searchForInconsistency()
             return
 
