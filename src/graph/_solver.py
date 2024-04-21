@@ -69,6 +69,7 @@ class SympySolver:
             self._debugAddVarsToEdges()
             outputGraphviz(self.graph)
 
+        self.graph.parent_context.log.debug(colored(f'Adding machine-machine edges', 'yellow'))
         self._addMachineMachineEdges() # add equations between machines, including complex situations - eg multi IO
 
         # Solve and if unsolvable, adjust until it is
@@ -215,10 +216,10 @@ class SympySolver:
                     involved_machines[dfs_b] += 1
 
                     # Check for all adjacent I/O edges using the same product
-                    for edge in self.graph.adj[a]['O']: # Multi-output
+                    for edge in self.graph.adj_machine[a]['O']: # Multi-output
                         if edge[2] == product:
                             q.append(edge)
-                    for edge in self.graph.adj[b]['I']: # Multi-input
+                    for edge in self.graph.adj_machine[b]['I']: # Multi-input
                         if edge[2] == product:
                             q.append(edge)
                 
@@ -262,6 +263,8 @@ class SympySolver:
         multi_idx = 1 # starts at 1 for new variables
         new_variables = []
         for edge in involved_edges:
+            other_machine_id = edge[0] if edge[1] == multi_machine else edge[1]
+
             # Add new variables and update efpti
             new_var_index = self.arrayIndex(multi_machine, multi_product, multi_io_direction, multi_idx=multi_idx)
             new_variables.append(self.variables[new_var_index])
@@ -269,9 +272,6 @@ class SympySolver:
             self.edge_from_perspective_to_index[(edge, multi_machine)] = new_var_index
 
             # Add "simple" machine-machine equations
-            other_machine_id = edge[0] if edge[1] == multi_machine else edge[1]
-            if other_machine_id in ['sink', 'source']:
-                continue
             other_var_index = self.edge_from_perspective_to_index[(edge, other_machine_id)]
             if multi_io_direction == 'O':
                 self._addNewEquation(
@@ -520,8 +520,9 @@ class SympySolver:
 
                         print(adjacent_variables, ing.name)
 
+                        # FIXME:
                         for i, eq in enumerate(self.system):
-                            print(eq.as_terms()[-1])
+                            # print(eq.as_terms()[-1])
                             if all([x in eq.as_terms()[-1] for x in adjacent_variables]):
                                 print(f'Associated equation: {eq}')
                                 # self.graph.parent_context.log.debug(colored(f'Eqn. involving {var_obj}: {eq}', 'cyan'))
