@@ -189,6 +189,7 @@ def addPowerLineNodesV2(self):
 
     # 3. Redirect burnables currently going to sink and redirect them to a new burn machine
     outputs = self.adj['sink']['I']
+    burn_machines_added = False
     for edge in deepcopy(outputs):
         node_from, _, ing_name = edge
         edge_data = self.edges[edge]
@@ -196,6 +197,8 @@ def addPowerLineNodesV2(self):
 
         if ing_name in known_burnables and not ing_name in self.graph_config['DO_NOT_BURN']:
             self.parent_context.log.info(colored(f'Detected burnable: {ing_name.title()}! Adding to chart.', 'blue'))
+            burn_machines_added = True
+
             generator_idx, eut_per_cell = known_burnables[ing_name]
             gen_name = generator_names[generator_idx]
 
@@ -289,10 +292,12 @@ def addPowerLineNodesV2(self):
             )
             # Remove old edge and repopulate adjacency list
             del self.edges[edge]
-            self.createAdjacencyList()
 
             highest_node_index += 1
 
+    if burn_machines_added:
+        self.parent_context.log.debug(colored('Updating adj since new powerline machines added', 'yellow'))
+        self.createAdjacencyList()
 
 
 def addSummaryNode(self):
@@ -314,6 +319,7 @@ def addSummaryNode(self):
             '</tr>'
         ])
 
+    self.parent_context.log.debug(colored('Updating adj before summary node', 'yellow'))
     self.createAdjacencyList()
 
     # Compute I/O

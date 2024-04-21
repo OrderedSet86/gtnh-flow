@@ -25,18 +25,26 @@ class ProgramContext:
 
 
     def __init__(self):
+        self.load_graph_config(ProgramContext.DEFAULT_CONFIG_PATH)
+        streamhandler_level = self.graph_config.get('STREAMHANDLER_LEVEL', 'INFO')
+
         self.log = logging.getLogger('flow.log')
         self.log.setLevel(logging.DEBUG)
+
+        if streamhandler_level == 'DEBUG':
+            fmtstring = '%(pathname)s:%(lineno)s %(levelname)s %(message)s',
+        else:
+            fmtstring = '%(filename)s:%(lineno)s %(levelname)s %(message)s'
         formatter = logging.Formatter(
-            fmt='%(filename)s:%(lineno)s %(levelname)s %(message)s',
+            fmt=fmtstring,
             datefmt='%Y-%m-%dT%H:%M:%S%z', # ISO 8601
         )
+
         handler = logging.StreamHandler() # outputs to stderr
         handler.setFormatter(formatter)
-        handler.setLevel(logging.INFO)
+        handler.setLevel(logging.getLevelName(self.graph_config.get('STREAMHANDLER_LEVEL')))
         self.log.addHandler(handler)
 
-        self.load_graph_config(ProgramContext.DEFAULT_CONFIG_PATH)
         self.graph_gen = systemOfEquationsSolverGraphGen
 
 
@@ -53,7 +61,7 @@ class ProgramContext:
         try:
             self.graph_gen(self, project_name[:-5], recipes, self.graph_config)
         except Exception as e:
-            print(traceback.format_exc())
+            cprint(traceback.format_exc(), 'red')
             self.log.error(colored(f'Error generating graph for project "{project_name}": {e}', 'red'))
             self.log.error(colored('If error cause is not obvious, please notify dev: https://github.com/OrderedSet86/gtnh-flow/issues', 'red'))
 

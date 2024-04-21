@@ -35,9 +35,10 @@ class Graph:
             rec.base_eut = rec.eut
 
         # DEBUG
+        self.parent_context.log.debug('Recipes after overclocking:')
         for rec in recipes:
-            self.parent_context.log.debug(rec)
-        self.parent_context.log.debug(colored(''))
+            self.parent_context.log.debug(colored(rec, 'yellow'))
+        self.parent_context.log.debuug('')
 
     # Graph utility functions
     from ._utils import (

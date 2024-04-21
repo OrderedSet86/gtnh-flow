@@ -63,9 +63,9 @@ def createAdjacencyList(self):
         if isinstance(recipe_obj, Recipe):
             machine_name = recipe_obj.machine
 
-        self.parent_context.log.debug(colored(f'{machine} {machine_name}', 'blue'))
+        self.parent_context.log.debug(colored(f'  {machine} {machine_name}', 'yellow'))
         for io_type, edges in io_group.items():
-            self.parent_context.log.debug(colored(f'{io_type} {edges}', 'blue'))
+            self.parent_context.log.debug(colored(f'    {io_type} {edges}', 'green'))
     self.parent_context.log.debug(colored(''))
 
 
