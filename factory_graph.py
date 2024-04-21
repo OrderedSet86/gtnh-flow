@@ -32,7 +32,7 @@ class ProgramContext:
         self.log.setLevel(logging.DEBUG)
 
         if streamhandler_level == 'DEBUG':
-            fmtstring = '%(pathname)s:%(lineno)s %(levelname)s %(message)s',
+            fmtstring = '%(pathname)s:%(lineno)s %(levelname)s %(message)s'
         else:
             fmtstring = '%(filename)s:%(lineno)s %(levelname)s %(message)s'
         formatter = logging.Formatter(
