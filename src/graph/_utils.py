@@ -56,6 +56,8 @@ def createAdjacencyList(self):
     self.adj = adj
     self.adj_machine = adj_machine
 
+    LOG_ADJACENCY_LIST = self.parent_context.graph_config.get('LOG_ADJACENCY_LIST', False)
+
     self.parent_context.log.debug(colored('Recomputing adjacency list...', 'blue'))
     for machine, io_group in self.adj_machine.items():
         machine_name = ''
@@ -63,10 +65,12 @@ def createAdjacencyList(self):
         if isinstance(recipe_obj, Recipe):
             machine_name = recipe_obj.machine
 
-        self.parent_context.log.debug(colored(f'  {machine} {machine_name}', 'yellow'))
-        for io_type, edges in io_group.items():
-            self.parent_context.log.debug(colored(f'    {io_type} {edges}', 'green'))
-    self.parent_context.log.debug(colored(''))
+        if LOG_ADJACENCY_LIST:
+            self.parent_context.log.debug(colored(f'  {machine} {machine_name}', 'yellow'))
+            for io_type, edges in io_group.items():
+                self.parent_context.log.debug(colored(f'    {io_type} {edges}', 'green'))
+    if LOG_ADJACENCY_LIST:
+        self.parent_context.log.debug(colored(''))
 
 
 def _checkIfMachine(self, rec_id):

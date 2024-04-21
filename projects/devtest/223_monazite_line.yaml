@@ -1,0 +1,506 @@
+- m: digester
+  tier: IV
+  coils: HSS-G
+  heat: 800
+  I:
+    crushed monazite ore: 1
+    nitric acid: 350
+  O:
+    small pile of silicon dioxide: 2
+    muddy monazite rare earth solution: 200
+  eut: 1920
+  dur: 10
+  number: 1
+- m: LCR
+  tier: LuV
+  group: LCRs
+  I:
+    '[Input] hydrogen': 3000
+    '[Input] nitrogen': 1000
+  O:
+    ammonia: 1000
+  eut: 384
+  dur: 16
+- m: LCR
+  tier: IV
+  group: LCRs
+  I:
+    ammonia: 4000
+    Ioxygen: 1000
+  O:
+    nitric acid: 1000
+  eut: 30
+  dur: 16
+- m: dissolution-tank
+  tier: IV
+  I:
+    saltpeter: 9
+    muddy monazite rare earth solution: 9000
+    water: 90000
+  O:
+    hafnia-zirconia blend dust: 4
+    thorianite dust: 9
+    monazite dust: 9
+    diluted monazite rare earth mud: 99000
+  eut: 480
+  dur: 405
+- m: industrial sifter
+  tier: IV
+  group: sifters
+  I:
+    diluted monazite rare earth mud: 1000
+  O:
+    monazite sulfate dust: 0.9
+    silicon dioxide: 0.75
+    rutile dust: 0.2
+    red zircon dust: 0.05
+    ilmenite dust: 0.2
+  eut: 240
+  dur: 20
+- m: industrial mixer
+  tier: EV
+  group: mixers
+  I:
+    monazite sulfate dust: 1
+    water: 6000
+  O:
+    diluted monazite sulfate: 7000
+  eut: 400
+  dur: 24
+- m: LCR
+  tier: IV
+  group: LCRs
+  I:
+    ammonia: 1000
+    nitric acid: 1000
+  O:
+    ammonium nitrate solution: 1000
+  eut: 400
+  dur: 1.5
+- m: LCR
+  tier: LuV
+  group: LCRs
+  I:
+    ammonium nitrate solution: 1800
+    diluted monazite sulfate: 9000
+  O:
+    acidic monazite powder dust: 3
+  eut: 480
+  dur: 216
+- m: industrial sifter
+  tier: IV
+  group: sifters
+  I:
+    acidic monazite powder dust: 1
+  O:
+    monazite rare earth filtrate dust: 0.9
+    thorium-phosphate cake dust: 0.7
+  eut: 256
+  dur: 30
+- m: industrial wash plant
+  tier: EV
+  I:
+    monazite rare earth filtrate dust: 1
+    ammonium nitrate solution: 320
+  O:
+    neutralized monazite rare earth filtrate dust: 1
+  eut: 240
+  dur: 6
+- m: industrial sifter
+  tier: IV
+  group: sifters
+  I:
+    neutralized monazite rare earth filtrate dust: 1
+  O:
+    monazite rare earth hydroxide concentrate dust: 0.9
+    uraniumfiltrate dust: 0.9
+  eut: 480
+  dur: 40
+- m: volcanus
+  coils: HSS-G
+  heat: 1200
+  tier: IV
+  group: blast furnaces
+  I:
+    monazite rare earth hydroxide concentrate dust: 1
+  O:
+    dried monazite rare earth concentrate dust: 1
+  eut: 120
+  dur: 15
+- m: LCR
+  tier: LuV
+  group: LCRs
+  I:
+    nitric acid: 500
+    dried monazite rare earth concentrate dust: 1
+  O:
+    nitrated monazite rare earth concentrate: 1000
+  eut: 480
+  dur: 25
+- m: industrial mixer
+  tier: EV
+  group: mixers
+  I:
+    water: 1000
+    nitrated monazite rare earth concentrate: 1000
+  O:
+    nitric-leached monazite mixture: 1000
+  eut: 120
+  dur: 10
+- m: industrial sifter
+  tier: IV
+  group: sifters
+  I:
+    nitric-leached monazite mixture: 1000
+  O:
+    cerium dioxide dust: 0.1111
+    nitric monazite leached concentrate: 1000
+  eut: 240
+  dur: 20
+- m: VF
+  tier: IV
+  I:
+    nitric monazite leached concentrate: 1000
+  O:
+    cooled monazite rare earth concentrate dust: 1
+  eut: 240
+  dur: 5
+- m: VF
+  tier: IV
+  I:
+    hot hafnium ingot: 1
+  O:
+    hafnium ingot: 1
+  eut: 120
+  dur: 26.7
+- m: VF
+  tier: IV
+  I:
+    hot zirconium ingot: 1
+  O:
+    zirconium ingot: 1
+  eut: 120
+  dur: 26.7
+- m: electromagnetic separator
+  tier: EV
+  I:
+    cooled monazite rare earth concentrate dust: 1
+  O:
+    europium oxide dust: 0.05
+    monaziterarer earth sediment dust: 0.9
+  eut: 1920
+  dur: 30
+- m: volcanus
+  coils: HSS-G
+  heat: 1200
+  tier: IV
+  group: blast furnaces
+  I:
+    monaziterarer earth sediment dust: 1
+    chlorine: 1000
+  O:
+    heterogenous halogenic monazite rare earth mixture dust: 1
+  eut: 480
+  dur: 25
+- m: industrial mixer
+  tier: EV
+  group: mixers
+  I:
+    salt: 1
+    heterogenous halogenic monazite rare earth mixture dust: 1
+    acetone: 1000
+  O:
+    saturated monazite rare earth mixture dust: 1
+  eut: 240
+  dur: 10
+- m: industrial centrifuge
+  tier: LuV
+  I:
+    saturated monazite rare earth mixture dust: 4
+  O:
+    samaric residiue dust: 3
+    chloromethane: 400
+  eut: 1920
+  dur: 157.5
+- m: industrial sifter
+  tier: IV
+  group: sifters
+  I:
+    samaric residiue dust: 3
+  O:
+    samarium dust: 2
+    gadolinium dust: 1
+  eut: 1920
+  dur: 6.65
+- m: industrial centrifuge
+  tier: LuV
+  I:
+    hafnia-zirconia blend dust: 1
+  O:
+    hafnia dust: 3
+    zirconia dust: 3
+  eut: 1920
+  dur: 30
+- m: LCR
+  tier: IV
+  group: LCRs
+  I:
+    '[Input] hydrogen': 1000
+    chlorine: 1000
+  O:
+    hydrochloric acid: 1000
+  eut: 7
+  dur: 3
+- m: LCR
+  tier: IV
+  group: LCRs
+  I:
+    hydrochloric acid: 1000
+    ammonia: 1000
+  O:
+    ammonium chloride: 1000
+  eut: 30
+  dur: 0.75
+- m: LCR
+  tier: IV
+  group: LCRs
+  I:
+    hafnia dust: 1
+    hydrochloric acid: 4000
+  O:
+    hafnium tetrachloride dust: 1
+    water1: 2000
+  eut: 30
+  dur: 15
+- m: LCR
+  tier: IV
+  group: LCRs
+  I:
+    hafnium tetrachloride dust: 1
+    water: 1000
+  O:
+    hafnium tetrachloride solution: 1000
+  eut: 30
+  dur: 10
+- m: volcanus
+  coils: HSS-G
+  heat: 2700
+  tier: IV
+  group: blast furnaces
+  I:
+    magnesium dust: 2
+    hafnium tetrachloride solution: 1000
+  O:
+    low-purity hafnium dust: 1
+    magnesiumchloride dust: 6
+  dur: 30
+  eut: 1920
+- m: LCR
+  tier: IV
+  group: LCRs
+  I:
+    sodium dust: 4
+    magnesiumchloride dust: 6
+  O:
+    magnesium dust1: 2
+    salt1: 8
+  eut: 480
+  dur: 20
+- m: LCR
+  tier: IV
+  group: LCRs
+  I:
+    iodine: 4000
+    low-purity hafnium dust: 1
+  O:
+    hafnium iodide dust: 1
+  eut: 30
+  dur: 15
+- m: volcanus
+  coils: HSS-G
+  heat: 3400
+  tier: IV
+  group: blast furnaces
+  I:
+    hafnium iodide dust: 9
+  O:
+    hot hafnium ingot: 9
+    iodiner: 36000
+    hafnium runoff dust: 1
+  eut: 1920
+  dur: 270
+- m: LCR
+  tier: IV
+  group: LCRs
+  I:
+    hydrochloric acid: 4000
+    zirconia dust: 1
+  O:
+    zirconium tetrachloride dust: 1
+    water1: 2000
+  eut: 30
+  dur: 15
+- m: LCR
+  tier: IV
+  group: LCRs
+  I:
+    water: 1000
+    zirconium tetrachloride dust: 1
+  O:
+    zirconium tetrachloride solution: 1000
+  eut: 30
+  dur: 10
+- m: volcanus
+  coils: HSS-G
+  heat: 4500
+  tier: IV
+  group: blast furnaces
+  I:
+    magnesium dust: 2
+    zirconium tetrachloride solution: 1000
+  O:
+    hot zirconium ingot: 1
+    magnesiumchloride dust: 6
+  eut: 1920
+  dur: 30
+- m: volcanus
+  coils: HSS-G
+  heat: 1500
+  tier: IV
+  group: blast furnaces
+  I:
+    thorium-phosphate cake dust: 1
+  O:
+    thorium-phosphate concentrate dust: 1
+  eut: 120
+  dur: 15
+- m: large thermal refinery
+  tier: EV
+  I:
+    thorium-phosphate concentrate dust: 1
+  O:
+    thorium: 1
+    phosphate: 1
+  eut: 480
+  dur: 10
+- m: LCR
+  tier: IV
+  group: LCRs
+  I:
+    cerium dioxide dust: 3
+    hydrogen gas: 1000
+    ammonium chloride: 3000
+  O:
+    cerium chloride dust: 4
+    steam: 2000
+    ammonia1: 3000
+  eut: 450
+  dur: 15
+  
+- m: volcanus
+  coils: HSS-G
+  heat: 2500
+  tier: IV
+  group: blast furnaces
+  I:
+    vanadium dust: 2
+    Ioxygen: 5000
+  O:
+    vanadium pentoxide dust: 7
+  eut: 120
+  dur: 10
+
+- m: LCR
+  tier: IV
+  group: LCRs
+  I:
+    vanadium pentoxide dust: 1
+    ethanol: 9000
+    Ioxygen: 45000
+  O:
+    oxalate: 9000
+  eut: 240
+  dur: 202.5
+  
+- m: LCR
+  tier: IV
+  group: LCRs
+  I:
+    oxalate: 3000
+    cerium chloride dust: 8
+  O:
+    cerium oxalate dust: 5
+    hydrochloric acid1: 6000
+  eut: 450
+  dur: 15
+- m: volcanus
+  coils: HSS-G
+  heat: 800
+  tier: IV
+  group: blast furnaces
+  I:
+    cerium oxalate dust: 5
+    carbon dust: 3
+  O:
+    cerium III oxide dust: 5
+    carbon monoxide: 9000
+  eut: 480
+  dur: 10
+- m: industrial electrolyzer
+  tier: EV
+  I:
+    cerium III oxide dust: 5
+  O:
+    cerium: 2
+    oxygen: 3000
+  eut: 60
+  dur: 3.5
+- m: LCR
+  tier: IV
+  group: LCRs
+  I:
+    '[Input] hydrogen': 1000
+    fluorine: 1000
+  O:
+    hydrofluoric acid: 1000
+  eut: 7
+  dur: 3
+- m: industrial wash plant
+  tier: EV
+  I:
+    uraniumfiltrate dust: 1
+    hydrofluoric acid: 100
+  O:
+    neutralized uranium filtrate dust: 1
+  eut: 120
+  dur: 18
+- m: industrial sifter
+  tier: IV
+  group: sifters
+  I:
+    neutralized uranium filtrate dust: 1
+  O:
+    uranium-238: 1.15
+    uranium-235: 0.5
+  eut: 30
+  dur: 50
+- m: LCR
+  tier: LuV
+  group: LCRs
+  I:
+    sulfuric acid: 1000
+    europium oxide dust: 1
+  O:
+    europium sulfide dust: 1
+    water: 1000
+  eut: 8400
+  dur: 15
+- m: industrial electrolyzer
+  tier: ZPM
+  I:
+    europium sulfide dust: 2
+  O:
+    europium: 1
+    sulfur: 1
+  eut: 33000
+  dur: 30

@@ -51,7 +51,7 @@ def createMachineLabels(self):
         # Standard label
         label_lines.extend([
             f'{round(rec.multiplier, 2)}x {rec.user_voltage.upper()} {capitalizeMachine(rec.machine)}',
-            f'Cycle: {rec.dur/20}s',
+            f'Cycle: {round(rec.dur/20, 2)}s',
             f'Amoritized: {self.userRound(int(round(rec.eut, 0)))} EU/t',
             f'Per Machine: {self.userRound(int(round(rec.base_eut, 0)))} EU/t',
         ])

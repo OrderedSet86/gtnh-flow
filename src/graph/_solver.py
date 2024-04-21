@@ -75,7 +75,8 @@ class SympySolver:
         # Solve and if unsolvable, adjust until it is
         self._solve()
 
-        self._writeQuantsToGraph()
+        if self.solved_vars:
+            self._writeQuantsToGraph()
     
 
     def _addNewEquation(self, new_eqn):
@@ -297,6 +298,20 @@ class SympySolver:
         # while True: # Loop until solved - algorithm may adjust edges each time it sees an EmptySet
         res = linsolve(self.system, self.variables)
         if isinstance(res, EmptySet):
+            self.graph.parent_context.log.warning(colored('EmptySet response - likely overdetermined', 'red'))
+
+            # Check for water in inputs
+            water_inputs, water_outputs = 0, 0
+            for edge in self.graph.edges:
+                a, b, product = edge
+                if product == 'water':
+                    if self.graph._checkIfMachine(a):
+                        water_outputs += 1
+                    if self.graph._checkIfMachine(b):
+                        water_inputs += 1
+            if water_outputs > 0 and water_outputs > 0:
+                self.graph.parent_context.log.warning(colored('Water detected in both machine inputs and outputs - possible cause of overdetermination', 'yellow'))
+
             self._searchForInconsistency()
             return
 
@@ -316,7 +331,7 @@ class SympySolver:
             outputGraphviz(self.graph)
 
             raise RuntimeError(
-                '\n    Unsolved variables - machine system is not well defined.'
+                '\n    Unsolved variables - machine system is underdefined.'
                 '\n    Likely cause is either disconnected machines or too little information.'
             )
 
@@ -325,14 +340,6 @@ class SympySolver:
         # Solve each equation stepwise until inconsistency is found, then report to end user
 
         self.graph.parent_context.log.info(colored('Searching for inconsistency in system of equations...', 'blue'))
-
-        # for expr in system:
-        #     print(expr)
-        # print()
-
-        # Output graph for end user to view
-        self._debugAddVarsToEdges()
-        outputGraphviz(self.graph)
 
         equations_to_check = deque(self.system)
         max_iter = len(self.system) ** 2 + 1
@@ -362,7 +369,12 @@ class SympySolver:
                     constant_diff = float(expr)
                     if not isclose(constant_diff, 0.0, abs_tol=0.00000001):
                         self.graph.parent_context.log.warning(colored(f'Inconsistency found with {involved_variables}! (diff = {constant_diff})', 'red'))
-                        # Now print what the variables are referring to and output debug graph
+                        # Now print what the variables are referring to
+                        involved_varindex = [int(str(x)[1:]) for x in involved_variables]
+                        for edge_perspective_data, varindex in self.edge_from_perspective_to_index.items():
+                            if varindex in involved_varindex:
+                                self.graph.parent_context.log.warning(colored(f'    v{varindex}: {edge_perspective_data}', 'red'))
+
                         inconsistent_variables.append((involved_variables, constant_diff))
                         iterations += 1
                         continue
@@ -384,6 +396,11 @@ class SympySolver:
                 equations_to_check.append(expr)
             
             iterations += 1
+
+        # Output graph for end user to view
+        self.graph.parent_context.log.warning(colored(f'Refer to graph for more information.', 'red'))
+        self._debugAddVarsToEdges()
+        outputGraphviz(self.graph)
         
         if inconsistent_variables == []:
             raise NotImplementedError('Both linear and nonlinear solver found empty set, so system of equations has no solutions -- report to dev.')
@@ -497,9 +514,9 @@ class SympySolver:
                     if len(relevant_edges) == 0:
                         raise RuntimeError(f'No edge found for ingredient {ing.name} in {rec_id} {direction}!')
                     elif len(relevant_machine_edges) > 1:
-                        print(f'Multi-IO machine detected! {rec_id} {direction} {ing.name} {relevant_edges}')
+                        # print(f'Multi-IO machine detected! {rec_id} {direction} {ing.name} {relevant_edges}')
                         
-                        # Make assumption that any equation involving both adjacent edge variables is the multi-IO base variable
+                        # Make assumption that any equation involving all adjacent edge variables is the multi-IO base variable
                         adjacent_variables = []
                         for edge in relevant_machine_edges:
                             perspective = rec_id
@@ -507,16 +524,49 @@ class SympySolver:
                             variableIndex = self.edge_from_perspective_to_index[edge_perspective_data]
                             adjacent_variables.append(variableIndex)
 
-                        print(relevant_edges)
-                        print(adjacent_variables, ing.name)
+                        own_ingredient = relevant_machine_edges[0][2]
 
-                        # FIXME:
+                        # print(relevant_edges)
+                        # print(adjacent_variables, ing.name)
+
+                        # Get related equation and base variable
                         for i, eq in enumerate(self.system):
-                            # print(eq.as_terms()[-1])
-                            if all([x in eq.as_terms()[-1] for x in adjacent_variables]):
-                                print(f'!! Associated equation: {eq}')
-                                # self.graph.parent_context.log.debug(colored(f'Eqn. involving {var_obj}: {eq}', 'cyan'))
-                                # removal_indices.append(i)
+                            eqn_var_indices = [int(str(x)[1:]) for x in eq.as_terms()[-1]]
+                            if all([x in eqn_var_indices for x in adjacent_variables]):
+                                # print(f'!! Associated equation: {eq}')
+                                assoc_eqn = (eq, eqn_var_indices)
+                                break
+                        base_var_idx = set(assoc_eqn[1]) - set(adjacent_variables)
+                        base_var_idx = list(base_var_idx)[0]
+
+                        # Add base_var_idx to ingredient name "own_ingredient" in node "rec_id"
+                        # TODO:
+
+                        # Get all var indices
+                        var_indices = []
+                        for edge in relevant_edges:
+                            perspective = rec_id
+                            edge_perspective_data = (edge, perspective)
+                            variableIndex = self.edge_from_perspective_to_index[edge_perspective_data]
+                            var_indices.append(variableIndex)
+                        var_string = f"[{', '.join([f'v{x}' for x in var_indices])}]"
+
+                        # Add ALL variable indices ONCE to ONE edge
+                        info_edge = relevant_edges[0]
+                        perspective = rec_id
+                        variableIndex = self.edge_from_perspective_to_index[(info_edge, perspective)]
+                        a, b, product = info_edge
+
+                        if 'debugHead' not in self.graph.edges[info_edge]:
+                            self.graph.edges[info_edge]['debugHead'] = ''
+                        if 'debugTail' not in self.graph.edges[info_edge]:
+                            self.graph.edges[info_edge]['debugTail'] = ''
+
+                        if perspective == b:
+                            self.graph.edges[info_edge]['debugHead'] += f'{var_string}'
+                        elif perspective == a:
+                            self.graph.edges[info_edge]['debugTail'] += f'{var_string}'
+
                     elif len(relevant_edges) >= 1:
                         edge = relevant_edges[0]
                         perspective = rec_id
@@ -617,8 +667,9 @@ def systemOfEquationsSolverGraphGen(self, project_name, recipes, graph_config):
     solver = SympySolver(g)
     solver.run()
 
-    graphPostProcessing(g)
-    outputGraphviz(g)
+    if solver.solved_vars:
+        graphPostProcessing(g)
+        outputGraphviz(g)
 
 
 if __name__ == '__main__':
