@@ -22,6 +22,7 @@ from src.graph._postProcessing import (
     addPowerLineNodesV2,
     addSummaryNode,
     addUserNodeColor,
+    bottleneckPrint,
     createMachineLabels,
 )
 from src.graph._output import (
@@ -67,7 +68,7 @@ class SympySolver:
         self._populateEFPTI() # construct "edge_from_perspective_to_index" - a useful index lookup for next steps
         if self.graph.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
             self._debugAddVarsToEdges()
-            outputGraphviz(self.graph)
+            self.outputGraphvizProxy()
 
         self.graph.parent_context.log.debug(colored(f'Adding machine-machine edges', 'yellow'))
         self._addMachineMachineEdges() # add equations between machines, including complex situations - eg multi IO
@@ -78,6 +79,10 @@ class SympySolver:
         if self.solved_vars:
             self._writeQuantsToGraph()
     
+    def outputGraphvizProxy(self):
+        outputGraphviz(self.graph)
+        if self.graph.graph_config.get('PRINT_BOTTLENECKS') and self.solved_vars:
+            bottleneckPrint(self.graph)
 
     def _addNewEquation(self, new_eqn):
         self.graph.parent_context.log.debug(colored(f'New equation: {new_eqn}', 'cyan'))
@@ -328,7 +333,7 @@ class SympySolver:
             print('all soln:', res)
 
             self._debugAddVarsToEdges()
-            outputGraphviz(self.graph)
+            self.outputGraphvizProxy()
 
             raise RuntimeError(
                 '\n    Unsolved variables - machine system is underdefined.'
@@ -397,7 +402,7 @@ class SympySolver:
         # Output graph for end user to view
         self.graph.parent_context.log.warning(colored(f'Refer to graph for more information.', 'red'))
         self._debugAddVarsToEdges()
-        outputGraphviz(self.graph)
+        self.outputGraphvizProxy()
         
         if inconsistent_variables == []:
             raise NotImplementedError('Both linear and nonlinear solver found empty set, so system of equations has no solutions -- report to dev.')
@@ -430,7 +435,7 @@ class SympySolver:
                 self.graph.parent_context.log.warning(colored(f'Between output={self.graph.recipes[mpdm_cache[0][0]].O}', 'red'))
                 self.graph.parent_context.log.warning(colored(f'    and  input={self.graph.recipes[mpdm_cache[1][0]].I}', 'red'))
 
-                self.graph.parent_context.log.info(colored('Please fix by either:', 'green'))
+                self.graph.parent_context.log.info(colored('[BETA] Please fix by either:', 'green'))
 
                 # if constant_diff < 0:
                 #     parent_group_idx = 0
@@ -440,26 +445,28 @@ class SympySolver:
                 child_group_idx = 1
 
                 # Negative means too much of right side, or too few of other sided inputs
-                self.graph.parent_context.log.info(colored(f'1. Sending excess {group[parent_group_idx]} {product} to sink', 'blue'))
+                self.graph.parent_context.log.info(colored(f'1. Sending excess "{group[parent_group_idx]} {product}" to sink', 'blue'))
 
                 # Check other sided inputs
                 machine, product, direction, multi_idx = idx_to_mpdm[var_to_idx(group[child_group_idx])]
-                nonself_product = []
-                for edge in self.graph.adj[machine][direction]:
-                    # print(self.graph.adj[machine])
-                    # print(edge)
-                    a, b, edgeproduct = edge
-                    if edgeproduct != product:
-                        nonself_product.append((
-                            edgeproduct,
-                            'v' + f'{self.edge_from_perspective_to_index[(edge, machine)]}',
-                        ))
+                self.graph.parent_context.log.info(colored(f'2. Pulling more "{group[child_group_idx]} {product}" from source', 'blue'))
 
-                self.graph.parent_context.log.info(colored(f'2. Pulling more {nonself_product} from source', 'blue'))
+                # nonself_product = []
+                # for edge in self.graph.adj[machine][direction]:
+                #     # print(self.graph.adj[machine])
+                #     # print(edge)
+                #     a, b, edgeproduct = edge
+                #     if edgeproduct != product:
+                #         nonself_product.append((
+                #             edgeproduct,
+                #             'v' + f'{self.edge_from_perspective_to_index[(edge, machine)]}',
+                #         ))
+
+                # self.graph.parent_context.log.info(colored(f'2. Pulling more {nonself_product} from source', 'blue'))
 
                 # # Output graph for end user to view
                 # self._debugAddVarsToEdges()
-                # outputGraphviz(self.graph)
+                # self.outputGraphvizProxy()
 
                 # TODO: Automate solution process fully
 
@@ -667,7 +674,7 @@ def systemOfEquationsSolverGraphGen(self, project_name, recipes, graph_config):
 
     if solver.solved_vars:
         graphPostProcessing(g)
-        outputGraphviz(g)
+        self.outputGraphvizProxy()
 
 
 if __name__ == '__main__':
