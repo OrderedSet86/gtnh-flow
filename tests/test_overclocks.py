@@ -2,11 +2,11 @@ from copy import deepcopy
 
 import pytest
 
-from data.basicTypes import Ingredient as Ing
-from data.basicTypes import IngredientCollection as IngCol
-from data.basicTypes import Recipe
 from factory_graph import ProgramContext
-from gtnh.overclocks import OverclockHandler
+from src.data.basicTypes import Ingredient as Ing
+from src.data.basicTypes import IngredientCollection as IngCol
+from src.data.basicTypes import Recipe
+from src.gtnh.overclocks import OverclockHandler
 
 
 def mod_recipe(recipe, **kwargs):
