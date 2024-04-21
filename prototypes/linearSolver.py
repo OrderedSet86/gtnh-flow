@@ -1,6 +1,3 @@
-# In theory solving the machine flow as a linear program is fast and simple -
-# this prototype explores this.
-
 import logging
 from collections import Counter, deque
 from copy import deepcopy

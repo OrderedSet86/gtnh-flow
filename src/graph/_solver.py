@@ -1,6 +1,7 @@
 # In theory solving the machine flow as a linear program is fast and simple -
 # this prototype explores this.
 
+import json
 import logging
 from collections import Counter, deque
 from math import isclose
@@ -48,7 +49,7 @@ class SympySolver:
     def arrayIndex(self, machine, product, direction, multi_idx=0):
         key = (machine, product, direction, multi_idx)
         if key not in self.lookup:
-            # print(f'Unique key {key}')
+            self.graph.parent_context.log.debug(colored(f'Addding new unseen variable {key} {self.variable_idx_counter}', 'red'))
             self.lookup[key] = self.variable_idx_counter
             self.variable_idx_counter += 1
             return self.variable_idx_counter - 1
@@ -283,14 +284,20 @@ class SympySolver:
 
                             if rec_id == a: # a is simple machine
                                 multi_idx = self.edge_from_perspective_to_index[(relevant_edge, b)]
-                                # print(relevant_edge, rec_id, flush=True)
-                                print(self.variables)
-                                print(self.arrayIndex(a, product, 'O'))
-                                self.system.append(
-                                    self.variables[self.arrayIndex(a, product, 'O')]
-                                    -
-                                    self.variables[self.arrayIndex(b, product, 'I', multi_idx=multi_idx)]
-                                )
+                                try:
+                                    self.system.append(
+                                        self.variables[self.arrayIndex(a, product, 'O')]
+                                        -
+                                        self.variables[self.arrayIndex(b, product, 'I', multi_idx=multi_idx)]
+                                    )
+                                except IndexError as e:
+                                    print(relevant_edge, rec_id, multi_idx)
+                                    print(self.variables)
+                                    print(self.arrayIndex(a, product, 'O'))
+                                    printable_lookup = {str(k): v for k, v in self.lookup.items()}
+                                    print(json.dumps(printable_lookup, indent=2))
+                                    raise e
+
                             elif rec_id == b: # b is simple machine
                                 multi_idx = self.edge_from_perspective_to_index[(relevant_edge, a)]
                                 self.system.append(
