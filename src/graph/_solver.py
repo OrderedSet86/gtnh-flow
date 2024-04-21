@@ -41,7 +41,7 @@ class SympySolver:
         self.system = []
         self.solved_vars = None # Result from linear solver
 
-        # TODO: Look into merging lookup and edge_from_perspective_to_index - they describe mostly the same thing
+        # Lookup is ground truth, efpti is just a convenient way of looking it up
         self.lookup = {} # (machine, product, direction, multi_idx) -> variable index
         self.edge_from_perspective_to_index = {} # (edge, machine_id) -> variable index
 
@@ -49,7 +49,11 @@ class SympySolver:
     def arrayIndex(self, machine, product, direction, multi_idx=0):
         key = (machine, product, direction, multi_idx)
         if key not in self.lookup:
-            self.graph.parent_context.log.debug(colored(f'Addding new unseen variable {key} {self.variable_idx_counter}', 'red'))
+            self.graph.parent_context.log.debug(colored(f'Addding new variable {key} {self.variable_idx_counter}', 'red'))
+
+            new_variable_name = f'v{self.variable_idx_counter}'
+            self.variables.append(symbols(new_variable_name, positive=True, real=True))
+
             self.lookup[key] = self.variable_idx_counter
             self.variable_idx_counter += 1
             return self.variable_idx_counter - 1
@@ -58,7 +62,7 @@ class SympySolver:
 
 
     def run(self):
-        self._createVariables() # initialize v1, v2, v3 ... (first pass)
+        # self._createVariables() # initialize v1, v2, v3 ... (first pass)
 
         # Construct system of equations
         self._addUserLocking() # add known equations from user "number" and "target" args
@@ -76,18 +80,18 @@ class SympySolver:
         self._writeQuantsToGraph()
 
 
-    def _createVariables(self):
-        # Compute number of variables
-        num_variables = 0
-        for rec_id in self.graph.nodes:
-            if self.graph._checkIfMachine(rec_id):
-                rec = self.graph.recipes[rec_id]
-                # one for each input/output ingredient
-                num_variables += len(rec.I) + len(rec.O)
-        self.num_variables = num_variables
+    # def _createVariables(self):
+    #     # Compute number of variables
+    #     num_variables = 0
+    #     for rec_id in self.graph.nodes:
+    #         if self.graph._checkIfMachine(rec_id):
+    #             rec = self.graph.recipes[rec_id]
+    #             # one for each input/output ingredient
+    #             num_variables += len(rec.I) + len(rec.O)
+    #     self.num_variables = num_variables
 
-        symbols_str = ', '.join(['v' + str(x) for x in range(num_variables)])
-        self.variables = list(symbols(symbols_str, positive=True, real=True))
+    #     symbols_str = ', '.join(['v' + str(x) for x in range(num_variables)])
+    #     self.variables = list(symbols(symbols_str, positive=True, real=True))
     
     
     def _addUserLocking(self):
