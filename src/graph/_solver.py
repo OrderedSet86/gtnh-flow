@@ -203,15 +203,15 @@ class SympySolver:
 
                 # Run DFS to find all connected machine-machine edges using the same product
                 involved_machines = Counter()
-                involved_edges = set()
+                involved_machine_edges = set()
                 q = [edge]
                 while q:
                     dfs_edge = q.pop()
-                    if dfs_edge in involved_edges:
+                    if dfs_edge in involved_machine_edges:
                         continue
                     dfs_a, dfs_b, _ = dfs_edge
 
-                    involved_edges.add(dfs_edge)
+                    involved_machine_edges.add(dfs_edge)
                     involved_machines[dfs_a] += 1
                     involved_machines[dfs_b] += 1
 
@@ -223,7 +223,7 @@ class SympySolver:
                         if edge[2] == product:
                             q.append(edge)
                 
-                if len(involved_edges) == 1:
+                if len(involved_machine_edges) == 1:
                     # Simple version - all A output fulfills all B input
 
                     self._addNewEquation(
@@ -236,18 +236,18 @@ class SympySolver:
                     # Each multi-input and multi-output will require the creation of minimum 2 new variables
                     # print(involved_machines)
                     # print(involved_edges)
-                    involved_edges = list(involved_edges)
+                    involved_machine_edges = list(involved_machine_edges)
 
                     complex_machine_id = involved_machines.most_common()[0][0]
-                    multi_io_direction = 'O' if involved_edges[0][0] == complex_machine_id else 'I'
-                    self._addMultiEquationsOnEdge(complex_machine_id, multi_io_direction, involved_edges)
+                    multi_io_direction = 'O' if involved_machine_edges[0][0] == complex_machine_id else 'I'
+                    self._addMultiEquationsOnEdge(complex_machine_id, multi_io_direction, involved_machine_edges)
 
-                computed_edges.update(involved_edges)
+                computed_edges.update(set(involved_machine_edges))
 
 
-    def _addMultiEquationsOnEdge(self, multi_machine, multi_io_direction, involved_edges):
+    def _addMultiEquationsOnEdge(self, multi_machine, multi_io_direction, involved_machine_edges):
         # Log
-        multi_product = involved_edges[0][2]
+        multi_product = involved_machine_edges[0][2]
         if multi_io_direction == 'O':
             self.graph.parent_context.log.info(colored(f'Solving multi-output scenario involving {multi_product}!', 'green'))
         elif multi_io_direction == 'I':
@@ -262,7 +262,7 @@ class SympySolver:
 
         multi_idx = 1 # starts at 1 for new variables
         new_variables = []
-        for edge in involved_edges:
+        for edge in involved_machine_edges:
             other_machine_id = edge[0] if edge[1] == multi_machine else edge[1]
 
             # Add new variables and update efpti
@@ -329,6 +329,10 @@ class SympySolver:
         # for expr in system:
         #     print(expr)
         # print()
+
+        # Output graph for end user to view
+        self._debugAddVarsToEdges()
+        outputGraphviz(self.graph)
 
         equations_to_check = deque(self.system)
         max_iter = len(self.system) ** 2 + 1
@@ -439,9 +443,9 @@ class SympySolver:
 
                 self.graph.parent_context.log.info(colored(f'2. Pulling more {nonself_product} from source', 'blue'))
 
-                # Output graph for end user to view
-                self._debugAddVarsToEdges()
-                outputGraphviz(self.graph)
+                # # Output graph for end user to view
+                # self._debugAddVarsToEdges()
+                # outputGraphviz(self.graph)
 
                 # TODO: Automate solution process fully
 
@@ -485,12 +489,35 @@ class SympySolver:
 
             for direction in ['I', 'O']:
                 adjacent_edges = self.graph.adj[rec_id][direction]
+                adjacent_machine_edges = self.graph.adj_machine[rec_id][direction]
                 for ing in getattr(rec, direction):
                     relevant_edges = [edge for edge in adjacent_edges if edge[2] == ing.name]
+                    relevant_machine_edges = [edge for edge in adjacent_machine_edges if edge[2] == ing.name]
 
                     if len(relevant_edges) == 0:
                         raise RuntimeError(f'No edge found for ingredient {ing.name} in {rec_id} {direction}!')
-                    elif len(relevant_edges) == 1:
+                    elif len(relevant_machine_edges) > 1:
+                        print(f'Multi-IO machine detected! {rec_id} {direction} {ing.name} {relevant_edges}')
+                        
+                        # Make assumption that any equation involving both adjacent edge variables is the multi-IO base variable
+                        adjacent_variables = []
+                        for edge in relevant_machine_edges:
+                            perspective = rec_id
+                            edge_perspective_data = (edge, perspective)
+                            variableIndex = self.edge_from_perspective_to_index[edge_perspective_data]
+                            adjacent_variables.append(variableIndex)
+
+                        print(relevant_edges)
+                        print(adjacent_variables, ing.name)
+
+                        # FIXME:
+                        for i, eq in enumerate(self.system):
+                            # print(eq.as_terms()[-1])
+                            if all([x in eq.as_terms()[-1] for x in adjacent_variables]):
+                                print(f'!! Associated equation: {eq}')
+                                # self.graph.parent_context.log.debug(colored(f'Eqn. involving {var_obj}: {eq}', 'cyan'))
+                                # removal_indices.append(i)
+                    elif len(relevant_edges) >= 1:
                         edge = relevant_edges[0]
                         perspective = rec_id
                         edge_perspective_data = (edge, perspective)
@@ -506,27 +533,6 @@ class SympySolver:
                             self.graph.edges[edge]['debugHead'] += f'v{variableIndex}'
                         elif perspective == a:
                             self.graph.edges[edge]['debugTail'] += f'v{variableIndex}'
-
-                    elif len(relevant_edges) > 1:
-                        print(f'Multi-IO machine detected! {rec_id} {direction} {ing.name} {relevant_edges}')
-                        
-                        # Make assumption that any equation involving both adjacent edge variables is the multi-IO base variable
-                        adjacent_variables = []
-                        for edge in relevant_edges:
-                            perspective = rec_id
-                            edge_perspective_data = (edge, perspective)
-                            variableIndex = self.edge_from_perspective_to_index[edge_perspective_data]
-                            adjacent_variables.append(variableIndex)
-
-                        print(adjacent_variables, ing.name)
-
-                        # FIXME:
-                        for i, eq in enumerate(self.system):
-                            # print(eq.as_terms()[-1])
-                            if all([x in eq.as_terms()[-1] for x in adjacent_variables]):
-                                print(f'Associated equation: {eq}')
-                                # self.graph.parent_context.log.debug(colored(f'Eqn. involving {var_obj}: {eq}', 'cyan'))
-                                # removal_indices.append(i)
 
         # Add machine debug variables
         for node_id in self.graph.nodes:
