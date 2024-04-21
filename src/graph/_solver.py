@@ -379,18 +379,15 @@ class SympySolver:
                         iterations += 1
                         continue
 
-
-                if len(unsolved) == 1:
-                    unvar = unsolved[0]
-                    solution = solve(expr, unvar)
-                    if len(solution) == 1:
-                        sval = solution[0]
-                        solved_values[unvar] = sval
-                        # print(sval)
-                    else:
-                        raise NotImplementedError(f'{solution=}')
+                unvar = unsolved[0]
+                solution = solve(expr, unvar)
+                if len(solution) == 1:
+                    sval = solution[0]
+                    solved_values[unvar] = sval
+                    # print(sval)
                 else:
-                    raise NotImplementedError(f'{expr} {sorted(solved_values.items(), key=lambda tup: str(tup[0]))}')
+                    # raise NotImplementedError(f'{solution=}')
+                    pass # TODO: Handle 0 case
 
             else:
                 equations_to_check.append(expr)
