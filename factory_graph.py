@@ -42,7 +42,7 @@ class ProgramContext:
 
         handler = logging.StreamHandler() # outputs to stderr
         handler.setFormatter(formatter)
-        handler.setLevel(logging.getLevelName(self.graph_config.get('STREAMHANDLER_LEVEL')))
+        handler.setLevel(logging.getLevelName(self.graph_config.get('STREAMHANDLER_LEVEL', 'INFO')))
         if streamhandler_level == 'DEBUG':
             # https://stackoverflow.com/a/74605301
             class PackagePathFilter(logging.Filter):

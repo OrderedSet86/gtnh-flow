@@ -669,7 +669,7 @@ def systemOfEquationsSolverGraphGen(self, project_name, recipes, graph_config):
 
     if solver.solved_vars:
         graphPostProcessing(g)
-        self.outputGraphvizProxy()
+        solver.outputGraphvizProxy()
 
 
 if __name__ == '__main__':
