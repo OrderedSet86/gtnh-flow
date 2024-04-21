@@ -328,9 +328,16 @@ class SympySolver:
 
         # Look up old variable association with edge
         old_var = self.edge_from_perspective_to_index[(multi_edge, multi_machine)]
-        # print(old_var)
+        var_obj = self.variables[old_var]
+        self.graph.parent_context.log.debug(colored(f'Removing variable {var_obj}', 'cyan'))
 
         # Check for existing edge equations involving old_var in system and remove if exist
+        removal_indices = []
+        for i, eq in enumerate(self.system):
+            if var_obj in eq.as_terms()[-1]:
+                removal_indices.append(i)
+        self.system = [x for i, x in enumerate(self.system) if i not in removal_indices]
+        
         # TODO: (ignoring this for now because it's not relevant for _addMachineMachineEdges)
         #   Consider keeping the machine-internal equation - it will remain accurate as the old var is kept for it
 
@@ -423,7 +430,7 @@ class SympySolver:
                 if expr.is_constant():
                     constant_diff = float(expr)
                     if not isclose(constant_diff, 0.0, abs_tol=0.00000001):
-                        # self.graph.parent_context.log.warning(colored(f'Inconsistency found in {preexpr}!', 'red'))
+                        self.graph.parent_context.log.warning(colored(f'Inconsistency found with {involved_variables}! (diff = {constant_diff})', 'red'))
                         # Now print what the variables are referring to and output debug graph
                         inconsistent_variables.append((involved_variables, constant_diff))
                         iterations += 1
@@ -456,6 +463,10 @@ class SympySolver:
 
         # for k, v in edge_from_perspective_to_index.items():
         #     print(k, v)
+
+        # Output graph for context
+        self._debugAddVarsToEdges()
+        self.graph.outputGraphviz()
 
         idx_to_mpdm = {idx: mpdm for mpdm, idx in self.lookup.items()}
         for group, constant_diff in inconsistent_variables:
