@@ -49,7 +49,8 @@
     stone: 1
   eut: 30
   dur: 0.8
-  number: 1
+  target: 
+    stone: 100
 - m: electrolyzer
   tier: MV
   I:
