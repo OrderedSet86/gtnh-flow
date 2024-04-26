@@ -40,6 +40,45 @@ def userRound(number):
             rounded = roundfxn(number)
             return rounded
 
+
+def userAccurate(number: int | float) -> str:
+    """
+    Displays a number in a human-readable way without rounding
+
+    It uses symbol up to 'T' (trillion).
+
+    Reference:
+    https://en.wikipedia.org/wiki/Long_and_short_scales
+    """
+    SCALE_NAMES = ['', 'k', 'M', 'G', 'T']
+    SCALE_BASES = [1, 1e3, 1e6, 1e9, 1e12]
+    length_threshold = 4
+    scale_name = ''
+    scaled_number = number
+    for scale, base in zip(reversed(SCALE_NAMES), reversed(SCALE_BASES)):
+        res_div = number / base
+        if res_div < 1:
+            continue
+
+        scale_name = scale
+        scaled_number = res_div
+        break
+
+    if type(scaled_number) is float:
+        if scaled_number.is_integer():
+            scaled_number = int(scaled_number)
+        else:
+            # floats have +1 length threshold for its floating point
+            length_threshold += 1
+
+    formatted = f'{scaled_number:,}{scale_name}'
+    # if the result with a scale is too long,
+    # falls back to simply formatting with thousands separator
+    if len(str(scaled_number)) > length_threshold and scale_name != 'T':
+        return f'{number:,}'
+    return formatted
+
+
 def createAdjacencyList(self):
     # Compute "adjacency list" (node -> {I: edges, O: edges}) for edges and machine-involved edges
     adj = defaultdict(lambda: defaultdict(list))
@@ -87,4 +126,3 @@ def _iterateOverMachines(self):
     for rec_id in self.nodes:
         if self._checkIfMachine(rec_id):
             yield self.recipes[rec_id]
-

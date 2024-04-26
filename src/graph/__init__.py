@@ -43,6 +43,7 @@ class Graph:
     # Graph utility functions
     from ._utils import (
         userRound,
+        userAccurate,
         addNode,
         addEdge,
         createAdjacencyList,
@@ -50,6 +51,7 @@ class Graph:
         _checkIfMachine,
     )
     userRound = staticmethod(userRound)
+    userAccurate = staticmethod(userAccurate)
 
     # Utilities for "port node" style graphviz nodes
     from ._portNodes import (
