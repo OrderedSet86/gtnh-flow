@@ -105,8 +105,9 @@ def addUserNodeColor(self):
 
     for rec_id in all_user_nodes:
         # Emphasizes the first line (i.e. machine name line)
-        self.nodes[rec_id]['label'] = re.sub(r'^([^\n]+)', r'<b><u>\1</u></b>', self.nodes[rec_id]['label'])
-
+        lines = self.nodes[rec_id]['label'].split('\n')
+        lines[0] = r'<b><u>' + lines[0] + r'</u></b>'
+        self.nodes[rec_id]['label'] = '\n'.join(lines)
 
 
 def addMachineMultipliers(self):
