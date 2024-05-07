@@ -1,0 +1,81 @@
+- m: chemical reactor
+  tier: LV
+  I:
+    ethylene: 1000
+    oxygen gas: 7000
+  O:
+    molten polyethylene: 1500
+  eut: 30
+  dur: 56
+  target:
+    molten polyethylene: 10
+- m: distillery
+  tier: LV
+  I:
+    severely steam cracked naphtha: 1000
+  O:
+    ethylene: 500
+    tiny pile of carbon dust: 3
+  eut: 30
+  dur: 12
+- m: chemical reactor
+  tier: LV
+  I:
+    naphtha: 1000
+    steam: 1000
+  O:
+    severely steam cracked naphtha: 800
+  eut: 30
+  dur: 16
+- m: chemical reactor
+  tier: LV
+  I:
+    sulfuric naphtha: 3000
+    hydrogen gas: 500
+  O:
+    naphtha: 3000
+    hydrogen sulfide: 500
+  eut: 30
+  dur: 2
+- m: distillery
+  tier: LV
+  I:
+    oil: 25
+  O:
+    sulfuric naphtha: 10
+  eut: 24
+  dur: 1
+- m: fluid heater
+  tier: LV
+  I:
+    water: 6
+  O:
+    steam: 960
+  eut: 30
+  dur: 1.5
+- m: electrolyzer
+  tier: LV
+  I:
+    electrolysed water cell: 1
+  O: 
+    oxygen gas: 1000
+    '[sink] hydrogen gas': 2000
+  eut: 30
+  dur: 1.5
+- m: electrolyzer
+  tier: LV
+  I:
+    electrolysed water cell: 1
+  O: 
+    '[sink] oxygen gas': 1000
+    hydrogen gas: 2000
+  eut: 30
+  dur: 1.5
+- m: electrolyzer
+  tier: LV
+  I:
+    water: 1000
+  O:
+    electrolysed water cell: 1
+  eut: 30
+  dur: 73.5

@@ -366,6 +366,8 @@ def addSummaryNode(self):
             ing_color = self.getUniqueColor(id)
             yield makeLineHtml(name_text, amt_text, ing_color, num_color)
 
+    print(total_io)
+
     ## If one ingredient's net output is equal or greater than 0, it is recyclable
     recyclable_flows = {id: quant for id, quant in total_io.items() if id != 'eu' and input_flows.get(id, 0) < 0 and total_io[id] >= 0}
     color_recyclable = self.graph_config['RECYCLABLE_COLOR']
@@ -375,6 +377,8 @@ def addSummaryNode(self):
         color_negative
     ))
     io_label_lines.append(makeIOTitle('Output'))
+    print(io_label_lines)
+    print()
     io_label_lines.extend(makeIOLines(
         filter(lambda e: e[0] != 'eu' and e[0] not in recyclable_flows and e[1] > 0, total_io.items()),
         color_positive
@@ -388,7 +392,8 @@ def addSummaryNode(self):
     total_eut = 0
     for rec in self.recipes.values():
         total_eut += rec.eut
-    io_label_lines.append('<hr/>')
+    if io_label_lines[-1] == '':
+        io_label_lines.append('<hr/>')
     eut_rounded = -int(math.ceil(total_eut))
     io_label_lines.append(makeLineHtml('Input EU/t:', self.userRound(eut_rounded), 'white', color_negative))
     if 'eu' in total_io:
@@ -444,6 +449,8 @@ def addSummaryNode(self):
     # Create final table
     io_label = ''.join(io_label_lines)
     io_label = f'<<table border="0">{io_label}</table>>'
+
+    print(io_label)
 
     # Add to graph
     self.addNode(
