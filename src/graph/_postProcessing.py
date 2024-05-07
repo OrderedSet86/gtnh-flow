@@ -1,5 +1,6 @@
 import logging
 import math
+import re
 from collections import defaultdict
 from copy import deepcopy
 from string import ascii_uppercase
@@ -21,7 +22,7 @@ def capitalizeMachine(machine):
     capitalization_exceptions = {
         # Format is old_str: new_str
     }
-    
+
     if len(machine_capitals) > 0:
         return machine
     elif machine in capitalization_exceptions:
@@ -38,7 +39,7 @@ def createMachineLabels(self):
     # Cycle: 2.0s
     # Amoritized: 1.46K EU/t
     # Per Machine: 256EU/t
-    
+
     for node_id in self.nodes:
         if self._checkIfMachine(node_id):
             rec_id = node_id
@@ -78,7 +79,7 @@ def createMachineLabels(self):
         if rec.machine in recognized_basic_power_machines:
             # Remove power input data
             label_lines = label_lines[:-2]
-        
+
         line_if_attr_exists = {
             'heat': (lambda rec: f'Base Heat: {rec.heat}K'),
             'coils': (lambda rec: f'Coils: {rec.coils.title()}'),
@@ -103,14 +104,16 @@ def addUserNodeColor(self):
     all_user_nodes = set(targeted_nodes) | set(numbered_nodes)
 
     for rec_id in all_user_nodes:
-        self.nodes[rec_id].update({'fillcolor': self.graph_config['LOCKEDNODE_COLOR']})
-
+        # Emphasizes the first line (i.e. machine name line)
+        lines = self.nodes[rec_id]['label'].split('\n')
+        lines[0] = r'<b><u>' + lines[0] + r'</u></b>'
+        self.nodes[rec_id]['label'] = '\n'.join(lines)
 
 
 def addMachineMultipliers(self):
     # Compute machine multiplier based on solved ingredient quantities
     # FIXME: If multipliers disagree, sympy solver might have failed on an earlier step
-    
+
     for rec_id, rec in self.recipes.items():
         multipliers = []
 
@@ -127,7 +130,7 @@ def addMachineMultipliers(self):
                         solved_quant_per_s += self.edges[edge]['quant']
 
                 base_quant_s = base_quant / (rec.dur/20)
-                
+
                 # print(io_dir, rec_id, ing_name, getattr(rec, io_dir))
                 # print(solved_quant_per_s, base_quant_s, rec.dur)
                 # print()
@@ -257,7 +260,7 @@ def addPowerLineNodesV2(self):
                 wasted_fuel=f'{self.userRound(loss_on_singleblock_output)}EU/t/amp',
             )
 
-            produced_eut_s = quant_s/expended_fuel_t*output_eut 
+            produced_eut_s = quant_s/expended_fuel_t*output_eut
             self.parent_context.log.info(
                 colored(
                     ''.join([
@@ -270,7 +273,7 @@ def addPowerLineNodesV2(self):
 
             self.addNode(
                 node_idx,
-                fillcolor=self.graph_config['NONLOCKEDNODE_COLOR'],
+                fillcolor=self.graph_config['DEFAULT_MACHINE_COLOR'],
                 shape='box'
             )
 
@@ -310,7 +313,7 @@ def addSummaryNode(self):
 
     color_positive = self.graph_config['POSITIVE_COLOR']
     color_negative = self.graph_config['NEGATIVE_COLOR']
-    
+
     def makeLineHtml(lab_text, amt_text, lab_color, amt_color):
         return ''.join([
             '<tr>'
@@ -438,8 +441,8 @@ def addSummaryNode(self):
         max_draw += rec.base_eut * math.ceil(rec.multiplier)
 
     io_label_lines.append(
-        makeLineHtml( 
-            'Peak power draw:', 
+        makeLineHtml(
+            'Peak power draw:',
             f'{round(max_draw/voltage_at_tier, 2)}A {tiers[max_tier].upper()}',
             'white',
             color_negative

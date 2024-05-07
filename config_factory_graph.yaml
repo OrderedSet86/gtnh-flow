@@ -49,17 +49,45 @@ LOCKEDNODE_COLOR: 'green'
 POSITIVE_COLOR: '#859900'
 NEGATIVE_COLOR: '#dc322f'
 RECYCLABLE_COLOR: '#2aa198'
+# Find color codes at: https://graphviz.org/doc/info/colors.html
+# Trying to pick one similar to the color of multis, but
+# there are some exceptions like
+# LPF machines and mixer share the same multi-use casings
+DEFAULT_MACHINE_COLOR: aliceblue
+MACHINE_COLORS:
+  electric blast furnace: lightgreen
+  volcanus: lightgreen
+  chemical reactor: dimgrey
+  large chemical reactor: dimgrey
+  distillery: lightblue1
+  distillation tower: lightblue1
+  dangote: lightblue1
+  centrifuge: goldenrod2
+  industrial centrifuge: goldenrod2
+  electrolyzer: lightsalmon2
+  industrial electrolyzer: lightsalmon2
+  autoclave: slateblue3
+  vacuum freezer: royalblue1
+  cryogenic freezer: royalblue1
+  ore washing plant: teal
+  macerator: peru
+  maceration stack: peru
+  industrial dehydrator: tomato3
+  dehydrator: tomato3
+  alloy blast smelter: wheat3
+  industrial sledgehammer: seagreen4
+  forge hammer: seagreen4
 
 ORIENTATION: 'TB'
 # TB: Vertical, LR: Horizontal, BT: Vertical Inverted, RL: Horizontal Inverted
 # [TB, LR, BT, RL]
 
 LINE_STYLE: 'spline'
-# [line, spline, polyline, curved] 
+# [line, spline, polyline, curved]
 
 RANKSEP: '1.25'
 NODESEP: '0.25'
-# Node separation size in X/Y. 
+# Node separation size in X/Y.
 # This is a suggestion, the graphing algorithm will ignore numbers that are too small.
 
 COMBINE_INPUTS: true
