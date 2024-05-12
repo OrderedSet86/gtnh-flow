@@ -82,7 +82,7 @@ def userAccurate(number: int | float) -> str:
     #    falls back to simply formatting with thousands separators
     # b) if it is a float: round it
     if len(str(scaled_number)) > LENGTH_THRESHOLD and scale_name != 'T':
-        if number.is_integer():
+        if isinstance(number, int) or (isinstance(number, float) and number.is_integer()):
             return f'{number:,}'
         elif abs(number) >= 1:
             return f'{round(number, FRACTION_PRECISION):,}'

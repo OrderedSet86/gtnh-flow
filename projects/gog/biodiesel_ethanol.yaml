@@ -18,8 +18,7 @@
     glycerol: 9000
   eut: 30
   dur: 270
-  target:
-    ethanol: 75
+  number: 4
 - m: electrolyzer
   tier: MV
   I:

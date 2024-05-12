@@ -1,0 +1,150 @@
+- m: fluid extractor
+  tier: LV
+  I:
+    coconut: 1
+  O:
+    seed oil: 300
+    mulch: 0.25
+  eut: 7
+  dur: 1.6
+- m: chemical reactor
+  tier: LV
+  I:
+    seed oil: 54000
+    ethanol: 9000
+    sodium hydroxide dust: 1
+  O:
+    bio diesel: 54000
+    glycerol: 9000
+  eut: 30
+  dur: 270
+- m: electrolyzer
+  tier: MV
+  I:
+    glycerol: 1000
+  O:
+    '[output] carbon dust': 3
+    '[output] hydrogen': 8000
+    '[output] oxygen': 3000
+  eut: 90
+  dur: 16.8
+- m: LCR
+  tier: HV
+  I:
+    bio diesel: 10000
+    tetranitromethane: 400
+  O:
+    cetane-boosted diesel: 9000
+  eut: 480
+  dur: 6
+  number: 1
+- m: chemical reactor
+  tier: MV
+  I:
+    ethenone: 1000
+    nitric acid: 8000
+  O:
+    tetranitromethane: 2000
+  eut: 120
+  dur: 24
+- m: chemical reactor
+  tier: MV
+  I:
+    sulfuric acid: 666.666
+    acetic acid: 1000
+  O:
+    ethenone: 1000
+  eut: 120
+  dur: 24
+  note: 'Skipped distillery for acetic recycling'
+- m: LCR
+  tier: LV
+  I:
+    sulfur dust: 1
+    oxygen: 3000
+    water: 1000
+  O:
+    sulfuric acid: 1000
+  eut: 30
+  dur: 24
+- m: LCR
+  tier: LV
+  I:
+    carbon dust: 2
+    hydrogen: 4000
+    oxygen: 2000
+  O:
+    acetic acid: 1000
+  eut: 30
+  dur: 24
+- m: LCR
+  tier: LV
+  I:
+    ammonia: 1000
+    sugar oxygen: 1200
+    oxygen: 2800
+  O:
+    nitric acid: 1000
+  eut: 30
+  dur: 16
+- m: LCR
+  tier: HV
+  I:
+    nitrogen: 1000
+    hydrogen: 3000
+  O:
+    ammonia: 1000
+  eut: 384
+  dur: 16
+- m: centrifuge
+  tier: MV
+  I:
+    compressed air cell: 5
+  O:
+    '[recycle] oxygen': 1000
+    nitrogen: 3900
+  eut: 7
+  dur: 80
+- m: centrifuge
+  tier: MV
+  I: {}
+  O:
+    compressed air cell: 1
+  eut: 2
+  dur: 15
+- m: forestry fermenter
+  tier: LV
+  I:
+    water: 60
+    blue mahoe sapling: 1
+    forestry fertilizer: 0.01042
+  O:
+    forestry biomass: 300
+  eut: 32
+  dur: 1.5
+  note: Using MV power
+- m: distillery
+  tier: LV
+  I:
+    forestry biomass: 40
+  O:
+    ethanol: 20
+  eut: 24
+  dur: 0.8
+- m: electrolyzer
+  tier: MV
+  I:
+    sugar: 32
+  O:
+    '[recycle] carbon dust': 2
+    sugar oxygen: 25000
+  eut: 60
+  dur: 22.4
+- m: extractor
+  tier: LV
+  I:
+    sugarbeet: 1
+  O:
+    sugar: 8
+  eut: 4
+  dur: 6.4
