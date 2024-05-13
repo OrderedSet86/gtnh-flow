@@ -1,0 +1,37 @@
+- m: large chemical reactor
+  tier: IV
+  I:
+    nitrogen dioxide: 1000
+    liquid oxygen: 1000
+    saltpeter: 2
+  O:
+    combustion promoter: 500
+  eut: 120
+  dur: 10
+  target:
+    combustion promoter: 1000
+- m: fluid extractor
+  tier: EV
+  I:
+    oxygen drop: 1
+  O:
+    liquid oxygen: 100
+  eut: 7
+  dur: 60
+- m: industrial centrifuge
+  tier: IV
+  I:
+    space comb: 1
+  O:
+    oxygen drop: 0.15
+  eut: 480
+  dur: 19.2
+# - m: universal chemical fuel engine
+#   tier: LV
+#   I:
+#     cetane-boosted diesel: 16000
+#     combustion promoter: 1000
+#   O:
+#     EU: 1
+#   eut: 0
+#   dur: 1

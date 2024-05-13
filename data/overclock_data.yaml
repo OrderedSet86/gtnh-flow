@@ -39,7 +39,6 @@ pipe_casings:
   steel: 4
   titanium: 6
   tungstensteel: 8
-  # TODO: Add the rest
 
 
 # [speed X, EU/t discount, parallels per tier]

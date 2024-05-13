@@ -7,6 +7,8 @@
     gold nugget: 0.0001
   eut: 7
   dur: 0.8
+  target:
+    goldfish: 2.8
 - m: chemical reactor
   tier: LV
   I:
@@ -18,7 +20,6 @@
     glycerol: 9000
   eut: 30
   dur: 270
-  number: 4
 - m: electrolyzer
   tier: MV
   I:

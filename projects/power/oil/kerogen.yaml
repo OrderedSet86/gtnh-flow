@@ -17,8 +17,6 @@
     light fuel: 12000
   eut: 30
   dur: 8
-  target:
-    light fuel: 1000
 - m: distillery
   tier: LV
   I:
@@ -73,16 +71,17 @@
 - m: bacterial vat
   tier: HV
   I:
-    fermented biomass: 10000
+    fermented biomass: 10_000_000
   O:
-    fulvic acid: 1000000
+    fulvic acid: 1_000_000
   eut: 480
   dur: 137.4
+  number: 1
 - m: bacterial vat
-  tier: LV
+  tier: HV
   I:
-    biomass: 100
+    biomass: 20_000
   O:
-    fermented biomass: 100000
+    fermented biomass: 20_000
   eut: 2
-  dur: 7.5
+  dur: 1.5

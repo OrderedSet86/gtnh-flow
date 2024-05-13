@@ -118,16 +118,41 @@ class OverclockHandler:
             [
                 ['coils', str, 'calculating recipe duration (eg "nichrome").'],
                 ['pipe_casings', str, 'calculating throughput multiplier (eg "steel").']
+                # ['catalyst', str, 'calculating input costs'] # TODO: No requirement until we have all catalysts
             ]
         )
-        # assert 'solid_casings' in dir(recipe), 'Chem plant requires "solid_casings" argument (eg "vigorous laurenium")'
 
         chem_plant_pipe_casings = self.overclock_data['pipe_casings']
         if recipe.pipe_casings not in chem_plant_pipe_casings:
             raise RuntimeError(f'Expected chem pipe casings in {list(chem_plant_pipe_casings)}\ngot "{recipe.pipe_casings}". (More are allowed, I just haven\'t added them yet.)')
 
-        recipe.dur /= self.overclock_data['coil_multipliers'][recipe.coils]
         throughput_multiplier = chem_plant_pipe_casings[recipe.pipe_casings]
+        coil_multiplier = self.overclock_data['coil_multipliers'][recipe.coils]
+
+        # Add catalyst
+        known_catalysts = {
+            # Just put the actual value here, the rest is automatically calculated
+            '': None,
+            'orange metal catalyst': IngredientCollection(*[
+                Ingredient('vanadium dust', 5),
+                Ingredient('palladium dust', 5),
+            ]),
+            # TODO: Add other catalysts
+        }
+
+        # assert 'catalyst' in known_catalysts, f'Unknown catalyst "{recipe.catalyst}", should be in\n{known_catalysts}' # TODO: No requirements until we have all catalysts
+
+        if hasattr(recipe, 'catalyst'):
+            if recipe.catalyst == '':
+                pass
+            else:
+                if coil_multiplier < 5.5 or recipe.pipe_casings != 'tungstensteel':
+                    catalyst_cost = known_catalysts[recipe.catalyst]
+                    catalyst_cost *= 1/50 # 50 durability per catalyst
+                    catalyst_cost *= 1 - throughput_multiplier / 10 # 20% chance of no damage per pipe casing tier
+                    recipe.I += known_catalysts[recipe.catalyst]
+
+        recipe.dur /= coil_multiplier
         recipe.I *= throughput_multiplier
         recipe.O *= throughput_multiplier
 
@@ -468,6 +493,8 @@ class OverclockHandler:
             'dangote - distillation tower': lambda recipe: self.modifyGTppSetParallel(recipe, 12),
             'dangote': lambda recipe: self.modifyGTppSetParallel(recipe, 12),
             'chemical plant': self.modifyChemPlant,
+            'chem plant': self.modifyChemPlant,
+            'exxonmobil chemical plant': self.modifyChemPlant,
             'zhuhai': self.modifyZhuhai,
             'tree growth simulator': self.modifyTGS,
             'industrial dehydrator': self.modifyUtupu,

@@ -299,6 +299,60 @@ def addPowerLineNodesV2(self):
 
             highest_node_index += 1
 
+    # 4. Special UCFE handling
+    ### Automatically balance the outputs of UCFE
+    # 1. Get UCFE node
+    UCFE_id = None
+    for rec_id, rec in self.recipes.items():
+        if rec.machine == 'universal chemical fuel engine':
+            UCFE_id = rec_id
+
+    if UCFE_id is not None:
+        cprint('Detected UCFE, autobalancing...', 'green')
+
+        # 2. Determine whether non-combustion promoter input is combustable or gas
+        input_ingredient_collection = self.recipes[UCFE_id].I
+        if len(input_ingredient_collection) != 2:
+            raise RuntimeError('Too many or too few inputs to UCFE - expected 2.')
+
+        if 'combustion promoter' not in input_ingredient_collection._ingdict:
+            raise RuntimeError('UCFE detected, but "combustion promoter" is not one of its inputs. Cannot autobalance.')
+
+        for ing in input_ingredient_collection._ings:
+            if ing.name != 'combustion promoter':
+                fuel_name = ing.name
+                break
+
+        burn_value_table = None
+        if fuel_name in turbineables:
+            burn_value_table = turbineables
+            coefficient = 0.04
+        elif fuel_name in combustables:
+            burn_value_table = combustables
+            coefficient = 0.04
+        elif fuel_name in rocket_fuels:
+            burn_value_table = rocket_fuels
+            coefficient = 0.005
+        else:
+            raise RuntimeError(f'Unrecognized input fuel to UCFE: {fuel_name}. Can only burn gas, combustables, or rocket fuel.')
+
+        # 3. Compute UCFE ratio and output EU/s
+        combustion_promoter_quant = input_ingredient_collection['combustion promoter'][0]
+        fuel_quant = input_ingredient_collection[fuel_name][0]
+        ratio = fuel_quant / combustion_promoter_quant
+
+        efficiency = math.exp(-coefficient*ratio) * 1.5
+        output_eu = efficiency * fuel_quant * burn_value_table[fuel_name] / 1000
+        print(f'UCFE ratio: {ratio}, efficiency: {efficiency}, output EU/s: {output_eu}')
+
+        # 4. Update edge with new value
+        self.edges[(UCFE_id, 'sink', 'EU')]['quant'] = output_eu
+
+        # 5. Fix insane multiplier and label numbers
+        UCFE_rec = self.recipes[UCFE_id]
+        UCFE_rec.multiplier = 1
+        UCFE_rec.O = IngredientCollection(Ingredient('EU', output_eu))
+
     if burn_machines_added:
         self.parent_context.log.debug(colored('Updating adj since new powerline machines added', 'yellow'))
         self.createAdjacencyList()

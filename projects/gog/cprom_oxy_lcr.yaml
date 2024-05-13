@@ -1,0 +1,29 @@
+- m: large chemical reactor
+  tier: IV
+  I:
+    nitrogen dioxide: 1000
+    liquid oxygen: 1000
+    saltpeter: 2
+  O:
+    combustion promoter: 500
+  eut: 120
+  dur: 10
+  target:
+    combustion promoter: 1000
+- m: cryogenic freezer
+  tier: IV
+  I:
+    oxygen: 1000
+  O:
+    liquid oxygen: 1000
+  eut: 480
+  dur: 60
+# - m: universal chemical fuel engine
+#   tier: LV
+#   I:
+#     cetane-boosted diesel: 16000
+#     combustion promoter: 1000
+#   O:
+#     EU: 1
+#   eut: 0
+#   dur: 1
