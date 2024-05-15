@@ -22,8 +22,8 @@ coil_heat:
   nichrome: 3601
   tungstensteel: 4501
   tpv-alloy: 4501
-  HSS-G: 5401
-  HSS-S: 6301
+  hss-g: 5401
+  hss-s: 6301
   naquadah: 7201
   naquadah alloy: 8101
   trinium: 9001
@@ -32,7 +32,7 @@ coil_heat:
   infinity: 11701
   hypogen: 12601
   eternal: 13501
-  
+
 
 pipe_casings:
   bronze: 2
