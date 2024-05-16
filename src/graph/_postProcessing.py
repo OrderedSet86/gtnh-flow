@@ -81,6 +81,7 @@ def createMachineLabels(self):
             label_lines = label_lines[:-2]
 
         line_if_attr_exists = {
+            'nc': (lambda rec: f'NC: {rec.nc.title()}'),
             'heat': (lambda rec: f'Base Heat: {rec.heat}K'),
             'coils': (lambda rec: f'Coils: {rec.coils.title()}'),
             'saw_type': (lambda rec: f'Saw Type: {rec.saw_type.title()}'),
