@@ -1,0 +1,133 @@
+- m: chem plant
+  tier: HV
+  I:
+    oxygen: 10000
+    2-EAHQ: 5000
+    anthracene: 50
+  O:
+    hydrogen peroxide: 5000
+    '[recycle] 2-EAQ': 5000
+  eut: 240
+  dur: 5
+  pipe_casings: tungstensteel
+  coils: tungstensteel
+- m: chem plant
+  tier: IV
+  I:
+    hydrogen: 2000
+    2-EAQ: 1000
+  O:
+    2-EAHQ: 1000
+  eut: 120
+  dur: 40
+  pipe_casings: tungstensteel
+  coils: tungstensteel
+  catalyst: orange metal catalyst
+- m: distillery
+  tier: HV
+  I:
+    coal tar: 40
+  O:
+    anthracene: 2
+  eut: 64
+  dur: 1.2
+- m: industrial coke oven
+  tier: EV
+  I:
+    charcoal: 16
+  O:
+    dried earth dust: 0.25
+    coal tar: 400
+  eut: 120
+  dur: 7.2
+- m: LCR
+  tier: EV
+  I:
+    oxygen: 1000
+    nitric oxide: 1000
+  O:
+    nitrogen dioxide: 1000
+  eut: 30
+  dur: 8
+- m: LCR
+  tier: EV
+  I:
+    oxygen: 10000
+    ammonia: 4000
+  O:
+    nitric oxide: 1000
+  eut: 30
+  dur: 16
+- m: LCR
+  tier: LuV
+  I:
+    nitrogen: 10000
+    hydrogen: 30000
+  O:
+    ammonia: 10000
+  eut: 384
+  dur: 160
+# To edit this section you need to edit the target in the LCR and the inputs to UCFE
+# {
+- m: universal chemical fuel engine
+  tier: LV
+  I:
+    dense hydrazine fuel mixture: 6400
+    combustion promoter: 100
+  O:
+    EU: 1
+  eut: 0
+  dur: 1
+- m: LCR
+  tier: HV
+  I:
+    nitrogen dioxide: 1000
+    hydrogen peroxide: 1000
+    saltpeter dust: 2
+  O:
+    combustion promoter: 2000
+  eut: 120
+  dur: 10
+  target:
+    combustion promoter: 100
+# }
+- m: chem plant
+  tier: HV
+  I:
+    hydrazine: 4000
+    methanol: 6000
+  O:
+    dense hydrazine fuel mixture: 10000
+  eut: 240
+  dur: 30
+  coils: tungstensteel
+  pipe_casings: tungstensteel
+- m: distillery
+  tier: HV
+  I:
+    wood vinegar: 200
+  O:
+    methanol: 60
+  eut: 64
+  dur: 0.8
+  note: Need to replace with dangote
+- m: industrial coke oven
+  tier: IV
+  I:
+    wood: 4
+  O:
+    wood vinegar: 750
+    '[recycle] charcoal': 5
+  eut: 64
+  dur: 6.4
+- m: chem plant
+  tier: EV
+  I:
+    hydrogen peroxide: 1000
+    ammonia: 2000
+  O:
+    hydrazine: 1000
+  eut: 240
+  dur: 30
+  coils: tungstensteel
+  pipe_casings: tungstensteel

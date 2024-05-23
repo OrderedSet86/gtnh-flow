@@ -1,5 +1,7 @@
 import itertools
 
+from termcolor import colored
+
 from src.gtnh.overclocks import OverclockHandler
 
 
@@ -33,14 +35,15 @@ class Graph:
             rec.base_eut = rec.eut
 
         # DEBUG
+        self.parent_context.log.debug('Recipes after overclocking:')
         for rec in recipes:
-            self.parent_context.cLog(rec)
-        self.parent_context.cLog('')
-
+            self.parent_context.log.debug(colored(rec, 'yellow'))
+        self.parent_context.log.debug('')
 
     # Graph utility functions
     from ._utils import (
         userRound,
+        userAccurate,
         addNode,
         addEdge,
         createAdjacencyList,
@@ -48,6 +51,7 @@ class Graph:
         _checkIfMachine,
     )
     userRound = staticmethod(userRound)
+    userAccurate = staticmethod(userAccurate)
 
     # Utilities for "port node" style graphviz nodes
     from ._portNodes import (
@@ -62,4 +66,8 @@ class Graph:
         getQuantLabel,
         _combineInputs,
         _combineOutputs,
+    )
+
+    from ._output import (
+        outputGraphviz,
     )

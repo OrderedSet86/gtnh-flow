@@ -1,0 +1,243 @@
+- m: rotary kiln
+  tier: MV
+  I:
+    zinc oxide fume dust: 2
+    carbon dust: 1
+    natural gas: 8
+    oxygen: 50
+  O:
+    waelz oxide dust: 1
+    waelz slag dust: 1
+    carbon dioxide : 25
+  eut: 120
+  dur: 4
+  number: 1
+  #target:
+     #coke dust: 12
+  group: zinc oxide fume chain
+- m: autoclave
+  tier: LV
+  I:
+    waelz oxide dust: 1
+    '[input] sulfuric acid': 1000
+  O:
+    germanium leach: 1000
+  eut: 30
+  dur: 10
+  group: zinc oxide fume chain
+- m: autoclave
+  tier: LV
+  I:
+    germanium leach: 1000
+    tannic acid solution: 100
+  O:
+    germanium concentrate dust: 0.8
+    zinc leach: 1000
+  eut: 30
+  dur: 10
+  group: zinc oxide fume chain
+- m: batch reactor
+  tier: LV
+  I:
+    germanium concentrate dust: 1
+    chlorine: 50
+    '[input] hydrochloric acid': 400
+  O:
+    impure germanium tetrachloride: 100
+  eut: 30
+  dur: 10
+  group: zinc oxide fume chain
+
+
+- m: rotary kiln
+  tier: MV
+  I:
+    zinc leach residue dust: 8
+    carbon dust: 1
+    natural gas: 8
+    oxygen: 50
+  O:
+    germanium rich oxide dust: 1
+    waelz slag dust: 1
+    carbon dioxide : 25
+  eut: 120
+  dur: 4
+  number: 1
+  group: germanium rich oxide chain
+- m: autoclave
+  tier: LV
+  I:
+    germanium rich oxide dust: 2
+    '[input] oxalic acid solution': 1000
+  O:
+    lead-silica residue dust: 1
+    germanium oxalate leach: 1000
+  eut: 30
+  dur: 10
+  group: germanium rich oxide chain
+- m: batch reactor
+  tier: LV
+  I:
+    small pile of iron dust: 2
+    germanium oxalate leach: 8000
+  O:
+    iron oxalate dihydrate dust: 9
+    purified germanium oxalate leach: 6000
+  eut: 30
+  dur: 10
+  group: germanium rich oxide chain
+- m: centrifuge
+  tier: LV
+  I:    
+    purified germanium oxalate leach: 1000
+    '[input] germanium-gallium extraction mixture': 1000
+  O:
+    germanium-gallium extract: 1000
+    '[output] oxalic acid solution': 1000
+  eut: 30
+  dur: 10
+  group: germanium rich oxide chain
+- m: centrifuge
+  tier: LV
+  I:    
+    '[input] diluted sulfuric acid': 600
+    germanium-gallium extract: 1000
+  O:
+    germanium extract: 1000
+    gallium sulfate solution: 600
+  eut: 30
+  dur: 10
+  group: germanium rich oxide chain
+- m: centrifuge
+  tier: LV
+  I:    
+   sodium hydroxide: 200
+   germanium extract: 1000
+  O:
+    '[output] germanium-gallium extraction mixture': 1000
+    germanium oxalate solution: 400
+  eut: 30
+  dur: 10
+  group: germanium rich oxide chain
+- m: batch reactor
+  tier: LV
+  I:
+    chlorine: 50
+    '[input] hydrochloric acid': 400
+    germanium oxalate solution: 400
+  O:
+    impure germanium tetrachloride: 100
+  eut: 30
+  dur: 10
+  group: germanium rich oxide chain
+
+
+
+- m: distillery
+  tier: LV
+  I:
+    impure germanium tetrachloride: 40
+  O:
+    germanium tetrachloride: 36
+  eut: 7
+  dur: 0.8
+  group: germanium refinement
+- m: batch reactor
+  tier: LV
+  I:
+    germanium tetrachloride: 1000
+    ultra pure water: 6000
+  O:
+    germanium dioxide dust: 3
+    '[output] hydrochloric acid': 4000
+  eut: 30
+  dur: 10
+  group: germanium refinement
+- m: tube furnace
+  tier: LV
+  I:
+    germanium dioxide dust: 3
+    hydrogen: 4000
+  O:
+    germanium dust: 1
+    steam: 2000
+  eut: 30
+  dur: 10
+  group: germanium refinement
+  
+- m: chemical bath
+  tier: LV
+  I:
+    wood log: 1
+    distilled water: 100
+  O:
+    tannic acid solution: 100
+  eut: 30
+  dur: 10
+- m: centrifuge
+  tier: LV
+  I:
+    waelz slag dust: 1
+  O:
+    hematite dust: 0.5
+    quicklime dust: 0.5
+    silicon dioxide dust: 0.75
+  eut: 30
+  dur: 2
+- m: centrifuge
+  tier: LV
+  I:
+    lead-silica residue dust: 1
+  O:
+    silicon dioxide dust: 0.6
+    anglesite dust: 0.4
+  eut: 30
+  dur: 8
+- m: packager
+  tier: LV
+  I:
+    iron dust: 1
+  O:
+    small pile of iron dust: 4
+  eut: 12
+  dur: 0.5
+- m: electrolyzer
+  tier: LV
+  I:
+    gallium sulfate solution: 3000
+  O:
+    gallium: 2
+    oxalic acid: 6
+    '[output] oxygen': 3000
+    '[output] sulfuric acid': 3000
+  eut: 12
+  dur: 0.5
+- m: mixer
+  tier: LV
+  I:
+    oxalic acid: 6
+    distilled water: 3000
+  O:
+    '[output] oxalic acid solution': 1000
+  eut: 12
+  dur: 0.5
+- m: roaster
+  tier: LV
+  I:
+    iron oxalate dihydrate dust: 9
+  O:
+    iron ii oxide dust: 2
+    steam: 1000
+    carbon monoxide: 1000
+    carbon dioxide: 1000
+  eut: 12
+  dur: 0.5
+- m: mixer
+  tier: LV
+  I:
+    '[input] sulfuric acid': 1000
+    water: 1000
+  O:
+    '[input] diluted sulfuric acid': 2000
+  eut: 12
+  dur: 0.5

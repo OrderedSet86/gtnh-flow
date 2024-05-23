@@ -3,8 +3,7 @@ from io import StringIO
 from collections import defaultdict
 
 import graphviz
-
-from src.graph._postProcessing import bottleneckPrint
+from termcolor import colored
 
 
 
@@ -49,7 +48,7 @@ def outputGraphviz(self):
         else:
             groups['no-group'].append(repackaged)
 
-    def make_table(lab, inputs, outputs):
+    def make_table(lab, inputs, outputs, input_quants=None, output_quants=None):
         is_inverted = self.graph_config['ORIENTATION'] in ['BT', 'RL']
         is_vertical = self.graph_config['ORIENTATION'] in ['TB', 'BT']
         num_inputs = len(inputs) if inputs is not None else 0
@@ -62,29 +61,33 @@ def outputGraphviz(self):
 
         machine_cell = ['<br />'.join(lab.split('\n'))]
         lines = [
-            ('i',inputs), 
-            (None,machine_cell), 
-            ('o',outputs)
+            ('i',inputs,input_quants), 
+            (None,machine_cell,None), 
+            ('o',outputs,output_quants)
         ]
         if is_inverted:
             lines.reverse()
-        lines = [(x,y) for x,y in lines if y]
+        lines = [(x,y,z) for x,y,z in lines if y]
 
         
         io = StringIO()
         if is_vertical:
             # Each Row is a table
             io.write('<<table border="0" cellspacing="0">')
-            for port_type,line in lines:
+            for port_type,line,quants in lines:
                 io.write('<tr>')
                 io.write('<td>')
                 io.write('<table border="0" cellspacing="0">')
                 io.write('<tr>')
-                for cell in line:
+                for i, cell in enumerate(line):
                     if port_type:
                         port_id = self.getPortId(cell, port_type)
                         ing_name = self.getIngLabel(cell)
-                        io.write(f'<td border="1" PORT="{port_id}">{self.stripBrackets(ing_name)}</td>')
+                        label = self.stripBrackets(ing_name)
+                        if quants:
+                            quant = self.userAccurate(quants[i])
+                            label = f'{label} x{quant}'
+                        io.write(f'<td border="1" PORT="{port_id}">{label}</td>')
                     else:
                         io.write(f'<td border="0">{cell}</td>')
                 io.write('</tr>')
@@ -96,15 +99,19 @@ def outputGraphviz(self):
             # Each columns is a table
             io.write('<<table border="0" cellspacing="0">')
             io.write('<tr>')
-            for port_type,line in lines:
+            for port_type,line,quants in lines:
                 io.write('<td>')
                 io.write('<table border="0" cellspacing="0">')
-                for cell in line:
+                for i, cell in enumerate(line):
                     io.write('<tr>')
                     if port_type:
                         port_id = self.getPortId(cell, port_type)
                         ing_name = self.getIngLabel(cell)
-                        io.write(f'<td border="1" PORT="{port_id}">{self.stripBrackets(ing_name)}</td>')
+                        label = self.stripBrackets(ing_name)
+                        if quants:
+                            quant = self.userAccurate(quants[i])
+                            label = f'{label} x{quant}'
+                        io.write(f'<td border="1" PORT="{port_id}">{label}</td>')
                     else:
                         io.write(f'<td border="0">{cell}</td>')
                     io.write('</tr>')
@@ -132,8 +139,10 @@ def outputGraphviz(self):
         elif re.match(r'^\d+$', node_name):
             rec = self.recipes[node_name]
             in_ports = [ing.name for ing in rec.I]
+            in_quants = [ing.quant for ing in rec.I]
             out_ports = [ing.name for ing in rec.O]
-            isTable, newLabel = make_table(label, in_ports, out_ports)
+            out_quants = [ing.quant for ing in rec.O]
+            isTable, newLabel = make_table(label, in_ports, out_ports, in_quants, out_quants)
 
         if isTable:
             kwargs['label'] = newLabel
@@ -153,7 +162,7 @@ def outputGraphviz(self):
                 add_node_internal(g, rec_id, **kwargs)
         else:
             with g.subgraph(name=f'cluster_{group}') as c:
-                self.parent_context.cLog(f'Creating subgraph {group}')
+                self.parent_context.log.debug(colored(f'Creating subgraph {group}'))
                 cluster_color = self.getUniqueColor(group)
 
                 # Populate nodes
@@ -264,6 +273,3 @@ def outputGraphviz(self):
 
     if self.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
         input()
-    
-    if self.graph_config.get('PRINT_BOTTLENECKS'):
-        bottleneckPrint(self)

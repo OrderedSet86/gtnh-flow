@@ -1,7 +1,8 @@
 # Standard libraries
+import argparse
 import logging
 import os
-import argparse
+import traceback
 from pathlib import Path
 
 # Pypi libraries
@@ -24,21 +25,34 @@ class ProgramContext:
 
 
     def __init__(self):
-        logging.basicConfig(level=logging.INFO)
-
         self.load_graph_config(ProgramContext.DEFAULT_CONFIG_PATH)
+        streamhandler_level = self.graph_config.get('STREAMHANDLER_LEVEL', 'INFO')
+
+        self.log = logging.getLogger('flow.log')
+        self.log.setLevel(logging.DEBUG)
+
+        if streamhandler_level == 'DEBUG':
+            fmtstring = '%(pathname)s:%(lineno)s %(levelname)s %(message)s'
+        else:
+            fmtstring = '%(filename)s:%(lineno)s %(levelname)s %(message)s'
+        formatter = logging.Formatter(
+            fmt=fmtstring,
+            datefmt='%Y-%m-%dT%H:%M:%S%z', # ISO 8601
+        )
+
+        handler = logging.StreamHandler() # outputs to stderr
+        handler.setFormatter(formatter)
+        handler.setLevel(logging.getLevelName(self.graph_config.get('STREAMHANDLER_LEVEL', 'INFO')))
+        if streamhandler_level == 'DEBUG':
+            # https://stackoverflow.com/a/74605301
+            class PackagePathFilter(logging.Filter):
+                def filter(self, record):
+                    record.pathname = record.pathname.replace(os.getcwd(),"")
+                    return True
+            handler.addFilter(PackagePathFilter())
+        self.log.addHandler(handler)
+
         self.graph_gen = systemOfEquationsSolverGraphGen
-
-
-    @staticmethod
-    def cLog(msg, color='white', level=logging.DEBUG):
-        # Not sure how to level based on a variable, so just if statements for now
-        if level == logging.DEBUG:
-            logging.debug(colored(msg, color))
-        elif level == logging.INFO:
-            logging.info(colored(msg, color))
-        elif level == logging.WARNING:
-            logging.warning(colored(msg, color))
 
 
     def load_graph_config(self, config_path):
@@ -51,12 +65,18 @@ class ProgramContext:
             raise Exception(f'Invalid project file. *.yaml file expected. Got: {project_name}.')
 
         recipes = recipesFromConfig(project_name)
-        self.graph_gen(self, project_name[:-5], recipes, self.graph_config)
+        try:
+            self.graph_gen(self, project_name[:-5], recipes, self.graph_config)
+        except Exception as e:
+            cprint(traceback.format_exc(), 'red')
+            self.log.error(colored(f'Error generating graph for project "{project_name}": {e}', 'red'))
+            self.log.error(colored('If error cause is not obvious, please notify dev: https://github.com/OrderedSet86/gtnh-flow/issues', 'red'))
 
 
     def run_noninteractive(self, projects):
         for project_name in projects:
             self.generate_one(project_name)
+
 
     def run_interactive(self):
         # Set up autcompletion config
@@ -96,6 +116,7 @@ class ProgramContext:
                 project_name += '.yaml'
 
             self.generate_one(project_name)
+
 
     def run(self):
 

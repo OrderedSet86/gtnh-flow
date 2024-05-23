@@ -1,0 +1,19 @@
+- m: forestry fermenter
+  tier: LV
+  I:
+    water: 300
+    blue mahoe sapling: 1
+    forestry fertilizer: 0.01042
+  O:
+    forestry biomass: 300
+  eut: 32
+  dur: 4
+  number: 2
+- m: distillery
+  tier: LV
+  I:
+    forestry biomass: 40
+  O:
+    ethanol: 20
+  eut: 24
+  dur: 0.8

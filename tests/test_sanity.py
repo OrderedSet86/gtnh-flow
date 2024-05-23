@@ -9,25 +9,47 @@ from termcolor import colored
 from src.data.loadMachines import recipesFromConfig
 from src.graph._solver import systemOfEquationsSolverGraphGen
 
+
 # Just compile and generate graph for every project
 # (Minus a few whitelisted long exceptions like nanocircuits)
 
 
 class ProgramContext:
+    DEFAULT_CONFIG_PATH = 'tests/sanity_config.yaml'
+
     def __init__(self):
-        logging.basicConfig(level=logging.INFO)
+        self.load_graph_config(ProgramContext.DEFAULT_CONFIG_PATH)
+        streamhandler_level = self.graph_config.get('STREAMHANDLER_LEVEL', 'INFO')
 
+        self.log = logging.getLogger('flow.log')
+        self.log.setLevel(logging.DEBUG)
 
-    @staticmethod
-    def cLog(msg, color='white', level=logging.DEBUG):
-        # Not sure how to level based on a variable, so just if statements for now
-        if level == logging.DEBUG:
-            logging.debug(colored(msg, color))
-        elif level == logging.INFO:
-            logging.info(colored(msg, color))
-        elif level == logging.WARNING:
-            logging.warning(colored(msg, color))
+        if streamhandler_level == 'DEBUG':
+            fmtstring = '%(pathname)s:%(lineno)s %(levelname)s %(message)s'
+        else:
+            fmtstring = '%(filename)s:%(lineno)s %(levelname)s %(message)s'
+        formatter = logging.Formatter(
+            fmt=fmtstring,
+            datefmt='%Y-%m-%dT%H:%M:%S%z', # ISO 8601
+        )
 
+        handler = logging.StreamHandler() # outputs to stderr
+        handler.setFormatter(formatter)
+        handler.setLevel(logging.getLevelName(self.graph_config.get('STREAMHANDLER_LEVEL', 'INFO')))
+        if streamhandler_level == 'DEBUG':
+            # https://stackoverflow.com/a/74605301
+            class PackagePathFilter(logging.Filter):
+                def filter(self, record):
+                    record.pathname = record.pathname.replace(os.getcwd(),"")
+                    return True
+            handler.addFilter(PackagePathFilter())
+        self.log.addHandler(handler)
+
+        self.graph_gen = systemOfEquationsSolverGraphGen
+
+    def load_graph_config(self, config_path):
+        with open(config_path, 'r') as f:
+            self.graph_config = yaml.safe_load(f)
 
 
 def generateProjectPaths():
@@ -70,10 +92,6 @@ def generateProjectPaths():
     return project_paths
 
 
-# def generateProjectPaths():
-#     return ['projects/pe/apple.yaml']
-
-
 @pytest.mark.parametrize("project_name", generateProjectPaths())
 def test_lazyGenerateGraphs(project_name):
     pc = ProgramContext()
@@ -81,11 +99,9 @@ def test_lazyGenerateGraphs(project_name):
 
     if project_name.endswith('.yaml'):
         project_name = project_name[:-5]
-    with open('tests/sanity_config.yaml', 'r') as f:
-        graph_config = yaml.safe_load(f)
 
     try:
-        systemOfEquationsSolverGraphGen(pc, project_name, recipes, graph_config)
+        pc.graph_gen(pc, project_name, recipes, pc.graph_config)
         assert True == True
     except Exception as e:
         assert True == False, f'Failed on {project_name} with error {e}'

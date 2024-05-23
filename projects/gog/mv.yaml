@@ -1,0 +1,44 @@
+- m: pyrolyse oven
+  tier: MV
+  coils: cupronickel
+  I:
+    oak wood: 16
+    nitrogen: 1000
+  O:
+    charcoal: 20
+    wood tar: 1500
+  eut: 96
+  dur: 16
+  number: 1
+- m: fluid extractor
+  tier: LV
+  I:
+    charcoal: 1
+  O:
+    ashes: 0.1
+    wood tar: 100
+  eut: 16
+  dur: 1.5
+- m: distillery
+  tier: MV
+  I:
+    wood tar: 200
+  O:
+    benzene: 80
+  eut: 64
+  dur: 0.8
+- m: centrifuge
+  tier: LV
+  I:
+    air: 10000
+  O:
+    nitrogen: 3900
+  eut: 7
+  dur: 80
+- m: compressor
+  tier: LV
+  I: {}
+  O:
+    air: 2000
+  eut: 2
+  dur: 15

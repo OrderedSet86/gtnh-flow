@@ -10,7 +10,7 @@ class Ingredient:
 
 class IngredientCollection:
     def __init__(self, *ingredient_list):
-        self._ings = ingredient_list
+        self._ings = list(ingredient_list)
         # Note: name is not a unique identifier for multi-input situations
         # therefore, need to defaultdict a list
         self._ingdict = defaultdict(list)
@@ -44,6 +44,15 @@ class IngredientCollection:
 
     def __len__(self):
         return len(self._ings)
+
+    def addItem(self, item: Ingredient):
+        self._ings.append(item)
+        self._ingdict[item.name].append(item.quant)
+    
+    def __add__(self, other: 'IngredientCollection'):
+        for ing in other:
+            self.addItem(ing)
+        return self
 
 
 class Recipe:

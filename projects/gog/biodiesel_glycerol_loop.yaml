@@ -1,0 +1,60 @@
+- m: fluid extractor
+  tier: LV
+  I:
+    pams fish: 1
+  O:
+    fish oil: 50
+  eut: 4
+  dur: 0.8
+  # target:
+  #   pams fish: 1
+- m: chemical reactor
+  tier: LV
+  I:
+    fish oil: 54000
+    methanol: 9000
+    sodium hydroxide dust: 1
+  O:
+    bio diesel: 54000
+    glycerol: 9000
+  eut: 30
+  dur: 270
+  number: 1
+- m: chemical reactor
+  tier: MV
+  I:
+    carbon monoxide: 1000
+    hydrogen: 4000
+  O:
+    methanol: 1000
+  eut: 96
+  dur: 6
+- m: chemical reactor
+  tier: LV
+  I:
+    carbon dust: 1
+    oxygen: 1000
+  O:
+    carbon monoxide: 1000
+  eut: 7
+  dur: 2
+- m: chemical reactor
+  tier: LV
+  I:
+    water: 1000
+    sodium dust: 1
+  O:
+    sodium hydroxide dust: 3
+    '[recycle] hydrogen': 1000
+  eut: 30
+  dur: 10
+- m: electrolyzer
+  tier: MV
+  I:
+    glycerol: 1000
+  O:
+    '[output] carbon dust': 3
+    '[output] hydrogen': 8000
+    '[output] oxygen': 3000
+  eut: 90
+  dur: 16.8

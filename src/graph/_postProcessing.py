@@ -1,11 +1,12 @@
 import logging
 import math
+import re
 from collections import defaultdict
 from copy import deepcopy
 from string import ascii_uppercase
 
 import yaml
-from termcolor import cprint
+from termcolor import colored, cprint
 
 from src.data.basicTypes import Ingredient, IngredientCollection, Recipe
 from src.graph._utils import _iterateOverMachines
@@ -21,7 +22,7 @@ def capitalizeMachine(machine):
     capitalization_exceptions = {
         # Format is old_str: new_str
     }
-    
+
     if len(machine_capitals) > 0:
         return machine
     elif machine in capitalization_exceptions:
@@ -38,7 +39,7 @@ def createMachineLabels(self):
     # Cycle: 2.0s
     # Amoritized: 1.46K EU/t
     # Per Machine: 256EU/t
-    
+
     for node_id in self.nodes:
         if self._checkIfMachine(node_id):
             rec_id = node_id
@@ -51,7 +52,7 @@ def createMachineLabels(self):
         # Standard label
         label_lines.extend([
             f'{round(rec.multiplier, 2)}x {rec.user_voltage.upper()} {capitalizeMachine(rec.machine)}',
-            f'Cycle: {rec.dur/20}s',
+            f'Cycle: {round(rec.dur/20, 2)}s',
             f'Amoritized: {self.userRound(int(round(rec.eut, 0)))} EU/t',
             f'Per Machine: {self.userRound(int(round(rec.base_eut, 0)))} EU/t',
         ])
@@ -78,7 +79,7 @@ def createMachineLabels(self):
         if rec.machine in recognized_basic_power_machines:
             # Remove power input data
             label_lines = label_lines[:-2]
-        
+
         line_if_attr_exists = {
             'heat': (lambda rec: f'Base Heat: {rec.heat}K'),
             'coils': (lambda rec: f'Coils: {rec.coils.title()}'),
@@ -88,6 +89,7 @@ def createMachineLabels(self):
             'efficiency': (lambda rec: f'Efficiency: {rec.efficiency}'),
             'wasted_fuel': (lambda rec: f'Wasted Fuel: {rec.wasted_fuel}'),
             'parallel': (lambda rec: f'Parallels: {rec.parallel}'),
+            'note': (lambda rec: f'Note: {rec.note}'),
         }
         for lookup, line_generator in line_if_attr_exists.items():
             if hasattr(rec, lookup):
@@ -103,14 +105,16 @@ def addUserNodeColor(self):
     all_user_nodes = set(targeted_nodes) | set(numbered_nodes)
 
     for rec_id in all_user_nodes:
-        self.nodes[rec_id].update({'fillcolor': self.graph_config['LOCKEDNODE_COLOR']})
-
+        # Emphasizes the first line (i.e. machine name line)
+        lines = self.nodes[rec_id]['label'].split('\n')
+        lines[0] = r'<b><u>' + lines[0] + r'</u></b>'
+        self.nodes[rec_id]['label'] = '\n'.join(lines)
 
 
 def addMachineMultipliers(self):
     # Compute machine multiplier based on solved ingredient quantities
     # FIXME: If multipliers disagree, sympy solver might have failed on an earlier step
-    
+
     for rec_id, rec in self.recipes.items():
         multipliers = []
 
@@ -127,7 +131,7 @@ def addMachineMultipliers(self):
                         solved_quant_per_s += self.edges[edge]['quant']
 
                 base_quant_s = base_quant / (rec.dur/20)
-                
+
                 # print(io_dir, rec_id, ing_name, getattr(rec, io_dir))
                 # print(solved_quant_per_s, base_quant_s, rec.dur)
                 # print()
@@ -189,13 +193,16 @@ def addPowerLineNodesV2(self):
 
     # 3. Redirect burnables currently going to sink and redirect them to a new burn machine
     outputs = self.adj['sink']['I']
+    burn_machines_added = False
     for edge in deepcopy(outputs):
         node_from, _, ing_name = edge
         edge_data = self.edges[edge]
         quant_s = edge_data['quant']
 
         if ing_name in known_burnables and not ing_name in self.graph_config['DO_NOT_BURN']:
-            self.parent_context.cLog(f'Detected burnable: {ing_name.title()}! Adding to chart.', 'blue', level=logging.INFO)
+            self.parent_context.log.info(colored(f'Detected burnable: {ing_name.title()}! Adding to chart.', 'blue'))
+            burn_machines_added = True
+
             generator_idx, eut_per_cell = known_burnables[ing_name]
             gen_name = generator_names[generator_idx]
 
@@ -254,19 +261,20 @@ def addPowerLineNodesV2(self):
                 wasted_fuel=f'{self.userRound(loss_on_singleblock_output)}EU/t/amp',
             )
 
-            produced_eut_s = quant_s/expended_fuel_t*output_eut 
-            self.parent_context.cLog(
-                ''.join([
-                    f'Added {gen_voltage} generator burning {quant_s} {ing_name} for '
-                    f'{self.userRound(produced_eut_s/20)}EU/t at {output_eut}EU/t each.'
-                ]),
-                'blue',
-                level=logging.INFO,
+            produced_eut_s = quant_s/expended_fuel_t*output_eut
+            self.parent_context.log.info(
+                colored(
+                    ''.join([
+                        f'Added {gen_voltage} generator burning {quant_s} {ing_name} for '
+                        f'{self.userRound(produced_eut_s/20)}EU/t at {output_eut}EU/t each.'
+                    ]),
+                    'blue',
+                )
             )
 
             self.addNode(
                 node_idx,
-                fillcolor=self.graph_config['NONLOCKEDNODE_COLOR'],
+                fillcolor=self.graph_config['DEFAULT_MACHINE_COLOR'],
                 shape='box'
             )
 
@@ -288,10 +296,66 @@ def addPowerLineNodesV2(self):
             )
             # Remove old edge and repopulate adjacency list
             del self.edges[edge]
-            self.createAdjacencyList()
 
             highest_node_index += 1
 
+    # 4. Special UCFE handling
+    ### Automatically balance the outputs of UCFE
+    # 1. Get UCFE node
+    UCFE_id = None
+    for rec_id, rec in self.recipes.items():
+        if rec.machine == 'universal chemical fuel engine':
+            UCFE_id = rec_id
+
+    if UCFE_id is not None:
+        cprint('Detected UCFE, autobalancing...', 'green')
+
+        # 2. Determine whether non-combustion promoter input is combustable or gas
+        input_ingredient_collection = self.recipes[UCFE_id].I
+        if len(input_ingredient_collection) != 2:
+            raise RuntimeError('Too many or too few inputs to UCFE - expected 2.')
+
+        if 'combustion promoter' not in input_ingredient_collection._ingdict:
+            raise RuntimeError('UCFE detected, but "combustion promoter" is not one of its inputs. Cannot autobalance.')
+
+        for ing in input_ingredient_collection._ings:
+            if ing.name != 'combustion promoter':
+                fuel_name = ing.name
+                break
+
+        burn_value_table = None
+        if fuel_name in turbineables:
+            burn_value_table = turbineables
+            coefficient = 0.04
+        elif fuel_name in combustables:
+            burn_value_table = combustables
+            coefficient = 0.04
+        elif fuel_name in rocket_fuels:
+            burn_value_table = rocket_fuels
+            coefficient = 0.005
+        else:
+            raise RuntimeError(f'Unrecognized input fuel to UCFE: {fuel_name}. Can only burn gas, combustables, or rocket fuel.')
+
+        # 3. Compute UCFE ratio and output EU/s
+        combustion_promoter_quant = input_ingredient_collection['combustion promoter'][0]
+        fuel_quant = input_ingredient_collection[fuel_name][0]
+        ratio = fuel_quant / combustion_promoter_quant
+
+        efficiency = math.exp(-coefficient*ratio) * 1.5
+        output_eu = efficiency * fuel_quant * burn_value_table[fuel_name] / 1000
+        print(f'UCFE ratio: {ratio}, efficiency: {efficiency}, output EU/s: {output_eu}')
+
+        # 4. Update edge with new value
+        self.edges[(UCFE_id, 'sink', 'EU')]['quant'] = output_eu
+
+        # 5. Fix insane multiplier and label numbers
+        UCFE_rec = self.recipes[UCFE_id]
+        UCFE_rec.multiplier = 1
+        UCFE_rec.O = IngredientCollection(Ingredient('EU', output_eu))
+
+    if burn_machines_added:
+        self.parent_context.log.debug(colored('Updating adj since new powerline machines added', 'yellow'))
+        self.createAdjacencyList()
 
 
 def addSummaryNode(self):
@@ -304,7 +368,7 @@ def addSummaryNode(self):
 
     color_positive = self.graph_config['POSITIVE_COLOR']
     color_negative = self.graph_config['NEGATIVE_COLOR']
-    
+
     def makeLineHtml(lab_text, amt_text, lab_color, amt_color):
         return ''.join([
             '<tr>'
@@ -313,11 +377,13 @@ def addSummaryNode(self):
             '</tr>'
         ])
 
+    self.parent_context.log.debug(colored('Updating adj before summary node', 'yellow'))
     self.createAdjacencyList()
 
     # Compute I/O
     total_io = defaultdict(float)
     ing_names = defaultdict(str)
+    input_flows = defaultdict(float)
     for direction in [-1, 1]:
         if direction == -1:
             # Inputs
@@ -335,31 +401,53 @@ def addSummaryNode(self):
 
             ing_names[ing_id] = self.getIngLabel(ing_name)
             total_io[ing_id] += direction * quant
+            if direction == -1:
+                input_flows[ing_id] += direction * quant
+
+    def canonicalizeFlow(flow):
+        # Set to 0 if too small (intended to avoid floating point issues)
+        return flow if abs(flow) > 1e-5 else 0
+    total_io = {ing: canonicalizeFlow(flow) for ing, flow in total_io.items()}
 
     # Create I/O lines
     io_label_lines = []
-    io_label_lines.append(f'<tr><td align="left"><font color="white" face="{self.graph_config["SUMMARY_FONT"]}"><b>Summary</b></font></td></tr><hr/>')
 
-    for id, quant in sorted(total_io.items(), key=lambda x: x[1]):
-        if id == 'eu':
-            continue
+    def makeIOTitle(title):
+        font = self.graph_config["SUMMARY_FONT"]
+        return f'<tr><td align="left"><font color="white" face="{font}"><b>{title}</b></font></td></tr><hr/>'
 
-        # Skip if too small (intended to avoid floating point issues)
-        near_zero_range = 10**-5
-        if -near_zero_range < quant < near_zero_range:
-            continue
+    def makeIOLines(flows, color):
+        for id, quant in sorted(flows, key=lambda x: -abs(x[1])):
+            amt_text = self.getQuantLabel(id, quant)
+            name_text = '\u2588 ' + ing_names[id]
+            num_color = color
+            ing_color = self.getUniqueColor(id)
+            yield makeLineHtml(name_text, amt_text, ing_color, num_color)
 
-        amt_text = self.getQuantLabel(id, quant)
-        name_text = '\u2588 ' + ing_names[id]
-        num_color = color_positive if quant >= 0 else color_negative
-        ing_color = self.getUniqueColor(id)
-        io_label_lines.append(makeLineHtml(name_text, amt_text, ing_color, num_color))
+    ## If one ingredient's net output is equal or greater than 0, it is recyclable
+    recyclable_flows = {id: quant for id, quant in total_io.items() if id != 'eu' and input_flows.get(id, 0) < 0 and total_io[id] >= 0}
+    color_recyclable = self.graph_config['RECYCLABLE_COLOR']
+    io_label_lines.append(makeIOTitle('Input'))
+    io_label_lines.extend(makeIOLines(
+        filter(lambda e: e[0] != 'eu' and e[0] not in recyclable_flows and e[1] < 0, total_io.items()),
+        color_negative
+    ))
+    io_label_lines.append(makeIOTitle('Output'))
+    io_label_lines.extend(makeIOLines(
+        filter(lambda e: e[0] != 'eu' and e[0] not in recyclable_flows and e[1] > 0, total_io.items()),
+        color_positive
+    ))
+    ## There might not be recyclable inputs
+    if recyclable_flows:
+        io_label_lines.append(makeIOTitle('Recyclable'))
+        io_label_lines.extend(makeIOLines(recyclable_flows.items(), color_recyclable))
 
     # Compute total EU/t cost and (if power line) output
     total_eut = 0
     for rec in self.recipes.values():
         total_eut += rec.eut
-    io_label_lines.append('<hr/>')
+    if io_label_lines[-1] == '':
+        io_label_lines.append('<hr/>')
     eut_rounded = -int(math.ceil(total_eut))
     io_label_lines.append(makeLineHtml('Input EU/t:', self.userRound(eut_rounded), 'white', color_negative))
     if 'eu' in total_io:
@@ -404,8 +492,8 @@ def addSummaryNode(self):
         max_draw += rec.base_eut * math.ceil(rec.multiplier)
 
     io_label_lines.append(
-        makeLineHtml( 
-            'Peak power draw:', 
+        makeLineHtml(
+            'Peak power draw:',
             f'{round(max_draw/voltage_at_tier, 2)}A {tiers[max_tier].upper()}',
             'white',
             color_negative

@@ -1,0 +1,208 @@
+- m: pyrolyse oven
+  tier: MV
+  I:
+    coal dust: 16
+  O:
+    coke dust: 12
+    coal tar: 2500
+    coal gas: 2500
+  eut: 60
+  dur: 16  
+  coils: nichrome
+  number: 1
+  #target:
+     #coke dust: 12
+- m: centrifuge
+  tier: LV
+  I:
+    coal gas: 10000
+    '[source] water': 1000
+  O:
+    syngas: 10000
+    ammonia solution: 1000
+  eut: 30
+  dur: 6
+- m: distillation tower
+  tier: MV
+  I:
+    coal tar: 1000
+  O:
+    bitumen: 0.5
+    anthracene oil: 100
+    naphthalene oil: 100
+    creosote: 450
+    coal tar oil: 350
+  eut: 48
+  dur: 10
+- m: mixer
+  tier: LV
+  I:
+    sulfuric acid: 100
+    anthracene oil: 1000
+  O:
+    acidic anthracene oil: 1000
+  eut: 30
+  dur: 6
+- m: centrifuge
+  tier: LV
+  I:
+    ethylene glycol: 75
+    acidic anthracene oil: 1000
+  O:
+    anthracene extract: 750
+    crude quinolinium sulfate: 250
+  eut: 30
+  dur: 6
+- m: distillation tower
+  tier: MV
+  I:
+    anthracene extract: 1000
+  O:
+    anthracene dust: 0.8
+    ethylene glycol: 100
+    coal tar oil: 200
+  eut: 48
+  dur: 10
+- m: cstr
+  tier: LV
+  I:
+    ammonia: 100    
+    crude quinolinium sulfate: 50
+  O:
+    impure quinoline: 50
+  eut: 30
+  dur: 0.05
+- m: distillation tower
+  tier: MV
+  I:
+    impure quinoline: 1000
+  O:
+    ammonium sulfate dust: 15
+    quinoline: 800
+    naphthalene oil: 200
+  eut: 48
+  dur: 10
+- m: roaster
+  tier: LV
+  I:
+    ammonium sulfate dust: 15
+  O:
+    ammonium bisulfate dust: 11
+    ammonia: 1000
+  eut: 30
+  dur: 8
+- m: extractor
+  tier: LV
+  I:
+    ammonium bisulfate dust: 1
+  O:
+    liquid ammonium bisulfate: 144
+  eut: 30
+  dur: 0.5
+- m: electrolyzer
+  tier: LV
+  I:
+    liquid ammonium bisulfate: 1584
+  O:
+    ammonia: 1000
+    sulfuric acid: 1000
+  eut: 30
+  dur: 0.5
+- m: centrifuge
+  tier: LV
+  I:
+    sodium hydroxide solution: 100
+    naphthalene oil: 1000
+  O:
+    creosote: 100
+    alkaline naphthalene oil: 1000
+  eut: 30
+  dur: 6
+- m: centrifuge
+  tier: LV
+  I:
+    sulfuric acid: 100
+    naphthalene oil: 1000
+  O:
+    sodium sulfate solution: 100
+    purified naphthalene oil: 1000
+  eut: 30
+  dur: 6
+- m: distillery
+  tier: LV
+  I:
+    sodium sulfate solution: 1000
+  O:
+    sodium sulfate dust: 7
+    water: 1000
+  eut: 30
+  dur: 10
+- m: distillation tower
+  tier: MV
+  I:
+    purified naphthalene oil: 1000
+  O:
+    anthracene oil: 100
+    naphthalene: 800
+    coal tar oil: 100
+  eut: 48
+  dur: 10
+- m: mixer
+  tier: LV
+  I:
+    sulfuric acid: 100
+    coal tar oil: 1000
+  O:
+    acidic coal tar oil: 1000
+  eut: 30
+  dur: 6
+- m: centrifuge
+  tier: LV
+  I:
+    furfural: 75
+    acidic coal tar oil: 1000
+  O:
+    b.t.e.x. extract: 750
+    crude pyridinium sulfate: 1000
+  eut: 30
+  dur: 6
+- m: cstr
+  tier: LV
+  I:
+    ammonia: 100    
+    crude pyridinium sulfate: 50
+  O:
+    impure pyridine: 50
+  eut: 30
+  dur: 0.05
+- m: distillation tower
+  tier: MV
+  I:
+    impure pyridine: 1000
+  O:
+    ammonium sulfate dust: 15
+    aniline: 250
+    pyridine: 750
+  eut: 48
+  dur: 10
+- m: centrifuge
+  tier: LV
+  I:
+    steam: 1000
+    b.t.e.x. extract: 1000
+  O:
+    b.t.e.x.: 1000
+    furfural: 100
+  eut: 30
+  dur: 5
+- m: distillation tower
+  tier: LV
+  I:
+    b.t.e.x.: 1000
+  O:
+    xylene mixture: 400
+    ethylbenzene: 50
+    toluene: 400
+    benzene.: 150
+  eut: 30
+  dur: 5

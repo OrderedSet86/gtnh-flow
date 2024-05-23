@@ -1,0 +1,32 @@
+- m: fluid extractor
+  tier: LV
+  I:
+    goldfish: 1
+  O:
+    fish oil: 100
+    gold nugget: 0.0001
+  eut: 7
+  dur: 0.8
+  target:
+    goldfish: 2.8
+- m: chemical reactor
+  tier: LV
+  I:
+    fish oil: 54000
+    ethanol: 9000
+    sodium hydroxide dust: 1
+  O:
+    bio diesel: 54000
+    glycerol: 9000
+  eut: 30
+  dur: 270
+- m: electrolyzer
+  tier: MV
+  I:
+    glycerol: 1000
+  O:
+    carbon dust: 3
+    hydrogen: 8000
+    oxygen: 3000
+  eut: 90
+  dur: 16.8

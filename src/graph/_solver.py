@@ -1,6 +1,7 @@
 # In theory solving the machine flow as a linear program is fast and simple -
 # this prototype explores this.
 
+import json
 import logging
 from collections import Counter, deque
 from math import isclose
@@ -9,6 +10,7 @@ from sympy import linsolve, symbols
 from sympy.core.numbers import Float
 from sympy.solvers import solve
 from sympy.sets.sets import EmptySet
+from termcolor import colored
 
 from src.graph import Graph
 from src.graph._preProcessing import (
@@ -20,6 +22,7 @@ from src.graph._postProcessing import (
     addPowerLineNodesV2,
     addSummaryNode,
     addUserNodeColor,
+    bottleneckPrint,
     createMachineLabels,
 )
 from src.graph._output import (
@@ -35,11 +38,10 @@ class SympySolver:
         self.graph = graph
         self.variables = []
         self.variable_idx_counter = 0 # Autogen current "head" index for variable number
-        self.num_variables = 0 # Expected number of variables - if this diverges from vic, something broke
         self.system = []
         self.solved_vars = None # Result from linear solver
 
-        # TODO: Look into merging lookup and edge_from_perspective_to_index - they describe mostly the same thing
+        # Lookup is ground truth, efpti is just a convenient way of looking it up
         self.lookup = {} # (machine, product, direction, multi_idx) -> variable index
         self.edge_from_perspective_to_index = {} # (edge, machine_id) -> variable index
 
@@ -47,7 +49,11 @@ class SympySolver:
     def arrayIndex(self, machine, product, direction, multi_idx=0):
         key = (machine, product, direction, multi_idx)
         if key not in self.lookup:
-            # print(f'Unique key {key}')
+            self.graph.parent_context.log.debug(colored(f'Addding new variable {key} {self.variable_idx_counter}', 'red'))
+
+            new_variable_name = f'v{self.variable_idx_counter}'
+            self.variables.append(symbols(new_variable_name, positive=True, real=True))
+
             self.lookup[key] = self.variable_idx_counter
             self.variable_idx_counter += 1
             return self.variable_idx_counter - 1
@@ -56,34 +62,33 @@ class SympySolver:
 
 
     def run(self):
-        self._createVariables() # initialize v1, v2, v3 ... (first pass)
-
         # Construct system of equations
         self._addUserLocking() # add known equations from user "number" and "target" args
         self._addMachineInternalLocking() # add relations inside machines - eg 1000 wood tar -> 350 benzene
         self._populateEFPTI() # construct "edge_from_perspective_to_index" - a useful index lookup for next steps
+        if self.graph.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
+            self._debugAddVarsToEdges()
+            self.outputGraphvizProxy()
+
+        self.graph.parent_context.log.debug(colored(f'Adding machine-machine edges', 'yellow'))
         self._addMachineMachineEdges() # add equations between machines, including complex situations - eg multi IO
 
         # Solve and if unsolvable, adjust until it is
         self._solve()
 
-        self._writeQuantsToGraph()
-
-
-    def _createVariables(self):
-        # Compute number of variables
-        num_variables = 0
-        for rec_id in self.graph.nodes:
-            if self.graph._checkIfMachine(rec_id):
-                rec = self.graph.recipes[rec_id]
-                # one for each input/output ingredient
-                num_variables += len(rec.I) + len(rec.O)
-        self.num_variables = num_variables
-
-        symbols_str = ', '.join(['v' + str(x) for x in range(num_variables)])
-        self.variables = list(symbols(symbols_str, positive=True, real=True))
+        if self.solved_vars:
+            self._writeQuantsToGraph()
     
-    
+    def outputGraphvizProxy(self):
+        outputGraphviz(self.graph)
+        if self.graph.graph_config.get('PRINT_BOTTLENECKS') and self.solved_vars:
+            bottleneckPrint(self.graph)
+
+    def _addNewEquation(self, new_eqn):
+        self.graph.parent_context.log.debug(colored(f'New equation: {new_eqn}', 'cyan'))
+        self.system.append(new_eqn)
+
+
     def _addUserLocking(self):
         # Add user-determined locked inputs
         targeted_nodes = [i for i, x in self.graph.recipes.items() if getattr(x, 'target', False) != False]
@@ -112,11 +117,12 @@ class SympySolver:
 
                 # Solve for ingredient quantity and add to system of equations
                 solved_quant_s = core_ing.quant * rec.number / (rec.dur/20)
-                self.system.append(
+                new_eqn = (
                     self.variables[self.arrayIndex(rec_id, core_ing.name, core_direction)]
                     -
                     solved_quant_s
                 )
+                self._addNewEquation(new_eqn)
 
             # Add targetted nodes
             for rec_id in targeted_nodes:
@@ -132,11 +138,12 @@ class SympySolver:
 
                     if directional_matches:
                         ing_name = directional_matches[0]
-                        self.system.append(
+                        new_eqn = (
                             self.variables[self.arrayIndex(rec_id, ing_name, ing_direction)]
                             -
                             target_quant
                         )
+                        self._addNewEquation(new_eqn)
                         break
                 else:
                     raise RuntimeError(f'Targetted quantity must be in machine I/O for \n{rec}')
@@ -164,11 +171,12 @@ class SympySolver:
                         if ing.name != core_ing.name:
                             # Determine constant multiple between products
                             multiple = core_ing.quant / ing.quant
-                            self.system.append(
+                            new_eqn = (
                                 self.variables[self.arrayIndex(rec_id, core_ing.name, core_direction)]
                                 -
                                 multiple * self.variables[self.arrayIndex(rec_id, ing.name, ing_direction)]
                             )
+                            self._addNewEquation(new_eqn)
 
 
     def _populateEFPTI(self):
@@ -201,30 +209,30 @@ class SympySolver:
 
                 # Run DFS to find all connected machine-machine edges using the same product
                 involved_machines = Counter()
-                involved_edges = set()
+                involved_machine_edges = set()
                 q = [edge]
                 while q:
                     dfs_edge = q.pop()
-                    if dfs_edge in involved_edges:
+                    if dfs_edge in involved_machine_edges:
                         continue
                     dfs_a, dfs_b, _ = dfs_edge
 
-                    involved_edges.add(dfs_edge)
+                    involved_machine_edges.add(dfs_edge)
                     involved_machines[dfs_a] += 1
                     involved_machines[dfs_b] += 1
 
                     # Check for all adjacent I/O edges using the same product
-                    for edge in self.graph.adj[a]['O']: # Multi-output
+                    for edge in self.graph.adj_machine[a]['O']: # Multi-output
                         if edge[2] == product:
                             q.append(edge)
-                    for edge in self.graph.adj[b]['I']: # Multi-input
+                    for edge in self.graph.adj_machine[b]['I']: # Multi-input
                         if edge[2] == product:
                             q.append(edge)
                 
-                if len(involved_edges) == 1:
+                if len(involved_machine_edges) == 1:
                     # Simple version - all A output fulfills all B input
 
-                    self.system.append(
+                    self._addNewEquation(
                         self.variables[self.arrayIndex(a, product, 'O')]
                         -
                         self.variables[self.arrayIndex(b, product, 'I')]
@@ -234,127 +242,78 @@ class SympySolver:
                     # Each multi-input and multi-output will require the creation of minimum 2 new variables
                     # print(involved_machines)
                     # print(involved_edges)
+                    involved_machine_edges = list(involved_machine_edges)
 
-                    # Assume no loops since DAG was enforced earlier
-                    for rec_id, count in involved_machines.most_common(): # most_common so multi-IO variables are created first
-                        if count > 1:
-                            # Multi-input or multi-output
-                            # Old variable is now the collected amount for that side
-                            # Then, add new variable for each input/output (minimum 2)
+                    complex_machine_id = involved_machines.most_common()[0][0]
+                    multi_io_direction = 'O' if involved_machine_edges[0][0] == complex_machine_id else 'I'
+                    self._addMultiEquationsOnEdge(complex_machine_id, multi_io_direction, involved_machine_edges)
 
-                            relevant_edge = None
-                            destinations = []
-                            for edge in involved_edges:
-                                multi_a, multi_b, multi_product = edge
-                                if rec_id in edge[:2]:
-                                    if relevant_edge is None:
-                                        relevant_edge = edge
-                                    if multi_a == rec_id:
-                                        destinations.append(multi_b)
-                                    elif multi_b == rec_id:
-                                        destinations.append(multi_a)
-
-                            self._addMultiEquationsOnEdge(relevant_edge, rec_id, destinations)
-
-                        else:
-                            # Still "simple" - can keep old self.graph variable, but opposite end of edge must point at correct multi-IO variable
-
-                            # print('Pre-efpti')
-                            # for k, v in edge_from_perspective_to_index.items():
-                            #     print(k, v)
-                            # print()
-
-                            # Figure out if simple machine is a or b
-                            for edge in involved_edges:
-                                if rec_id in edge[:2]:
-                                    relevant_edge = edge
-                            
-                            a, b, product = relevant_edge
-
-                            # Add equation
-                            # for k, v in edge_from_perspective_to_index:
-                            #     print(k, v)
-                            # print()
-
-                            if rec_id == a: # a is simple machine
-                                multi_idx = self.edge_from_perspective_to_index[(relevant_edge, b)]
-                                # print(relevant_edge, rec_id, flush=True)
-                                self.system.append(
-                                    self.variables[self.arrayIndex(a, product, 'O')]
-                                    -
-                                    self.variables[self.arrayIndex(b, product, 'I', multi_idx=multi_idx)]
-                                )
-                            elif rec_id == b: # b is simple machine
-                                multi_idx = self.edge_from_perspective_to_index[(relevant_edge, a)]
-                                self.system.append(
-                                    self.variables[self.arrayIndex(a, product, 'O', multi_idx=multi_idx)]
-                                    -
-                                    self.variables[self.arrayIndex(b, product, 'I')]
-                                )
-
-                computed_edges.update(involved_edges)
+                computed_edges.update(set(involved_machine_edges))
 
 
-    def _addMultiEquationsOnEdge(self, multi_edge, multi_machine, destinations):
-        # destinations = list of nodes
+    def _addMultiEquationsOnEdge(self, multi_machine, multi_io_direction, involved_machine_edges):
+        # Log
+        multi_product = involved_machine_edges[0][2]
+        if multi_io_direction == 'O':
+            self.graph.parent_context.log.info(colored(f'Solving multi-output scenario involving {multi_product}!', 'green'))
+        elif multi_io_direction == 'I':
+            self.graph.parent_context.log.info(colored(f'Solving multi-input scenario involving {multi_product}!', 'green'))
 
-        multi_a, multi_b, multi_product = multi_edge
-        if multi_machine == multi_a:
-            direction = 'O'
-        elif multi_machine == multi_b:
-            direction = 'I'
+        self.graph.parent_context.log.debug(
+            colored(
+                f'Old base var: {self.arrayIndex(multi_machine, multi_product, multi_io_direction, multi_idx=0)}',
+                'cyan'
+            )
+        )
 
-        # Add new variables vX, vY, ...
-        new_symbols = ', '.join(['v' + str(x + self.num_variables) for x in range(len(destinations))])
-        self.variables.extend(list(symbols(new_symbols, positive=True, real=True)))
+        multi_idx = 1 # starts at 1 for new variables
+        new_variables = []
+        for edge in involved_machine_edges:
+            other_machine_id = edge[0] if edge[1] == multi_machine else edge[1]
 
-        # Look up old variable association with edge
-        old_var = self.edge_from_perspective_to_index[(multi_edge, multi_machine)]
-        # print(old_var)
+            # Add new variables and update efpti
+            new_var_index = self.arrayIndex(multi_machine, multi_product, multi_io_direction, multi_idx=multi_idx)
+            new_variables.append(self.variables[new_var_index])
+            multi_idx += 1
+            self.edge_from_perspective_to_index[(edge, multi_machine)] = new_var_index
 
-        # Check for existing edge equations involving old_var in system and remove if exist
-        # TODO: (ignoring this for now because it's not relevant for _addMachineMachineEdges)
-        #   Consider keeping the machine-internal equation - it will remain accurate as the old var is kept for it
+            # Add "simple" machine-machine equations
+            other_var_index = self.edge_from_perspective_to_index[(edge, other_machine_id)]
+            if multi_io_direction == 'O':
+                self._addNewEquation(
+                    self.variables[new_var_index]
+                    -
+                    self.variables[other_var_index]
+                )
+            elif multi_io_direction == 'I':
+                self._addNewEquation(
+                    self.variables[other_var_index]
+                    -
+                    self.variables[new_var_index]
+                )
 
-        # Update efpti and arrayIndex for new variables + edges
-        connected_edges = self.graph.adj[multi_machine][direction]
-        variable_index = self.num_variables
-        for edge in connected_edges:
-            a, b, product = edge
-            if product != multi_product:
-                continue
-            
-            self.edge_from_perspective_to_index[(edge, multi_machine)] = variable_index
-            self.arrayIndex(multi_machine, product, direction, multi_idx=variable_index) # Sanity check that variable counts match
-            variable_index += 1
-        
-        if direction == 'O':
-            self.graph.parent_context.cLog(f'Solving multi-output scenario involving {multi_product}!', 'green', level=logging.INFO)
-        elif direction == 'I':
-            self.graph.parent_context.cLog(f'Solving multi-input scenario involving {multi_product}!', 'green', level=logging.INFO)
-
-        # Add new equations for multi-IO
-        # print(self.variables)
-        # for k,v in self.lookup.items():
-        #     print(k, v)
-
-        base = self.variables[self.arrayIndex(multi_machine, multi_product, direction, multi_idx=0)]
-        for i, dst in enumerate(destinations):
-            base -= self.variables[self.arrayIndex(multi_machine, multi_product, direction, multi_idx=self.num_variables + i)]
-        self.system.append(base)
-
-        self.num_variables += len(destinations)
+        # Add new overall balancing equation for multi-IO
+        eqn = self.variables[self.arrayIndex(multi_machine, multi_product, multi_io_direction, multi_idx=0)]
+        for newvar in new_variables:
+            eqn -= newvar
+        self._addNewEquation(eqn)
 
 
     def _solve(self):
-        while True: # Loop until solved - algorithm may adjust edges each time it sees an EmptySet
-            res = linsolve(self.system, self.variables)
-            print(res)
-            if isinstance(res, EmptySet):
-                self._searchForInconsistency()
-                exit(1)
-            else:
-                break
+        # while True: # Loop until solved - algorithm may adjust edges each time it sees an EmptySet
+        res = linsolve(self.system, self.variables)
+        if isinstance(res, EmptySet):
+            self.graph.parent_context.log.warning(colored('EmptySet response - likely overdetermined', 'red'))
+
+            # Check for water in inputs
+            for edge in self.graph.edges:
+                a, b, product = edge
+                if product == 'water':
+                    if self.graph._checkIfMachine(a) and self.graph._checkIfMachine(b):
+                        self.graph.parent_context.log.warning(colored('Water detected on machine/machine edge - possible cause of overdetermination', 'yellow'))
+                        break
+            self._searchForInconsistency()
+            return
 
         lstres = list(res)
         if len(lstres) > 1:
@@ -366,17 +325,21 @@ class SympySolver:
                 any_unsolved = True
                 print(i, var)
         if any_unsolved:
-            raise RuntimeError('Unsolved variables - machine system is not well defined. Contact developer :)')
+            print('all soln:', res)
+
+            self._debugAddVarsToEdges()
+            self.outputGraphvizProxy()
+
+            raise RuntimeError(
+                '\n    Unsolved variables - machine system is underdefined.'
+                '\n    Likely cause is either disconnected machines or too little information.'
+            )
 
 
     def _searchForInconsistency(self):
         # Solve each equation stepwise until inconsistency is found, then report to end user
 
-        self.graph.parent_context.cLog('Searching for inconsistency in system of equations...', 'blue', level=logging.INFO)
-
-        # for expr in system:
-        #     print(expr)
-        # print()
+        self.graph.parent_context.log.info(colored('Searching for inconsistency in system of equations...', 'blue'))
 
         equations_to_check = deque(self.system)
         max_iter = len(self.system) ** 2 + 1
@@ -405,29 +368,36 @@ class SympySolver:
                 if expr.is_constant():
                     constant_diff = float(expr)
                     if not isclose(constant_diff, 0.0, abs_tol=0.00000001):
-                        # self.graph.parent_context.cLog(f'Inconsistency found in {preexpr}!', 'red', level=logging.WARNING)
-                        # Now print what the variables are referring to and output debug graph
+                        self.graph.parent_context.log.warning(colored(f'Inconsistency found with {involved_variables}! (diff = {constant_diff})', 'red'))
+                        # Now print what the variables are referring to
+                        involved_varindex = [int(str(x)[1:]) for x in involved_variables]
+                        for edge_perspective_data, varindex in self.edge_from_perspective_to_index.items():
+                            if varindex in involved_varindex:
+                                self.graph.parent_context.log.warning(colored(f'    v{varindex}: {edge_perspective_data}', 'red'))
+
                         inconsistent_variables.append((involved_variables, constant_diff))
                         iterations += 1
                         continue
 
-
-                if len(unsolved) == 1:
-                    unvar = unsolved[0]
-                    solution = solve(expr, unvar)
-                    if len(solution) == 1:
-                        sval = solution[0]
-                        solved_values[unvar] = sval
-                        # print(sval)
-                    else:
-                        raise NotImplementedError(f'{solution=}')
+                unvar = unsolved[0]
+                solution = solve(expr, unvar)
+                if len(solution) == 1:
+                    sval = solution[0]
+                    solved_values[unvar] = sval
+                    # print(sval)
                 else:
-                    raise NotImplementedError(f'{expr} {sorted(solved_values.items(), key=lambda tup: str(tup[0]))}')
+                    # raise NotImplementedError(f'{solution=}')
+                    pass # TODO: Handle 0 case
 
             else:
                 equations_to_check.append(expr)
             
             iterations += 1
+
+        # Output graph for end user to view
+        self.graph.parent_context.log.warning(colored(f'Refer to graph for more information.', 'red'))
+        self._debugAddVarsToEdges()
+        self.outputGraphvizProxy()
         
         if inconsistent_variables == []:
             raise NotImplementedError('Both linear and nonlinear solver found empty set, so system of equations has no solutions -- report to dev.')
@@ -455,12 +425,12 @@ class SympySolver:
             
             # When problematic inconsistency is found...
             if len(products) == 1:
-                self.graph.parent_context.cLog(f'Major inconsistency: {group}', 'red', level=logging.WARNING)
+                self.graph.parent_context.log.warning(colored(f'Major inconsistency: {group}', 'red'))
 
-                self.graph.parent_context.cLog(f'Between output={self.graph.recipes[mpdm_cache[0][0]].O}', 'red', level=logging.WARNING)
-                self.graph.parent_context.cLog(f'    and  input={self.graph.recipes[mpdm_cache[1][0]].I}', 'red', level=logging.WARNING)
+                self.graph.parent_context.log.warning(colored(f'Between output={self.graph.recipes[mpdm_cache[0][0]].O}', 'red'))
+                self.graph.parent_context.log.warning(colored(f'    and  input={self.graph.recipes[mpdm_cache[1][0]].I}', 'red'))
 
-                self.graph.parent_context.cLog('Please fix by either:', 'green', level=logging.INFO)
+                self.graph.parent_context.log.info(colored('[BETA] Please fix by either:', 'green'))
 
                 # if constant_diff < 0:
                 #     parent_group_idx = 0
@@ -470,30 +440,33 @@ class SympySolver:
                 child_group_idx = 1
 
                 # Negative means too much of right side, or too few of other sided inputs
-                self.graph.parent_context.cLog(f'1. Sending excess {group[parent_group_idx]} {product} to sink', 'blue', level=logging.INFO)
+                self.graph.parent_context.log.info(colored(f'1. Sending excess "{group[parent_group_idx]} {product}" to sink', 'blue'))
 
                 # Check other sided inputs
                 machine, product, direction, multi_idx = idx_to_mpdm[var_to_idx(group[child_group_idx])]
-                nonself_product = []
-                for edge in self.graph.adj[machine][direction]:
-                    # print(self.graph.adj[machine])
-                    # print(edge)
-                    a, b, edgeproduct = edge
-                    if edgeproduct != product:
-                        nonself_product.append((
-                            edgeproduct,
-                            'v' + f'{self.edge_from_perspective_to_index[(edge, machine)]}',
-                        ))
+                self.graph.parent_context.log.info(colored(f'2. Pulling more "{group[child_group_idx]} {product}" from source', 'blue'))
 
-                self.graph.parent_context.cLog(f'2. Pulling more {nonself_product} from source', 'blue', level=logging.INFO)
+                # nonself_product = []
+                # for edge in self.graph.adj[machine][direction]:
+                #     # print(self.graph.adj[machine])
+                #     # print(edge)
+                #     a, b, edgeproduct = edge
+                #     if edgeproduct != product:
+                #         nonself_product.append((
+                #             edgeproduct,
+                #             'v' + f'{self.edge_from_perspective_to_index[(edge, machine)]}',
+                #         ))
 
-                # Output graph for end user to view
-                self._debugAddVarsToEdges()
-                outputGraphviz(self.graph)
+                # self.graph.parent_context.log.info(colored(f'2. Pulling more {nonself_product} from source', 'blue'))
+
+                # # Output graph for end user to view
+                # self._debugAddVarsToEdges()
+                # self.outputGraphvizProxy()
 
                 # TODO: Automate solution process fully
 
-                selection = input() # TODO: Verify input
+                # selection = input() # TODO: Verify input
+                selection = ''
 
                 if selection == '1':
                     # Send excess to sink
@@ -519,24 +492,99 @@ class SympySolver:
         # Add variable indices to edges and rec_id to machines
 
         # Lookup is a dictionary defined like this:
-        #   def arrayIndex(machine, product, direction):
+        #   (machine, product, direction, multi_idx) -> variable index
         # Edges in self.edges are defined like:
         #   rec_id_a, rec_id_b, product
-
-        for edge_perspective_data, variableIndex in self.edge_from_perspective_to_index.items():
-            edge, perspective = edge_perspective_data
-            a, b, product = edge
-            
-            if 'debugHead' not in self.graph.edges[edge]:
-                self.graph.edges[edge]['debugHead'] = ''
-            if 'debugTail' not in self.graph.edges[edge]:
-                self.graph.edges[edge]['debugTail'] = ''
-
-            if perspective == b:
-                self.graph.edges[edge]['debugHead'] += f'v{variableIndex}'
-            elif perspective == a:
-                self.graph.edges[edge]['debugTail'] += f'v{variableIndex}'
         
+        # Add edge debug variables
+        for node_id in self.graph.nodes:
+            if self.graph._checkIfMachine(node_id):
+                rec_id = node_id
+                rec = self.graph.recipes[rec_id]
+            else:
+                continue
+
+            for direction in ['I', 'O']:
+                adjacent_edges = self.graph.adj[rec_id][direction]
+                adjacent_machine_edges = self.graph.adj_machine[rec_id][direction]
+                for ing in getattr(rec, direction):
+                    relevant_edges = [edge for edge in adjacent_edges if edge[2] == ing.name]
+                    relevant_machine_edges = [edge for edge in adjacent_machine_edges if edge[2] == ing.name]
+
+                    if len(relevant_edges) == 0:
+                        raise RuntimeError(f'No edge found for ingredient {ing.name} in {rec_id} {direction}!')
+                    elif len(relevant_machine_edges) > 1:
+                        # print(f'Multi-IO machine detected! {rec_id} {direction} {ing.name} {relevant_edges}')
+                        
+                        # Make assumption that any equation involving all adjacent edge variables is the multi-IO base variable
+                        adjacent_variables = []
+                        for edge in relevant_machine_edges:
+                            perspective = rec_id
+                            edge_perspective_data = (edge, perspective)
+                            variableIndex = self.edge_from_perspective_to_index[edge_perspective_data]
+                            adjacent_variables.append(variableIndex)
+
+                        own_ingredient = relevant_machine_edges[0][2]
+
+                        # print(relevant_edges)
+                        # print(adjacent_variables, ing.name)
+
+                        # Get related equation and base variable
+                        for i, eq in enumerate(self.system):
+                            eqn_var_indices = [int(str(x)[1:]) for x in eq.as_terms()[-1]]
+                            if all([x in eqn_var_indices for x in adjacent_variables]):
+                                # print(f'!! Associated equation: {eq}')
+                                assoc_eqn = (eq, eqn_var_indices)
+                                break
+                        base_var_idx = set(assoc_eqn[1]) - set(adjacent_variables)
+                        base_var_idx = list(base_var_idx)[0]
+
+                        # Add base_var_idx to ingredient name "own_ingredient" in node "rec_id"
+                        # TODO:
+
+                        # Get all var indices
+                        var_indices = []
+                        for edge in relevant_edges:
+                            perspective = rec_id
+                            edge_perspective_data = (edge, perspective)
+                            variableIndex = self.edge_from_perspective_to_index[edge_perspective_data]
+                            var_indices.append(variableIndex)
+                        var_string = f"[{', '.join([f'v{x}' for x in var_indices])}]"
+
+                        # Add ALL variable indices ONCE to ONE edge
+                        info_edge = relevant_edges[0]
+                        perspective = rec_id
+                        variableIndex = self.edge_from_perspective_to_index[(info_edge, perspective)]
+                        a, b, product = info_edge
+
+                        if 'debugHead' not in self.graph.edges[info_edge]:
+                            self.graph.edges[info_edge]['debugHead'] = ''
+                        if 'debugTail' not in self.graph.edges[info_edge]:
+                            self.graph.edges[info_edge]['debugTail'] = ''
+
+                        if perspective == b:
+                            self.graph.edges[info_edge]['debugHead'] += f'{var_string}'
+                        elif perspective == a:
+                            self.graph.edges[info_edge]['debugTail'] += f'{var_string}'
+
+                    elif len(relevant_edges) >= 1:
+                        edge = relevant_edges[0]
+                        perspective = rec_id
+                        edge_perspective_data = (edge, perspective)
+                        variableIndex = self.edge_from_perspective_to_index[edge_perspective_data]
+                        a, b, product = edge
+                        
+                        if 'debugHead' not in self.graph.edges[edge]:
+                            self.graph.edges[edge]['debugHead'] = ''
+                        if 'debugTail' not in self.graph.edges[edge]:
+                            self.graph.edges[edge]['debugTail'] = ''
+
+                        if perspective == b:
+                            self.graph.edges[edge]['debugHead'] += f'v{variableIndex}'
+                        elif perspective == a:
+                            self.graph.edges[edge]['debugTail'] += f'v{variableIndex}'
+
+        # Add machine debug variables
         for node_id in self.graph.nodes:
             if self.graph._checkIfMachine(node_id):
                 rec_id = node_id
@@ -615,12 +663,13 @@ def systemOfEquationsSolverGraphGen(self, project_name, recipes, graph_config):
 
     graphPreProcessing(g)
 
-    g.parent_context.cLog('Running linear solver...', 'green', level=logging.INFO)
+    g.parent_context.log.info(colored('Running linear solver...', 'green'))
     solver = SympySolver(g)
     solver.run()
 
-    graphPostProcessing(g)
-    outputGraphviz(g)
+    if solver.solved_vars:
+        graphPostProcessing(g)
+        solver.outputGraphvizProxy()
 
 
 if __name__ == '__main__':
