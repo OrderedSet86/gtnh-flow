@@ -1,0 +1,75 @@
+- m: volcanus
+  tier: IV
+  I:
+    naquadah oxide mixture dust: 2
+    fluoroantimonic acid: 1500
+  O:
+    titanium trifluoride dust: 2
+    low quality naquadah emulsion: 1000
+  eut: 480
+  dur: 2.5
+  coils: hss-s
+  heat: 3000
+  group: naquadah stage 1
+
+- m: industrial centrifuge
+  tier: IV
+  I:
+    sodium hydroxide dust: 27
+    low quality naquadah emulsion: 10000
+  O:
+    low quality naquadah solution: 9000
+    antimony dust: 15
+    gallium hydroxide dust: 70
+  eut: 1920
+  dur: 50
+  group: naquadah stage 1
+  number: 1
+
+- m: large chemical reactor
+  tier: IV
+  I:
+    p-507: 4000
+    low quality naquadah solution: 36000
+  O:
+    fluorine-rich waste liquid: 10000
+    naquadah-adamantium solution: 30000
+  eut: 1920
+  dur: 200
+  group: naquadah stage 1
+
+- m: Neutron Activator # 200-230 MeV
+  tier: LV
+  I:
+    naquadah-adamantium solution: 3000
+  O:
+    adamantine dust: 4
+    "[recycle] naquadah oxide mixture dust": 2
+    concentrated enriched-naquadah sludge dust: 1
+    naquadah-rich solution: 2000
+  eut: 0
+  dur: 5
+  group: naquadah stage 1
+
+- m: industrial electrolyzer
+  tier: MV
+  I:
+    adamantine dust: 5
+  O:
+    adamantium dust: 2
+    oxygen: 3000
+  eut: 60
+  dur: 2.75
+  group: naquadah stage 1
+
+- m: large processing factory
+  tier: MV
+  I:
+    sodium hydroxide dust: 27
+    naquadah-rich solution: 5000
+  O:
+    naquadahine dust: 30
+    "[sink] p-507": 1000
+  eut: 120
+  dur: 50
+  group: naquadah stage 1

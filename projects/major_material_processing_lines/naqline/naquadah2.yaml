@@ -1,0 +1,103 @@
+- m: Neutron Activator # 460-480 MeV
+  tier: LV
+  I:
+    concentrated enriched-naquadah sludge dust: 16
+  O:
+    enriched-naquadah sulphate dust: 165
+    sodium sulfate dust: 140
+    "[recycle] low quality naquadria sulphate dust": 2
+  eut: 0
+  dur: 6
+  group: naquadah stage 2
+  target:
+    concentrated enriched-naquadah sludge dust: 0.02
+
+- m: industrial electrolyzer
+  tier: MV
+  I:
+    enriched-naquadah sulphate dust: 11
+  O:
+    enriched naquadah dust: 1
+    sulfur dust: 2
+    oxygen: 8000
+  eut: 90
+  dur: 2.3
+  group: naquadah stage 2
+
+- m: electric blast furnace
+  tier: EV
+  I:
+    enriched naquadah dust: 16
+    hydrofluoric acid: 3000
+  O:
+    radioactive sludge dust: 3
+    acid naquadah emulsion: 2000
+  eut: 1920
+  dur: 180
+  heat: 3400
+  coils: hss-s
+  group: naquadah stage 2
+
+- m: industrial centrifuge
+  tier: MV
+  I:
+    radioactive sludge dust: 4
+  O:
+    calcium dust: 2.95
+    naquadah dust: 0.8
+    uranium238: 0.25
+    plutonium239: 0.2
+    uranium235: 0.2
+    radon: 20
+  eut: 120
+  dur: 45
+  group: naquadah stage 2
+
+- m: large chemical reactor
+  tier: LV
+  I:
+    quicklime dust: 8
+    acid naquadah emulsion: 1000
+  O:
+    small pile of antimony trioxide dust: 1
+    fluorspar dust: 4
+    naquadah emulsion: 1000
+  eut: 30
+  dur: 12
+  group: naquadah stage 2
+
+- m: industrial centrifuge
+  tier: MV
+  I:
+    naquadah emulsion: 1000
+  O:
+    "[recycle] radioactive sludge dust": 5.46
+    naquadah solution: 500
+  eut: 120
+  dur: 40
+  group: naquadah stage 2
+
+- m: distillation tower
+  tier: IV
+  I:
+    naquadah solution: 20
+  O:
+    naquadah asphalt: 2
+    heavy naquadah fuel: 5
+    light naquadah fuel: 10
+    naquadah gas: 60
+  eut: 1920
+  dur: 1
+  group: naquadah stage 2
+
+- m: large chemical reactor
+  tier: LV
+  I:
+    sodium sulfate dust: 7
+    hydrogen: 2000
+  O:
+    sodium dust: 2
+    "[sink] sulfuric acid": 1000
+  eut: 30
+  dur: 1.5
+  group: naquadah stage 2

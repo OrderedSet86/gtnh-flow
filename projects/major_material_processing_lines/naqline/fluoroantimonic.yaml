@@ -1,0 +1,67 @@
+- m: large chemical reactor
+  tier: IV
+  I:
+    antimony dust: 1
+    ether: 1000
+    chlorine: 3000
+  O:
+    antimony trichloride solution: 1000
+  eut: 30
+  dur: 3
+  group: fluoroantimonic
+
+- m: large chemical reactor
+  tier: IV
+  I:
+    antimony trichloride solution: 1000
+    chlorine: 2000
+  O:
+    antimony pentachloride solution: 1000
+  eut: 480
+  dur: 9
+  group: fluoroantimonic
+
+- m: distillation tower
+  tier: IV
+  I:
+    antimony pentachloride solution: 1000
+  O:
+    "[recycle] ether": 1000
+    antimony pentachloride: 1000
+  eut: 120
+  dur: 30
+  group: fluoroantimonic
+
+- m: large chemical reactor
+  tier: IV
+  I:
+    hydrogen: 9000
+    fluorine: 9000
+  O:
+    hydrofluoric acid: 9000
+  eut: 480
+  dur: 0.35
+
+- m: large chemical reactor
+  tier: IV
+  I:
+    antimony pentachloride: 1000
+    hydrofluoric acid: 5000
+  O:
+    antimony pentafluoride: 1000
+    hydrochloric acid: 5000
+  eut: 30
+  dur: 21
+  group: fluoroantimonic
+
+- m: large chemical reactor
+  tier: IV
+  I:
+    antimony pentafluoride: 1000
+    hydrofluoric acid: 1000
+  O:
+    fluoroantimonic acid: 1000
+  eut: 1920
+  dur: 42
+  group: fluoroantimonic
+  number: 1

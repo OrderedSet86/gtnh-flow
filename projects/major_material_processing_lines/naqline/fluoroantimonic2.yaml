@@ -1,0 +1,62 @@
+- m: vacuum freezer
+  tier: IV
+  I:
+    water: 1000
+  O:
+    crushed ice: 1000
+  eut: 120
+  dur: 2.5
+  number: 1
+
+- m: mega chemical reactor
+  tier: IV
+  I:
+    antimony dust: 8
+    ether: 1000
+    fluorine: 40000
+    crushed ice: 8000
+  O:
+    antimony pentafluoride solution: 8000
+  eut: 7680
+  dur: 40
+
+- m: large chemical reactor
+  tier: IV
+  I:
+    hydrogen: 9000
+    fluorine: 9000
+  O:
+    hydrofluoric acid: 9000
+  eut: 480
+  dur: 0.35
+
+- m: distillation tower
+  tier: IV
+  I:
+    antimony pentafluoride solution: 4000
+  O:
+    antimony pentafluoride: 4000
+    ether: 500
+  eut: 120
+  dur: 5
+
+# - m: large chemical reactor
+#   tier: IV
+#   I:
+#     antimony pentafluoride: 1000
+#     hydrofluoric acid: 1000
+#   O:
+#     fluoroantimonic acid: 1000
+#   eut: 1920
+#   dur: 42
+#   number: 4
+
+- m: mega chemical reactor
+  tier: IV
+  I:
+    antimony pentafluoride: 1000
+    hydrofluoric acid: 1000
+  O:
+    fluoroantimonic acid: 1000
+  eut: 1920
+  dur: 42

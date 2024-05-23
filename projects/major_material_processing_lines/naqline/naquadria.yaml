@@ -1,0 +1,75 @@
+- m: large chemical reactor
+  tier: EV
+  I:
+    low quality naquadria sulphate dust: 3
+    p-507: 500
+  O:
+    low quality naquadria sulphate: 3500
+  eut: 1920
+  dur: 25
+  group: naquadria
+  target:
+    low quality naquadria sulphate dust: 0.01
+
+- m: distillation tower
+  tier: IV
+  I:
+    low quality naquadria sulphate: 7000
+  O:
+    enriched-naquadah oxide mixture dust: 2
+    "[sink] p-507": 1000
+    naquadria-rich solution: 5400
+    diluted sulfuric acid: 12000
+  eut: 7680
+  dur: 25
+  group: naquadria
+
+- m: Neutron Activator # 1050-1100 MeV
+  tier: LV
+  I:
+    naquadria-rich solution: 9000
+  O:
+    naquadria sulphate dust: 44
+    "[recycle] low quality naquadria sulphate dust": 6
+  eut: 0
+  dur: 5
+  group: naquadria
+
+- m: large chemical reactor
+  tier: EV
+  I:
+    enriched-naquadah oxide mixture dust: 4
+    p-507: 1000
+    sulfuric acid: 18000
+  O:
+    "[recycle] naquadah oxide mixture dust": 1
+    trinium sulphate dust: 1
+    enriched-naquadah-rich solution: 4000
+    waste liquid: 1000
+  eut: 1920
+  dur: 20
+  group: naquadria
+
+- m: large processing factory
+  tier: HV
+  I:
+    enriched-naquadah-rich solution: 2500
+    sodium hydroxide dust: 15
+  O:
+    "[recycle] concentrated enriched-naquadah sludge dust": 2
+    "[sink] p-507": 625
+  eut: 480
+  dur: 12.5
+  group: naquadria
+
+- m: large chemical reactor
+  tier: HV
+  I:
+    trinium sulphate dust: 6
+    hydrogen: 2000
+  O:
+    trinium dust: 1
+    "[sink] sulfuric acid": 1000
+  eut: 480
+  dur: 6
+  group: naquadria
