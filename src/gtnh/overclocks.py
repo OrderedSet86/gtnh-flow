@@ -486,7 +486,6 @@ class OverclockHandler:
             'thermic heating device': self.modifyGTpp,
             'thermic heater': self.modifyGTpp,
             'industrial fluid heater': self.modifyGTpp,
-            'volcanus': self.modifyGTpp,
 
             # Special GT++ multis
             'industrial coke oven': lambda recipe: self.modifyGTppSetParallel(recipe, 24, speed_per_tier=0.96),
@@ -500,6 +499,7 @@ class OverclockHandler:
             'industrial dehydrator': self.modifyUtupu,
             'flotation cell regulator': self.modifyPerfect,
             'isamill grinding machine': self.modifyPerfect,
+            "volcanus": self.modifyEBF,
         }
 
         if recipe.machine in machine_overrides:

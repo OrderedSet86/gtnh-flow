@@ -113,6 +113,44 @@ def test_EBFOverclock(recipe, expected_eut, expected_dur, overclock_handler):
     overclocked = overclock_handler.overclockRecipe(recipe)
     assert overclocked.eut == expected_eut
     assert overclocked.dur == expected_dur
+    
+
+recipe_volcanus = mod_recipe(recipe_ebf, machine="volcanus")
+
+# Based on in-game measurements
+@pytest.mark.parametrize(
+    "recipe,expected_eut,expected_dur",
+    [
+        (
+        # No Overclocks (800K over recipe - no bonuses)
+            mod_recipe(recipe_ebf, user_voltage="mv", coils="cupronickel"),  # 1801K    
+            120 * 0.9,
+            25 / 2,
+        ),
+        # one normal OC
+        (
+            mod_recipe(recipe_ebf, user_voltage="hv", coils="kanthal"),  # 2701K    
+            120 * 4 * 0.9,
+            25 / 2,
+        ),
+        # one perfect OC
+        (
+            mod_recipe(recipe_ebf, user_voltage="hv", coils="nichrome"),  # 3601K
+            120 * 4 * 0.95**2,
+            25 / 4,
+        ),
+        # one normal OC plus one perfect OC
+        (
+            mod_recipe(recipe_ebf, user_voltage="ev", coils="nichrome"),  # 3601K
+            120 * 16 * 0.95**2,
+            25 / 4 / 2,
+        )
+    ],
+)
+def test_volcanusOverclock(recipe, expected_eut, expected_dur, overclock_handler):
+    overclocked = overclock_handler.overclockRecipe(recipe)
+    assert overclocked.eut == expected_eut
+    assert overclocked.dur == expected_dur
 
 
 recipe_pyrolyse_oven = Recipe(
