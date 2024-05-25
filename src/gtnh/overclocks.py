@@ -60,7 +60,7 @@ class OverclockHandler:
         # Attempt to GT OC the entire parallel set until no energy is left
         while TOTAL_EUT < available_eut:
             OC_EUT = TOTAL_EUT * 4
-            OC_DUR = NEW_RECIPE_TIME / 2
+            OC_DUR = NEW_RECIPE_TIME / 2 
             if OC_EUT <= available_eut:
                 if OC_DUR < 1:
                     break
@@ -249,7 +249,7 @@ class OverclockHandler:
         return recipe
 
 
-    def modifyUtupu(self, recipe):
+    def modifyUtupu(self, recipe, override_max_parallel = None):
         require(
             recipe,
             [
@@ -268,7 +268,7 @@ class OverclockHandler:
 
         # Calculate base parallel count and clip time to 1 tick
         available_eut = self.voltage_cutoffs[self.voltages.index(recipe.user_voltage)]
-        MAX_PARALLEL = (self.voltages.index(recipe.user_voltage) + 1) * PARALLELS_PER_TIER
+        MAX_PARALLEL = override_max_parallel if override_max_parallel else (self.voltages.index(recipe.user_voltage) + 1) * PARALLELS_PER_TIER
         NEW_RECIPE_TIME = max(recipe.dur * SPEED_BOOST, 1)
 
         # Calculate current EU/t spend
@@ -292,6 +292,51 @@ class OverclockHandler:
 
         recipe.eut = TOTAL_EUT * 4**oc_count * eut_discount
         recipe.dur = NEW_RECIPE_TIME / 2**oc_count / 2**max(min(perfect_ocs, oc_count), 0)
+        recipe.I *= y
+        recipe.O *= y
+
+        return recipe
+    
+    # Volcanus is like a combo of EBF and GTpp math, however:
+    #   gtpp-style bonuses to speed, eut are applied *before* parallels are calculated
+    #   there there are 8 parallels *maximum*, not per-tier (some other gtpp machines are like this)
+    #   ebf bonuses to power, perfect OCs apply *after* parallels are calculated
+    #   no heat-per-tier bonuses
+    # This makes it match Utupu, except for the parallel maximum
+    def modifyVolcanus(self, recipe):
+        require(
+            recipe,
+            [
+                ['coils', str, 'calculating heat and perfect OCs for recipes (eg "nichrome").'],
+                ['heat', int, 'calculating perfect OCs and heat requirement (eg "4300").'],
+            ]
+        )
+        
+        user_voltage = self.voltages.index(recipe.user_voltage)
+  
+        # GTpp things (Volcanus does not do parallels_per_tier, only up to MAX_PARALLEL)
+        gtpp_speed_boost, gtpp_eut_discount, max_parallel = self.overclock_data['GTpp_stats'][recipe.machine]
+        # Apply GT++ boosts before parallels+ocs
+        recipe.eut *= gtpp_eut_discount
+        recipe.dur /= gtpp_speed_boost+1
+        available_eut = self.voltage_cutoffs[user_voltage]
+        y = min(available_eut//recipe.eut, max_parallel)
+        recipe.parallel = y
+        recipe.eut *= y
+
+        # EBF Things
+        # This code makes it look like heat discounts do apply like normal ebf:  https://github.com/GTNewHorizons/GTplusplus/blob/38f38a991e433f6eff30476b87a71eeadee228ce/src/main/java/gtPlusPlus/xmod/gregtech/common/tileentities/machines/multi/processing/advanced/GregtechMetaTileEntity_Adv_EBF.java#L235
+        # However, Questbook and in-game testing (GTNH 2.5.1) disagree
+        actual_heat = self.overclock_data['coil_heat'][recipe.coils] # + 100 * min(0, user_voltage - 2)
+        excess_heat = actual_heat - recipe.heat
+        ebf_eut_discount = 0.95 ** (excess_heat // 900)
+        perfect_ocs = (excess_heat // 1800)
+        
+        # OCs after parallelization
+        parallel_base_voltage = bisect_right(self.voltage_cutoffs, recipe.eut) # Note using eut after parallels
+        oc_count = user_voltage - parallel_base_voltage
+        recipe.eut = recipe.eut * 4**oc_count * ebf_eut_discount
+        recipe.dur = recipe.dur / 2**oc_count / 2**max(min(perfect_ocs, oc_count), 0)
         recipe.I *= y
         recipe.O *= y
 
@@ -499,7 +544,7 @@ class OverclockHandler:
             'industrial dehydrator': self.modifyUtupu,
             'flotation cell regulator': self.modifyPerfect,
             'isamill grinding machine': self.modifyPerfect,
-            "volcanus": self.modifyEBF,
+            "volcanus": self.modifyVolcanus,
         }
 
         if recipe.machine in machine_overrides:
