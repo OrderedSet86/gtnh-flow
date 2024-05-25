@@ -268,8 +268,8 @@ class OverclockHandler:
 
         # Calculate base parallel count and clip time to 1 tick
         available_eut = self.voltage_cutoffs[self.voltages.index(recipe.user_voltage)]
-        MAX_PARALLEL = override_max_parallel if override_max_parallel else (self.voltages.index(recipe.user_voltage) + 1) * PARALLELS_PER_TIER
-        NEW_RECIPE_TIME = max(recipe.dur * SPEED_BOOST, 1)
+        MAX_PARALLEL = override_max_parallel if override_max_parallel else ((self.voltages.index(recipe.user_voltage) + 1) * PARALLELS_PER_TIER)
+        NEW_RECIPE_TIME = max(recipe.dur * SPEED_BOOST, 1/20)
 
         # Calculate current EU/t spend
         x = recipe.eut * EU_DISCOUNT
@@ -294,6 +294,7 @@ class OverclockHandler:
         recipe.dur = NEW_RECIPE_TIME / 2**oc_count / 2**max(min(perfect_ocs, oc_count), 0)
         recipe.I *= y
         recipe.O *= y
+        recipe.parallel = y
 
         return recipe
     
@@ -303,45 +304,10 @@ class OverclockHandler:
     #   ebf bonuses to power, perfect OCs apply *after* parallels are calculated
     #   no heat-per-tier bonuses
     # This makes it match Utupu, except for the parallel maximum
-    def modifyVolcanus(self, recipe):
-        require(
-            recipe,
-            [
-                ['coils', str, 'calculating heat and perfect OCs for recipes (eg "nichrome").'],
-                ['heat', int, 'calculating perfect OCs and heat requirement (eg "4300").'],
-            ]
-        )
-        
-        user_voltage = self.voltages.index(recipe.user_voltage)
-  
-        # GTpp things (Volcanus does not do parallels_per_tier, only up to MAX_PARALLEL)
-        gtpp_speed_boost, gtpp_eut_discount, max_parallel = self.overclock_data['GTpp_stats'][recipe.machine]
-        # Apply GT++ boosts before parallels+ocs
-        recipe.eut *= gtpp_eut_discount
-        recipe.dur /= gtpp_speed_boost+1
-        available_eut = self.voltage_cutoffs[user_voltage]
-        y = min(available_eut//recipe.eut, max_parallel)
-        recipe.parallel = y
-        recipe.eut *= y
-
-        # EBF Things
-        # This code makes it look like heat discounts do apply like normal ebf:  https://github.com/GTNewHorizons/GTplusplus/blob/38f38a991e433f6eff30476b87a71eeadee228ce/src/main/java/gtPlusPlus/xmod/gregtech/common/tileentities/machines/multi/processing/advanced/GregtechMetaTileEntity_Adv_EBF.java#L235
-        # However, Questbook and in-game testing (GTNH 2.5.1) disagree
-        actual_heat = self.overclock_data['coil_heat'][recipe.coils] # + 100 * min(0, user_voltage - 2)
-        excess_heat = actual_heat - recipe.heat
-        ebf_eut_discount = 0.95 ** (excess_heat // 900)
-        perfect_ocs = (excess_heat // 1800)
-        
-        # OCs after parallelization
-        parallel_base_voltage = bisect_right(self.voltage_cutoffs, recipe.eut) # Note using eut after parallels
-        oc_count = user_voltage - parallel_base_voltage
-        recipe.eut = recipe.eut * 4**oc_count * ebf_eut_discount
-        recipe.dur = recipe.dur / 2**oc_count / 2**max(min(perfect_ocs, oc_count), 0)
-        recipe.I *= y
-        recipe.O *= y
-
-        return recipe
-
+    def modifyVolcanus(self, recipe):        
+        SPEED_BOOST, EU_DISCOUNT, MAX_PARALLEL = self.overclock_data['GTpp_stats'][recipe.machine]
+        return self.modifyUtupu(recipe, MAX_PARALLEL)
+       
 
     def modifyFusion(self, recipe):
         # Ignore "tier" and just use "mk" argument for OCs
