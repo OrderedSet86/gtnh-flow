@@ -49,7 +49,7 @@
     hydrofluoric acid: 5000
   O:
     antimony pentafluoride: 1000
-    "[sink] hydrochloric acid": 5000
+    hydrochloric acid: 5000
   eut: 30
   dur: 21
   group: fluoroantimonic
@@ -58,13 +58,67 @@
   tier: IV
   I:
     antimony pentafluoride: 1000
-    hydrofluoric acid: 1000
+    "[source] hydrofluoric acid": 1000 # This hydrofluoric (only) is recycled
   O:
     fluoroantimonic acid: 1000
   eut: 1920
   dur: 42
   group: fluoroantimonic
-  # number: 1
+  number: 4
+
+  
+# No need to make new p507 - 100% recycled within this line.
+# - m: large chemical reactor
+#   tier: HV
+#   I:
+#     seed oil: 3000
+#     hydrogen: 8000
+#   O:
+#     2-ethyl-1-hexanol: 1000
+#   eut: 480
+#   dur: 20
+#   group: p507
+
+# - m: large chemical reactor
+#   tier: HV
+#   I:
+#     "[source] apatite dust": 9
+#     # water: 10000
+#     sulfuric acid: 5000
+#   O:
+#     gypsum dust: 40
+#     "[sink] phosphoric acid": 3000
+#     "[sink] hydrochloric acid": 1000
+#   eut: 30
+#   dur: 16
+#   group: p507
+
+# - m: electric blast furnace
+#   tier: HV
+#   I:
+#     gypsum dust: 8
+#   O:
+#     quicklime dust: 1
+#     diluted sulfuric acid: 1500
+#   eut: 480
+#   dur: 10
+#   coils: hss-s
+#   heat: 3200
+#   group: p507
+
+# - m: large chemical reactor
+#   tier: EV
+#   I:
+#     "[source] sodium dust": 2
+#     2-ethyl-1-hexanol: 2000
+#     phosphoric acid: 1000
+#     ethanol: 2000
+#   O:
+#     "[fresh] p-507": 1000
+#   eut: 1920
+#   dur: 60
+#   # number: 1
+#   group: p507
 
 - m: volcanus
   tier: IV
@@ -97,7 +151,8 @@
 - m: large chemical reactor
   tier: IV
   I:
-    p-507: 4000
+    # "[fresh] p-507": 4000
+    "[source] p-507": 4000
     low quality naquadah solution: 36000
   O:
     fluorine-rich waste liquid: 10000
@@ -113,7 +168,7 @@
   O:
     adamantine dust: 4
     "[recycle] naquadah oxide mixture dust": 2
-    concentrated enriched-naquadah sludge dust: 1
+    "[fresh] concentrated enriched-naquadah sludge dust": 1
     naquadah-rich solution: 2000
   eut: 0
   dur: 5
@@ -125,7 +180,7 @@
     adamantine dust: 5
   O:
     adamantium dust: 2
-    "[sink] oxygen": 3000
+    "[recycle] oxygen": 3000
   eut: 60
   dur: 2.75
   group: naquadah stage 1
@@ -146,16 +201,23 @@
 - m: Neutron Activator # 460-480 MeV
   tier: LV
   I:
-    concentrated enriched-naquadah sludge dust: 16
+    # Nasty cycle to unravel here. 16 CENSD here becomes:
+    #  - 2 LQNSD
+    #  - 3500 * (2/1.2) = 5833.33333 (using resolved recycle loop)
+    #  - 5833.333 * (2/7000) = 1.66666 enriched-naquadah oxide mixture dust
+    #  - 1.66666 * (4000/4) = 1666.66666 enriched-naquadah-rich solution
+    #  - 1666.66666 * (2/2500) = 1.333333 more CENSD
+    # Therefore, input ratio should be 14.666666 fresh to 1.3333333 recycled.
+    # "[fresh] concentrated enriched-naquadah sludge dust": 16
+    "[fresh] concentrated enriched-naquadah sludge dust": 14.6666667
+    "[source] concentrated enriched-naquadah sludge dust": 1.3333333
   O:
     enriched-naquadah sulphate dust: 165
     sodium sulfate dust: 140
-    low quality naquadria sulphate dust: 2
+    "[fresh] low quality naquadria sulphate dust": 2
   eut: 0
   dur: 6
   group: naquadah stage 2
-  # target:
-  #   concentrated enriched-naquadah sludge dust: 0.02
 
 - m: industrial electrolyzer
   tier: MV
@@ -164,7 +226,7 @@
   O:
     enriched naquadah dust: 1
     sulfur dust: 2
-    oxygen: 8000
+    "[recycle] oxygen": 8000
   eut: 90
   dur: 2.3
   group: naquadah stage 2
@@ -205,11 +267,23 @@
     quicklime dust: 8
     acid naquadah emulsion: 1000
   O:
-    small pile of antimony trioxide dust: 1
+    # small pile of antimony trioxide dust: 1
+    antimony trioxide dust: 0.1111111 # Actually outputs small piles but those are dumb
     fluorspar dust: 4
     naquadah emulsion: 1000
   eut: 30
   dur: 12
+  group: naquadah stage 2
+
+- m: industrial electrolyzer
+  tier: HV
+  I:
+    antimony trioxide dust: 5
+  O:
+    "[recycle] antimony": 2
+    "[recycle] oxygen": 3000
+  eut: 30
+  dur: 12.5
   group: naquadah stage 2
 
   
@@ -218,7 +292,7 @@
   I:
     naquadah emulsion: 1000
   O:
-    "[recycle] radioactive sludge dust": 5.46
+    radioactive sludge dust: 5.46
     naquadah solution: 500
   eut: 120
   dur: 40
@@ -243,8 +317,8 @@
     sodium sulfate dust: 7
     hydrogen: 2000
   O:
-    sodium dust: 2
-    "[sink] sulfuric acid": 1000
+    "[recycle] sodium dust": 2
+    "[recycle] sulfuric acid": 1000
   eut: 30
   dur: 1.5
   group: naquadah stage 2
@@ -253,15 +327,22 @@
 - m: large chemical reactor
   tier: EV
   I:
-    low quality naquadria sulphate dust: 3
-    p-507: 500
+    # We've got a nasty loop to solve here by handy (because graph solver :)
+    # Each 3 LQNSD in here becomes:
+    #   - 3500 LQNS
+    #   - 5400 * (3500/7000) = 2700 Naq-rich solution
+    #   - 6 * (2700/9000) = 1.8 more LQNSD
+    # Therefore, input ratio should be 1.2 fresh to 1.8 recycled.
+
+    # "[fresh] low quality naquadria sulphate dust": 3
+    "[fresh] low quality naquadria sulphate dust": 1.2
+    "[source] low quality naquadria sulphate dust": 1.8
+    "[source] p-507": 500
   O:
     low quality naquadria sulphate: 3500
   eut: 1920
   dur: 25
   group: naquadria
-  target:
-    low quality naquadria sulphate dust: 0.01
 
   
 - m: distillation tower
@@ -282,8 +363,9 @@
   I:
     naquadria-rich solution: 9000
   O:
+    # This good stuff plugs into naqline ZPM for Extremely Unstable Naq Ingot, etc.
     naquadria sulphate dust: 44
-    "[recycle] low quality naquadria sulphate dust": 6
+    "[sink] low quality naquadria sulphate dust": 6
   eut: 0
   dur: 5
   group: naquadria
@@ -292,7 +374,7 @@
   tier: EV
   I:
     enriched-naquadah oxide mixture dust: 4
-    p-507: 1000
+    "[source] p-507": 1000
     sulfuric acid: 18000
   O:
     "[recycle] naquadah oxide mixture dust": 1
@@ -322,7 +404,129 @@
     hydrogen: 2000
   O:
     trinium dust: 1
-    "[sink] sulfuric acid": 1000
+    "[recycle] sulfuric acid": 1000
   eut: 480
   dur: 6
   group: naquadria
+
+- m: large chemical reactor
+  tier: EV
+  I:
+    gallium hydroxide dust: 7
+    sodium dust: 3
+  O:
+    gallium dust: 1
+    "[recycle] sodium hydroxide dust": 9
+  eut: 30
+  dur: 2
+  group: recycler
+  # target:
+  #   gallium hydroxide dust: 12.6
+
+- m: large chemical reactor
+  tier: IV
+  I:
+    fluorine-rich waste liquid: 1500
+    quicklime dust: 40
+  O:
+    fluorspar dust: 60
+    waste liquid: 1000
+  eut: 120
+  dur: 50
+  group: recycler
+  # target:
+  #   fluorine-rich waste liquid: 450
+
+- m: industrial electrolyzer
+  tier: HV
+  I:
+    fluorspar dust: 3
+  O:
+    calcium dust: 1
+    "[recycle] fluorine": 2000
+  eut: 60
+  dur: 0.95
+  group: recycler
+
+- m: lcr
+  tier: HV
+  I:
+    calcium dust: 1
+    oxygen: 1000
+  O:
+    "[recycle] quicklime dust": 2
+  eut: 30
+  dur: 0.5
+  group: recycler
+
+- m: distillation tower
+  tier: IV
+  I:
+    waste liquid: 10000
+  O:
+    chrome dust: 3
+    salt water: 3000
+    phenol: 2000
+    hydrochloric acid: 5000
+  eut: 480
+  dur: 15
+  group: recycler
+
+- m: industrial electrolyzer
+  tier: EV
+  I:
+    salt water: 1000
+  O:
+    "[recycle] sodium hydroxide dust": 3
+    "[recycle] hydrogen": 1000
+    "[recycle] chlorine": 1000
+  eut: 30
+  dur: 36
+  group: recycler
+
+- m: distillation tower
+  tier: MV
+  I:
+    diluted sulfuric acid: 3000
+  O:
+    "[recycle] sulfuric acid": 2000
+  eut: 120
+  dur: 30
+  group: recycler
+
+- m: industrial electrolyzer
+  tier: EV
+  I:
+    hydrochloric acid: 1000
+  O:
+    "[recycle] hydrogen": 1000
+    "[recycle] chlorine": 1000
+  eut: 30
+  dur: 36
+  group: recycler
+
+- m: electric blast furnace
+  tier: IV
+  I:
+    hydrogen: 3000
+    titanium trifluoride dust: 4
+  O:
+    hot titanium ingot: 1
+    "[recycle] hydrofluoric acid": 3000
+  eut: 1920
+  dur: 6
+  heat: 2000
+  coils: hss-s
+  # target:
+  #   titanium trifluoride dust: 3.6
+  group: titanium
+
+- m: vacuum freezer
+  tier: IV
+  I:
+    hot titanium ingot: 1
+  O:
+    titanium ingot: 1
+  eut: 480
+  dur: 7.2
+  gruop: titanium
