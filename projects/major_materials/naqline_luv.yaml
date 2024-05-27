@@ -66,60 +66,6 @@
   group: fluoroantimonic
   number: 4
 
-  
-# No need to make new p507 - 100% recycled within this line.
-# - m: large chemical reactor
-#   tier: HV
-#   I:
-#     seed oil: 3000
-#     hydrogen: 8000
-#   O:
-#     2-ethyl-1-hexanol: 1000
-#   eut: 480
-#   dur: 20
-#   group: p507
-
-# - m: large chemical reactor
-#   tier: HV
-#   I:
-#     "[source] apatite dust": 9
-#     # water: 10000
-#     sulfuric acid: 5000
-#   O:
-#     gypsum dust: 40
-#     "[sink] phosphoric acid": 3000
-#     "[sink] hydrochloric acid": 1000
-#   eut: 30
-#   dur: 16
-#   group: p507
-
-# - m: electric blast furnace
-#   tier: HV
-#   I:
-#     gypsum dust: 8
-#   O:
-#     quicklime dust: 1
-#     diluted sulfuric acid: 1500
-#   eut: 480
-#   dur: 10
-#   coils: hss-s
-#   heat: 3200
-#   group: p507
-
-# - m: large chemical reactor
-#   tier: EV
-#   I:
-#     "[source] sodium dust": 2
-#     2-ethyl-1-hexanol: 2000
-#     phosphoric acid: 1000
-#     ethanol: 2000
-#   O:
-#     "[fresh] p-507": 1000
-#   eut: 1920
-#   dur: 60
-#   # number: 1
-#   group: p507
-
 - m: volcanus
   tier: IV
   I:
@@ -146,12 +92,10 @@
   eut: 1920
   dur: 50
   group: naquadah stage 1
-  # number: 1
 
 - m: large chemical reactor
   tier: IV
   I:
-    # "[fresh] p-507": 4000
     "[source] p-507": 4000
     low quality naquadah solution: 36000
   O:
@@ -420,8 +364,6 @@
   eut: 30
   dur: 2
   group: recycler
-  # target:
-  #   gallium hydroxide dust: 12.6
 
 - m: large chemical reactor
   tier: IV
@@ -434,8 +376,6 @@
   eut: 120
   dur: 50
   group: recycler
-  # target:
-  #   fluorine-rich waste liquid: 450
 
 - m: industrial electrolyzer
   tier: HV
@@ -517,8 +457,6 @@
   dur: 6
   heat: 2000
   coils: hss-s
-  # target:
-  #   titanium trifluoride dust: 3.6
   group: titanium
 
 - m: vacuum freezer
