@@ -152,11 +152,8 @@ class OverclockHandler:
                     catalyst_cost *= 1 - throughput_multiplier / 10 # 20% chance of no damage per pipe casing tier
                     recipe.I += known_catalysts[recipe.catalyst]
 
+        recipe = self.modifyGTppSetParallel(recipe, throughput_multiplier)
         recipe.dur /= coil_multiplier
-        recipe.I *= throughput_multiplier
-        recipe.O *= throughput_multiplier
-
-        recipe = self.modifyStandard(recipe)
 
         return recipe
 
