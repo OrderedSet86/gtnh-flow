@@ -25,20 +25,45 @@
   coils: naquadah
   catalyst: orange metal catalyst
   note: aluminium machine casings
-# - m: chem plant
-#   tier: IV
-#   I:
-#     carbon dust: 1
-#   O:
-#     hydrogen: 2000
-#     hydrazine: 1000
-#   eut: 120
-#   dur: 40
-#   pipe_casings: tungstensteel
-#   coils: hss-g
-#   note: aluminium machine casings
+- m: chem plant
+  tier: EV
+  I:
+    monomethylhydrazine: 4000
+    nitric acid: 1000
+  O:
+    cn3h7o3 rocket fuel: 10000
+  eut: 480
+  dur: 45
+  coils: hss-g
+  pipe_casings: titanium
+  note: tss machine casings
+- m: chem plant
+  tier: IV
+  I:
+    hydrogen peroxide: 1000
+    ammonia: 2000
+  O:
+    hydrazine: 1000
+  eut: 240
+  dur: 30
+  coils: hss-g
+  pipe_casings: tungstensteel
+  note: steel machine casings
+- m: chem plant
+  tier: IV
+  I:
+    '[source] carbon dust': 1
+    hydrogen: 2000
+    hydrazine: 1000
+  O:
+    monomethylhydrazine: 1000
+  eut: 240
+  dur: 48
+  pipe_casings: tungstensteel
+  coils: hss-g
+  note: aluminium machine casings
 
-- m: distillation tower
+- m: dangote - distillation tower
   tier: IV
   I:
     coal tar: 1000
@@ -52,7 +77,7 @@
   dur: 15
   group: anthracene
 - m: industrial coke oven
-  tier: EV
+  tier: IV
   I:
     charcoal: 16
   O:
@@ -123,31 +148,6 @@
   target:
     combustion promoter: 400
 # }
-- m: chem plant
-  tier: EV
-  I:
-    hydrazine: 4000
-    nitric acid: 1000
-  O:
-    cn3h7o3 rocket fuel: 10000
-  eut: 480
-  dur: 45
-  coils: hss-g
-  pipe_casings: titanium
-  note: tss machine casings
-
-- m: chem plant
-  tier: IV
-  I:
-    hydrogen peroxide: 1000
-    ammonia: 2000
-  O:
-    hydrazine: 1000
-  eut: 240
-  dur: 30
-  coils: hss-g
-  pipe_casings: tungstensteel
-  note: steel machine casings
 - m: air intake hatch
   tier: LV
   I: {}
@@ -187,7 +187,7 @@
   eut: 480
   dur: 10
   group: ammonia
-- m: distillation tower
+- m: dangote - distillation tower
   tier: IV
   I:
     water: 1000
