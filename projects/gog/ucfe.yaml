@@ -1,5 +1,5 @@
 - m: chem plant
-  tier: HV
+  tier: IV
   I:
     air: 20000
     2-EAHQ: 5000
@@ -8,7 +8,7 @@
     hydrogen peroxide: 5000
     '[recycle] 2-EAQ': 5000
   eut: 240
-  dur: 5
+  dur: 30
   pipe_casings: titanium
   coils: hss-g
   note: steel machine casings
@@ -26,7 +26,7 @@
   catalyst: orange metal catalyst
   note: aluminium machine casings
 - m: chem plant
-  tier: EV
+  tier: IV
   I:
     monomethylhydrazine: 4000
     nitric acid: 1000
@@ -35,7 +35,7 @@
   eut: 480
   dur: 45
   coils: hss-g
-  pipe_casings: titanium
+  pipe_casings: tungstensteel
   note: tss machine casings
 - m: chem plant
   tier: IV
@@ -50,7 +50,7 @@
   pipe_casings: tungstensteel
   note: steel machine casings
 - m: chem plant
-  tier: IV
+  tier: LuV
   I:
     '[source] carbon dust': 1
     hydrogen: 2000
@@ -60,7 +60,7 @@
   eut: 240
   dur: 48
   pipe_casings: tungstensteel
-  coils: hss-g
+  coils: naquadah
   note: aluminium machine casings
 
 - m: dangote - distillation tower
