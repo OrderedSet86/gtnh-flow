@@ -9,7 +9,7 @@
     '[recycle] 2-EAQ': 5000
   eut: 240
   dur: 30
-  pipe_casings: titanium
+  pipe_casings: tungstensteel
   coils: hss-g
   note: steel machine casings
 - m: chem plant
@@ -26,19 +26,19 @@
   catalyst: orange metal catalyst
   note: aluminium machine casings
 - m: chem plant
-  tier: IV
+  tier: LuV
   I:
-    monomethylhydrazine: 4000
+    monomethylhydrazine: 2000
     nitric acid: 1000
   O:
-    cn3h7o3 rocket fuel: 10000
+    cn3h7o3 rocket fuel: 2000
   eut: 480
   dur: 45
-  coils: hss-g
+  coils: naquadah
   pipe_casings: tungstensteel
   note: tss machine casings
 - m: chem plant
-  tier: IV
+  tier: LuV
   I:
     hydrogen peroxide: 1000
     ammonia: 2000
@@ -46,7 +46,7 @@
     hydrazine: 1000
   eut: 240
   dur: 30
-  coils: hss-g
+  coils: naquadah
   pipe_casings: tungstensteel
   note: steel machine casings
 - m: chem plant
@@ -124,13 +124,14 @@
     nitric oxide: 1000
   eut: 30
   dur: 16
+
 # To edit this section you need to edit the target in the LCR and the inputs to UCFE
 # {
 - m: universal chemical fuel engine
   tier: LV
   I:
-    cn3h7o3 rocket fuel: 6400
-    combustion promoter: 400
+    cn3h7o3 rocket fuel: 5000
+    combustion promoter: 312.5
   O:
     EU: 1
   eut: 0
@@ -146,8 +147,9 @@
   eut: 120
   dur: 10
   target:
-    combustion promoter: 400
+    combustion promoter: 312.5
 # }
+
 - m: air intake hatch
   tier: LV
   I: {}
@@ -176,7 +178,7 @@
   dur: 16
 
 - m: LCR
-  tier: IV
+  tier: LuV
   I:
     methane: 5000
     distilled water: 10000
@@ -197,7 +199,7 @@
   dur: 1.6
   group: ammonia
 - m: LCR
-  tier: EV
+  tier: LuV
   I:
     carbon dust: 1
     recycle hydrogen: 4000
@@ -207,14 +209,14 @@
   dur: 10
   group: ammonia
 - m: industrial electrolyzer
-  tier: EV
+  tier: ZPM
   I:
     carbon dioxide: 1000
   O:
     carbon dust: 1
-    '[recycle] oxygen': 1000
-  eut: 60
-  dur: 5.6
+    '[recycle] oxygen': 2000
+  eut: 120
+  dur: 15
   group: ammonia
 - m: LCR
   tier: ZPM
