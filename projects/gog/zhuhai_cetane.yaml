@@ -17,16 +17,16 @@
     glycerol: 9000
   eut: 30
   dur: 270
-- m: electrolyzer
-  tier: MV
-  I:
-    glycerol: 1000
-  O:
-    '[output] carbon dust': 3
-    '[output] hydrogen': 8000
-    '[output] oxygen': 3000
-  eut: 90
-  dur: 16.8
+# - m: electrolyzer
+#   tier: MV
+#   I:
+#     glycerol: 1000
+#   O:
+#     '[output] carbon dust': 3
+#     '[output] hydrogen': 8000
+#     '[output] oxygen': 3000
+#   eut: 90
+#   dur: 16.8
 - m: LCR
   tier: HV
   I:
@@ -36,7 +36,9 @@
     cetane-boosted diesel: 9000
   eut: 480
   dur: 6
-  number: 1
+  # target:
+  #   cetane-boosted diesel: 400
+  # number: 1
 - m: chemical reactor
   tier: MV
   I:
@@ -80,8 +82,7 @@
   tier: LV
   I:
     ammonia: 1000
-    sugar oxygen: 1200
-    oxygen: 2800
+    oxygen: 4000
   O:
     nitric acid: 1000
   eut: 30
@@ -136,7 +137,7 @@
     sugar: 32
   O:
     '[recycle] carbon dust': 2
-    sugar oxygen: 25000
+    oxygen: 25000
   eut: 60
   dur: 22.4
 - m: extractor
@@ -148,9 +149,46 @@
   eut: 4
   dur: 6.4
 - m: zhuhai
-  tier: EV
+  tier: IV
   I: {}
   O:
     pams fish: 0.8181818181
   eut: 16
   dur: 5
+  number: 2
+- m: ic2 sugarbeet crop
+  tier: LV
+  I: {}
+  O:
+    sugarbeet: 32.641
+  eut: 0
+  dur: 3600
+  note: 20/20/1 stats in grove assumed
+- m: forestry fermenter
+  tier: LV
+  I:
+    water: 300
+    blue mahoe sapling: 1
+    forestry fertilizer: 0.01042
+  O:
+    forestry biomass: 300
+  eut: 32
+  dur: 2
+- m: distillery
+  tier: LV
+  I:
+    forestry biomass: 40
+  O:
+    ethanol for hydrogen: 20
+  eut: 24
+  dur: 0.8
+- m: electrolyzer
+  tier: MV
+  I:
+    ethanol for hydrogen: 20
+  O:
+    hydrogen: 6000
+    '[recycle] carbon dust': 2
+    '[recycle] oxygen': 1000
+  eut: 90
+  dur: 7.2

@@ -18,6 +18,8 @@ def mod_recipe(recipe, **kwargs):
 
 @pytest.fixture
 def overclock_handler():
+    # for now it uses config file in the project
+    # it may cause issue if config file is messed up
     return OverclockHandler(ProgramContext())
 
 

@@ -22,8 +22,8 @@ coil_heat:
   nichrome: 3601
   tungstensteel: 4501
   tpv-alloy: 4501
-  HSS-G: 5401
-  HSS-S: 6301
+  hss-g: 5401
+  hss-s: 6301
   naquadah: 7201
   naquadah alloy: 8101
   trinium: 9001
@@ -32,7 +32,7 @@ coil_heat:
   infinity: 11701
   hypogen: 12601
   eternal: 13501
-  
+
 
 pipe_casings:
   bronze: 2
@@ -43,6 +43,7 @@ pipe_casings:
 
 # [speed X, EU/t discount, parallels per tier]
 GTpp_stats:
+  # TODO: Canonical name
   industrial centrifuge: [1.25, 0.9, 6]
   industrial material press: [5.0, 1.0, 4]
   industrial electrolyzer: [1.8, 0.9, 2]
@@ -60,13 +61,17 @@ GTpp_stats:
   large scale auto-assembler: [2.0, 1.0, 2]
   cutting factory controller: [2.0, 0.75, 4]
   boldarnator: [2.0, 0.75, 8]
-  dangote - distillery: [0, 1.0, 48]
+  dangote - distillery: [1, 0.15, 8]
   industrial dehydrator: [1.2, 0.5, 4]
   thermic heating device: [1.2, 0.9, 8]
   thermic heater: [1.2, 0.9, 8]
   industrial fluid heater: [1.2, 0.9, 8]
   volcanus: [1.2, 0.9, 8]
 
+  # these are special, the -1 are discarded
+  dangote - distillation tower: [2.5, 1, -1] 
+  industrial coke oven: [0, -1, -1]
+  chemical plant: [0, 1, -1]
 
 voltage_data:
   tiers:

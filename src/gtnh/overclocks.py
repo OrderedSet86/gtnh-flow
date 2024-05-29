@@ -34,7 +34,7 @@ class OverclockHandler:
         self.voltage_cutoffs = [32*pow(4, x) + 1 for x in range(len(self.voltages))]
 
 
-    def modifyGTpp(self, recipe):
+    def modifyGTpp(self, recipe, MAX_PARALLEL=None, eut_discount=None):
         if recipe.machine not in self.overclock_data['GTpp_stats']:
             raise RuntimeError('Missing OC data for GT++ multi - add to gtnhClasses/overclocks.py:GTpp_stats')
 
@@ -42,9 +42,13 @@ class OverclockHandler:
         SPEED_BOOST, EU_DISCOUNT, PARALLELS_PER_TIER = self.overclock_data['GTpp_stats'][recipe.machine]
         SPEED_BOOST = 1/(SPEED_BOOST+1)
 
+        if eut_discount is not None:
+            EU_DISCOUNT = eut_discount
+
         # Calculate base parallel count and clip time to 1 tick
         available_eut = self.voltage_cutoffs[self.voltages.index(recipe.user_voltage)]
-        MAX_PARALLEL = (self.voltages.index(recipe.user_voltage) + 1) * PARALLELS_PER_TIER
+        if MAX_PARALLEL is None:
+            MAX_PARALLEL = (self.voltages.index(recipe.user_voltage) + 1) * PARALLELS_PER_TIER
         NEW_RECIPE_TIME = max(recipe.dur * SPEED_BOOST, 1)
 
         # Calculate current EU/t spend
@@ -54,8 +58,10 @@ class OverclockHandler:
         TOTAL_EUT = x*y
 
         # Debug info
+        self.parent_context.log.debug(colored(recipe.machine, 'green'))
         self.parent_context.log.debug(colored('Base GT++ OC stats:', 'yellow'))
         self.parent_context.log.debug(colored(f'{available_eut=} {MAX_PARALLEL=} {NEW_RECIPE_TIME=} {TOTAL_EUT=} {y=}', 'yellow'))
+        self.parent_context.log.debug(colored(f'{SPEED_BOOST=} {EU_DISCOUNT=} {MAX_PARALLEL=}', 'yellow'))
 
         # Attempt to GT OC the entire parallel set until no energy is left
         while TOTAL_EUT < available_eut:
@@ -64,41 +70,8 @@ class OverclockHandler:
             if OC_EUT <= available_eut:
                 if OC_DUR < 1:
                     break
-                self.parent_context.log.debug(colored('OC to', 'yellow'))
-                self.parent_context.log.debug(colored(f'{OC_EUT=} {OC_DUR=}', 'yellow'))
-                TOTAL_EUT = OC_EUT
-                NEW_RECIPE_TIME = OC_DUR
-            else:
-                break
-
-        recipe.eut = TOTAL_EUT
-        recipe.dur = NEW_RECIPE_TIME
-        recipe.I *= y
-        recipe.O *= y
-
-        return recipe
-
-
-    def modifyGTppSetParallel(self, recipe, MAX_PARALLEL, speed_per_tier=1):
-        available_eut = self.voltage_cutoffs[self.voltages.index(recipe.user_voltage)]
-
-        x = recipe.eut
-        y = min(int(available_eut/x), MAX_PARALLEL)
-        recipe.parallel = y
-        TOTAL_EUT = x*y
-        NEW_RECIPE_TIME = round(recipe.dur * (speed_per_tier)**(self.voltages.index(recipe.user_voltage) + 1), 2)
-
-        self.parent_context.log.debug(colored('Base GT++ OC stats:', 'yellow'))
-        self.parent_context.log.debug(colored(f'{available_eut=} {MAX_PARALLEL=} {NEW_RECIPE_TIME=} {TOTAL_EUT=} {y=}', 'yellow'))
-
-        while TOTAL_EUT < available_eut:
-            OC_EUT = TOTAL_EUT * 4
-            OC_DUR = NEW_RECIPE_TIME / 2
-            if OC_EUT <= available_eut:
-                if OC_DUR < 20:
-                    break
-                self.parent_context.log.debug(colored('OC to', 'yellow'))
-                self.parent_context.log.debug(colored(f'{OC_EUT=} {OC_DUR=}', 'yellow'))
+                self.parent_context.log.debug(colored('    OC to', 'yellow'))
+                self.parent_context.log.debug(colored(f'    {OC_EUT=} {OC_DUR=}', 'yellow'))
                 TOTAL_EUT = OC_EUT
                 NEW_RECIPE_TIME = OC_DUR
             else:
@@ -152,11 +125,8 @@ class OverclockHandler:
                     catalyst_cost *= 1 - throughput_multiplier / 10 # 20% chance of no damage per pipe casing tier
                     recipe.I += known_catalysts[recipe.catalyst]
 
+        recipe = self.modifyGTpp(recipe, MAX_PARALLEL=throughput_multiplier)
         recipe.dur /= coil_multiplier
-        recipe.I *= throughput_multiplier
-        recipe.O *= throughput_multiplier
-
-        recipe = self.modifyStandard(recipe)
 
         return recipe
 
@@ -243,7 +213,6 @@ class OverclockHandler:
         else:
             recipe.O = IngredientCollection(Ingredient(recipe.O._ings[0].name, TGS_wood_out))
         recipe.eut = self.voltage_cutoffs[oc_idx] - 1
-        print(oc_idx)
         recipe.dur = max(100/(2**(oc_idx)), 1)
 
         return recipe
@@ -420,6 +389,15 @@ class OverclockHandler:
         return recipe
 
 
+    def modifyICO(self, recipe):
+        user_voltage = self.voltages.index(recipe.user_voltage)
+        eut_discount = 1 - 0.04 * (user_voltage + 1)
+
+        recipe = self.modifyGTpp(recipe, MAX_PARALLEL=24, eut_discount=eut_discount)
+
+        return recipe
+
+
     def calculateStandardOC(self, recipe):
         base_voltage = bisect_right(self.voltage_cutoffs, recipe.eut)
         user_voltage = self.voltages.index(recipe.user_voltage)
@@ -499,9 +477,10 @@ class OverclockHandler:
             'industrial fluid heater': self.modifyGTpp,
 
             # Special GT++ multis
-            'industrial coke oven': lambda recipe: self.modifyGTppSetParallel(recipe, 24, speed_per_tier=0.96),
-            'dangote - distillation tower': lambda recipe: self.modifyGTppSetParallel(recipe, 12),
-            'dangote': lambda recipe: self.modifyGTppSetParallel(recipe, 12),
+            'dangote - distillation tower': lambda recipe: self.modifyGTpp(recipe, MAX_PARALLEL=12),
+            'dangote': lambda recipe: self.modifyGTpp(recipe, MAX_PARALLEL=12),
+            'ICO': self.modifyICO,
+            'industrial coke oven': self.modifyICO,
             'chemical plant': self.modifyChemPlant,
             'chem plant': self.modifyChemPlant,
             'exxonmobil chemical plant': self.modifyChemPlant,
