@@ -11,7 +11,7 @@ from termcolor import colored, cprint
 
 # Internal libraries
 from src.data.loadMachines import recipesFromConfig
-from src.graph._solver import systemOfEquationsSolverGraphGen
+from src.graph._sympySolver import systemOfEquationsSolverGraphGen
 
 # Conditional imports based on OS
 try: # Linux

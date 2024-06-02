@@ -7,6 +7,8 @@
   eut: 5
   dur: 19
   number: 1
+  cost_priority:
+    pams fish: 1
   # target:
   #   # methane: 250
   #   pams fish: 1

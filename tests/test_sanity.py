@@ -7,7 +7,7 @@ import yaml
 from termcolor import colored
 
 from src.data.loadMachines import recipesFromConfig
-from src.graph._solver import systemOfEquationsSolverGraphGen
+from graph._sympySolver import systemOfEquationsSolverGraphGen
 
 
 # Just compile and generate graph for every project
