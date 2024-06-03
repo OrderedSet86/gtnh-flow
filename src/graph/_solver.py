@@ -359,7 +359,7 @@ class SympySolver:
             unsolved = [x for x in involved_variables if x not in solved_values]
             solved = [x for x in involved_variables if x in solved_values]
 
-            if len(unsolved) <= 1:
+            if len(unsolved) == 1:
                 for var in solved:
                     expr = expr.subs(var, solved_values[var])
                 # print('   ', expr)
@@ -401,6 +401,9 @@ class SympySolver:
         
         if inconsistent_variables == []:
             raise NotImplementedError('Both linear and nonlinear solver found empty set, so system of equations has no solutions -- report to dev.')
+
+        if len(unsolved) == 0:
+            return
 
         # Check inconsistent equations to see if products on both sides are the same - these are the core issues
         def var_to_idx(var):

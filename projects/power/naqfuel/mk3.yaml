@@ -2,17 +2,17 @@
   tier: UHV
   I:
     extremely unstable naquadah dust: 4
-    tiberium: 27
+    tiberium dust: 27
     high density uranium: 2
     high density plutonium: 1
     light naquadah fuel: 1000
     heavy naquadah fuel: 800
   O:
-    naquadah fuel mk3: 100
-  eut: 1100000
-  dur: 10
-  target:
-    naquadah fuel mk3: 10
+    naqfuel mk3: 100
+  eut: 1_100_000
+  dur: 5
+  number: 1
+  group: naqfuel fractions
 - m: distillation tower
   tier: EV
   I:
@@ -22,41 +22,194 @@
     heavy naquadah fuel: 5
     light naquadah fuel: 6.25
     '[output] light naquadah fuel': 2.75
-    water: 10
     naquadah gas: 60
   eut: 1920
   dur: 1
+  group: naqfuel fractions
 - m: centrifuge
   tier: MV
   I:
     naquadah emulsion: 1000
   O:
+    radioactive sludge dust: 5.46
     naquadah solution: 500
   eut: 120
   dur: 40
-- m: large chemical reactor
+  group: naqfuel fractions
+- m: LCR
   tier: LV
   I:
     acid naquadah emulsion: 1000
-    quicklime: 32
+    quicklime: 8
   O:
     fluorspar: 4
     antimony trioxide: 0.25
     naquadah emulsion: 1000
   eut: 30
   dur: 12
-- m: electric blast furnace
-  coils: nichrome
-  heat: 3400
+  group: naqfuel fractions
+- m: EBF
   tier: IV
   I:
     fluoroantimonic acid: 4000
-    naquadria: 32
+    naquadria dust: 32
   O:
     acid naquadah emulsion: 8000
     '[output] extremely unstable naquadah dust': 17
-  eut: 4080
+  eut: 3840
   dur: 180
+  coils: naquadah
+  heat: 3400
+  group: naqfuel fractions
+- m: LCR
+  tier: IV
+  I:
+    calcium dust: 1
+    oxygen: 1000
+  O:
+    quicklime: 2
+  eut: 30
+  dur: 0.5
+  group: naqfuel fractions
+# This whole thing causes a crash...
+# - m: electrolyzer
+#   tier: IV
+#   I:
+#     fluorspar: 3
+#   O:
+#     '[recycle] calcium dust': 1
+#     '[recycle] fluorine': 2000
+#   eut: 60
+#   dur: 0.95
+#   group: naqfuel fractions
+- m: oil cracker
+  tier: IV
+  I:
+    molten atomic separation catalyst: 1
+    naquadah gas: 250
+  O:
+    lightly cracked naquadah gas: 250
+  eut: 4020
+  dur: 3
+  group: naqfuel fractions
+- m: distillation tower
+  tier: IV
+  I:
+    lightly cracked naquadah gas: 1000
+  O:
+    '[recycle] helium': 375
+    '[recycle] neon': 60
+    '[recycle] argon': 80
+    '[recycle] krypton': 18
+    '[recycle] xenon': 34
+    '[recycle] radon': 11200
+    '[recycle] naquadah dust': 0.111111111
+  eut: 1340
+  dur: 7.5
+  group: naqfuel fractions
+
+
+- m: LCR
+  tier: LuV
+  I:
+    antimony pentafluoride: 1000
+    hydrofluoric acid: 1000
+  O:
+    fluoroantimonic acid: 1000
+  eut: 1920
+  dur: 42
+  group: fluoroantimonic acid
+- m: distillation tower
+  tier: MV
+  I:
+    antimony pentafluoride solution: 4000
+  O:
+    antimony pentafluoride: 4000
+    ether: 500
+  eut: 120
+  dur: 5
+  group: fluoroantimonic acid
+- m: LCR
+  tier: LuV
+  I:
+    antimony dust: 8
+    ether: 1000
+    fluorine: 40_000
+    crushed ice: 8000
+  O:
+    antimony pentafluoride solution: 8000
+  eut: 7680
+  dur: 40
+  group: fluoroantimonic acid
+- m: vacuum freezer
+  tier: IV
+  I:
+    '[input] water': 1000
+  O:
+    crushed ice: 1000
+  eut: 120
+  dur: 2.5
+  group: fluoroantimonic acid
+- m: LCR
+  tier: LuV
+  I:
+    hydrogen: 1000
+    fluorine: 1000
+  O:
+    hydrofluoric acid: 1000
+  eut: 7
+  dur: 3
+  group: fluoroantimonic acid
+
+
+- m: electrolyzer
+  tier: LV
+  I:
+    antimony trioxide: 5
+  O:
+    '[recycle] antimony dust': 2
+    '[recycle] oxygen': 3000
+  eut: 30
+  dur: 12.5
+  group: recycle
+- m: centrifuge
+  tier: MV
+  I:
+    radioactive sludge dust: 4
+  O:
+    # '[recycle] calcium dust': 2.95
+    '[recycle] naquadah dust': 0.8
+    # '[recycle] uranium 238 dust': 0.25
+    '[recycle] plutonium 239 dust': 0.2
+    '[recycle] tiberium dust': 0.2
+    '[recycle] radon': 20
+  eut: 120
+  dur: 45
+  note: excluding 0.25 u238 dust and 2.95 calcium dust output due to crash
+  group: recycle
+- m: centrifuge
+  tier: ZPM
+  I:
+    naqfuel mk3 (depleted): 125
+  O:
+    naquadah dust: 21.2
+    bedrockium dust: 6.4
+    oganesson: 90
+  eut: 30720
+  dur: 12.5
+  group: recycle
+
+
+- m: vacuum freezer
+  tier: LuV
+  I:
+    air: 2000
+  O:
+    liquid air: 1000
+  eut: 480
+  dur: 1.4
+
+
 - m: compressor
   tier: HV
   I:
@@ -65,32 +218,7 @@
     high density uranium: 1
   eut: 480
   dur: 30
-- m: compressor
-  tier: MV
-  I:
-    high density plutonium nugget: 9
-  O:
-    high density plutonium: 1
-  eut: 120
-  dur: 60
-- m: electric implosion compressort
-  tier: UEV
-  I:
-    wrapped uranium ingot: 4
-  O:
-    high density uranium nugget: 1
-    tungsten carbide dust: 0.88
-  eut: 7864320
-  dur: 0.05
-- m: electric implosion compressort
-  tier: UEV
-  I:
-    wrapped plutonium ingot: 2
-  O:
-    high density plutonium nugget: 1
-    hss-s dust: 0.88
-  eut: 7864320
-  dur: 0.05
+  group: high density uranium
 - m: assembler
   tier: HV
   I:
@@ -100,6 +228,101 @@
     wrapped uranium ingot: 1
   eut: 480
   dur: 70
+  group: high density uranium
+- m: electric implosion compressor
+  tier: UEV
+  I:
+    wrapped uranium ingot: 4
+  O:
+    high density uranium nugget: 1
+    '[recycle] tungstencarbide dust': 0.8888888888888888
+  eut: 7_864_320
+  dur: 0.05
+  group: high density uranium
+- m: mixer
+  tier: LV
+  I:
+    graphite dust: 3
+    uranium 238 dust: 1
+  O:
+    graphite-uranium mixture dust: 4
+  eut: 10
+  dur: 1.7
+  group: high density uranium
+- m: EBF
+  tier: ZPM
+  I:
+    silicon carbide dust: 2
+    nitrogen: 500
+  O:
+    graphite dust: 1
+    '[recycle] raw silicon dust': 0.25
+  eut: 7680
+  dur: 7.5
+  heat: 4500
+  coils: naquadah
+  group: high density uranium
+- m: mixer
+  tier: HV
+  I:
+    raw silicon dust: 1
+    carbon dust: 1
+  O:
+    silicon carbide dust: 2
+  eut: 30
+  dur: 2
+  group: high density uranium
+- m: EBF
+  tier: ZPM
+  I:
+    tungstencarbide dust: 1
+    nitrogen: 1000
+  O:
+    hot tungstencarbide ingot: 1
+  eut: 1920
+  dur: 100
+  heat: 2460
+  coils: naquadah
+  group: high density uranium
+- m: vacuum freezer
+  tier: ZPM
+  I:
+    hot tungstencarbide ingot: 1
+  O:
+    tungstencarbide ingot: 1
+  eut: 1920
+  dur: 14.55
+  group: high density uranium
+- m: bending machine
+  tier: EV
+  I:
+    tungstencarbide ingot: 1
+  O:
+    tungstencarbide foil: 4
+  eut: 24
+  dur: 9.7
+  group: high density uranium
+
+
+- m: compressor
+  tier: MV
+  I:
+    high density plutonium nugget: 9
+  O:
+    high density plutonium: 1
+  eut: 120
+  dur: 60
+  group: high density plutonium
+- m: electric implosion compressor
+  tier: UEV
+  I:
+    wrapped plutonium ingot: 2
+  O:
+    high density plutonium nugget: 1
+    '[recycle] hss-s dust': 0.88
+  eut: 7864320
+  dur: 0.05
+  group: high density plutonium
 - m: assembler
   tier: EV
   I:
@@ -109,15 +332,7 @@
     wrapped plutonium ingot: 1
   eut: 1920
   dur: 90
-- m: mixer
-  tier: LV
-  I:
-    graphite dust: 3
-    uranium 238 dust: 1
-  O:
-   graphite-uranium mixture dust: 4
-  eut: 10
-  dur: 1.7
+  group: high density plutonium
 - m: mixer
   tier: LV
   I:
@@ -129,3 +344,222 @@
     plutonium oxide-uranium mixture dust: 32
   eut: 20
   dur: 1.25
+  group: high density plutonium
+- m: bending machine
+  tier: EV
+  I:
+    hss-s ingot: 1
+  O:
+    hss-s foil: 4
+  eut: 24
+  dur: 12.9
+  group: high density plutonium
+- m: vacuum freezer
+  tier: EV
+  I:
+    hot hss-s ingot: 1
+  O:
+    hss-s ingot: 1
+  eut: 1920
+  dur: 19.35
+  group: high density plutonium
+- m: EBF
+  tier: ZPM
+  I:
+    hss-s dust: 1
+  O:
+    hot hss-s ingot: 1
+  eut: 1920
+  dur: 150
+  heat: 5000
+  coils: naquadah
+  group: high density plutonium
+
+
+- m: large naquadah reactor
+  tier: LV
+  I:
+    liquid air: 2400
+    gelid cryotheum: 1000
+    naqfuel mk3: 16
+    molten atomic separation catalyst: 80
+  O:
+    eu: 33478720000
+    naqfuel mk3 (depleted): 16
+  eut: 0
+  dur: 4
+  do_not_overclock: true
+
+
+- m: fluid extractor
+  tier: EV
+  I:
+    atomic separation catalyst ingot: 1
+  O:
+    molten atomic separation catalyst: 144
+  eut: 2
+  dur: 15
+  group: atomic separation catalyst
+- m: vacuum freezer
+  tier: UV
+  I:
+    hot atomic separation catalyst ingot: 1
+  O:
+    atomic separation catalyst ingot: 1
+  eut: 30720
+  dur: 10
+  group: atomic separation catalyst
+- m: EBF
+  tier: ZPM
+  I:
+    orundum plate: 2
+    raw atomic separation catalyst: 4
+    molten plutonium 239: 144
+  O:
+    hot atomic separation catalyst ingot: 1
+  eut: 480
+  dur: 180
+  heat: 5000
+  coils: naquadah
+  group: atomic separation catalyst
+- m: fluid extractor
+  tier: EV
+  I:
+    plutonium 239 dust: 1
+  O:
+    molten plutonium 239: 144
+  eut: 42
+  dur: 1.2
+  group: atomic separation catalyst
+- m: mixer
+  tier: EV
+  I:
+    blaze powder: 32
+    draconium dust: 4
+    ardite dust: 4
+    molten naquadah: 144
+  O:
+    raw atomic separation catalyst: 64
+  eut: 480
+  dur: 15
+  group: atomic separation catalyst
+- m: forming press
+  tier: ZPM
+  I:
+    tiberium plate: 1
+    raw silicon plate: 8
+  O:
+    orundum plate: 1
+  eut: 3840
+  dur: 20
+  group: atomic separation catalyst
+- m: cutting machine
+  tier: IV
+  I:
+    block of tiberium: 1
+  O:
+    tiberium plate: 9
+  eut: 30
+  dur: 163
+  group: atomic separation catalyst
+- m: compressor
+  tier: IV
+  I:
+    tiberium gem: 9
+  O:
+    block of tiberium: 1
+  eut: 2
+  dur: 15
+  group: atomic separation catalyst
+- m: electric implosion compressor
+  tier: UEV
+  I:
+    tiberium dust: 4
+  O:
+    tiberium gem: 3
+  eut: 7_864_320
+  dur: 0.05
+  group: atomic separation catalyst
+- m: bending machine
+  tier: IV
+  I:
+    raw silicon ingot: 1
+  O:
+    raw silicon plate: 1
+  eut: 24
+  dur: 1.4
+  group: atomic separation catalyst
+- m: EBF
+  tier: LuV
+  I:
+    silicon dioxide dust: 3
+    carbon dust: 2
+  O:
+    raw silicon ingot: 1
+    carbon dioxide: 2000
+    ashes: 0.11111111
+  eut: 120
+  dur: 4
+  heat: 1200
+  coils: naquadah
+  note: UHV muffler to catch all CO2
+  group: atomic separation catalyst
+- m: electrolyzer
+  tier: LuV
+  I:
+    carbon dioxide: 1000
+  O:
+    '[recycle] carbon dust': 1
+    '[recycle] oxygen': 1000
+  eut: 60
+  dur: 5.6
+  group: atomic separation catalyst
+- m: macerator
+  tier: IV
+  I:
+    blaze rod: 1
+  O:
+    blaze powder: 3.5
+  eut: 2
+  dur: 20
+  group: atomic separation catalyst
+- m: industrial centrifuge
+  tier: ZPM
+  I:
+    air: 10000
+  O:
+    '[recycle] oxygen': 1000
+    nitrogen: 3900
+  eut: 7
+  dur: 80
+  group: atomic separation catalyst
+
+
+- m: air intake hatch
+  tier: LV
+  I: {}
+  O:
+    air: 1000
+  eut: 0
+  dur: 0.2
+
+
+- m: fluid extractor
+  tier: IV
+  I:
+    cryotheum dust: 1
+  O:
+    gelid cryotheum: 250
+  eut: 240
+  dur: 10
+  group: bee gelid cryotheum
+- m: industrial centrifuge
+  tier: LuV
+  I:
+    cryotheum comb: 1
+  O:
+    cryotheum dust: 1
+    refractory wax: 0.5
+  eut: 240
+  dur: 12.8
+  group: bee gelid cryotheum
