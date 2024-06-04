@@ -1,0 +1,42 @@
+# Uses names from Tungstate but skips steps for simplicity
+
+- m: large chemical reactor
+  tier: HV
+  I:
+    sodium tungstate: 4
+    calcium chloride dust: 6
+  O:
+    scheelite dust: 7
+    salt: 8
+  cost:
+    sodium tungstate: 10
+    calcium chloride dust: 10
+  eut: 480
+  dur: 5
+
+- m: chemical reactor
+  tier: LV
+  I:
+    salt: 2
+    water: 1
+  O:
+    sodium hydroxide dust: 1
+    '[output] hydrogen': 0.5
+  # cost:
+  #   water: 10
+  eut: 30
+  dur: 10
+
+- m: electric blast furnace
+  tier: EV
+  I:
+    scheelite dust: 7
+    hydrogen: 3
+  O:
+    tungsten dust: 1
+  target:
+    tungsten dust: 0.2
+  eut: 1920
+  dur: 5
+  heat: 1
+  coils: cupronickel

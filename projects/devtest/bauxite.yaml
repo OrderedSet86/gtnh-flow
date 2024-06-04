@@ -2,35 +2,37 @@
   tier: HV
   I:
     purified bauxite: 32
-    sodium hydroxide: 9
+    sodium hydroxide: 3
     quicklime: 4
-    water: 5000
+    water: 5
   O:
-    bauxite slurry: 8000
+    bauxite slurry: 8
   eut: 120
   dur: 10
-  number: 1
+  # number: 1
 - m: oil cracker
   tier: HV
   I:
-    steam: 2000
-    bauxite slurry: 32000
+    steam: 2
+    bauxite slurry: 32
   O:
-    heated bauxite slurry: 32000
+    heated bauxite slurry: 32
   eut: 400
   dur: 8
 - m: large chemical reactor
   tier: HV
   I:
-    carbon dioxide: 5000
-    heated bauxite slurry: 32000
+    carbon dioxide: 5
+    heated bauxite slurry: 32
     aluminium hydroxide: 1
   O:
-    alumina: 80
+    alumina: 8 # (wrong)
     sodium carbonate: 9
     calcite: 10
     bauxite slag: 16
-    sluice juice: 5000
+    sluice juice: 5
+  target:
+    alumina: 10
   eut: 400
   dur: 15
 - m: large chemical reactor
@@ -39,7 +41,7 @@
     calcite: 5
   O:
     quicklime: 2
-    carbon dioxide: 1000
+    carbon dioxide: 1
   eut: 30
   dur: 12
 - m: centrifuge
@@ -47,17 +49,18 @@
   I:
     bauxite slag: 1
   O:
+    # These numbers are all goofed for normalization purposes
     rutile: 1
-    gallium: 0.3
-    quicklime: 0.2
-    silicon dioxide: 0.9
-    iron dust: 0.8
+    gallium: 3
+    quicklime: 2
+    silicon dioxide: 9
+    iron dust: 8
   eut: 120
   dur: 2
 - m: centrifuge
   tier: HV
   I:
-    sluice juice: 1000
+    sluice juice: 1
   O:
     stone dust: 1
     iron dust: 0.4
@@ -74,37 +77,37 @@
   O:
     sodium dust: 2
     carbon dust: 1
-    oxygen: 3000
+    oxygen: 3
   eut: 60
   dur: 4.8
 - m: large chemical reactor
   tier: HV
   I:
     sodium dust: 1
-    water: 1000
+    water: 1
   O:
-    sodium hydroxide: 3
-    hydrogen: 1000
+    sodium hydroxide: 1
+    hydrogen: 1
   eut: 30
   dur: 10
 - m: large chemical reactor
   tier: HV
   I:
     aluminium dust: 16
-    sodium hydroxide: 48
-    water: 16000
+    sodium hydroxide: 16
+    water: 16
   O:
-    sodium aluminate: 64
-    hydrogen: 48000
+    sodium aluminate: 16
+    hydrogen: 48
   eut: 480
   dur: 20
 - m: large chemical reactor
   tier: HV
   I:
-    sodium aluminate: 4
-    water: 2000
+    sodium aluminate: 1
+    water: 2
   O:
     aluminium hydroxide: 7
-    sodium hydroxide: 3
+    sodium hydroxide: 1
   eut: 120
   dur: 2.5

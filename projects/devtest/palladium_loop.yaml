@@ -1,0 +1,41 @@
+- m: large chemical reactor
+  tier: EV
+  I:
+    palladium metallic powder dust: 1
+    "[palladium] ammonia": 1
+  O:
+    "[palladium recycle] palladium enriched ammonia": 1
+  eut: 30
+  dur: 12.5
+  group: palladium
+
+- m: large chemical reactor
+  tier: HV
+  I:
+    # Manually resolve cycle by splitting palladium enriched ammonia from fresh and recycle sources
+    # from 9 palladium enriched ammonia (into this lcr), the amount recycled is:
+    #   (16 (palladium salt dust) * 0.95 (sifter)) - 9 (used by this lcr)) * 1 (lcr with ammonia) = 6200
+    # The remaining 9-6200=2800 is the fresh input
+    # "[fresh] palladium enriched  ammonia": 2.8
+    # "[palladiumrecycle] palladium enriched ammonia": 6.2
+    palladium enriched ammonia: 9
+    palladium metallic powder dust: 9
+  O:
+    palladium salt dust: 16
+    reprecipitated palladium dust: 2
+  target:
+    reprecipitated palladium dust: 10
+  cost:
+    palladium enriched ammonia: 1
+  eut: 30
+  dur: 112.5
+  group: palladium
+- m: industrial sifter
+  tier: HV
+  I:
+    palladium salt dust: 1
+  O:
+    "[recycle] palladium metallic powder dust": 0.95
+  eut: 30
+  dur: 30
+  group: palladium

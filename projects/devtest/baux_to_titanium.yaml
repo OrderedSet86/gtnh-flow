@@ -5,8 +5,10 @@
   O:
     rutile dust: 2
     aluminium dust: 16
-    oxygen: 11000
-    hydrogen: 10000
+    oxygen: 11
+    hydrogen: 10
+  cost:
+    bauxite dust: 10
   eut: 90
   dur: 35.1
 - m: large chemical reactor
@@ -14,22 +16,22 @@
   I:
     rutile dust: 1
     carbon dust: 2
-    chlorine: 4000
+    chlorine: 4
   O:
-    titanium tetrachloride: 1000
-    carbon monoxide: 2000
+    titanium tetrachloride: 1
+    carbon monoxide: 2
   eut: 480
   dur: 20
 - m: electric blast furnace
   tier: HV
   I:
     magnesium dust: 2
-    titanium tetrachloride: 1000
+    titanium tetrachloride: 1
   O:
     hot titanium ingot: 1
     magnesium chloride dust: 6
-  target:
-    hot titanium ingot: 1
+  # target:
+  #   hot titanium ingot: 1
   eut: 480
   dur: 40
   coils: kanthal
@@ -40,6 +42,8 @@
   I:
     hot titanium ingot: 1
   O:
+    titanium ingot: 1
+  target:
     titanium ingot: 1
   eut: 480
   dur: 7.2
@@ -59,15 +63,15 @@
     salt: 2
   O:
     sodium dust: 1
-    chlorine: 1000
+    chlorine: 1
   eut: 30
   dur: 16
 - m: electrolyzer
   tier: MV
   I:
-    carbon monoxide: 1000
+    carbon monoxide: 1
   O:
     carbon dust: 1
-    oxygen: 1000
+    oxygen: 1
   eut: 60
   dur: 5.6
