@@ -112,7 +112,7 @@ def constructCell(self, cell, i, io, port_type, quant_recipe, quant_s_array=None
             quant = self.userAccurate(quant_recipe[i])
             label = f'{label} x{quant}<br/>test'
         if quant_s_array:
-            # Expected to be a list of [ing name
+            # Expected to be a list of [ing_color, ing_quant_per_s]
             pass
 
         io.write(f'<td border="1" PORT="{port_id}" bgcolor="{background_color}" color="white"><font color="white">{label}</font></td>')
@@ -137,8 +137,11 @@ def mulcolor(h, f):
     return '#' + ''.join(hex(x)[2:].zfill(2) for x in [r, g, b])
 
 
-def constructPortAwareEdgeStyling(self, dst_node, edge_data, edge_style, is_vertical, quant_label, src_node,
-                                  src_has_port, dst_has_port):
+def constructPortAwareEdgeStyling(self, io_info, edge_data, edge_style, is_vertical, src_has_port, dst_has_port):
+    src_node, dst_node, ing_name = io_info
+    ing_quant = edge_data['quant']
+    ing_id = self.getIngId(ing_name)
+    quant_label = self.getQuantLabel(ing_id, ing_quant)
 
     port_style = dict(edge_style)
 
@@ -253,13 +256,12 @@ def outputGraphviz(self):
         ing_quant, kwargs = edge_data['quant'], edge_data['kwargs']
 
         ing_id = self.getIngId(ing_name)
-        quant_label = self.getQuantLabel(ing_id, ing_quant)
         # ing_label = self.getIngLabel(ing_name)
 
         # Assign ing color if it doesn't already exist
         ing_color = self.getUniqueColor(ing_id)
 
-        # Figure out ID of connected node ports
+        # Figure out ID of connected node - add port if exist
         src_has_port = self.nodeHasPort(src_node)
         dst_has_port = self.nodeHasPort(dst_node)
         src_port_name = self.getPortId(ing_name, 'o')
@@ -270,9 +272,8 @@ def outputGraphviz(self):
         src_port = f'{src_port}:{outPort}' if src_has_port else src_port
         dst_port = f'{dst_port}:{inPort}' if dst_has_port else dst_port
 
-        port_style = constructPortAwareEdgeStyling(self, dst_node, edge_data, edge_style,
-                                                   is_vertical, quant_label, src_node,
-                                                   src_has_port, dst_has_port)
+        port_style = constructPortAwareEdgeStyling(self, io_info, edge_data, edge_style, is_vertical, src_has_port,
+                                                   dst_has_port)
 
         color_style = dict(
             fontcolor=mulcolor(ing_color, 1.5),
