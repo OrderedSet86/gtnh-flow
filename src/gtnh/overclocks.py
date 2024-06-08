@@ -427,25 +427,25 @@ class OverclockHandler:
             'advanced assembly line': self.modifyAAL,
             'AAL': self.modifyAAL,
 
-            'large gas turbine': lambda recipe: self.modifyTurbine(recipe, 'gas_fuels'),
-            'XL Turbo Gas Turbine': lambda recipe: self.modifyXT(recipe, 'gas_fuels'),
+            'large gas turbine': lambda rec: self.modifyTurbine(rec, 'gas_fuels'),
+            'XL Turbo Gas Turbine': lambda rec: self.modifyXT(rec, 'gas_fuels'),
 
-            'large steam turbine': lambda recipe: self.modifyTurbine(recipe, 'steam_fuels'),
-            'XL Turbo Steam Turbine': lambda recipe: self.modifyXT(recipe, 'steam_fuels'),
+            'large steam turbine': lambda rec: self.modifyTurbine(rec, 'steam_fuels'),
+            'XL Turbo Steam Turbine': lambda rec: self.modifyXT(rec, 'steam_fuels'),
 
             # Megas
             # FIXME: The implementations of these are wrong
-            'mega blast furnace': lambda recipe: self.modifyMega(recipe, self.modifyEBF),
-            'MBF': lambda recipe: self.modifyMega(recipe, self.modifyEBF),
-            'MEBF': lambda recipe: self.modifyMega(recipe, self.modifyEBF),
-            'mega distillation tower': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
-            'MDT': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
-            'mega vacuum freezer': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
-            'MVF': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
+            'mega blast furnace': lambda rec: self.modifyMega(rec, self.modifyEBF),
+            'MBF': lambda rec: self.modifyMega(rec, self.modifyEBF),
+            'MEBF': lambda rec: self.modifyMega(rec, self.modifyEBF),
+            'mega distillation tower': lambda rec: self.modifyMega(rec, self.modifyStandard),
+            'MDT': lambda rec: self.modifyMega(rec, self.modifyStandard),
+            'mega vacuum freezer': lambda rec: self.modifyMega(rec, self.modifyStandard),
+            'MVF': lambda rec: self.modifyMega(rec, self.modifyStandard),
             # TODO: These may not follow normal mega rules
-            'mega large chemical reactor': lambda recipe: self.modifyMega(recipe, self.modifyPerfect),
-            'mega chemical reactor': lambda recipe: self.modifyMega(recipe, self.modifyPerfect),
-            'MCR': lambda recipe: self.modifyMega(recipe, self.modifyPerfect),
+            'mega large chemical reactor': lambda rec: self.modifyMega(rec, self.modifyPerfect),
+            'mega chemical reactor': lambda rec: self.modifyMega(rec, self.modifyPerfect),
+            'MCR': lambda rec: self.modifyMega(rec, self.modifyPerfect),
 
             # Basic GT++ multis
             'industrial centrifuge': self.modifyGTpp,
@@ -472,8 +472,8 @@ class OverclockHandler:
             'volcanus': self.modifyGTpp,
 
             # Special GT++ multis
-            'dangote - distillation tower': lambda recipe: self.modifyGTpp(recipe, MAX_PARALLEL=12),
-            'dangote': lambda recipe: self.modifyGTpp(recipe, MAX_PARALLEL=12),
+            'dangote - distillation tower': lambda rec: self.modifyGTpp(rec, MAX_PARALLEL=12),
+            'dangote': lambda rec: self.modifyGTpp(rec, MAX_PARALLEL=12),
             'ICO': self.modifyICO,
             'industrial coke oven': self.modifyICO,
             'chemical plant': self.modifyChemPlant,

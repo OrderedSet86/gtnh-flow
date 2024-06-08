@@ -81,7 +81,7 @@ MACHINE_COLORS:
   industrial sledgehammer: seagreen4
   forge hammer: seagreen4
 
-ORIENTATION: 'TB'
+ORIENTATION: 'TD'
 # TB: Vertical, LR: Horizontal, BT: Vertical Inverted, RL: Horizontal Inverted
 # [TB, LR, BT, RL]
 

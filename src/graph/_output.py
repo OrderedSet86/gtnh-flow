@@ -6,14 +6,117 @@ import graphviz
 from termcolor import colored
 
 
-
-def outputGraphviz(self):
-    # Outputs a graphviz png using the graph info
+def add_node_internal(self, g, node_name, **kwargs):
     node_style = {
         'style': 'filled',
         'fontname': self.graph_config['GENERAL_FONT'],
         'fontsize': str(self.graph_config['NODE_FONTSIZE']),
     }
+
+    label = kwargs['label'] if 'label' in kwargs else None
+    isTable = False
+    newLabel = None
+
+    def unique(sequence):
+        seen = set()
+        return [x for x in sequence if not (x in seen or seen.add(x))]
+
+    if node_name == 'source':
+        names = unique([name for src, _, name in self.edges.keys() if src == 'source'])
+        isTable, newLabel = make_table(self, label, None, names)
+    elif node_name == 'sink':
+        names = unique([name for _, dst, name in self.edges.keys() if dst == 'sink'])
+        isTable, newLabel = make_table(self, label, names, None)
+    elif re.match(r'^\d+$', node_name):
+        rec = self.recipes[node_name]
+        in_ports = [ing.name for ing in rec.I]
+        in_quants = [ing.quant for ing in rec.I]
+        out_ports = [ing.name for ing in rec.O]
+        out_quants = [ing.quant for ing in rec.O]
+        isTable, newLabel = make_table(self, label, in_ports, out_ports, in_quants, out_quants)
+
+    if isTable:
+        kwargs['label'] = newLabel
+        kwargs['shape'] = 'plain'
+
+    g.node(
+        f'{node_name}',
+        **kwargs,
+        **node_style
+    )
+
+
+def make_table(self, lab, inputs, outputs, input_quants=None, output_quants=None):
+    is_inverted = self.graph_config['ORIENTATION'] in ['BT', 'RL']
+    is_vertical = self.graph_config['ORIENTATION'] in ['TB', 'BT']
+    num_inputs = len(inputs) if inputs is not None else 0
+    num_outputs = len(outputs) if outputs is not None else 0
+    has_input = num_inputs > 0
+    has_output = num_outputs > 0
+
+    if not has_input and not has_output:
+        return (False, lab)
+
+    machine_cell = ['<br />'.join(lab.split('\n'))]
+    lines = [
+        ('i', inputs, input_quants),
+        (None, machine_cell, None),
+        ('o', outputs, output_quants)
+    ]
+    if is_inverted:
+        lines.reverse()
+    lines = [(x, y, z) for x, y, z in lines if y]
+
+    io = StringIO()
+    if is_vertical:
+        # Each Row is a table
+        io.write('<<table border="0" cellspacing="0">')
+        for port_type, line, quants in lines:
+            io.write('<tr>')
+            io.write('<td>')
+            io.write('<table border="0" cellspacing="0">')
+            io.write('<tr>')
+            for i, cell in enumerate(line):
+                constructCell(self, cell, i, io, port_type, quants)
+            io.write('</tr>')
+            io.write('</table>')
+            io.write('</td>')
+            io.write('</tr>')
+        io.write('</table>>')
+    else:
+        # Each columns is a table
+        io.write('<<table border="0" cellspacing="0">')
+        io.write('<tr>')
+        for port_type, line, quants in lines:
+            io.write('<td>')
+            io.write('<table border="0" cellspacing="0">')
+            for i, cell in enumerate(line):
+                io.write('<tr>')
+                constructCell(self, cell, i, io, port_type, quants)
+                io.write('</tr>')
+            io.write('</table>')
+            io.write('</td>')
+        io.write('</tr>')
+        io.write('</table>>')
+    return (True, io.getvalue())
+
+
+def constructCell(self, cell, i, io, port_type, quants):
+    if port_type:
+        port_id = self.getPortId(cell, port_type)
+        ing_name = self.getIngLabel(cell)
+        label = self.stripBrackets(ing_name)
+        if quants:
+            quant = self.userAccurate(quants[i])
+            label = f'{label} x{quant}'
+        # io.write(f'<td border="1" PORT="{port_id}">{label}</td>')
+        io.write(f'<td>{label}</td>')
+    else:
+        io.write(f'<td>{cell}</td>')
+
+
+def outputGraphviz(self):
+    # Outputs a graphviz png using the graph info
     edge_style = {
         'fontname': self.graph_config['GENERAL_FONT'],
         'fontsize': str(self.graph_config['EDGE_FONTSIZE']),
@@ -31,6 +134,7 @@ def outputGraphviz(self):
             'rankdir': self.graph_config['ORIENTATION'],
             'ranksep': self.graph_config['RANKSEP'],
             'nodesep': self.graph_config['NODESEP'],
+            'newrank': True,
         }
     )
 
@@ -48,118 +152,12 @@ def outputGraphviz(self):
         else:
             groups['no-group'].append(repackaged)
 
-    def make_table(lab, inputs, outputs, input_quants=None, output_quants=None):
-        is_inverted = self.graph_config['ORIENTATION'] in ['BT', 'RL']
-        is_vertical = self.graph_config['ORIENTATION'] in ['TB', 'BT']
-        num_inputs = len(inputs) if inputs is not None else 0
-        num_outputs = len(outputs) if outputs is not None else 0
-        has_input = num_inputs > 0
-        has_output = num_outputs > 0
-        
-        if not has_input and not has_output:
-            return (False, lab)
-
-        machine_cell = ['<br />'.join(lab.split('\n'))]
-        lines = [
-            ('i',inputs,input_quants), 
-            (None,machine_cell,None), 
-            ('o',outputs,output_quants)
-        ]
-        if is_inverted:
-            lines.reverse()
-        lines = [(x,y,z) for x,y,z in lines if y]
-
-        
-        io = StringIO()
-        if is_vertical:
-            # Each Row is a table
-            io.write('<<table border="0" cellspacing="0">')
-            for port_type,line,quants in lines:
-                io.write('<tr>')
-                io.write('<td>')
-                io.write('<table border="0" cellspacing="0">')
-                io.write('<tr>')
-                for i, cell in enumerate(line):
-                    if port_type:
-                        port_id = self.getPortId(cell, port_type)
-                        ing_name = self.getIngLabel(cell)
-                        label = self.stripBrackets(ing_name)
-                        if quants:
-                            quant = self.userAccurate(quants[i])
-                            label = f'{label} x{quant}'
-                        io.write(f'<td border="1" PORT="{port_id}">{label}</td>')
-                    else:
-                        io.write(f'<td border="0">{cell}</td>')
-                io.write('</tr>')
-                io.write('</table>')
-                io.write('</td>')
-                io.write('</tr>')
-            io.write('</table>>')
-        else:
-            # Each columns is a table
-            io.write('<<table border="0" cellspacing="0">')
-            io.write('<tr>')
-            for port_type,line,quants in lines:
-                io.write('<td>')
-                io.write('<table border="0" cellspacing="0">')
-                for i, cell in enumerate(line):
-                    io.write('<tr>')
-                    if port_type:
-                        port_id = self.getPortId(cell, port_type)
-                        ing_name = self.getIngLabel(cell)
-                        label = self.stripBrackets(ing_name)
-                        if quants:
-                            quant = self.userAccurate(quants[i])
-                            label = f'{label} x{quant}'
-                        io.write(f'<td border="1" PORT="{port_id}">{label}</td>')
-                    else:
-                        io.write(f'<td border="0">{cell}</td>')
-                    io.write('</tr>')
-                io.write('</table>')
-                io.write('</td>')
-            io.write('</tr>')
-            io.write('</table>>')
-        return (True, io.getvalue())
-
-    def add_node_internal(graph, node_name, **kwargs):
-        label = kwargs['label'] if 'label' in kwargs else None
-        isTable = False
-        newLabel = None
-
-        def unique(sequence):
-            seen = set()
-            return [x for x in sequence if not (x in seen or seen.add(x))]
-        
-        if node_name == 'source':
-            names = unique([name for src,_,name in self.edges.keys() if src == 'source'])
-            isTable, newLabel = make_table(label, None, names)
-        elif node_name == 'sink':
-            names = unique([name for _,dst,name in self.edges.keys() if dst == 'sink'])
-            isTable, newLabel = make_table(label, names, None)
-        elif re.match(r'^\d+$', node_name):
-            rec = self.recipes[node_name]
-            in_ports = [ing.name for ing in rec.I]
-            in_quants = [ing.quant for ing in rec.I]
-            out_ports = [ing.name for ing in rec.O]
-            out_quants = [ing.quant for ing in rec.O]
-            isTable, newLabel = make_table(label, in_ports, out_ports, in_quants, out_quants)
-
-        if isTable:
-            kwargs['label'] = newLabel
-            kwargs['shape'] = 'plain'
-        
-        graph.node(
-            f'{node_name}',
-            **kwargs,
-            **node_style
-        )
-
     # Populate nodes by group
     for group in groups:
         if group == 'no-group':
             # Don't draw subgraph if not part of a group
             for rec_id, kwargs in groups[group]:
-                add_node_internal(g, rec_id, **kwargs)
+                add_node_internal(self, g, rec_id, **kwargs)
         else:
             with g.subgraph(name=f'cluster_{group}') as c:
                 self.parent_context.log.debug(colored(f'Creating subgraph {group}'))
@@ -167,7 +165,7 @@ def outputGraphviz(self):
 
                 # Populate nodes
                 for rec_id, kwargs in groups[group]:
-                    add_node_internal(c, rec_id, **kwargs)
+                    add_node_internal(self, c, rec_id, **kwargs)
 
                 payload = group.upper()
                 ln = f'<tr><td align="left"><font color="{cluster_color}" face="{self.graph_config["GROUP_FONT"]}">{payload}</font></td></tr>'

@@ -222,12 +222,12 @@ class SympySolver:
                     involved_machines[dfs_b] += 1
 
                     # Check for all adjacent I/O edges using the same product
-                    for edge in self.graph.adj_machine[a]['O']: # Multi-output
-                        if edge[2] == product:
-                            q.append(edge)
-                    for edge in self.graph.adj_machine[b]['I']: # Multi-input
-                        if edge[2] == product:
-                            q.append(edge)
+                    for out_edge in self.graph.adj_machine[a]['O']: # Multi-output
+                        if out_edge[2] == product:
+                            q.append(out_edge)
+                    for in_edge in self.graph.adj_machine[b]['I']: # Multi-input
+                        if in_edge[2] == product:
+                            q.append(in_edge)
                 
                 if len(involved_machine_edges) == 1:
                     # Simple version - all A output fulfills all B input
@@ -399,7 +399,7 @@ class SympySolver:
         self._debugAddVarsToEdges()
         self.outputGraphvizProxy()
         
-        if inconsistent_variables == []:
+        if inconsistent_variables:
             raise NotImplementedError('Both linear and nonlinear solver found empty set, so system of equations has no solutions -- report to dev.')
 
         if len(unsolved) == 0:
