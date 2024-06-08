@@ -101,18 +101,93 @@ def make_table(self, lab, inputs, outputs, input_quants=None, output_quants=None
     return (True, io.getvalue())
 
 
-def constructCell(self, cell, i, io, port_type, quants):
+def constructCell(self, cell, i, io, port_type, quant_recipe, quant_s_array=None):
+    background_color = self.graph_config['BACKGROUND_COLOR']
+
     if port_type:
         port_id = self.getPortId(cell, port_type)
         ing_name = self.getIngLabel(cell)
         label = self.stripBrackets(ing_name)
-        if quants:
-            quant = self.userAccurate(quants[i])
-            label = f'{label} x{quant}'
-        # io.write(f'<td border="1" PORT="{port_id}">{label}</td>')
-        io.write(f'<td>{label}</td>')
+        if quant_recipe:
+            quant = self.userAccurate(quant_recipe[i])
+            label = f'{label} x{quant}<br/>test'
+        if quant_s_array:
+            # Expected to be a list of [ing name
+            pass
+
+        io.write(f'<td border="1" PORT="{port_id}" bgcolor="{background_color}" color="white"><font color="white">{label}</font></td>')
     else:
-        io.write(f'<td>{cell}</td>')
+        io.write(f'<td border="0">{cell}</td>')
+
+
+def calculateNodeRank(self):
+    # To make layout more intuitive:
+    # 1. Mark all nodes with no predecessors as rank 0
+    # 2. Propagate rank updates down the tree
+    # 3. Send these explicit ranks to graphviz
+    pass
+
+
+def mulcolor(h, f):
+    h = h.lstrip('#')
+    r, g, b = tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
+    r = max(0, min(255, int(r * f)))
+    g = max(0, min(255, int(g * f)))
+    b = max(0, min(255, int(b * f)))
+    return '#' + ''.join(hex(x)[2:].zfill(2) for x in [r, g, b])
+
+
+def constructPortAwareStyling(self,
+        dst_node, edge_data, edge_style,
+        inPort, outPort, ing_name, is_vertical,
+        quant_label, src_node):
+
+    src_has_port = self.nodeHasPort(src_node)
+    dst_has_port = self.nodeHasPort(dst_node)
+    src_port_name = self.getPortId(ing_name, 'o')
+    dst_port_name = self.getPortId(ing_name, 'i')
+
+    src_port = f'{src_node}:{src_port_name}' if src_has_port else src_node
+    dst_port = f'{dst_node}:{dst_port_name}' if dst_has_port else dst_node
+    src_port = f'{src_port}:{outPort}' if src_has_port else src_port
+    dst_port = f'{dst_port}:{inPort}' if dst_has_port else dst_port
+
+    port_style = dict(edge_style)
+
+    # Place edge quant in a location it is likely to be readable
+    angle = 60 if is_vertical else 20
+    dist = 2.5 if is_vertical else 4
+    port_style.update(labeldistance=str(dist), labelangle=str(angle))
+
+    lab = f'({quant_label})'
+    if dst_has_port:
+        debugHead = ''
+        if 'debugHead' in edge_data:
+            debugHead = f'\n{edge_data["debugHead"]}'
+        port_style.update(arrowhead='normal')
+        port_style.update(headlabel=f'{lab}{debugHead}')
+    if src_has_port:
+        debugTail = ''
+        if 'debugTail' in edge_data:
+            debugTail = f'\n{edge_data["debugTail"]}'
+        port_style.update(arrowtail='tee')
+        port_style.update(taillabel=f'{lab}{debugTail}')
+
+    src_is_joint_i = re.match('^joint_i', src_node)
+    dst_is_joint_i = re.match('^joint_i', dst_node)
+    src_is_joint_o = re.match('^joint_o', src_node)
+    dst_is_joint_o = re.match('^joint_o', dst_node)
+
+    # if src_is_joint_o:
+    #    port_style.update(taillabel=f'{lab}')
+    if src_has_port and dst_is_joint_o:
+        port_style.update(headlabel=f'{lab}')
+    if src_is_joint_i and dst_has_port:
+        port_style.update(taillabel=f'{lab}')
+    # if dst_is_joint_i:
+    #    port_style.update(headlabel=f'{lab}')
+
+    return dst_port, port_style, src_port
 
 
 def outputGraphviz(self):
@@ -127,14 +202,14 @@ def outputGraphviz(self):
     }
     g = graphviz.Digraph(
         engine='dot',
-        strict=False, # Prevents edge grouping
+        strict=False,  # Prevents edge grouping
         graph_attr={
             'bgcolor': self.graph_config['BACKGROUND_COLOR'],
             'splines': self.graph_config['LINE_STYLE'],
             'rankdir': self.graph_config['ORIENTATION'],
             'ranksep': self.graph_config['RANKSEP'],
             'nodesep': self.graph_config['NODESEP'],
-            'newrank': True,
+            # 'newrank': True,
         }
     )
 
@@ -159,6 +234,7 @@ def outputGraphviz(self):
             for rec_id, kwargs in groups[group]:
                 add_node_internal(self, g, rec_id, **kwargs)
         else:
+            # Draw subgraph/cluster if part of group
             with g.subgraph(name=f'cluster_{group}') as c:
                 self.parent_context.log.debug(colored(f'Creating subgraph {group}'))
                 cluster_color = self.getUniqueColor(group)
@@ -167,9 +243,11 @@ def outputGraphviz(self):
                 for rec_id, kwargs in groups[group]:
                     add_node_internal(self, c, rec_id, **kwargs)
 
+                # Make border around cluster
                 payload = group.upper()
                 ln = f'<tr><td align="left"><font color="{cluster_color}" face="{self.graph_config["GROUP_FONT"]}">{payload}</font></td></tr>'
                 tb = f'<<table border="0">{ln}</table>>'
+
                 c.attr(
                     color=cluster_color,
                     label=tb,
@@ -178,7 +256,7 @@ def outputGraphviz(self):
 
     inPort = self.getInputPortSide()
     outPort = self.getOutputPortSide()
-    
+
     is_inverted = self.graph_config['ORIENTATION'] in ['BT', 'RL']
     is_vertical = self.graph_config['ORIENTATION'] in ['TB', 'BT']
 
@@ -190,75 +268,30 @@ def outputGraphviz(self):
         quant_label = self.getQuantLabel(ing_id, ing_quant)
         # ing_label = self.getIngLabel(ing_name)
 
+        # Assign ing color if it doesn't already exist
+        ing_color = self.getUniqueColor(ing_id)
+
+        dst_port, port_style, src_port = constructPortAwareStyling(
+            self, dst_node, edge_data, edge_style,
+            inPort, outPort, ing_name, is_vertical,
+            quant_label, src_node
+        )
+
+        color_style = dict(
+            fontcolor=mulcolor(ing_color, 1.5),
+            color=ing_color,
+        )
+
         # Strip bad arguments
         if 'locked' in kwargs:
             del kwargs['locked']
 
-        # Assign ing color if it doesn't already exist
-        ing_color = self.getUniqueColor(ing_id)
-
-        src_has_port = self.nodeHasPort(src_node)
-        dst_has_port = self.nodeHasPort(dst_node)
-
-        src_port_name = self.getPortId(ing_name, 'o')
-        dst_port_name = self.getPortId(ing_name, 'i')
-
-        src_port = f'{src_node}:{src_port_name}' if src_has_port else src_node
-        dst_port = f'{dst_node}:{dst_port_name}' if dst_has_port else dst_node
-
-        src_port = f'{src_port}:{outPort}' if src_has_port else src_port
-        dst_port = f'{dst_port}:{inPort}' if dst_has_port else dst_port
-
-        port_style = dict(edge_style)
-        
-        angle = 60 if is_vertical else 20
-        dist = 2.5 if is_vertical else 4
-        port_style.update(labeldistance=str(dist), labelangle=str(angle))
-
-        lab = f'({quant_label})'
-        if dst_has_port:
-            debugHead = ''
-            if 'debugHead' in edge_data:
-                debugHead = f'\n{edge_data["debugHead"]}'
-            port_style.update(arrowhead='normal')
-            port_style.update(headlabel=f'{lab}{debugHead}')
-        if src_has_port:
-            debugTail = ''
-            if 'debugTail' in edge_data:
-                debugTail = f'\n{edge_data["debugTail"]}'
-            port_style.update(arrowtail='tee')
-            port_style.update(taillabel=f'{lab}{debugTail}')
-
-        src_is_joint_i = re.match('^joint_i', src_node)
-        dst_is_joint_i = re.match('^joint_i', dst_node)
-        src_is_joint_o = re.match('^joint_o', src_node)
-        dst_is_joint_o = re.match('^joint_o', dst_node)
-        
-        #if src_is_joint_o:
-        #    port_style.update(taillabel=f'{lab}')
-        if src_has_port and dst_is_joint_o:
-            port_style.update(headlabel=f'{lab}')
-        if src_is_joint_i and dst_has_port:
-            port_style.update(taillabel=f'{lab}')
-        #if dst_is_joint_i:
-        #    port_style.update(headlabel=f'{lab}')
-
-        def mulcolor(h, f):
-            h = h.lstrip('#')
-            r,g,b = tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
-            r = max(0,min(255,int(r * f)))
-            g = max(0,min(255,int(g * f)))
-            b = max(0,min(255,int(b * f)))
-            return '#' + ''.join(hex(x)[2:].zfill(2) for x in [r,g,b])
-
-
         g.edge(
             src_port,
             dst_port,
-            fontcolor=mulcolor(ing_color, 1.5),
-            color=ing_color,
             **kwargs,
-            **port_style
+            **color_style,
+            **port_style,
         )
 
     # Output final graph
@@ -267,6 +300,7 @@ def outputGraphviz(self):
         directory='output/',
         view=self.graph_config['VIEW_ON_COMPLETION'],
         format=self.graph_config['OUTPUT_FORMAT'],
+        engine='dot',
     )
 
     if self.graph_config.get('DEBUG_SHOW_EVERY_STEP', False):
