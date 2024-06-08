@@ -6,7 +6,7 @@ import graphviz
 from termcolor import colored
 
 
-def add_node_internal(self, g, node_name, **kwargs):
+def addNodeInternal(self, g, node_name, **kwargs):
     node_style = {
         'style': 'filled',
         'fontname': self.graph_config['GENERAL_FONT'],
@@ -23,17 +23,17 @@ def add_node_internal(self, g, node_name, **kwargs):
 
     if node_name == 'source':
         names = unique([name for src, _, name in self.edges.keys() if src == 'source'])
-        isTable, newLabel = make_table(self, label, None, names)
+        isTable, newLabel = makeNodeTable(self, label, None, names)
     elif node_name == 'sink':
         names = unique([name for _, dst, name in self.edges.keys() if dst == 'sink'])
-        isTable, newLabel = make_table(self, label, names, None)
+        isTable, newLabel = makeNodeTable(self, label, names, None)
     elif re.match(r'^\d+$', node_name):
         rec = self.recipes[node_name]
         in_ports = [ing.name for ing in rec.I]
         in_quants = [ing.quant for ing in rec.I]
         out_ports = [ing.name for ing in rec.O]
         out_quants = [ing.quant for ing in rec.O]
-        isTable, newLabel = make_table(self, label, in_ports, out_ports, in_quants, out_quants)
+        isTable, newLabel = makeNodeTable(self, label, in_ports, out_ports, in_quants, out_quants)
 
     if isTable:
         kwargs['label'] = newLabel
@@ -46,7 +46,7 @@ def add_node_internal(self, g, node_name, **kwargs):
     )
 
 
-def make_table(self, lab, inputs, outputs, input_quants=None, output_quants=None):
+def makeNodeTable(self, lab, inputs, outputs, input_quants=None, output_quants=None):
     is_inverted = self.graph_config['ORIENTATION'] in ['BT', 'RL']
     is_vertical = self.graph_config['ORIENTATION'] in ['TB', 'BT']
     num_inputs = len(inputs) if inputs is not None else 0
@@ -137,20 +137,8 @@ def mulcolor(h, f):
     return '#' + ''.join(hex(x)[2:].zfill(2) for x in [r, g, b])
 
 
-def constructPortAwareStyling(self,
-        dst_node, edge_data, edge_style,
-        inPort, outPort, ing_name, is_vertical,
-        quant_label, src_node):
-
-    src_has_port = self.nodeHasPort(src_node)
-    dst_has_port = self.nodeHasPort(dst_node)
-    src_port_name = self.getPortId(ing_name, 'o')
-    dst_port_name = self.getPortId(ing_name, 'i')
-
-    src_port = f'{src_node}:{src_port_name}' if src_has_port else src_node
-    dst_port = f'{dst_node}:{dst_port_name}' if dst_has_port else dst_node
-    src_port = f'{src_port}:{outPort}' if src_has_port else src_port
-    dst_port = f'{dst_port}:{inPort}' if dst_has_port else dst_port
+def constructPortAwareEdgeStyling(self, dst_node, edge_data, edge_style, is_vertical, quant_label, src_node,
+                                  src_has_port, dst_has_port):
 
     port_style = dict(edge_style)
 
@@ -187,7 +175,7 @@ def constructPortAwareStyling(self,
     # if dst_is_joint_i:
     #    port_style.update(headlabel=f'{lab}')
 
-    return dst_port, port_style, src_port
+    return port_style
 
 
 def outputGraphviz(self):
@@ -232,7 +220,7 @@ def outputGraphviz(self):
         if group == 'no-group':
             # Don't draw subgraph if not part of a group
             for rec_id, kwargs in groups[group]:
-                add_node_internal(self, g, rec_id, **kwargs)
+                addNodeInternal(self, g, rec_id, **kwargs)
         else:
             # Draw subgraph/cluster if part of group
             with g.subgraph(name=f'cluster_{group}') as c:
@@ -241,7 +229,7 @@ def outputGraphviz(self):
 
                 # Populate nodes
                 for rec_id, kwargs in groups[group]:
-                    add_node_internal(self, c, rec_id, **kwargs)
+                    addNodeInternal(self, c, rec_id, **kwargs)
 
                 # Make border around cluster
                 payload = group.upper()
@@ -271,11 +259,20 @@ def outputGraphviz(self):
         # Assign ing color if it doesn't already exist
         ing_color = self.getUniqueColor(ing_id)
 
-        dst_port, port_style, src_port = constructPortAwareStyling(
-            self, dst_node, edge_data, edge_style,
-            inPort, outPort, ing_name, is_vertical,
-            quant_label, src_node
-        )
+        # Figure out ID of connected node ports
+        src_has_port = self.nodeHasPort(src_node)
+        dst_has_port = self.nodeHasPort(dst_node)
+        src_port_name = self.getPortId(ing_name, 'o')
+        dst_port_name = self.getPortId(ing_name, 'i')
+
+        src_port = f'{src_node}:{src_port_name}' if src_has_port else src_node
+        dst_port = f'{dst_node}:{dst_port_name}' if dst_has_port else dst_node
+        src_port = f'{src_port}:{outPort}' if src_has_port else src_port
+        dst_port = f'{dst_port}:{inPort}' if dst_has_port else dst_port
+
+        port_style = constructPortAwareEdgeStyling(self, dst_node, edge_data, edge_style,
+                                                   is_vertical, quant_label, src_node,
+                                                   src_has_port, dst_has_port)
 
         color_style = dict(
             fontcolor=mulcolor(ing_color, 1.5),
