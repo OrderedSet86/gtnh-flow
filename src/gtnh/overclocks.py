@@ -370,6 +370,8 @@ class OverclockHandler:
     
 
     def modifyMega(self, recipe, baseModifierFunction):
+        # FIXME: This is not how they work...
+
         recipe = baseModifierFunction(recipe)
         recipe.I *= 256
         recipe.O *= 256
@@ -432,15 +434,18 @@ class OverclockHandler:
             'XL Turbo Steam Turbine': lambda recipe: self.modifyXT(recipe, 'steam_fuels'),
 
             # Megas
+            # FIXME: The implementations of these are wrong
             'mega blast furnace': lambda recipe: self.modifyMega(recipe, self.modifyEBF),
             'MBF': lambda recipe: self.modifyMega(recipe, self.modifyEBF),
-            'mega large chemical reactor': lambda recipe: self.modifyMega(recipe, self.modifyPerfect),
-            'mega chemical reactor': lambda recipe: self.modifyMega(recipe, self.modifyPerfect),
-            'MCR': lambda recipe: self.modifyMega(recipe, self.modifyPerfect),
+            'MEBF': lambda recipe: self.modifyMega(recipe, self.modifyEBF),
             'mega distillation tower': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
             'MDT': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
             'mega vacuum freezer': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
             'MVF': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
+            # TODO: These may not follow normal mega rules
+            'mega large chemical reactor': lambda recipe: self.modifyMega(recipe, self.modifyPerfect),
+            'mega chemical reactor': lambda recipe: self.modifyMega(recipe, self.modifyPerfect),
+            'MCR': lambda recipe: self.modifyMega(recipe, self.modifyPerfect),
 
             # Basic GT++ multis
             'industrial centrifuge': self.modifyGTpp,
