@@ -4,3 +4,4 @@ pyyaml>=6.0
 pyreadline3>=3.4.1
 sympy>=1.11.1
 termcolor>=1.1.0
+cvxpy>=1.5.0

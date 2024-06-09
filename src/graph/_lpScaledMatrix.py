@@ -2,7 +2,7 @@ import cvxpy as cp
 import numpy as np
 
 
-class LpNormalizedMatrix:
+class LpScaledMatrix:
     def __init__(self, matrix, target_vector):
         self.matrix = matrix
         self.target_vector = target_vector
@@ -59,3 +59,8 @@ class LpNormalizedMatrix:
         # Un-augment the matrix
         self.scaled_matrix = scaled_aug_matrix[:, :-1]
         self.scaled_target_vector = scaled_aug_matrix[:, -1]
+        
+        self.max_min_ratio = max_val.value / min_val.value
+
+    def unscale_recipes(self, scaled_recipe_vars):
+        return scaled_recipe_vars * self.recipe_scales / self.target_scale

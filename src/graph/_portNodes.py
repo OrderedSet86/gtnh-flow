@@ -6,8 +6,8 @@ from collections import defaultdict
 # as designed by Usagirei in https://github.com/OrderedSet86/gtnh-flow/pull/4
 
 
-def stripBrackets(self, ing):
-    if self.graph_config['STRIP_BRACKETS']:
+def stripBrackets(self, ing, override_config=False):
+    if override_config or self.graph_config['STRIP_BRACKETS']:
         prefix = False
         if ing[:2] == '\u2588 ':
             prefix = True

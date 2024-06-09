@@ -2,23 +2,30 @@ import re
 from collections import Counter
 
 from ..graph import Graph
-from collections import Counter
+from ._portNodes import stripBrackets
+from termcolor import colored
+import numpy as np
 
 
 class LpProject:
     def __init__(
         self,
-        inputs,
-        explicit_inputs,
-        outputs,
-        targets,
-        variables,
-        recipe_names,
-        ing_matrix,
-        target_vector,
+        inputs: set,
+        explicit_input_priorities: dict[str, int],
+        outputs: set,
+        targets: dict[str, int],
+        variables: list[str],
+        recipe_names: list[str],
+        ing_matrix: np.ndarray,
+        target_vector: np.ndarray,
     ):
         self.inputs = inputs
-        self.explicit_inputs = explicit_inputs
+        self.explicit_inputs = explicit_input_priorities.values()
+        self.explicit_input_priorities = explicit_input_priorities
+        self.num_priorities = len(self.explicit_inputs)
+        self.explicit_in_groups = [[]] * self.num_priorities
+        for ing, priority in self.explicit_input_priorities.items():
+            self.explicit_in_groups[priority].append(ing)
         self.outputs = outputs
         self.targets = targets
         self.variables = variables
@@ -53,73 +60,87 @@ class LpProject:
         return names
 
     @staticmethod
-    def fromRecipes(recipes):
+    def fromGraph(graph: Graph):
+        recipes = graph.recipes.values()
         inputs = set()
-        explicit_inputs = set()
+        # explicit_inputs = set()
+        explicit_input_priorities = {}
         outputs = set()
         targets = {}
         # Just use indices to identify recipes here
         for recipe, io in enumerate(recipes):
             for ing in io.I:
-                ing_name = stripBrackets(ing.name)
+                ing_name = stripBrackets(None, ing.name, True)
                 inputs.add(ing_name)
             for out in io.O:
-                out_name = stripBrackets(out.name)
+                out_name = stripBrackets(None, out.name, True)
                 outputs.add(out_name)
             if hasattr(io, "cost"):
-                for explicit_input in getattr(io, "cost"):
-                    explicit_inputs.add(explicit_input)
+                costs = getattr(io, "cost")
+                for explicit_input in costs:
+                    if explicit_input in explicit_input_priorities:
+                        graph.parent_context.log.warn(
+                            colored(
+                                f"Encountered duplicate explicit input {explicit_input}.",
+                                "red",
+                            )
+                        )
+                    explicit_input_priorities[explicit_input] = costs[explicit_input]
             if hasattr(io, "target"):
                 for target, quant in getattr(io, "target").items():
                     targets[target] = quant
 
         if len(targets) == 0:
-            raise RuntimeError("No targets found! At least one is required for LP solver.")
-        if len(explicit_inputs) == 0:
-            raise RuntimeError("No explicit inputs found! At least one main ingredient is recommended for reasonable results.")
-        
+            raise RuntimeError(
+                "No targets found! At least one is required for LP solver."
+            )
+        if len(explicit_input_priorities.keys()) == 0:
+            graph.parent_context.log.warn(
+                colored(
+                    "No explicit inputs found! At least one main ingredient is highly recommended for reasonable results.",
+                    "red",
+                )
+            )
+
         if not all(target in outputs for target in targets):
             raise RuntimeError(
                 "Encountered target which is never an output (likely a spelling mistake). targets: "
                 + str(targets)
             )
-        if not all(cost in inputs for cost in explicit_inputs):
+        if not all(cost in inputs for cost in set(explicit_input_priorities.keys())):
             raise RuntimeError(
                 "Encountered cost/explicit input which is never an input (likely a spelling mistake). costs: "
-                + str(explicit_inputs)
+                + str(list(explicit_input_priorities.keys()))
             )
-    
 
         variables = list(inputs | outputs)
 
-        recipe_vectors = []
+        recipe_matrix = np.zeros((len(recipes), len(variables)))
         variable_indices = {var: i for i, var in enumerate(variables)}
         print(variable_indices)
-        for recipe in recipes:
-            vector = [0] * len(variables)
+        for i, recipe in enumerate(recipes):
             for ing in recipe.I:
-                vector[variable_indices[stripBrackets(ing.name)]] = -1 * ing.quant
+                recipe_matrix[
+                    i, variable_indices[stripBrackets(None, ing.name, True)]
+                ] = (-1 * ing.quant)
             for out in recipe.O:
-                vector[variable_indices[stripBrackets(out.name)]] = out.quant
-            recipe_vectors.append(vector)
+                recipe_matrix[
+                    i, variable_indices[stripBrackets(None, out.name, True)]
+                ] = out.quant
         recipe_names = LpProject.genRecipeNames(recipes)
-        print("Recipe Vectors", list(zip(recipe_names, recipe_vectors)))
-        ing_vectors = list(
-            zip(*recipe_vectors)
+        print("Recipe Matrix", recipe_matrix)
+        ing_matrix = (
+            recipe_matrix.T
         )  # Transpose (constraints are per-item, not per-recipe)
-        target_vector = [targets.get(var, 0) for var in variables]
+        target_vector = np.array([targets.get(var, 0) for var in variables])
 
         return LpProject(
             inputs,
-            explicit_inputs,
+            explicit_input_priorities,
             outputs,
             targets,
             variables,
             recipe_names,
-            ing_vectors,
+            ing_matrix,
             target_vector,
         )
-
-    @staticmethod
-    def fromGraph(graph: Graph):
-        return LpProject.fromRecipes(graph.recipes.values())
