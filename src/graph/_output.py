@@ -23,10 +23,10 @@ def addNodeInternal(self, g, node_name, **kwargs):
 
     if node_name == 'source':
         names = unique([name for src, _, name in self.edges.keys() if src == 'source'])
-        isTable, newLabel = makeNodeTable(self, label, None, names)
+        isTable, newLabel = makeNodeTable(self, label, [], names)
     elif node_name == 'sink':
         names = unique([name for _, dst, name in self.edges.keys() if dst == 'sink'])
-        isTable, newLabel = makeNodeTable(self, label, names, None)
+        isTable, newLabel = makeNodeTable(self, label, names, [])
     elif re.match(r'^\d+$', node_name):
         rec = self.recipes[node_name]
         in_ports = [ing.name for ing in rec.I]
@@ -49,8 +49,8 @@ def addNodeInternal(self, g, node_name, **kwargs):
 def makeNodeTable(self, lab, inputs, outputs, input_quants=None, output_quants=None):
     is_inverted = self.graph_config['ORIENTATION'] in ['BT', 'RL']
     is_vertical = self.graph_config['ORIENTATION'] in ['TB', 'BT']
-    num_inputs = len(inputs) if inputs is not None else 0
-    num_outputs = len(outputs) if outputs is not None else 0
+    num_inputs = len(inputs)
+    num_outputs = len(outputs)
     has_input = num_inputs > 0
     has_output = num_outputs > 0
 
