@@ -28,13 +28,11 @@
   O:
     hot titanium ingot: 1
     magnesium chloride dust: 6
-  target:
-    hot titanium ingot: 1
   eut: 480
   dur: 40
   coils: kanthal
   heat: 2140
-  # number: 1
+  number: 1
 - m: vacuum freezer
   tier: HV
   I:
