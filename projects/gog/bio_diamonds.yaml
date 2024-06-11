@@ -1,0 +1,118 @@
+- m: lpf
+  tier: ZPM
+  I:
+    coal chunk: 1
+  O:
+    diamond: 1
+  eut: 2
+  dur: 15
+  target:
+    diamond: 10
+- m: electric blast furnace
+  tier: ZPM
+  I:
+    bio chunk: 1
+  O:
+    coal chunk: 1
+  eut: 120
+  dur: 60
+  heat: 1000
+  coils: electrum flux
+- m: lsaa
+  tier: ZPM
+  I:
+    block of charcoal: 1
+    compressed bio ball: 8
+  O:
+    bio chunk: 1
+  eut: 64
+  dur: 60
+- m: lpf
+  tier: ZPM
+  I:
+    charcoal: 9
+  O:
+    block of charcoal: 1
+  eut: 2
+  dur: 15
+- m: lpf
+  tier: ZPM
+  I:
+    bio ball: 1
+  O:
+    compressed bio ball: 1
+  eut: 2
+  dur: 15
+- m: mixer++
+  tier: ZPM
+  I:
+    plantball: 16
+    flint dust: 2
+  O:
+    bio ball: 1
+  eut: 16
+  dur: 10
+- m: packager
+  tier: ZPM
+  I:
+    tiny pile of flint dust: 9
+  O:
+    flint dust: 1
+  eut: 1
+  dur: 0.05
+- m: forge hammer
+  tier: ZPM
+  I:
+    flint: 1
+  O:
+    tiny pile of flint dust: 2
+  eut: 16
+  dur: 1
+- m: crafter
+  tier: LV
+  I:
+    gravel: 1
+  O:
+    flint: 1
+  eut: 30
+  dur: 1
+- m: ico
+  tier: ZPM
+  I:
+    wood: 4
+  O:
+    wood tar: 375
+    charcoal: 5
+  eut: 64
+  dur: 6.4
+- m: tree growth simulator
+  tier: ZPM
+  I: {}
+  O:
+    wood: 48
+  eut: 480
+  dur: 5
+  saw_type: saw
+- m: lpf
+  tier: ZPM
+  I:
+    barley: 8
+  O:
+    plantball: 1
+  eut: 2
+  dur: 15
+- m: forge hammer
+  tier: ZPM
+  I:
+    cobblestone: 1
+  O:
+    gravel: 1
+  eut: 16
+  dur: 0.5
+- m: boldarnator
+  tier: ZPM
+  I: {}
+  O:
+    cobblestone: 1
+  eut: 30
+  dur: 0.8

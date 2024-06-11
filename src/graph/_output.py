@@ -110,7 +110,7 @@ def constructCell(self, cell, i, io, port_type, quant_recipe, quant_s_array=None
         label = self.stripBrackets(ing_name)
         if quant_recipe:
             quant = self.userAccurate(quant_recipe[i])
-            label = f'{label} x{quant}<br/>test'
+            label = f'{label} x{quant}'
         if quant_s_array:
             # Expected to be a list of [ing_color, ing_quant_per_s]
             pass
