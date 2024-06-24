@@ -46,12 +46,7 @@ def solveMinFreeVariables(project: LpProject, in_table, out_table):
     priority_ratio = scaled_matrix.max_min_ratio**4
 
     constraints = []
-
-    # for item, recipe_coeffs in zip(project.variables, scaled_matrix.matrix):
-
-    #     problem_eq = cp.sum(cp.multiply(recipe_vars, recipe_coeffs)) + input_term == 0
-    #     constraints.append(problem_eq)
-
+    
     # Item quantities must add up (for each item, item io * amount of recipe + input/output term == 0)
     constraints.append(
         cp.matmul(scaled_matrix.scaled_matrix, recipe_vars)

@@ -430,8 +430,8 @@
     # from 9000 palladium enriched ammonia (into this lcr), the amount recycled is:
     #   (16 (palladium salt dust) * 0.95 (sifter)) - 9 (used by this lcr)) * 1000 (lcr with ammonia) = 6200
     # The remaining 9000-6200=2800 is the fresh input
-    "[fresh] palladium enriched ammonia": 2800
-    "[palladium recycle] palladium enriched ammonia": 6200
+    # "[fresh] palladium enriched ammonia": 2800
+    "[palladium recycle] palladium enriched ammonia": 9000
     palladium metallic powder dust: 9
   O:
     palladium salt dust: 16
