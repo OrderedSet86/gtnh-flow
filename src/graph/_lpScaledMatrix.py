@@ -3,12 +3,16 @@ import numpy as np
 
 
 class LpScaledMatrix:
-    def __init__(self, matrix, target_vector):
+    def __init__(self, matrix, target_vector=None):
         self.matrix = matrix
         self.target_vector = target_vector
+        has_target = target_vector is not None
 
         # Augment the matrix with the target vector
-        aug_matrix = np.hstack([matrix, np.array(target_vector).reshape((-1, 1))])
+        if has_target:
+            aug_matrix = np.hstack([matrix, np.array(target_vector).reshape((-1, 1))])
+        else:
+            aug_matrix = matrix
 
         num_rows = len(aug_matrix)
         num_cols = len(aug_matrix[0])
@@ -45,22 +49,23 @@ class LpScaledMatrix:
 
         # Solve the problem
         problem.solve(gp=True)
-        print("Matrix Normalization Problem in: ", problem.solver_stats.solve_time)
+        # print("Matrix Normalization Problem in: ", problem.solver_stats.solve_time)
 
         # Extract the scale factors
         self.item_scales = item_scales_vars.value
-        self.recipe_scales = recipe_scales_vars.value[:-1]
-        self.target_scale = recipe_scales_vars.value[-1]
+        self.recipe_scales = recipe_scales_vars.value[:(-1 if has_target else None)]
+        self.target_scale = recipe_scales_vars.value[-1] if has_target else None
 
         # Apply the scaling factors to the normalized matrix
         scaled_aug_matrix = np.multiply(
             aug_matrix, np.outer(self.item_scales, recipe_scales_vars.value)
         )
         # Un-augment the matrix
-        self.scaled_matrix = scaled_aug_matrix[:, :-1]
-        self.scaled_target_vector = scaled_aug_matrix[:, -1]
+        self.scaled_matrix = scaled_aug_matrix[:, :(-1 if has_target else None)]
+        self.scaled_target_vector = scaled_aug_matrix[:, -1] if has_target else None
         
         self.max_min_ratio = max_val.value / min_val.value
 
     def unscale_recipes(self, scaled_recipe_vars):
-        return scaled_recipe_vars * self.recipe_scales / self.target_scale
+        target_scale = self.target_scale or 1
+        return scaled_recipe_vars * self.recipe_scales / target_scale

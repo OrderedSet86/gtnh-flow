@@ -2,6 +2,7 @@ import re
 from collections import Counter
 
 from ..graph import Graph
+from ..data.loadMachines import recipesFromConfig
 from ._portNodes import stripBrackets
 from termcolor import colored
 import numpy as np
@@ -20,7 +21,7 @@ class LpProject:
         target_vector: np.ndarray,
     ):
         self.inputs = inputs
-        self.explicit_inputs = explicit_input_priorities.values()
+        self.explicit_inputs = explicit_input_priorities.keys()
         self.explicit_input_priorities = explicit_input_priorities
         self.num_priorities = len(self.explicit_inputs)
         self.explicit_in_groups = [[]] * self.num_priorities
@@ -48,11 +49,7 @@ class LpProject:
         names = []
         for recipe in recipes:
             represent_ing = recipe.I[0].name if len(recipe.I) > 0 else "nothing"
-            name = (
-                LpProject.genSlug(recipe.machine, True)
-                + "_"
-                + LpProject.genSlug(represent_ing)
-            )
+            name = LpProject.genSlug(recipe.machine, True) + "_" + LpProject.genSlug(represent_ing)
             counter[name] += 1
             if counter[name] > 1:
                 name += f"_{counter[name]}"
@@ -60,8 +57,7 @@ class LpProject:
         return names
 
     @staticmethod
-    def fromGraph(graph: Graph):
-        recipes = graph.recipes.values()
+    def fromRecipes(recipes, warn=print):
         inputs = set()
         # explicit_inputs = set()
         explicit_input_priorities = {}
@@ -79,59 +75,43 @@ class LpProject:
                 costs = getattr(io, "cost")
                 for explicit_input in costs:
                     if explicit_input in explicit_input_priorities:
-                        graph.parent_context.log.warn(
-                            colored(
-                                f"Encountered duplicate explicit input {explicit_input}.",
-                                "red",
-                            )
-                        )
+                        warn(f"Encountered duplicate explicit input {explicit_input}.")
+                        
                     explicit_input_priorities[explicit_input] = costs[explicit_input]
             if hasattr(io, "target"):
                 for target, quant in getattr(io, "target").items():
                     targets[target] = quant
 
         if len(targets) == 0:
-            raise RuntimeError(
-                "No targets found! At least one is required for LP solver."
-            )
+            raise RuntimeError("No targets found! At least one is required for LP solver.")
         if len(explicit_input_priorities.keys()) == 0:
-            graph.parent_context.log.warn(
-                colored(
-                    "No explicit inputs found! At least one main ingredient is highly recommended for reasonable results.",
-                    "red",
-                )
-            )
-
+            warn("No explicit inputs found! At least one main ingredient is highly recommended for reasonable results.")
         if not all(target in outputs for target in targets):
             raise RuntimeError(
-                "Encountered target which is never an output (likely a spelling mistake). targets: "
-                + str(targets)
+                "Encountered target which is never an output (likely a spelling mistake). targets: " + str(targets)
             )
         if not all(cost in inputs for cost in set(explicit_input_priorities.keys())):
             raise RuntimeError(
                 "Encountered cost/explicit input which is never an input (likely a spelling mistake). costs: "
                 + str(list(explicit_input_priorities.keys()))
             )
+            
+        # Remap priorities to (0, 1, ...)
+        distinct_priorities = set(explicit_input_priorities.values())
+        priority_map = dict(zip(distinct_priorities, range(len(distinct_priorities))))
+        explicit_input_priorities = { ing: priority_map[p] for ing, p in explicit_input_priorities.items()}
 
         variables = list(inputs | outputs)
 
         recipe_matrix = np.zeros((len(recipes), len(variables)))
         variable_indices = {var: i for i, var in enumerate(variables)}
-        print(variable_indices)
         for i, recipe in enumerate(recipes):
             for ing in recipe.I:
-                recipe_matrix[
-                    i, variable_indices[stripBrackets(None, ing.name, True)]
-                ] = (-1 * ing.quant)
+                recipe_matrix[i, variable_indices[stripBrackets(None, ing.name, True)]] = -1 * ing.quant
             for out in recipe.O:
-                recipe_matrix[
-                    i, variable_indices[stripBrackets(None, out.name, True)]
-                ] = out.quant
+                recipe_matrix[i, variable_indices[stripBrackets(None, out.name, True)]] = out.quant
         recipe_names = LpProject.genRecipeNames(recipes)
-        print("Recipe Matrix", recipe_matrix)
-        ing_matrix = (
-            recipe_matrix.T
-        )  # Transpose (constraints are per-item, not per-recipe)
+        ing_matrix = recipe_matrix.T  # Transpose (constraints are per-item, not per-recipe)
         target_vector = np.array([targets.get(var, 0) for var in variables])
 
         return LpProject(
@@ -144,3 +124,14 @@ class LpProject:
             ing_matrix,
             target_vector,
         )
+
+    @staticmethod
+    def fromGraph(graph: Graph):
+        def warn(message):
+            graph.parent_context.log.warn(colored(message, "red"))
+        return LpProject.fromRecipes(graph.recipes.values(), warn)
+
+    @staticmethod
+    def fromConfig(config_path):
+        recipes = recipesFromConfig(config_path)
+        return LpProject.fromRecipes(recipes)
