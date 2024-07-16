@@ -344,8 +344,8 @@
 - m: lcr
   tier: ev
   I:
-    ammonia: 1000
-    hydrochloric acid: 1000
+    cerium recycle ammonia: 1000
+    cerium recycle hydrochloric acid: 1000
   O:
     ammonium chloride: 1000
   group: cerium
@@ -360,7 +360,7 @@
   O:
     cerium chloride dust: 4
     "[recycle] steam": 3000
-    "[100% recycle] ammonia": 3000
+    "[recycle] cerium recycle ammonia": 3000
   group: cerium
   eut: 450
   dur: 15
@@ -371,7 +371,7 @@
     oxalate: 3000
   O:
     cerium oxalate dust: 5
-    "[recycle] hydrochloric acid": 6000
+    "[recycle] cerium recycle hydrochloric acid": 6000
   group: cerium
   eut: 450
   dur: 15
