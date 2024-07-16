@@ -81,6 +81,7 @@ def createMachineLabels(self):
             label_lines = label_lines[:-2]
 
         line_if_attr_exists = {
+            'nc': (lambda rec: f'NC: {rec.nc.title()}'),
             'heat': (lambda rec: f'Base Heat: {rec.heat}K'),
             'coils': (lambda rec: f'Coils: {rec.coils.title()}'),
             'saw_type': (lambda rec: f'Saw Type: {rec.saw_type.title()}'),
@@ -90,6 +91,7 @@ def createMachineLabels(self):
             'wasted_fuel': (lambda rec: f'Wasted Fuel: {rec.wasted_fuel}'),
             'parallel': (lambda rec: f'Parallels: {rec.parallel}'),
             'note': (lambda rec: f'Note: {rec.note}'),
+            'pipe_casings': (lambda rec: f'Pipe Casings: {rec.pipe_casings}'),
         }
         for lookup, line_generator in line_if_attr_exists.items():
             if hasattr(rec, lookup):

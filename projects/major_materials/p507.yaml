@@ -1,0 +1,62 @@
+- m: large chemical reactor
+  tier: HV
+  I:
+    seed oil: 3000
+    hydrogen: 8000
+  O:
+    2-ethyl-1-hexanol: 1000
+  eut: 480
+  dur: 20
+  group: p507
+
+- m: large chemical reactor
+  tier: HV
+  I:
+    apatite dust: 9
+    water: 10000
+    sulfuric acid: 5000
+  O:
+    gypsum dust: 40
+    phosphoric acid: 3000
+    hydrochloric acid: 1000
+  eut: 30
+  dur: 16
+  group: p507
+
+- m: electric blast furnace
+  tier: HV
+  I:
+    gypsum dust: 8
+  O:
+    quicklime dust: 1
+    diluted sulfuric acid: 1500
+  eut: 480
+  dur: 10
+  coils: hss-s
+  heat: 3200
+  group: p507
+
+- m: distillation tower
+  tier: HV
+  I:
+    diluted sulfuric acid: 3000
+  O:
+    "[recycle] sulfuric acid": 2000
+    water: 1000
+  eut: 120
+  dur: 30
+  group: p507
+
+- m: large chemical reactor
+  tier: EV
+  I:
+    sodium dust: 2
+    2-ethyl-1-hexanol: 2000
+    phosphoric acid: 1000
+    ethanol: 2000
+  O:
+    p-507: 1000
+  eut: 1920
+  dur: 60
+  number: 1
+  group: p507

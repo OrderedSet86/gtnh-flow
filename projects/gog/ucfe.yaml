@@ -1,18 +1,19 @@
 - m: chem plant
-  tier: HV
+  tier: IV
   I:
-    oxygen: 10000
+    air: 20000
     2-EAHQ: 5000
     anthracene: 50
   O:
     hydrogen peroxide: 5000
     '[recycle] 2-EAQ': 5000
   eut: 240
-  dur: 5
+  dur: 30
   pipe_casings: tungstensteel
-  coils: tungstensteel
+  coils: naquadah
+  note: steel machine casings
 - m: chem plant
-  tier: IV
+  tier: LuV
   I:
     hydrogen: 2000
     2-EAQ: 1000
@@ -21,18 +22,62 @@
   eut: 120
   dur: 40
   pipe_casings: tungstensteel
-  coils: tungstensteel
+  coils: naquadah
   catalyst: orange metal catalyst
-- m: distillery
-  tier: HV
+  note: aluminium machine casings
+- m: chem plant
+  tier: LuV
   I:
-    coal tar: 40
+    monomethylhydrazine: 2000
+    nitric acid: 1000
   O:
-    anthracene: 2
-  eut: 64
-  dur: 1.2
+    cn3h7o3 rocket fuel: 2000
+  eut: 480
+  dur: 45
+  coils: naquadah
+  pipe_casings: tungstensteel
+  note: tss machine casings
+- m: chem plant
+  tier: LuV
+  I:
+    hydrogen peroxide: 1000
+    ammonia: 2000
+  O:
+    hydrazine: 1000
+  eut: 240
+  dur: 30
+  coils: naquadah
+  pipe_casings: tungstensteel
+  note: steel machine casings
+- m: chem plant
+  tier: LuV
+  I:
+    '[source] carbon dust': 1
+    hydrogen: 2000
+    hydrazine: 1000
+  O:
+    monomethylhydrazine: 1000
+  eut: 240
+  dur: 48
+  pipe_casings: tungstensteel
+  coils: naquadah
+  note: aluminium machine casings
+
+- m: dangote - distillation tower
+  tier: LuV
+  I:
+    coal tar: 1000
+  O:
+    kerosene: 600
+    anthracene: 50
+    ethylbenzene: 200
+    naphtha: 150
+    coal tar oil: 600
+  eut: 256
+  dur: 15
+  group: anthracene
 - m: industrial coke oven
-  tier: EV
+  tier: ZPM
   I:
     charcoal: 16
   O:
@@ -40,6 +85,27 @@
     coal tar: 400
   eut: 120
   dur: 7.2
+  group: anthracene
+- m: tree growth simulator
+  tier: EV
+  I: {}
+  O:
+    wood: 48
+  eut: 480
+  dur: 5
+  saw_type: saw
+  group: anthracene
+- m: industrial coke oven
+  tier: ZPM
+  I:
+    wood: 4
+  O:
+    wood tar: 375
+    charcoal: 5
+  eut: 64
+  dur: 6.4
+  group: anthracene
+
 - m: LCR
   tier: EV
   I:
@@ -58,28 +124,20 @@
     nitric oxide: 1000
   eut: 30
   dur: 16
-- m: LCR
-  tier: LuV
-  I:
-    nitrogen: 10000
-    hydrogen: 30000
-  O:
-    ammonia: 10000
-  eut: 384
-  dur: 160
+
 # To edit this section you need to edit the target in the LCR and the inputs to UCFE
 # {
 - m: universal chemical fuel engine
   tier: LV
   I:
-    dense hydrazine fuel mixture: 6400
-    combustion promoter: 100
+    cn3h7o3 rocket fuel: 16000
+    combustion promoter: 1000
   O:
     EU: 1
   eut: 0
   dur: 1
 - m: LCR
-  tier: HV
+  tier: EV
   I:
     nitrogen dioxide: 1000
     hydrogen peroxide: 1000
@@ -89,45 +147,113 @@
   eut: 120
   dur: 10
   target:
-    combustion promoter: 100
+    combustion promoter: 1000
 # }
-- m: chem plant
+
+- m: air intake hatch
+  tier: LV
+  I: {}
+  O:
+    air: 1000
+  eut: 0
+  dur: 0.2
+
+- m: compressor
   tier: HV
   I:
-    hydrazine: 4000
-    methanol: 6000
+    dried earth dust: 9
   O:
-    dense hydrazine fuel mixture: 10000
-  eut: 240
-  dur: 30
-  coils: tungstensteel
-  pipe_casings: tungstensteel
-- m: distillery
-  tier: HV
-  I:
-    wood vinegar: 200
-  O:
-    methanol: 60
-  eut: 64
-  dur: 0.8
-  note: Need to replace with dangote
-- m: industrial coke oven
+    dirt: 1
+  eut: 7
+  dur: 2
+
+- m: LCR
   tier: IV
   I:
-    wood: 4
+    ammonia: 1000
+    oxygen: 4000
   O:
-    wood vinegar: 750
-    '[recycle] charcoal': 5
-  eut: 64
-  dur: 6.4
-- m: chem plant
+    nitric acid: 1000
+  eut: 30
+  dur: 16
+
+- m: LCR
+  tier: ZPM
+  I:
+    methane: 5000
+    distilled water: 10000
+  O:
+    carbon dioxide: 5000
+    recycle hydrogen: 20000
+    hydrogen: 20000
+  eut: 480
+  dur: 10
+  group: ammonia
+- m: dangote - distillation tower
+  tier: LuV
+  I:
+    water: 1000
+  O:
+    distilled water: 1000
+  eut: 120
+  dur: 1.6
+  group: ammonia
+- m: LCR
+  tier: LuV
+  I:
+    carbon dust: 1
+    recycle hydrogen: 4000
+  O:
+    methane: 1000
+  eut: 30
+  dur: 10
+  group: ammonia
+- m: industrial electrolyzer
+  tier: UV
+  I:
+    carbon dioxide: 1000
+  O:
+    carbon dust: 1
+    '[recycle] oxygen': 2000
+  eut: 120
+  dur: 15
+  group: ammonia
+- m: LCR
+  tier: UV
+  I:
+    nitrogen: 10000
+    hydrogen: 30000
+  O:
+    ammonia: 10000
+  eut: 384
+  dur: 160
+  group: ammonia
+- m: industrial centrifuge
+  tier: ZPM
+  I:
+    air: 10000
+  O:
+    '[recycle] oxygen': 1000
+    nitrogen: 3900
+  eut: 7
+  dur: 80
+  group: ammonia
+
+- m: LCR
   tier: EV
   I:
-    hydrogen peroxide: 1000
-    ammonia: 2000
+    ethylbenzene: 1000
   O:
-    hydrazine: 1000
-  eut: 240
-  dur: 30
-  coils: tungstensteel
-  pipe_casings: tungstensteel
+    styrene: 1000
+    '[recycle] hydrogen': 2000
+  eut: 30
+  dur: 1.5
+- m: industrial electrolyzer
+  tier: IV
+  I:
+    styrene: 1000
+  O:
+    '[recycle] carbon dust': 8
+    '[recycle] hydrogen': 8000
+  eut: 60
+  dur: 19.2

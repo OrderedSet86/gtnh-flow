@@ -48,7 +48,7 @@ class IngredientCollection:
     def addItem(self, item: Ingredient):
         self._ings.append(item)
         self._ingdict[item.name].append(item.quant)
-    
+
     def __add__(self, other: 'IngredientCollection'):
         for ing in other:
             self.addItem(ing)
@@ -75,6 +75,10 @@ class Recipe:
         self.multiplier = -1
         self.base_eut = eut # Used for final graph output
         for key, value in kwargs.items():
+            # quick fix to ignore cases
+            # this implies that config files better use lower-case too
+            if type(value) is str:
+                value = value.lower()
             setattr(self, key, value)
 
     def __repr__(self):

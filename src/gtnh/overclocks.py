@@ -34,7 +34,7 @@ class OverclockHandler:
         self.voltage_cutoffs = [32*pow(4, x) + 1 for x in range(len(self.voltages))]
 
 
-    def modifyGTpp(self, recipe):
+    def modifyGTpp(self, recipe, MAX_PARALLEL=None, eut_discount=None):
         if recipe.machine not in self.overclock_data['GTpp_stats']:
             raise RuntimeError('Missing OC data for GT++ multi - add to gtnhClasses/overclocks.py:GTpp_stats')
 
@@ -42,9 +42,13 @@ class OverclockHandler:
         SPEED_BOOST, EU_DISCOUNT, PARALLELS_PER_TIER = self.overclock_data['GTpp_stats'][recipe.machine]
         SPEED_BOOST = 1/(SPEED_BOOST+1)
 
+        if eut_discount is not None:
+            EU_DISCOUNT = eut_discount
+
         # Calculate base parallel count and clip time to 1 tick
         available_eut = self.voltage_cutoffs[self.voltages.index(recipe.user_voltage)]
-        MAX_PARALLEL = (self.voltages.index(recipe.user_voltage) + 1) * PARALLELS_PER_TIER
+        if MAX_PARALLEL is None:
+            MAX_PARALLEL = (self.voltages.index(recipe.user_voltage) + 1) * PARALLELS_PER_TIER
         NEW_RECIPE_TIME = max(recipe.dur * SPEED_BOOST, 1)
 
         # Calculate current EU/t spend
@@ -54,8 +58,10 @@ class OverclockHandler:
         TOTAL_EUT = x*y
 
         # Debug info
+        self.parent_context.log.debug(colored(recipe.machine, 'green'))
         self.parent_context.log.debug(colored('Base GT++ OC stats:', 'yellow'))
         self.parent_context.log.debug(colored(f'{available_eut=} {MAX_PARALLEL=} {NEW_RECIPE_TIME=} {TOTAL_EUT=} {y=}', 'yellow'))
+        self.parent_context.log.debug(colored(f'{SPEED_BOOST=} {EU_DISCOUNT=} {MAX_PARALLEL=}', 'yellow'))
 
         # Attempt to GT OC the entire parallel set until no energy is left
         while TOTAL_EUT < available_eut:
@@ -64,41 +70,8 @@ class OverclockHandler:
             if OC_EUT <= available_eut:
                 if OC_DUR < 1:
                     break
-                self.parent_context.log.debug(colored('OC to', 'yellow'))
-                self.parent_context.log.debug(colored(f'{OC_EUT=} {OC_DUR=}', 'yellow'))
-                TOTAL_EUT = OC_EUT
-                NEW_RECIPE_TIME = OC_DUR
-            else:
-                break
-
-        recipe.eut = TOTAL_EUT
-        recipe.dur = NEW_RECIPE_TIME
-        recipe.I *= y
-        recipe.O *= y
-
-        return recipe
-
-
-    def modifyGTppSetParallel(self, recipe, MAX_PARALLEL, speed_per_tier=1):
-        available_eut = self.voltage_cutoffs[self.voltages.index(recipe.user_voltage)]
-
-        x = recipe.eut
-        y = min(int(available_eut/x), MAX_PARALLEL)
-        recipe.parallel = y
-        TOTAL_EUT = x*y
-        NEW_RECIPE_TIME = round(recipe.dur * (speed_per_tier)**(self.voltages.index(recipe.user_voltage) + 1), 2)
-
-        self.parent_context.log.debug(colored('Base GT++ OC stats:', 'yellow'))
-        self.parent_context.log.debug(colored(f'{available_eut=} {MAX_PARALLEL=} {NEW_RECIPE_TIME=} {TOTAL_EUT=} {y=}', 'yellow'))
-
-        while TOTAL_EUT < available_eut:
-            OC_EUT = TOTAL_EUT * 4
-            OC_DUR = NEW_RECIPE_TIME / 2
-            if OC_EUT <= available_eut:
-                if OC_DUR < 20:
-                    break
-                self.parent_context.log.debug(colored('OC to', 'yellow'))
-                self.parent_context.log.debug(colored(f'{OC_EUT=} {OC_DUR=}', 'yellow'))
+                self.parent_context.log.debug(colored('    OC to', 'yellow'))
+                self.parent_context.log.debug(colored(f'    {OC_EUT=} {OC_DUR=}', 'yellow'))
                 TOTAL_EUT = OC_EUT
                 NEW_RECIPE_TIME = OC_DUR
             else:
@@ -152,11 +125,8 @@ class OverclockHandler:
                     catalyst_cost *= 1 - throughput_multiplier / 10 # 20% chance of no damage per pipe casing tier
                     recipe.I += known_catalysts[recipe.catalyst]
 
+        recipe = self.modifyGTpp(recipe, MAX_PARALLEL=throughput_multiplier)
         recipe.dur /= coil_multiplier
-        recipe.I *= throughput_multiplier
-        recipe.O *= throughput_multiplier
-
-        recipe = self.modifyStandard(recipe)
 
         return recipe
 
@@ -243,8 +213,7 @@ class OverclockHandler:
         else:
             recipe.O = IngredientCollection(Ingredient(recipe.O._ings[0].name, TGS_wood_out))
         recipe.eut = self.voltage_cutoffs[oc_idx] - 1
-        print(oc_idx)
-        recipe.dur = max(100/(2**(oc_idx)), 1)
+        recipe.dur = max(100/(2**oc_idx), 1)
 
         return recipe
 
@@ -412,10 +381,21 @@ class OverclockHandler:
     
 
     def modifyMega(self, recipe, baseModifierFunction):
+        # FIXME: This is not how they work...
+
         recipe = baseModifierFunction(recipe)
         recipe.I *= 256
         recipe.O *= 256
         recipe.eut *= 256
+
+        return recipe
+
+
+    def modifyICO(self, recipe):
+        user_voltage = self.voltages.index(recipe.user_voltage)
+        eut_discount = 1 - 0.04 * (user_voltage + 1)
+
+        recipe = self.modifyGTpp(recipe, MAX_PARALLEL=24, eut_discount=eut_discount)
 
         return recipe
 
@@ -452,28 +432,25 @@ class OverclockHandler:
             'multi smelter': self.modifyMultiSmelter,
             'circuit assembly line': self.modifyPerfect,
             'fusion reactor': self.modifyFusion,
-            
             'advanced assline': self.modifyAAL,
-            'advanced assembling line': self.modifyAAL,
-            'advanced assembly line': self.modifyAAL,
-            'AAL': self.modifyAAL,
-
-            'large gas turbine': lambda recipe: self.modifyTurbine(recipe, 'gas_fuels'),
-            'XL Turbo Gas Turbine': lambda recipe: self.modifyXT(recipe, 'gas_fuels'),
-
-            'large steam turbine': lambda recipe: self.modifyTurbine(recipe, 'steam_fuels'),
-            'XL Turbo Steam Turbine': lambda recipe: self.modifyXT(recipe, 'steam_fuels'),
+            'large gas turbine': lambda rec: self.modifyTurbine(rec, 'gas_fuels'),
+            'xl turbo gas turbine': lambda rec: self.modifyXT(rec, 'gas_fuels'),
+            'large steam turbine': lambda rec: self.modifyTurbine(rec, 'steam_fuels'),
+            'xl turbo steam turbine': lambda rec: self.modifyXT(rec, 'steam_fuels'),
 
             # Megas
-            'mega blast furnace': lambda recipe: self.modifyMega(recipe, self.modifyEBF),
-            'MBF': lambda recipe: self.modifyMega(recipe, self.modifyEBF),
-            'mega large chemical reactor': lambda recipe: self.modifyMega(recipe, self.modifyPerfect),
-            'mega chemical reactor': lambda recipe: self.modifyMega(recipe, self.modifyPerfect),
-            'MCR': lambda recipe: self.modifyMega(recipe, self.modifyPerfect),
-            'mega distillation tower': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
-            'MDT': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
-            'mega vacuum freezer': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
-            'MVF': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
+            # FIXME: The implementations of these are wrong
+            'mega blast furnace': lambda rec: self.modifyMega(rec, self.modifyEBF),
+            'mbf': lambda rec: self.modifyMega(rec, self.modifyEBF),
+            'mebf': lambda rec: self.modifyMega(rec, self.modifyEBF),
+            'mega distillation tower': lambda rec: self.modifyMega(rec, self.modifyStandard),
+            'mdt': lambda rec: self.modifyMega(rec, self.modifyStandard),
+            'mega vacuum freezer': lambda rec: self.modifyMega(rec, self.modifyStandard),
+            'mvf': lambda rec: self.modifyMega(rec, self.modifyStandard),
+            # TODO: These may not follow normal mega rules
+            'mega large chemical reactor': lambda rec: self.modifyMega(rec, self.modifyPerfect),
+            'mega chemical reactor': lambda rec: self.modifyMega(rec, self.modifyPerfect),
+            'mcr': lambda rec: self.modifyMega(rec, self.modifyPerfect),
 
             # Basic GT++ multis
             'industrial centrifuge': self.modifyGTpp,
@@ -483,10 +460,8 @@ class OverclockHandler:
             'wire factory': self.modifyGTpp,
             'industrial mixing machine': self.modifyGTpp,
             'industrial sifter': self.modifyGTpp,
-            'large sifter': self.modifyGTpp,
             'large thermal refinery': self.modifyGTpp,
             'industrial wash plant': self.modifyGTpp,
-            'ore washing plant': self.modifyGTpp,
             'industrial extrusion machine': self.modifyGTpp,
             'large processing factory': self.modifyGTpp,
             'industrial arc furnace': self.modifyGTpp,
@@ -495,16 +470,12 @@ class OverclockHandler:
             'boldarnator': self.modifyGTpp,
             'dangote - distillery': self.modifyGTpp,
             'thermic heating device': self.modifyGTpp,
-            'thermic heater': self.modifyGTpp,
-            'industrial fluid heater': self.modifyGTpp,
+            'volcanus': self.modifyGTpp,
 
             # Special GT++ multis
-            'industrial coke oven': lambda recipe: self.modifyGTppSetParallel(recipe, 24, speed_per_tier=0.96),
-            'dangote - distillation tower': lambda recipe: self.modifyGTppSetParallel(recipe, 12),
-            'dangote': lambda recipe: self.modifyGTppSetParallel(recipe, 12),
-            'chemical plant': self.modifyChemPlant,
+            'dangote - distillation tower': lambda rec: self.modifyGTpp(rec, MAX_PARALLEL=12),
+            'industrial coke oven': self.modifyICO,
             'chem plant': self.modifyChemPlant,
-            'exxonmobil chemical plant': self.modifyChemPlant,
             'zhuhai': self.modifyZhuhai,
             'tree growth simulator': self.modifyTGS,
             'industrial dehydrator': self.modifyUtupu,
@@ -513,6 +484,7 @@ class OverclockHandler:
             "volcanus": self.modifyVolcanus,
         }
 
+        # TODO: Check if casing matters here
         if recipe.machine in machine_overrides:
             return machine_overrides[recipe.machine](recipe)
         else:

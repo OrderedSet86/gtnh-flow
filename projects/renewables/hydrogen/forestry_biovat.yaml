@@ -1,0 +1,63 @@
+- m: bacterial vat
+  tier: HV
+  I:
+    biomass: 20_000
+  O:
+    fermented biomass: 20_000
+  eut: 2
+  dur: 1.5
+- m: dangote - distillation tower
+  tier: EV
+  I:
+    fermented biomass: 1000
+  O:
+    methane: 600
+    co2 gas: 400
+    methanol: 150
+    ethanol: 150
+    '[recycle] ammonia': 100
+    acetic acid: 25
+    ic2 fertiliser: 1
+  eut: 120
+  dur: 3.75
+- m: electrolyzer
+  tier: MV
+  I:
+    methane: 1000
+  O:
+    carbon dust: 1
+    hydrogen: 4000
+  eut: 60
+  dur: 4
+  target:
+    hydrogen: 615.384
+- m: forestry fermenter
+  tier: MV
+  I:
+    water: 300
+    blue mahoe sapling: 1
+    forestry fertilizer: 0.01042
+  O:
+    biomass: 300
+  eut: 128
+  dur: 1
+- m: electrolyzer
+  tier: MV
+  I:
+    ethanol: 1000
+  O:
+    carbon dust: 1
+    hydrogen: 6000
+    oxygen: 1000
+  eut: 90
+  dur: 7.2
+- m: electrolyzer
+  tier: MV
+  I:
+    methanol: 1000
+  O:
+    carbon dust: 1
+    hydrogen: 4000
+    oxygen: 1000
+  eut: 90
+  dur: 7.2

@@ -1,4 +1,4 @@
-- m: pyrolyse oven
+- m: pyro oven
   tier: MV
   coils: kanthal
   I:

@@ -1,0 +1,46 @@
+- m: LCR
+  tier: EV
+  I:
+    ethanol: 1000
+    sulfuric acid: 1000
+  O:
+    ether: 500
+    diluted sulfuric acid: 1500
+  eut: 120
+  dur: 25.5
+- m: dangote - distillery
+  tier: EV
+  I:
+    diluted sulfuric acid: 60
+  O:
+    sulfuric acid: 40
+  eut: 30
+  dur: 1.2
+- m: forestry fermenter
+  tier: MV
+  I:
+    water: 300
+    blue mahoe sapling: 1
+    forestry fertilizer: 0.01042
+  O:
+    forestry biomass: 300
+  eut: 128
+  dur: 1
+- m: dangote - distillery
+  tier: EV
+  I:
+    forestry biomass: 40
+  O:
+    ethanol: 20
+  eut: 24
+  dur: 0.8
+- m: XLGT
+  tier: IV
+  I:
+    ether: 1
+  O: {}
+  eut: 0
+  dur: 0
+  material: shadow
+  size: large
+  number: 1

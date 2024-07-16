@@ -1,0 +1,38 @@
+- m: LCR
+  tier: EV
+  I:
+    methane: 5000
+    distilled water: 10000
+  O:
+    carbon dioxide: 5000
+    hydrogen: 40000
+  eut: 480
+  dur: 10
+  target:
+    hydrogen: 2000
+- m: distillation tower
+  tier: EV
+  I:
+    water: 1000
+  O:
+    distilled water: 1000
+  eut: 120
+  dur: 1.6
+- m: LCR
+  tier: EV
+  I:
+    carbon dust: 1
+    hydrogen: 4000
+  O:
+    methane: 1000
+  eut: 30
+  dur: 10
+- m: industrial electrolyzer
+  tier: EV
+  I:
+    carbon dioxide: 1000
+  O:
+    carbon dust: 1
+    oxygen: 1000
+  eut: 60
+  dur: 5.6
