@@ -470,6 +470,7 @@ class OverclockHandler:
             'industrial dehydrator': self.modifyUtupu,
             'flotation cell regulator': self.modifyPerfect,
             'isamill grinding machine': self.modifyPerfect,
+            "digester": self.modifyPerfect,
         }
 
         # TODO: Check if casing matters here
