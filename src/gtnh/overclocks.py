@@ -213,7 +213,7 @@ class OverclockHandler:
         else:
             recipe.O = IngredientCollection(Ingredient(recipe.O._ings[0].name, TGS_wood_out))
         recipe.eut = self.voltage_cutoffs[oc_idx] - 1
-        recipe.dur = max(100/(2**(oc_idx)), 1)
+        recipe.dur = max(100/(2**oc_idx), 1)
 
         return recipe
 
@@ -381,6 +381,8 @@ class OverclockHandler:
     
 
     def modifyMega(self, recipe, baseModifierFunction):
+        # FIXME: This is not how they work...
+
         recipe = baseModifierFunction(recipe)
         recipe.I *= 256
         recipe.O *= 256
@@ -430,28 +432,25 @@ class OverclockHandler:
             'multi smelter': self.modifyMultiSmelter,
             'circuit assembly line': self.modifyPerfect,
             'fusion reactor': self.modifyFusion,
-            
             'advanced assline': self.modifyAAL,
-            'advanced assembling line': self.modifyAAL,
-            'advanced assembly line': self.modifyAAL,
-            'AAL': self.modifyAAL,
-
-            'large gas turbine': lambda recipe: self.modifyTurbine(recipe, 'gas_fuels'),
-            'XL Turbo Gas Turbine': lambda recipe: self.modifyXT(recipe, 'gas_fuels'),
-
-            'large steam turbine': lambda recipe: self.modifyTurbine(recipe, 'steam_fuels'),
-            'XL Turbo Steam Turbine': lambda recipe: self.modifyXT(recipe, 'steam_fuels'),
+            'large gas turbine': lambda rec: self.modifyTurbine(rec, 'gas_fuels'),
+            'xl turbo gas turbine': lambda rec: self.modifyXT(rec, 'gas_fuels'),
+            'large steam turbine': lambda rec: self.modifyTurbine(rec, 'steam_fuels'),
+            'xl turbo steam turbine': lambda rec: self.modifyXT(rec, 'steam_fuels'),
 
             # Megas
-            'mega blast furnace': lambda recipe: self.modifyMega(recipe, self.modifyEBF),
-            'MBF': lambda recipe: self.modifyMega(recipe, self.modifyEBF),
-            'mega large chemical reactor': lambda recipe: self.modifyMega(recipe, self.modifyPerfect),
-            'mega chemical reactor': lambda recipe: self.modifyMega(recipe, self.modifyPerfect),
-            'MCR': lambda recipe: self.modifyMega(recipe, self.modifyPerfect),
-            'mega distillation tower': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
-            'MDT': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
-            'mega vacuum freezer': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
-            'MVF': lambda recipe: self.modifyMega(recipe, self.modifyStandard),
+            # FIXME: The implementations of these are wrong
+            'mega blast furnace': lambda rec: self.modifyMega(rec, self.modifyEBF),
+            'mbf': lambda rec: self.modifyMega(rec, self.modifyEBF),
+            'mebf': lambda rec: self.modifyMega(rec, self.modifyEBF),
+            'mega distillation tower': lambda rec: self.modifyMega(rec, self.modifyStandard),
+            'mdt': lambda rec: self.modifyMega(rec, self.modifyStandard),
+            'mega vacuum freezer': lambda rec: self.modifyMega(rec, self.modifyStandard),
+            'mvf': lambda rec: self.modifyMega(rec, self.modifyStandard),
+            # TODO: These may not follow normal mega rules
+            'mega large chemical reactor': lambda rec: self.modifyMega(rec, self.modifyPerfect),
+            'mega chemical reactor': lambda rec: self.modifyMega(rec, self.modifyPerfect),
+            'mcr': lambda rec: self.modifyMega(rec, self.modifyPerfect),
 
             # Basic GT++ multis
             'industrial centrifuge': self.modifyGTpp,
@@ -461,10 +460,8 @@ class OverclockHandler:
             'wire factory': self.modifyGTpp,
             'industrial mixing machine': self.modifyGTpp,
             'industrial sifter': self.modifyGTpp,
-            'large sifter': self.modifyGTpp,
             'large thermal refinery': self.modifyGTpp,
             'industrial wash plant': self.modifyGTpp,
-            'ore washing plant': self.modifyGTpp,
             'industrial extrusion machine': self.modifyGTpp,
             'large processing factory': self.modifyGTpp,
             'industrial arc furnace': self.modifyGTpp,
@@ -473,17 +470,12 @@ class OverclockHandler:
             'boldarnator': self.modifyGTpp,
             'dangote - distillery': self.modifyGTpp,
             'thermic heating device': self.modifyGTpp,
-            'thermic heater': self.modifyGTpp,
-            'industrial fluid heater': self.modifyGTpp,
+            'volcanus': self.modifyGTpp,
 
             # Special GT++ multis
-            'dangote - distillation tower': lambda recipe: self.modifyGTpp(recipe, MAX_PARALLEL=12),
-            'dangote': lambda recipe: self.modifyGTpp(recipe, MAX_PARALLEL=12),
-            'ICO': self.modifyICO,
+            'dangote - distillation tower': lambda rec: self.modifyGTpp(rec, MAX_PARALLEL=12),
             'industrial coke oven': self.modifyICO,
-            'chemical plant': self.modifyChemPlant,
             'chem plant': self.modifyChemPlant,
-            'exxonmobil chemical plant': self.modifyChemPlant,
             'zhuhai': self.modifyZhuhai,
             'tree growth simulator': self.modifyTGS,
             'industrial dehydrator': self.modifyUtupu,
@@ -492,6 +484,7 @@ class OverclockHandler:
             "volcanus": self.modifyVolcanus,
         }
 
+        # TODO: Check if casing matters here
         if recipe.machine in machine_overrides:
             return machine_overrides[recipe.machine](recipe)
         else:

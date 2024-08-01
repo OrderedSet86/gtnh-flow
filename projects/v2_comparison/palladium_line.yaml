@@ -1,0 +1,58 @@
+- m: large chemical reactor
+  tier: EV
+  I:
+    palladium metallic powder dust: 9
+    palladium enriched ammonia: 9000
+  O:
+    palladium salt dust: 16
+    reprecipitated palladium dust: 2
+  eut: 30
+  dur: 112.5
+  group: palladium
+- m: sifter
+  tier: HV
+  I:
+    palladium salt dust: 1
+  O:
+    palladium metallic powder dust: 0.95
+  eut: 30
+  dur: 30
+  group: palladium
+- m: large chemical reactor
+  tier: HV
+  I:
+    palladium metallic powder dust: 1
+    ammonia: 1000
+  O:
+    palladium enriched ammonia: 1000
+  eut: 30
+  dur: 12.5
+  group: palladium
+- m: large chemical reactor
+  tier: EV
+  I:
+    formic acid: 4000
+    reprecipitated palladium dust: 4
+  O:
+    palladium dust: 2
+    ammonia: 4000
+    ethylene: 1000
+  eut: 30
+  dur: 12.5
+  group: palladium
+  target:
+    palladium dust: 10
+- m: large chemical reactor
+  tier: EV
+  I:
+    ammonium chloride: 3600
+    platinum concentrate: 18000
+  O:
+    platinum salt dust: 16
+    reprecipitated platinum dust: 4
+    palladium enriched ammonia: 3600
+    nitrogen dioxide: 9000
+    diluted sulfuric acid: 9000
+  eut: 240
+  dur: 70
+  group: platinum
