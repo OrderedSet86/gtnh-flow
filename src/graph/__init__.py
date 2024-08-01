@@ -56,7 +56,7 @@ machine_identity_groups = [
     ['volcanus', {'volc', 'ebf++'}],
     ['dangote - distillation tower', {'dt++', 'dangote'}],
     ['industrial coke oven', {'ico'}],
-    ['chem plant', {'chemical plant', 'exxonmobil', 'exxonmobil chemical plant'}],
+    ['chemical plant', {'chemical plant', 'exxonmobil', 'exxonmobil chemical plant'}],
     ['zhuhai', set()],
     ['tree growth simulator', {'tgs'}],
     ['industrial dehydrator', {'utupu', 'utupu-tanuri', 'dehydrator++'}],
