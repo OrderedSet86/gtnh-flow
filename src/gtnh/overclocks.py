@@ -482,6 +482,7 @@ class OverclockHandler:
             'flotation cell regulator': self.modifyPerfect,
             'isamill grinding machine': self.modifyPerfect,
             "volcanus": self.modifyVolcanus,
+            "digester": self.modifyPerfect,
         }
 
         # TODO: Check if casing matters here
