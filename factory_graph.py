@@ -115,6 +115,7 @@ class ProgramContext:
                 # This happens because autocomplete will not add .yaml if there are alternatives (like "power/fish/methane_no_biogas")
                 project_name += '.yaml'
 
+            self.load_graph_config(ProgramContext.DEFAULT_CONFIG_PATH)
             self.generate_one(project_name)
 
 

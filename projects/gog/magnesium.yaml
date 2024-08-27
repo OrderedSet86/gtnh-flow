@@ -1,0 +1,37 @@
+- m: boldarnator
+  tier: UXV
+  I:
+    redstone dust: 1
+  O:
+    obsidian: 1
+  eut: 30
+  dur: 6.4
+- m: lpf
+  tier: UXV
+  I:
+    obsidian: 1
+  O:
+    obsidian ingot: 9
+  eut: 3
+  dur: 6.5
+- m: maceration stack
+  tier: UXV
+  I:
+    obsidian ingot: 1
+  O:
+    obsidian dust: 1
+  eut: 4
+  dur: 1.1
+- m: industrial electrolyzer
+  tier: UXV
+  I:
+    obsidian dust: 12
+  O:
+    magnesium dust: 1
+    iron dust: 1
+    raw silicon dust: 2
+    oxygen: 8000
+  eut: 90
+  dur: 12
+  target:
+    magnesium dust: 5000
