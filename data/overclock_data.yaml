@@ -66,7 +66,7 @@ GTpp_stats:
   # these are special, the -1 are discarded
   dangote - distillation tower: [2.5, 1, -1] 
   industrial coke oven: [0, -1, -1]
-  chemical plant: [0, 1, -1]
+  chem plant: [0, 1, -1]
 
 voltage_data:
   tiers:
