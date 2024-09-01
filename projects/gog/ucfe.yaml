@@ -106,7 +106,7 @@
   dur: 6.4
   group: anthracene
 
-- m: LCR
+- m: large chemical reactor
   tier: EV
   I:
     oxygen: 1000
@@ -115,7 +115,7 @@
     nitrogen dioxide: 1000
   eut: 30
   dur: 8
-- m: LCR
+- m: large chemical reactor
   tier: EV
   I:
     oxygen: 10000
@@ -136,7 +136,7 @@
     EU: 1
   eut: 0
   dur: 1
-- m: LCR
+- m: large chemical reactor
   tier: EV
   I:
     nitrogen dioxide: 1000
@@ -167,7 +167,7 @@
   eut: 7
   dur: 2
 
-- m: LCR
+- m: large chemical reactor
   tier: IV
   I:
     ammonia: 1000
@@ -177,7 +177,7 @@
   eut: 30
   dur: 16
 
-- m: LCR
+- m: large chemical reactor
   tier: ZPM
   I:
     methane: 5000
@@ -198,7 +198,7 @@
   eut: 120
   dur: 1.6
   group: ammonia
-- m: LCR
+- m: large chemical reactor
   tier: LuV
   I:
     carbon dust: 1
@@ -218,7 +218,7 @@
   eut: 120
   dur: 15
   group: ammonia
-- m: LCR
+- m: large chemical reactor
   tier: UV
   I:
     nitrogen: 10000
@@ -239,7 +239,7 @@
   dur: 80
   group: ammonia
 
-- m: LCR
+- m: large chemical reactor
   tier: EV
   I:
     ethylbenzene: 1000
