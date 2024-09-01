@@ -36,7 +36,7 @@ class OverclockHandler:
 
     def modifyGTpp(self, recipe, MAX_PARALLEL=None, eut_discount=None):
         if recipe.machine not in self.overclock_data['GTpp_stats']:
-            raise RuntimeError('Missing OC data for GT++ multi - add to gtnhClasses/overclocks.py:GTpp_stats')
+            raise RuntimeError(f'Missing OC data for GT++ multi "{recipe.machine}"- add to gtnhClasses/overclocks.py:GTpp_stats')
 
         # Get per-machine boosts
         SPEED_BOOST, EU_DISCOUNT, PARALLELS_PER_TIER = self.overclock_data['GTpp_stats'][recipe.machine]
