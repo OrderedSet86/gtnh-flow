@@ -161,7 +161,7 @@ recipe_samarium = Recipe(
         ),
         # EBF heat bonuses are applied after parallels are calculated (so still only 4 parallels)
         (
-            mod_recipe(recipe_volcanus, user_voltage="hv", coils="HSS-G"),  # 5401K
+            mod_recipe(recipe_volcanus, user_voltage="hv", coils="hss-g"),  # 5401K
             120 * 4 * 0.9 * 0.95**4,
             25 / 2.2,
             4
