@@ -66,7 +66,7 @@ class OverclockHandler:
         # Attempt to GT OC the entire parallel set until no energy is left
         while TOTAL_EUT < available_eut:
             OC_EUT = TOTAL_EUT * 4
-            OC_DUR = NEW_RECIPE_TIME / 2
+            OC_DUR = NEW_RECIPE_TIME / 2 
             if OC_EUT <= available_eut:
                 if OC_DUR < 1:
                     break
@@ -218,7 +218,7 @@ class OverclockHandler:
         return recipe
 
 
-    def modifyUtupu(self, recipe):
+    def modifyUtupu(self, recipe, override_max_parallel = None):
         require(
             recipe,
             [
@@ -237,8 +237,8 @@ class OverclockHandler:
 
         # Calculate base parallel count and clip time to 1 tick
         available_eut = self.voltage_cutoffs[self.voltages.index(recipe.user_voltage)]
-        MAX_PARALLEL = (self.voltages.index(recipe.user_voltage) + 1) * PARALLELS_PER_TIER
-        NEW_RECIPE_TIME = max(recipe.dur * SPEED_BOOST, 1)
+        MAX_PARALLEL = override_max_parallel if override_max_parallel else ((self.voltages.index(recipe.user_voltage) + 1) * PARALLELS_PER_TIER)
+        NEW_RECIPE_TIME = max(recipe.dur * SPEED_BOOST, 1/20)
 
         # Calculate current EU/t spend
         x = recipe.eut * EU_DISCOUNT
@@ -263,9 +263,20 @@ class OverclockHandler:
         recipe.dur = NEW_RECIPE_TIME / 2**oc_count / 2**max(min(perfect_ocs, oc_count), 0)
         recipe.I *= y
         recipe.O *= y
+        recipe.parallel = y
 
         return recipe
-
+    
+    # Volcanus is like a combo of EBF and GTpp math, however:
+    #   gtpp-style bonuses to speed, eut are applied *before* parallels are calculated
+    #   there there are 8 parallels *maximum*, not per-tier (some other gtpp machines are like this)
+    #   ebf bonuses to power, perfect OCs apply *after* parallels are calculated
+    #   no heat-per-tier bonuses
+    # This makes it match Utupu, except for the parallel maximum
+    def modifyVolcanus(self, recipe):        
+        SPEED_BOOST, EU_DISCOUNT, MAX_PARALLEL = self.overclock_data['GTpp_stats'][recipe.machine]
+        return self.modifyUtupu(recipe, MAX_PARALLEL)
+       
 
     def modifyFusion(self, recipe):
         # Ignore "tier" and just use "mk" argument for OCs
@@ -470,6 +481,7 @@ class OverclockHandler:
             'industrial dehydrator': self.modifyUtupu,
             'flotation cell regulator': self.modifyPerfect,
             'isamill grinding machine': self.modifyPerfect,
+            "volcanus": self.modifyVolcanus,
             "digester": self.modifyPerfect,
         }
 
