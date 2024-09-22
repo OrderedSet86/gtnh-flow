@@ -59,7 +59,7 @@ machine_identity_groups = [
     ['chemical plant', {'chem plant', 'exxonmobil', 'exxonmobil chemical plant'}],
     ['zhuhai', set()],
     ['tree growth simulator', {'tgs'}],
-    ['industrial dehydrator', {'utupu', 'utupu-tanuri', 'utupu tanuri' 'dehydrator++'}],
+    ['industrial dehydrator', {'utupu', 'utupu-tanuri', 'utupu tanuri', 'dehydrator++'}],
     ['flotation cell regulator', {'flotation cell'}],
     ['isamill grinding machine', {'isamill'}],
 ]
