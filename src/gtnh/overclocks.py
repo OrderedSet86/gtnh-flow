@@ -475,7 +475,7 @@ class OverclockHandler:
             # Special GT++ multis
             'dangote - distillation tower': lambda rec: self.modifyGTpp(rec, MAX_PARALLEL=12),
             'industrial coke oven': self.modifyICO,
-            'chem plant': self.modifyChemPlant,
+            'chemical plant': self.modifyChemPlant,
             'zhuhai': self.modifyZhuhai,
             'tree growth simulator': self.modifyTGS,
             'industrial dehydrator': self.modifyUtupu,
