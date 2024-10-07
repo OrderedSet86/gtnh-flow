@@ -1,0 +1,480 @@
+- m: digester
+  tier: iv
+  I:
+    crushed bastnasite ore: 2
+    nitric acid: 700
+  O:
+    silicon dioxide: 1
+    muddy bastnasite rare earth solution: 400
+
+  group: bastnasite
+  eut: 1920
+  dur: 20
+- m: oil cracker
+  tier: iv
+  I:
+    steam: 1000
+    muddy bastnasite rare earth solution: 1000
+  O:
+    steam-cracked bastnasite mud: 2000
+  group: bastnasite
+  eut: 480
+  dur: 30
+- m: industrial mixer
+  tier: ev
+  I:
+    sodiumfluorosilicate: 320
+    steam-cracked bastnasite mud: 1000
+  O:
+    conditioned bastnasite mud: 1320
+  group: bastnasite
+  eut: 120
+  dur: 40
+- m: dissolution tank
+  tier: iv
+  I:
+    saltpeter: 1
+    conditioned bastnasite mud: 1000
+    # water: 1000
+  O:
+    gangue dust: 1
+    diluted bastnasite mud: 11000
+  number: 8
+  group: bastnasite
+  eut: 1920
+  dur: 50
+- m: industrial sifter
+  tier: iv
+  I:
+    diluted bastnasite mud: 1000
+  O:
+    silicon dioxide: 0.9
+    rutile dust: 0.75
+    red zircon dust: 0.1
+    ilmenite dust: 0.05
+    filtered bastnasite mud: 400
+  group: bastnasite
+  eut: 240
+  dur: 20
+- m: volcanus
+  coils: naquadah alloy
+  tier: luv
+  I:
+    filtered bastnasite mud: 1000
+  O:
+    bastnasite rare earth oxides dust: 1
+  group: bastnasite
+  heat: 1400
+  eut: 600
+  dur: 25
+- m: ore washing plant
+  tier: ev
+  I:
+    bastnasite rare earth oxides dust: 1
+    hydrochloric acid: 500
+  O:
+    acid-leached bastnasite rare earth oxides dust: 1
+  group: bastnasite
+  eut: 30
+  dur: 10
+- m: volcanus
+  coils: naquadah alloy
+  tier: iv
+  I:
+    acid-leached bastnasite rare earth oxides dust: 1
+    oxygen: 1000
+  O:
+    roasted rare earth oxides dust: 1
+    "[recycle] fluorine": 13
+  group: bastnasite
+  heat: 1200
+  eut: 120
+  dur: 30
+- m: industrial mixer
+  tier: ev
+  I:
+    roasted rare earth oxides dust: 1
+    # water: 200
+  O:
+    wet rare earth oxides dust: 1
+  group: bastnasite
+  eut: 30
+  dur: 5
+- m: lcr
+  tier: luv
+  I:
+    wet rare earth oxides dust: 1
+    # Not-bracketed to make local cycle easier to find
+    Bastnasite recycle fluorine: 4000
+  O:
+    cerium-oxidised rare earth oxides dust: 1
+    "[bastnasite recycle] hydrofluoric acid": 4000
+    # "[to zap] hydrofluoric acid": 2669.421
+    # "[to recycle] hydrofluoric acid": 1330.579
+  group: bastnasite
+  eut: 480
+  dur: 15
+- m: industrial electrolyzer
+  tier: ev
+  I:
+    "[bastnasite recycle] hydrofluoric acid": 1000
+  O: 
+    "[recycle] hydrogen": 1000
+    "[recycle] Bastnasite recycle fluorine": 1000
+  group: bastnasite
+  eut: 60
+  dur: 4
+- m: industrial centrifuge
+  tier: luv
+  I:
+    cerium-oxidised rare earth oxides dust: 1
+  O:
+    bastnasite rarer earth oxides dust: 1
+    cerium dioxide dust: 0.9
+  group: bastnasite
+  eut: 480
+  dur: 30
+- m: industrial mixer
+  tier: iv
+  I:
+    bastnasite rarer earth oxides dust: 1
+    nitric acid: 400
+  O:
+    nitrogenated bastnasite rarer earth oxides: 1000
+  group: bastnasite
+  eut: 480
+  dur: 15
+- m: lcr
+  tier: luv
+  I:
+    nitrogenated bastnasite rarer earth oxides: 1000
+    acetone: 1000
+  O:
+    bastnasite rarer earth oxide suspension: 1000
+  group: bastnasite
+  eut: 480
+  dur: 35
+- m: industrial centrifuge
+  tier: luv
+  I:
+    bastnasite rarer earth oxide suspension: 1000
+  O:
+    neodymium rare earth concentrate dust: 0.8
+    samaric rare earth concentrate dust: 0.5
+    diluted acetone: 750
+  group: bastnasite
+  eut: 480
+  dur: 45
+- m: thermic heating device
+  tier: iv
+  I:
+    diluted acetone: 50
+  O:
+    "[recycle] acetone": 30
+  group: bastnasite
+  eut: 120
+  dur: 1.2
+
+- m: lcr
+  tier: luv
+  I:
+    neodymium rare earth concentrate dust: 2
+    hydrochloric acid: 2000
+  O:
+    lanthanum chloride dust: 2
+    neodymium oxide dust: 2
+  group: bastnasite
+  eut: 800
+  dur: 45
+- m: industrial electrolyzer
+  tier: ev
+  I:
+    lanthanum chloride dust: 4
+  O:
+    lanthanum dust: 1
+    "[recycle into HCl] chlorine": 3000
+  group: bastnasite
+  eut: 60
+  dur: 2.7
+
+# Bastnasite line is very HCl negative. Lanthanum Chloride makes byproduct Chlorine. Lets loop that back in as HCL.
+- m: lcr
+  tier: ev
+  I:
+    "[recycle into HCl] chlorine": 1000
+    hydrogen: 1000
+  O:
+    "[recycle] hydrochloric acid": 1000
+  group: bastnasite
+  eut: 7
+  dur: 3
+
+- m: industrial electrolyzer
+  tier: ev
+  I:
+    neodymium oxide dust: 5
+  O:
+    neodymium dust: 2
+    "[recycle] oxygen": 3000
+  group: bastnasite
+  eut: 60
+  dur: 3.6
+  
+- m: lcr
+  tier: luv
+  I:
+    hydrogen: 1000
+    fluorine: 1000
+  O:
+    "[samarium] hydrofluoric acid": 1000
+  group: samarium
+  eut: 450
+  dur: 30
+
+- m: lcr
+  tier: iv
+  I:
+    samaric rare earth concentrate dust: 1
+    "[samarium] hydrofluoric acid": 2000
+  O:
+    fluorinated samaric concentrate dust: 1
+  group: samarium
+  eut: 480
+  dur: 15
+- m: volcanus
+  coils: naquadah alloy
+  tier: iv
+  I:
+    fluorinated samaric concentrate dust: 8
+    calcium: 4
+  O:
+    holmium dust: 1
+    samarium-terbium mixture dust: 4
+    calcium fluoride: 12000
+  group: samarium
+  heat: 1200
+  eut: 1920
+  dur: 80
+- m: large processing factory
+  tier: iv
+  I:
+    calcium fluoride: 1000
+  O:
+    calcium fluoride dust: 1
+  group: samarium
+  eut: 30
+  dur: 1.25
+- m: industrial electrolyzer
+  tier: ev
+  I:
+    calcium fluoride dust: 1
+  O:
+    "[recycle] calcium": 1
+    "[recycle] fluorine": 2000
+  group: samarium
+  eut: 60
+  dur: 0.95
+- m: lcr
+  tier: iv
+  I:
+    samarium-terbium mixture dust: 1
+    ammonium nitrate dust: 9
+  O:
+    nitrogenated samarium-terbium mixture dust: 1
+  group: samarium
+  eut: 480
+  dur: 30
+- m: lcr
+  tier: luv
+  I:
+    nitrogenated samarium-terbium mixture dust: 4
+    copper dust: 1
+  O:
+    terbium nitrate dust: 2
+    samaric residue dust: 2
+  group: samarium
+  eut: 1920
+  dur: 160
+- m: industrial electrolyzer
+  tier: ev
+  I:
+    terbium nitrate dust: 5
+  O:
+    terbium: 1
+    "[recycle] oxygen": 3000
+    "[recycle] nitrogen": 1000
+  group: samarium
+  eut: 90
+  dur: 1.6
+- m: industrial sifter
+  tier: ev
+  I:
+    samaric residue dust: 3
+  O:
+    samarium dust: 2
+    gadolinium dust: 1
+  group: samarium
+  eut: 1920
+  dur: 6.65
+- m: chemical plant
+  coils: naquadah alloy
+  pipe_casings: tungstensteel
+  tier: iv
+  I:
+    ammonia: 4000
+    nitric acid: 4000
+  O:
+    hydrated ammonium nitrate slurry: 5184
+  group: samarium
+  eut: 120
+  dur: 60
+
+- m: utupu-tanuri
+  coils: naquadah alloy
+  tier: iv
+  I:
+    hydrated ammonium nitrate slurry: 144
+  O:
+    ammonium nitrate dust: 1
+    # water: 250
+  group: samarium
+  eut: 480
+  dur: 11.25
+  heat: 0 # This don't seem right
+- m: lcr
+  tier: ev
+  I:
+    cerium recycle ammonia: 1000
+    cerium recycle hydrochloric acid: 1000
+  O:
+    ammonium chloride: 1000
+  group: cerium
+  eut: 30
+  dur: 0.75
+- m: lcr
+  tier: iv
+  I:
+    cerium dioxide dust: 3
+    hydrogen: 1000
+    ammonium chloride: 3000
+  O:
+    cerium chloride dust: 4
+    "[recycle] steam": 3000
+    "[recycle] cerium recycle ammonia": 3000
+  group: cerium
+  eut: 450
+  dur: 15
+- m: lcr
+  tier: ev
+  I:
+    cerium chloride dust: 8
+    oxalate: 3000
+  O:
+    cerium oxalate dust: 5
+    "[recycle] cerium recycle hydrochloric acid": 6000
+  group: cerium
+  eut: 450
+  dur: 15
+- m: volcanus
+  coils: naquadah
+  tier: iv
+  I:
+    cerium oxalate dust: 5
+    carbon dust: 3
+  O:
+    cerium (III) oxide dust: 5
+    carbon monoxide: 9000
+  group: cerium
+  heat: 800
+  eut: 480
+  dur: 10
+
+# zap carbon monoxide to replace carbon input (in excess)
+- m: industrial electrolyzer
+  tier: ev
+  I:
+    carbon monoxide: 1000
+  O:
+    "[recycle] carbon dust": 1
+    "[recycle] oxygen": 1000
+  group: cerium
+  eut: 60
+  dur: 5.6
+
+- m: industrial electrolyzer
+  tier: ev
+  I:
+    cerium (III) oxide dust: 5
+  O:
+    cerium dust: 2
+    "[recycle] oxygen": 3000
+  group: cerium
+  eut: 60
+  dur: 3.5
+
+
+
+- m: lcr
+  tier: iv
+  I:
+    raw silicon dust: 1
+    # Not-bracketed tag to this cycle a little easier to find
+    H2SiF6 recycle hydrofluoric acid: 6000
+  O:
+    hexafluorosilicic acid: 1000
+    "[H2SiF6 recycle] hydrogen": 4000
+  group: H2SiF6
+  eut: 120
+  dur: 20
+
+- m: lcr
+  tier: iv
+  I:
+    salt: 4
+    hexafluorosilicic acid: 1000
+  O:
+    sodiumfluorosilicate: 1000
+    "[H2SiF6 recycle] hydrochloric acid": 2000
+  group: H2SiF6
+  eut: 450
+  dur: 30
+
+# you could optionally make the H2SiF6 setup self-contained on hydrogen. It's neater for piping,
+# but then you end up using the Chlorine to make HCl it later (as this line is very HCl negative outside of this H2SiF6 component).
+# Since H2SiF6 has no other use in this game, I think it's smarter to save energy and use the HCl directly.
+# If you want to make it self-contained, you can add these and remove the partial hydrogen recycle machine below.
+# - m: industrial electrolyzer
+#   tier: iv
+#   I:
+#      "[H2SiF6 recycle] hydrochloric acid": 1000
+#   O:
+#     "[recycle] chlorine": 1000
+#     "[H2SiF6 recycle] hydrogen": 1000
+#   group: H2SiF6
+#   eut: 30
+#   dur: 36
+# - m: lcr
+#   tier: iv
+#   I:
+#     "[H2SiF6 recycle] hydrogen": 1000
+#     fluorine: 1000
+#   O:
+#     "[recycle] H2SiF6 recycle hydrofluoric acid": 1000
+#   group: H2SiF6
+#   eut: 450
+#   dur: 30
+
+# Partially recycle hydrogen to HF within the H2SiF6 component. 
+# The hexafluorosilicic acid step above burns 6000 HF for 4000 H, so we need 2000 fresh.
+# That's a 4:2 ratio, so the numbers are ugly. Multiply this machine by 3 to make the numbers nicer
+- m: lcr
+  tier: iv
+  I:
+    "[H2SiF6 recycle] hydrogen": 2000
+    "[fresh] hydrogen": 1000
+    fluorine: 3000
+  O:
+    "[recycle] H2SiF6 recycle hydrofluoric acid": 3000
+  group: H2SiF6
+  eut: 450
+  dur: 90
