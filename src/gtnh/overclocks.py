@@ -11,8 +11,9 @@ from termcolor import colored
 from src.data.basicTypes import Ingredient, IngredientCollection, Recipe
 
 
-def require(recipe: Recipe, requirements: tuple[str, str, str]):
+def require(recipe: Recipe, requirements: tuple[str, str, str]) -> None:
     # requirements should be a list of [key, type, reason]
+    # throws RuntimeError if any of the requirements are not met
     for req in requirements:
         key, req_type, reason = req
         pass_conditions = [key in vars(recipe), isinstance(getattr(recipe, key, None), req_type)]
@@ -26,7 +27,7 @@ class OverclockHandler:
     def __init__(
             self,
             parent_context, # TODO: Figure out how to type this (ProgramContext)
-        ):
+        ) -> None:
         self.parent_context = parent_context
         self.ignore_underclock = False # Whether to throw an error or actually underclock if
                                        # USER_VOLTAGE < EUT

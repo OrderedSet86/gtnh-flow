@@ -3,7 +3,7 @@ import collections
 # Modified from https://stackoverflow.com/a/53995651/7247528
 
 
-class BasicGraph(object):
+class BasicGraph:
     def __init__(self, edges) -> None:
         self.edges = edges
         self.adj = BasicGraph._build_adjacency_list(edges)

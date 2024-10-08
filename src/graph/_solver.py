@@ -36,7 +36,7 @@ from src.graph._output import (
 class SympySolver:
 
 
-    def __init__(self, graph: Graph):
+    def __init__(self, graph: Graph) -> None:
         self.graph = graph
         self.variables = []
         self.variable_idx_counter = 0 # Autogen current "head" index for variable number
@@ -264,7 +264,7 @@ class SympySolver:
             multi_machine: str,
             multi_io_direction: Literal['I', 'O'],
             involved_machine_edges: list[EdgeIndexType],
-        ):
+        ) -> None:
         # Log
         multi_product = involved_machine_edges[0][2]
         if multi_io_direction == 'O':

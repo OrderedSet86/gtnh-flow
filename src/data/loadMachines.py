@@ -5,7 +5,7 @@ import yaml
 from src.data.basicTypes import Ingredient, IngredientCollection, Recipe
 
 
-def recipesFromConfig(project_name: str, project_folder: str = 'projects'):
+def recipesFromConfig(project_name: str, project_folder: str = 'projects') -> list[Recipe]:
     # Load config file
     CONFIG_FILE_PATH = Path(project_folder) / f'{project_name}'
     project_name = CONFIG_FILE_PATH.name.split('.')[0]

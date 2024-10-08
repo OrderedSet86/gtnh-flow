@@ -11,7 +11,7 @@ from src.data.loadMachines import recipesFromConfig
 # (Minus a few whitelisted long exceptions like nanocircuits)
 
 
-def generateProjectPaths():
+def generateProjectPaths() -> list[str]:
     skip_names = [
         # Too big
         'circuits/nanocircuits.yaml',
@@ -52,7 +52,7 @@ def generateProjectPaths():
 
 
 @pytest.mark.parametrize("project_name", generateProjectPaths())
-def test_lazyGenerateGraphs(project_name: str):
+def test_lazyGenerateGraphs(project_name: str) -> None:
     pc = ProgramContext('tests/sanity_config.yaml')
     recipes = recipesFromConfig(project_name, project_folder='')
 

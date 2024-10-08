@@ -38,7 +38,12 @@ recipe_sb_centrifuge = Recipe(
         (mod_recipe(recipe_sb_centrifuge, user_voltage="hv"), 80, 20),
     ],
 )
-def test_standardOverclock(recipe: Recipe, expected_eut: float, expected_dur: float, overclock_handler):
+def test_standardOverclock(
+        recipe: Recipe,
+        expected_eut: float,
+        expected_dur: float,
+        overclock_handler: OverclockHandler,
+    ) -> None:
     overclocked = overclock_handler.overclockRecipe(recipe)
     assert overclocked.eut == expected_eut
     assert overclocked.dur == expected_dur
@@ -61,7 +66,12 @@ recipe_lcr = Recipe(
         (mod_recipe(recipe_lcr, user_voltage="hv"), 80, 5),
     ],
 )
-def test_perfectOverclock(recipe: Recipe, expected_eut: float, expected_dur: float, overclock_handler):
+def test_perfectOverclock(
+        recipe: Recipe,
+        expected_eut: float,
+        expected_dur: float,
+        overclock_handler: OverclockHandler,
+    ) -> None:
     overclocked = overclock_handler.overclockRecipe(recipe)
     assert overclocked.eut == expected_eut
     assert overclocked.dur == expected_dur
@@ -109,7 +119,12 @@ recipe_ebf = Recipe(
         ),
     ],
 )
-def test_EBFOverclock(recipe: Recipe, expected_eut: float, expected_dur: float, overclock_handler):
+def test_EBFOverclock(
+        recipe: Recipe,
+        expected_eut: float,
+        expected_dur: float,
+        overclock_handler: OverclockHandler,
+    ) -> None:
     overclocked = overclock_handler.overclockRecipe(recipe)
     assert overclocked.eut == expected_eut
     assert overclocked.dur == expected_dur
@@ -201,7 +216,13 @@ recipe_samarium = Recipe(
         ),
     ],
 )
-def test_volcanusOverclock(recipe: Recipe, expected_eut: float, expected_dur: float, expected_parallel: int, overclock_handler):
+def test_volcanusOverclock(
+        recipe: Recipe,
+        expected_eut: float,
+        expected_dur: float,
+        expected_parallel: int,
+        overclock_handler: OverclockHandler,
+    ) -> None:
     overclocked = overclock_handler.overclockRecipe(recipe)
     assert overclocked.eut == expected_eut
     assert overclocked.dur == expected_dur
@@ -243,7 +264,12 @@ recipe_pyrolyse_oven = Recipe(
         ),
     ],
 )
-def test_pyrolyseOverclock(recipe: Recipe, expected_eut: float, expected_dur: float, overclock_handler):
+def test_pyrolyseOverclock(
+        recipe: Recipe,
+        expected_eut: float,
+        expected_dur: float,
+        overclock_handler: OverclockHandler,
+    ) -> None:
     overclocked = overclock_handler.overclockRecipe(recipe)
     assert overclocked.eut == expected_eut
-    assert overclocked.dur == expected_dur
+    assert overclocked.dur == expected_dur  

@@ -1,6 +1,6 @@
 from collections import defaultdict
 from dataclasses import dataclass
-from typing import Union
+from typing import Iterable, Union
 
 
 @dataclass
@@ -10,7 +10,7 @@ class Ingredient:
 
 
 class IngredientCollection:
-    def __init__(self, *ingredient_list: list[Ingredient]):
+    def __init__(self, *ingredient_list: list[Ingredient]) -> None:
         self._ings = list(ingredient_list)
         # Note: name is not a unique identifier for multi-input situations
         # therefore, need to defaultdict a list
@@ -18,10 +18,10 @@ class IngredientCollection:
         for ing in self._ings:
             self._ingdict[ing.name].append(ing.quant)
 
-    def __iter__(self):
+    def __iter__(self) -> Iterable[Ingredient]:
         return iter(self._ings)
 
-    def __getitem__(self, idx: Union[int, str]):
+    def __getitem__(self, idx: Union[int, str]) -> Union[Ingredient, list[float]]:
         # int goes to self._ings, str goes to self._ingdict
         if isinstance(idx, int):
             return self._ings[idx]
@@ -30,10 +30,10 @@ class IngredientCollection:
         else:
             raise RuntimeError(f'Improper access to {self} using {idx}')
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str([x for x in self._ings])
 
-    def __mul__(self, mul_num: Union[float, int]):
+    def __mul__(self, mul_num: Union[float, int]) -> 'IngredientCollection':
         assert isinstance(mul_num, (int, float))
         for ing in self._ings:
             ing.quant *= mul_num
@@ -44,14 +44,14 @@ class IngredientCollection:
 
         return self
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._ings)
 
-    def addItem(self, item: Ingredient):
+    def addItem(self, item: Ingredient) -> None:
         self._ings.append(item)
         self._ingdict[item.name].append(item.quant)
 
-    def __add__(self, other: 'IngredientCollection'):
+    def __add__(self, other: 'IngredientCollection') -> 'IngredientCollection':
         for ing in other:
             self.addItem(ing)
         return self
@@ -67,7 +67,7 @@ class Recipe:
             eut: float,
             dur: float, # With new subtick this is tracked as float
             **kwargs
-        ):
+        ) -> None:
         self.machine = machine_name
         self.user_voltage = user_voltage
         self.I = inputs
@@ -83,10 +83,10 @@ class Recipe:
                 value = value.lower()
             setattr(self, key, value)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str([f'{x}={getattr(self, x)}' for x in vars(self)])
 
-    def __mul__(self, mul_num: Union[int, float]):
+    def __mul__(self, mul_num: Union[int, float]) -> 'Recipe':
         assert isinstance(mul_num, (int, float))
         assert self.multiplier == -1 # Undefined behavior with multiple multiplications
 

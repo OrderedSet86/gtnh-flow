@@ -21,7 +21,7 @@ def overclock_handler():
         "HSS-G",
     ],
 )
-def test_coils_value_case_sensitivity(coils: str, overclock_handler):
+def test_coils_value_case_sensitivity(coils: str, overclock_handler: OverclockHandler):
     recipe = Recipe(
         "electric blast furnace",
         "ev",

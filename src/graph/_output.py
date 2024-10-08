@@ -62,7 +62,7 @@ def makeNodeTable(
         outputs: list[str],
         input_quants: list[float] = None,
         output_quants: list[float] = None,
-    ):
+    ) -> tuple[bool, str]:
     is_inverted = self.graph_config['ORIENTATION'] in ['BT', 'RL']
     is_vertical = self.graph_config['ORIENTATION'] in ['TB', 'BT']
     num_inputs = len(inputs)
@@ -141,7 +141,7 @@ def constructCell(
         io.write(f'<td border="0">{cell}</td>')
 
 
-def calculateNodeRank(self):
+def calculateNodeRank(self) -> int:
     # To make layout more intuitive:
     # 1. Mark all nodes with no predecessors as rank 0
     # 2. Propagate rank updates down the tree
@@ -166,7 +166,7 @@ def constructPortAwareEdgeStyling(
         is_vertical: bool,
         src_has_port: bool,
         dst_has_port: bool,
-    ):
+    ) -> dict[str, str]:
     src_node, dst_node, ing_name = io_info
     ing_quant = edge_data['quant']
     ing_id = self.getIngId(ing_name)
