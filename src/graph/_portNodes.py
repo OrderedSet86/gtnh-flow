@@ -1,12 +1,14 @@
 import math
 import re
 from collections import defaultdict
+from typing import Literal
+
 
 # This file is for the "port" style nodes
 # as designed by Usagirei in https://github.com/OrderedSet86/gtnh-flow/pull/4
 
 
-def stripBrackets(self, ing):
+def stripBrackets(self, ing: str) -> str:
     if self.graph_config['STRIP_BRACKETS']:
         prefix = False
         if ing[:2] == '\u2588 ':
@@ -19,7 +21,7 @@ def stripBrackets(self, ing):
         return ing
 
 
-def nodeHasPort(self, node):
+def nodeHasPort(self, node: str) -> bool:
     if node in ['source', 'sink']:
         return True
     if re.match(r'^\d+$', node):
@@ -27,7 +29,7 @@ def nodeHasPort(self, node):
     return False
 
 
-def getOutputPortSide(self):
+def getOutputPortSide(self) -> str:
     dir = self.graph_config['ORIENTATION']
     if dir == 'TB':
         return 's'
@@ -39,7 +41,7 @@ def getOutputPortSide(self):
         return 'w'
 
 
-def getInputPortSide(self):
+def getInputPortSide(self) -> str:
     dir = self.graph_config['ORIENTATION']
     if dir == 'TB':
         return 'n'
@@ -51,18 +53,22 @@ def getInputPortSide(self):
         return 'e'
 
 
-def getUniqueColor(self, id):
-    if id not in self._color_dict:
-        self._color_dict[id] = next(self._color_cycler)
-    return self._color_dict[id]
+def getUniqueColor(self, port_id: str) -> str:
+    if port_id not in self._color_dict:
+        self._color_dict[port_id] = next(self._color_cycler)
+    return self._color_dict[port_id]
 
 
-def getPortId(self, ing_name, port_type):
+def getPortId(
+        self,
+        ing_name: str,
+        port_type: Literal['i', 'o']
+    ) -> str:
     normal = re.sub(' ','_', ing_name).lower().strip()
     return f'{port_type}_{normal}'
 
 
-def getIngId(self, ing_name):
+def getIngId(self, ing_name: str) -> str:
     id = ing_name
     id = re.sub(r'\[.*?\]', '', id)
     id = id.strip()
@@ -70,7 +76,7 @@ def getIngId(self, ing_name):
     return id.lower()
 
 
-def getIngLabel(self, ing_name):
+def getIngLabel(self, ing_name: str) -> str:
     capitalization_exceptions = {
         'eu': 'EU',
     }
@@ -81,7 +87,7 @@ def getIngLabel(self, ing_name):
         return ing_name.title()
 
 
-def getQuantLabel(self, ing_id, ing_quant):
+def getQuantLabel(self, ing_id: str, ing_quant: float) -> str:
     unit_exceptions = {
         'eu': lambda eu: f'{int(math.floor(eu / 20))}/t'
     }
@@ -91,7 +97,7 @@ def getQuantLabel(self, ing_id, ing_quant):
         return f'{self.userRound(ing_quant)}/s'
 
 
-def _combineOutputs(self):
+def _combineOutputs(self) -> None:
     ings = defaultdict(list)
     for src,dst,ing in self.edges.keys():
         ings[(src,ing)].append(dst)
@@ -120,7 +126,7 @@ def _combineOutputs(self):
         self.addEdge(src, joint_id, ing, qSum)
 
 
-def _combineInputs(self):
+def _combineInputs(self) -> None:
     ings = defaultdict(list)
     for src,dst,ing in self.edges.keys():
         ings[(dst,ing)].append(src)

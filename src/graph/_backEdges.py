@@ -4,20 +4,21 @@ import collections
 
 
 class BasicGraph(object):
-    def __init__(self, edges):
+    def __init__(self, edges) -> None:
         self.edges = edges
         self.adj = BasicGraph._build_adjacency_list(edges)
         self.back_edges = []
 
     @staticmethod
-    def _build_adjacency_list(edges):
+    def _build_adjacency_list(edges) -> dict[str, list[str]]:
         adj = collections.defaultdict(list)
         for edge in edges:
             adj[edge[0]].append(edge[1])
         return adj
 
 
-def dfs(G):
+def dfs(G: BasicGraph) -> None:
+    # Mutates G directly
     discovered = set()
     finished = set()
 
@@ -26,7 +27,13 @@ def dfs(G):
             dfs_visit(G, u, discovered, finished)
 
 
-def dfs_visit(G, u, discovered, finished):
+def dfs_visit(
+        G: BasicGraph,
+        u: dict[str, list[str]], # adjacency list
+        discovered: set[str],
+        finished: set[str],
+    ) -> None:
+    # Mutates G directly
     discovered.add(u)
 
     for v in G.adj[u]:

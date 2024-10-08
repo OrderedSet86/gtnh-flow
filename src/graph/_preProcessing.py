@@ -6,7 +6,7 @@ from src.graph._backEdges import BasicGraph, dfs
 from src.graph._utils import swapIO
 
 
-def connectGraph(self):
+def connectGraph(self) -> None:
     '''
     Connects recipes without locking the quantities
     '''
@@ -95,7 +95,7 @@ def connectGraph(self):
         self.outputGraphviz()
 
 
-def removeBackEdges(self):
+def removeBackEdges(self) -> None:
     # Loops are possible in machine processing, but very difficult / NP-hard to solve properly
     # Want to make algorithm simple, so just break all back edges and send them to sink instead
     # The final I/O information will have these balanced, so this is ok

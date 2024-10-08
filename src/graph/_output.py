@@ -1,12 +1,21 @@
 import re
 from io import StringIO
 from collections import defaultdict
+from typing import Any, Iterable, Literal, Union
 
 import graphviz
 from termcolor import colored
 
+from src.data.basicTypes import EdgeIndexType
 
-def addNodeInternal(self, g, node_name, **kwargs):
+
+def addNodeInternal(
+        self,
+        g: graphviz.Digraph,
+        node_name: str,
+        **kwargs
+    ) -> None:
+
     node_style = {
         'style': 'filled',
         'fontname': self.graph_config['GENERAL_FONT'],
@@ -17,7 +26,7 @@ def addNodeInternal(self, g, node_name, **kwargs):
     isTable = False
     newLabel = None
 
-    def unique(sequence):
+    def unique(sequence: Iterable) -> list: # TODO: Not sure why this exists when set could be used
         seen = set()
         return [x for x in sequence if not (x in seen or seen.add(x))]
 
@@ -46,7 +55,14 @@ def addNodeInternal(self, g, node_name, **kwargs):
     )
 
 
-def makeNodeTable(self, lab, inputs, outputs, input_quants=None, output_quants=None):
+def makeNodeTable(
+        self,
+        lab: str,
+        inputs: list[str],
+        outputs: list[str],
+        input_quants: list[float] = None,
+        output_quants: list[float] = None,
+    ):
     is_inverted = self.graph_config['ORIENTATION'] in ['BT', 'RL']
     is_vertical = self.graph_config['ORIENTATION'] in ['TB', 'BT']
     num_inputs = len(inputs)
@@ -101,7 +117,15 @@ def makeNodeTable(self, lab, inputs, outputs, input_quants=None, output_quants=N
     return (True, io.getvalue())
 
 
-def constructCell(self, cell, i, io, port_type, quant_recipe, quant_s_array=None):
+# TODO: Needs nomenclature update
+def constructCell(
+        self,
+        cell: str,
+        i: int,
+        io: StringIO,
+        port_type: Literal['i', 'o', None],
+        quant_recipe: list[float],
+    ) -> None:
     background_color = self.graph_config['BACKGROUND_COLOR']
 
     if port_type:
@@ -111,9 +135,6 @@ def constructCell(self, cell, i, io, port_type, quant_recipe, quant_s_array=None
         if quant_recipe:
             quant = self.userAccurate(quant_recipe[i])
             label = f'{label} x{quant}'
-        if quant_s_array:
-            # Expected to be a list of [ing_color, ing_quant_per_s]
-            pass
 
         io.write(f'<td border="1" PORT="{port_id}" bgcolor="{background_color}" color="white"><font color="white">{label}</font></td>')
     else:
@@ -125,10 +146,10 @@ def calculateNodeRank(self):
     # 1. Mark all nodes with no predecessors as rank 0
     # 2. Propagate rank updates down the tree
     # 3. Send these explicit ranks to graphviz
-    pass
+    raise NotImplementedError()
 
 
-def mulcolor(h, f):
+def mulcolor(h: str, f: Union[float, int]) -> str:
     h = h.lstrip('#')
     r, g, b = tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
     r = max(0, min(255, int(r * f)))
@@ -137,7 +158,15 @@ def mulcolor(h, f):
     return '#' + ''.join(hex(x)[2:].zfill(2) for x in [r, g, b])
 
 
-def constructPortAwareEdgeStyling(self, io_info, edge_data, edge_style, is_vertical, src_has_port, dst_has_port):
+def constructPortAwareEdgeStyling(
+        self,
+        io_info: EdgeIndexType,
+        edge_data: dict[str, Any], # TODO: Make nicer type for this
+        edge_style: dict[str, str],
+        is_vertical: bool,
+        src_has_port: bool,
+        dst_has_port: bool,
+    ):
     src_node, dst_node, ing_name = io_info
     ing_quant = edge_data['quant']
     ing_id = self.getIngId(ing_name)
@@ -181,7 +210,7 @@ def constructPortAwareEdgeStyling(self, io_info, edge_data, edge_style, is_verti
     return port_style
 
 
-def outputGraphviz(self):
+def outputGraphviz(self) -> None:
     # Outputs a graphviz png using the graph info
     edge_style = {
         'fontname': self.graph_config['GENERAL_FONT'],
@@ -272,8 +301,15 @@ def outputGraphviz(self):
         src_port = f'{src_port}:{outPort}' if src_has_port else src_port
         dst_port = f'{dst_port}:{inPort}' if dst_has_port else dst_port
 
-        port_style = constructPortAwareEdgeStyling(self, io_info, edge_data, edge_style, is_vertical, src_has_port,
-                                                   dst_has_port)
+        port_style = constructPortAwareEdgeStyling(
+            self,
+            io_info,
+            edge_data,
+            edge_style,
+            is_vertical,
+            src_has_port,
+            dst_has_port,
+        )
 
         color_style = dict(
             fontcolor=mulcolor(ing_color, 1.5),

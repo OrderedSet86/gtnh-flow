@@ -1,5 +1,6 @@
 from collections import defaultdict
 from dataclasses import dataclass
+from typing import Union
 
 
 @dataclass
@@ -9,19 +10,19 @@ class Ingredient:
 
 
 class IngredientCollection:
-    def __init__(self, *ingredient_list):
+    def __init__(self, *ingredient_list: list[Ingredient]):
         self._ings = list(ingredient_list)
         # Note: name is not a unique identifier for multi-input situations
         # therefore, need to defaultdict a list
         self._ingdict = defaultdict(list)
         for ing in self._ings:
             self._ingdict[ing.name].append(ing.quant)
-        # self._ingdict = {x.name: x.quant for x in self._ings}
 
     def __iter__(self):
         return iter(self._ings)
 
-    def __getitem__(self, idx):
+    def __getitem__(self, idx: Union[int, str]):
+        # int goes to self._ings, str goes to self._ingdict
         if isinstance(idx, int):
             return self._ings[idx]
         elif isinstance(idx, str):
@@ -32,7 +33,8 @@ class IngredientCollection:
     def __repr__(self):
         return str([x for x in self._ings])
 
-    def __mul__(self, mul_num):
+    def __mul__(self, mul_num: Union[float, int]):
+        assert isinstance(mul_num, (int, float))
         for ing in self._ings:
             ing.quant *= mul_num
         self._ingdict = defaultdict(list)
@@ -58,12 +60,12 @@ class IngredientCollection:
 class Recipe:
     def __init__(
             self,
-            machine_name,
-            user_voltage,
-            inputs,
-            outputs,
-            eut,
-            dur,
+            machine_name: str,
+            user_voltage: str,
+            inputs: IngredientCollection,
+            outputs: IngredientCollection,
+            eut: float,
+            dur: float, # With new subtick this is tracked as float
             **kwargs
         ):
         self.machine = machine_name
@@ -84,7 +86,7 @@ class Recipe:
     def __repr__(self):
         return str([f'{x}={getattr(self, x)}' for x in vars(self)])
 
-    def __mul__(self, mul_num):
+    def __mul__(self, mul_num: Union[int, float]):
         assert isinstance(mul_num, (int, float))
         assert self.multiplier == -1 # Undefined behavior with multiple multiplications
 
@@ -95,6 +97,9 @@ class Recipe:
 
         return self
 
+
+EdgeIndexType = tuple[str, str, str] # (node_from, node_to, ing_name)
+# EdgeDataType = dict[] # TODO: Make nicer type for this
 
 
 if __name__ == '__main__':

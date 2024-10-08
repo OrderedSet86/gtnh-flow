@@ -1,9 +1,8 @@
-import logging
 import math
-import re
 from collections import defaultdict
 from copy import deepcopy
 from string import ascii_uppercase
+from typing import Generator, Union
 
 import yaml
 from termcolor import colored, cprint
@@ -14,7 +13,7 @@ from src.gtnh.overclocks import OverclockHandler
 
 
 
-def capitalizeMachine(machine):
+def capitalizeMachine(machine: str) -> str:
     # check if machine has capitals, and if so, preserve them
     capitals = set(ascii_uppercase)
     machine_capitals = [ch for ch in machine if ch in capitals]
@@ -32,7 +31,7 @@ def capitalizeMachine(machine):
 
 
 
-def createMachineLabels(self):
+def createMachineLabels(self) -> None:
     # Distillation Tower
     # ->
     # 5.71x HV Distillation Tower
@@ -101,7 +100,7 @@ def createMachineLabels(self):
 
 
 
-def addUserNodeColor(self):
+def addUserNodeColor(self) -> None:
     targeted_nodes = [i for i, x in self.recipes.items() if getattr(x, 'target', False) != False]
     numbered_nodes = [i for i, x in self.recipes.items() if getattr(x, 'number', False) != False]
     all_user_nodes = set(targeted_nodes) | set(numbered_nodes)
@@ -113,7 +112,7 @@ def addUserNodeColor(self):
         self.nodes[rec_id]['label'] = '\n'.join(lines)
 
 
-def addMachineMultipliers(self):
+def addMachineMultipliers(self) -> None:
     # Compute machine multiplier based on solved ingredient quantities
     # FIXME: If multipliers disagree, sympy solver might have failed on an earlier step
 
@@ -146,8 +145,7 @@ def addMachineMultipliers(self):
         rec.eut = rec.multiplier * rec.eut
 
 
-
-def addPowerLineNodesV2(self):
+def addPowerLineNodesV2(self) -> None:
     generator_names = {
         0: 'gas turbine',
         1: 'combustion gen',
@@ -212,7 +210,7 @@ def addPowerLineNodesV2(self):
             node_idx = f'{highest_node_index}'
 
             # Burn gen is a singleblock
-            def findClosestVoltage(voltage_list, voltage):
+            def findClosestVoltage(voltage_list: list[str], voltage: str) -> str:
                 nonlocal voltages
                 leftmost = voltages.index(voltage_list[0])
                 rightmost = voltages.index(voltage_list[-1])
@@ -360,7 +358,7 @@ def addPowerLineNodesV2(self):
         self.createAdjacencyList()
 
 
-def addSummaryNode(self):
+def addSummaryNode(self) -> None:
     # Now that tree is fully locked, add I/O node
     # Specifically, inputs are adj[source] and outputs are adj[sink]
     with open('data/misc.yaml', 'r') as f:
@@ -371,7 +369,13 @@ def addSummaryNode(self):
     color_positive = self.graph_config['POSITIVE_COLOR']
     color_negative = self.graph_config['NEGATIVE_COLOR']
 
-    def makeLineHtml(lab_text, amt_text, lab_color, amt_color):
+    def makeLineHtml(
+            lab_text: str,
+            amt_text: str,
+            lab_color: str,
+            amt_color: str,
+        ) -> str:
+        nonlocal self
         return ''.join([
             '<tr>'
             f'<td align="left"><font color="{lab_color}" face="{self.graph_config["SUMMARY_FONT"]}">{self.stripBrackets(lab_text)}</font></td>'
@@ -406,7 +410,7 @@ def addSummaryNode(self):
             if direction == -1:
                 input_flows[ing_id] += direction * quant
 
-    def canonicalizeFlow(flow):
+    def canonicalizeFlow(flow: float) -> Union[int, float]:
         # Set to 0 if too small (intended to avoid floating point issues)
         return flow if abs(flow) > 1e-5 else 0
     total_io = {ing: canonicalizeFlow(flow) for ing, flow in total_io.items()}
@@ -414,11 +418,11 @@ def addSummaryNode(self):
     # Create I/O lines
     io_label_lines = []
 
-    def makeIOTitle(title):
+    def makeIOTitle(title: str) -> str:
         font = self.graph_config["SUMMARY_FONT"]
         return f'<tr><td align="left"><font color="white" face="{font}"><b>{title}</b></font></td></tr><hr/>'
 
-    def makeIOLines(flows, color):
+    def makeIOLines(flows: list[float], color: str) -> Generator[str, None, None]:
         for id, quant in sorted(flows, key=lambda x: -abs(x[1])):
             amt_text = self.getQuantLabel(id, quant)
             name_text = '\u2588 ' + ing_names[id]
@@ -515,7 +519,7 @@ def addSummaryNode(self):
     )
 
 
-def bottleneckPrint(self):
+def bottleneckPrint(self) -> None:
     # Prints bottlenecks normalized to an input voltage.
     machine_recipes = [x for x in _iterateOverMachines(self)]
     machine_recipes.sort(

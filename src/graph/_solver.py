@@ -1,17 +1,19 @@
 # In theory solving the machine flow as a linear program is fast and simple -
 # this prototype explores this.
 
-import json
-import logging
 from collections import Counter, deque
 from math import isclose
+from typing import Any, Literal
 
 from sympy import linsolve, symbols
 from sympy.core.numbers import Float
+from sympy.core.expr import Expr
+from sympy.core.symbol import Symbol
 from sympy.solvers import solve
 from sympy.sets.sets import EmptySet
 from termcolor import colored
 
+from src.data.basicTypes import EdgeIndexType, Recipe
 from src.graph import Graph
 from src.graph._preProcessing import (
     connectGraph,
@@ -34,7 +36,7 @@ from src.graph._output import (
 class SympySolver:
 
 
-    def __init__(self, graph):
+    def __init__(self, graph: Graph):
         self.graph = graph
         self.variables = []
         self.variable_idx_counter = 0 # Autogen current "head" index for variable number
@@ -46,7 +48,13 @@ class SympySolver:
         self.edge_from_perspective_to_index = {} # (edge, machine_id) -> variable index
 
 
-    def arrayIndex(self, machine, product, direction, multi_idx=0):
+    def arrayIndex(
+            self,
+            machine: str,
+            product: str,
+            direction: Literal['I', 'O'],
+            multi_idx: int = 0,
+        ) -> int:
         key = (machine, product, direction, multi_idx)
         if key not in self.lookup:
             self.graph.parent_context.log.debug(colored(f'Addding new variable {key} {self.variable_idx_counter}', 'red'))
@@ -61,7 +69,7 @@ class SympySolver:
             return self.lookup[key]
 
 
-    def run(self):
+    def run(self) -> None:
         # Construct system of equations
         self._addUserLocking() # add known equations from user "number" and "target" args
         self._addMachineInternalLocking() # add relations inside machines - eg 1000 wood tar -> 350 benzene
@@ -79,17 +87,17 @@ class SympySolver:
         if self.solved_vars:
             self._writeQuantsToGraph()
     
-    def outputGraphvizProxy(self):
+    def outputGraphvizProxy(self) -> None:
         outputGraphviz(self.graph)
         if self.graph.graph_config.get('PRINT_BOTTLENECKS') and self.solved_vars:
             bottleneckPrint(self.graph)
 
-    def _addNewEquation(self, new_eqn):
+    def _addNewEquation(self, new_eqn: Expr) -> None:
         self.graph.parent_context.log.debug(colored(f'New equation: {new_eqn}', 'cyan'))
         self.system.append(new_eqn)
 
 
-    def _addUserLocking(self):
+    def _addUserLocking(self) -> None:
         # Add user-determined locked inputs
         targeted_nodes = [i for i, x in self.graph.recipes.items() if getattr(x, 'target', False) != False]
         numbered_nodes = [i for i, x in self.graph.recipes.items() if getattr(x, 'number', False) != False]
@@ -149,7 +157,7 @@ class SympySolver:
                     raise RuntimeError(f'Targetted quantity must be in machine I/O for \n{rec}')
 
     
-    def _addMachineInternalLocking(self):
+    def _addMachineInternalLocking(self) -> None:
         # Add machine equations
         for rec_id in self.graph.nodes:
             if self.graph._checkIfMachine(rec_id):
@@ -179,7 +187,7 @@ class SympySolver:
                             self._addNewEquation(new_eqn)
 
 
-    def _populateEFPTI(self):
+    def _populateEFPTI(self) -> None:
         # Populate edge_from_perspective_to_index for all edges - so there's something consistent to call for all edges
         for edge in self.graph.edges:
             a, b, product = edge
@@ -193,7 +201,7 @@ class SympySolver:
                     self.edge_from_perspective_to_index[(edge, b)] = self.arrayIndex(b, product, 'I')
 
 
-    def _addMachineMachineEdges(self):
+    def _addMachineMachineEdges(self) -> None:
         # Add machine-machine edges
         # Need to be careful about how these are added - multi input and multi output can
         #   require arbitrarily many variables per equation
@@ -251,7 +259,12 @@ class SympySolver:
                 computed_edges.update(set(involved_machine_edges))
 
 
-    def _addMultiEquationsOnEdge(self, multi_machine, multi_io_direction, involved_machine_edges):
+    def _addMultiEquationsOnEdge(
+            self,
+            multi_machine: str,
+            multi_io_direction: Literal['I', 'O'],
+            involved_machine_edges: list[EdgeIndexType],
+        ):
         # Log
         multi_product = involved_machine_edges[0][2]
         if multi_io_direction == 'O':
@@ -299,7 +312,7 @@ class SympySolver:
         self._addNewEquation(eqn)
 
 
-    def _solve(self):
+    def _solve(self) -> None:
         # while True: # Loop until solved - algorithm may adjust edges each time it sees an EmptySet
         res = linsolve(self.system, self.variables)
         if isinstance(res, EmptySet):
@@ -336,7 +349,7 @@ class SympySolver:
             )
 
 
-    def _searchForInconsistency(self):
+    def _searchForInconsistency(self) -> None:
         # Solve each equation stepwise until inconsistency is found, then report to end user
 
         self.graph.parent_context.log.info(colored('Searching for inconsistency in system of equations...', 'blue'))
@@ -406,7 +419,7 @@ class SympySolver:
             return
 
         # Check inconsistent equations to see if products on both sides are the same - these are the core issues
-        def var_to_idx(var):
+        def var_to_idx(var: Symbol) -> int:
             return int(str(var).strip('v'))
 
         # for k, v in edge_from_perspective_to_index.items():
@@ -491,7 +504,7 @@ class SympySolver:
                     pass
 
 
-    def _debugAddVarsToEdges(self):
+    def _debugAddVarsToEdges(self) -> None:
         # Add variable indices to edges and rec_id to machines
 
         # Lookup is a dictionary defined like this:
@@ -598,7 +611,7 @@ class SympySolver:
             self.graph.nodes[rec_id]['label'] = f'[id:{rec_id}] {rec.machine}'
 
 
-    def _writeQuantsToGraph(self):
+    def _writeQuantsToGraph(self) -> None:
         # Update graph edge values
         for edge in self.graph.edges:
             a, b, product = edge
@@ -638,14 +651,14 @@ class SympySolver:
 
 
 
-def graphPreProcessing(self):
+def graphPreProcessing(self) -> None:
     connectGraph(self)
     if not self.graph_config.get('KEEP_BACK_EDGES', False):
         removeBackEdges(self)
     self.createAdjacencyList()
 
 
-def graphPostProcessing(self):
+def graphPostProcessing(self) -> None:
     if self.graph_config.get('POWER_LINE', False):
         addPowerLineNodesV2(self)
 
@@ -660,7 +673,12 @@ def graphPostProcessing(self):
         self._combineOutputs()
 
 
-def systemOfEquationsSolverGraphGen(self, project_name, recipes, graph_config):
+def systemOfEquationsSolverGraphGen(
+        self,
+        project_name: str,
+        recipes: list[Recipe],
+        graph_config: dict[str, Any],
+    ) -> None:
     g = Graph(project_name, recipes, self, graph_config=graph_config)
     self._graph = g # For test access
 

@@ -1,12 +1,13 @@
-from collections import defaultdict
 import math
+from collections import defaultdict
+from typing import Generator, Literal, Union
 
 from termcolor import colored
 
 from src.data.basicTypes import Recipe
 
 
-def swapIO(io_type):
+def swapIO(io_type: Literal['I', 'O']) -> Literal['I', 'O']:
     if io_type == 'I':
         return 'O'
     elif io_type == 'O':
@@ -15,18 +16,25 @@ def swapIO(io_type):
         raise RuntimeError(f'Improper I/O type: {io_type}')
 
 
-def addNode(self, recipe_id, **kwargs):
+def addNode(self, recipe_id: str, **kwargs) -> None:
     self.nodes[recipe_id] = kwargs
 
 
-def addEdge(self, node_from, node_to, ing_name, quantity, **kwargs):
+def addEdge(
+        self,
+        node_from: str,
+        node_to: str,
+        ing_name: str,
+        quantity: float,
+        **kwargs
+    ) -> None:
     self.edges[(node_from, node_to, ing_name)] = {
         'quant': quantity,
         'kwargs': kwargs
     }
 
 
-def userRound(number):
+def userRound(number: Union[int, float]) -> str:
     # Display numbers nicely for end user (eg. 814.3k)
     # input int/float, return string
     cutoffs = {
@@ -42,7 +50,7 @@ def userRound(number):
             return rounded
 
 
-def userAccurate(number: int | float) -> str:
+def userAccurate(number: Union[int, float]) -> str:
     """
     Displays a number in a human-readable and accurate way
 
@@ -94,7 +102,7 @@ def userAccurate(number: int | float) -> str:
     return formatted
 
 
-def createAdjacencyList(self):
+def createAdjacencyList(self) -> None:
     # Compute "adjacency list" (node -> {I: edges, O: edges}) for edges and machine-involved edges
     adj = defaultdict(lambda: defaultdict(list))
     adj_machine = defaultdict(lambda: defaultdict(list))
@@ -127,7 +135,7 @@ def createAdjacencyList(self):
         self.parent_context.log.debug(colored(''))
 
 
-def _checkIfMachine(self, rec_id):
+def _checkIfMachine(self, rec_id: str) -> bool:
     # TODO: Memoize calls
     if rec_id in {'source', 'sink', 'total_io_node'}:
         return False
@@ -136,7 +144,7 @@ def _checkIfMachine(self, rec_id):
     return True
 
 
-def _iterateOverMachines(self):
+def _iterateOverMachines(self) -> Generator[Recipe, None, None]:
     # Iterate over non-source/sink noedes and non power nodes
     for rec_id in self.nodes:
         if self._checkIfMachine(rec_id):

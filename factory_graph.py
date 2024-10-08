@@ -4,6 +4,7 @@ import logging
 import os
 import traceback
 from pathlib import Path
+from typing import Literal, Union
 
 # Pypi libraries
 import yaml
@@ -21,11 +22,11 @@ except Exception: # Windows
 
 
 class ProgramContext:
-    DEFAULT_CONFIG_PATH = 'config_factory_graph.yaml'
 
 
-    def __init__(self):
-        self.load_graph_config(ProgramContext.DEFAULT_CONFIG_PATH)
+    def __init__(self, default_config_path: str = 'config_factory_graph.yaml') -> None:
+        self.default_config_path = default_config_path
+        self.load_graph_config(default_config_path)
         streamhandler_level = self.graph_config.get('STREAMHANDLER_LEVEL', 'INFO')
 
         self.log = logging.getLogger('flow.log')
@@ -46,7 +47,7 @@ class ProgramContext:
         if streamhandler_level == 'DEBUG':
             # https://stackoverflow.com/a/74605301
             class PackagePathFilter(logging.Filter):
-                def filter(self, record):
+                def filter(self, record: logging.LogRecord) -> Literal[True]:
                     record.pathname = record.pathname.replace(os.getcwd(),"")
                     return True
             handler.addFilter(PackagePathFilter())
@@ -55,12 +56,12 @@ class ProgramContext:
         self.graph_gen = systemOfEquationsSolverGraphGen
 
 
-    def load_graph_config(self, config_path):
+    def load_graph_config(self, config_path: str) -> None:
         with open(config_path, 'r') as f:
             self.graph_config = yaml.safe_load(f)
 
 
-    def generate_one(self, project_name):
+    def generate_one(self, project_name: str) -> None:
         if not project_name.endswith('.yaml'):
             raise Exception(f'Invalid project file. *.yaml file expected. Got: {project_name}.')
 
@@ -73,19 +74,19 @@ class ProgramContext:
             self.log.error(colored('If error cause is not obvious, please notify dev: https://github.com/OrderedSet86/gtnh-flow/issues', 'red'))
 
 
-    def run_noninteractive(self, projects):
+    def run_noninteractive(self, projects: list[str]) -> None:
         for project_name in projects:
             self.generate_one(project_name)
 
 
-    def run_interactive(self):
+    def run_interactive(self) -> None:
         # Set up autcompletion config
         projects_path = Path('projects')
         readline.parse_and_bind('tab: complete')
         readline.set_completer_delims('')
 
         while True:
-            def completer(text, state):
+            def completer(text: str, state: int) -> Union[str, None]:
                 prefix = ''
                 suffix = text
                 if '/' in text:
@@ -115,14 +116,14 @@ class ProgramContext:
                 # This happens because autocomplete will not add .yaml if there are alternatives (like "power/fish/methane_no_biogas")
                 project_name += '.yaml'
 
-            self.load_graph_config(ProgramContext.DEFAULT_CONFIG_PATH)
+            self.load_graph_config(self.default_config_path)
             self.generate_one(project_name)
 
 
-    def run(self):
+    def run(self) -> None:
 
         parser = argparse.ArgumentParser()
-        parser.add_argument('--config', type=str, default=ProgramContext.DEFAULT_CONFIG_PATH, help='Path to the global .yaml configuration file.')
+        parser.add_argument('--config', type=str, default='config_factory_graph.yaml', help='Path to the global .yaml configuration file.')
         parser.add_argument('--interactive', action='store_true', help='Force interactive mode.')
         parser.add_argument('--graph_gen', type=str, default='systemOfEquationsSolverGraphGen', help='Type of the graph generator to use.')
         parser.add_argument('--no_view_on_completion', action='store_true', help='Override the VIEW_ON_COMPLETION config setting to False. Useful when running mass jobs.')

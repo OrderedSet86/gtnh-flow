@@ -1,3 +1,5 @@
+from typing import Union
+
 import pytest
 
 from src.graph._utils import userAccurate
@@ -42,5 +44,5 @@ from src.graph._utils import userAccurate
     (-0.0001, '-0.0001'),
     (-0.0001323, '-0.000132'),
 ])
-def test_user_accurate(number, expected_format):
+def test_user_accurate(number: Union[float, int], expected_format: str):
     assert userAccurate(number) == expected_format

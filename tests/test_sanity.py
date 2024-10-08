@@ -1,55 +1,14 @@
-import logging
 import os
 from pathlib import Path
 
 import pytest
-import yaml
-from termcolor import colored
 
+from factory_graph import ProgramContext
 from src.data.loadMachines import recipesFromConfig
-from src.graph._solver import systemOfEquationsSolverGraphGen
 
 
 # Just compile and generate graph for every project
 # (Minus a few whitelisted long exceptions like nanocircuits)
-
-
-class ProgramContext:
-    DEFAULT_CONFIG_PATH = 'tests/sanity_config.yaml'
-
-    def __init__(self):
-        self.load_graph_config(ProgramContext.DEFAULT_CONFIG_PATH)
-        streamhandler_level = self.graph_config.get('STREAMHANDLER_LEVEL', 'INFO')
-
-        self.log = logging.getLogger('flow.log')
-        self.log.setLevel(logging.DEBUG)
-
-        if streamhandler_level == 'DEBUG':
-            fmtstring = '%(pathname)s:%(lineno)s %(levelname)s %(message)s'
-        else:
-            fmtstring = '%(filename)s:%(lineno)s %(levelname)s %(message)s'
-        formatter = logging.Formatter(
-            fmt=fmtstring,
-            datefmt='%Y-%m-%dT%H:%M:%S%z', # ISO 8601
-        )
-
-        handler = logging.StreamHandler() # outputs to stderr
-        handler.setFormatter(formatter)
-        handler.setLevel(logging.getLevelName(self.graph_config.get('STREAMHANDLER_LEVEL', 'INFO')))
-        if streamhandler_level == 'DEBUG':
-            # https://stackoverflow.com/a/74605301
-            class PackagePathFilter(logging.Filter):
-                def filter(self, record):
-                    record.pathname = record.pathname.replace(os.getcwd(),"")
-                    return True
-            handler.addFilter(PackagePathFilter())
-        self.log.addHandler(handler)
-
-        self.graph_gen = systemOfEquationsSolverGraphGen
-
-    def load_graph_config(self, config_path):
-        with open(config_path, 'r') as f:
-            self.graph_config = yaml.safe_load(f)
 
 
 def generateProjectPaths():
@@ -93,8 +52,8 @@ def generateProjectPaths():
 
 
 @pytest.mark.parametrize("project_name", generateProjectPaths())
-def test_lazyGenerateGraphs(project_name):
-    pc = ProgramContext()
+def test_lazyGenerateGraphs(project_name: str):
+    pc = ProgramContext('tests/sanity_config.yaml')
     recipes = recipesFromConfig(project_name, project_folder='')
 
     if project_name.endswith('.yaml'):

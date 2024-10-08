@@ -1,16 +1,17 @@
 # Standard libraries
 import math
 from bisect import bisect_right
+from typing import Callable
 
 # Pypi libraries
 import yaml
 from termcolor import colored
 
 # Internal libraries
-from src.data.basicTypes import Ingredient, IngredientCollection
+from src.data.basicTypes import Ingredient, IngredientCollection, Recipe
 
 
-def require(recipe, requirements):
+def require(recipe: Recipe, requirements: tuple[str, str, str]):
     # requirements should be a list of [key, type, reason]
     for req in requirements:
         key, req_type, reason = req
@@ -22,7 +23,10 @@ def require(recipe, requirements):
 class OverclockHandler:
 
 
-    def __init__(self, parent_context):
+    def __init__(
+            self,
+            parent_context, # TODO: Figure out how to type this (ProgramContext)
+        ):
         self.parent_context = parent_context
         self.ignore_underclock = False # Whether to throw an error or actually underclock if
                                        # USER_VOLTAGE < EUT
@@ -34,7 +38,7 @@ class OverclockHandler:
         self.voltage_cutoffs = [32*pow(4, x) + 1 for x in range(len(self.voltages))]
 
 
-    def modifyGTpp(self, recipe, MAX_PARALLEL=None, eut_discount=None):
+    def modifyGTpp(self, recipe: Recipe, MAX_PARALLEL: int = None, eut_discount: float = None) -> Recipe:
         if recipe.machine not in self.overclock_data['GTpp_stats']:
             raise RuntimeError('Missing OC data for GT++ multi - add to gtnhClasses/overclocks.py:GTpp_stats')
 
@@ -85,7 +89,7 @@ class OverclockHandler:
         return recipe
 
 
-    def modifyChemPlant(self, recipe):
+    def modifyChemPlant(self, recipe: Recipe) -> Recipe:
         require(
             recipe,
             [
@@ -131,14 +135,14 @@ class OverclockHandler:
         return recipe
 
 
-    def modifyZhuhai(self, recipe):
+    def modifyZhuhai(self, recipe: Recipe) -> Recipe:
         recipe = self.modifyStandard(recipe)
         parallel_count = (self.voltages.index(recipe.user_voltage) + 2)*2
         recipe.O *= parallel_count
         return recipe
 
 
-    def modifyEBF(self, recipe):
+    def modifyEBF(self, recipe: Recipe) -> Recipe:
         require(
             recipe,
             [
@@ -161,7 +165,7 @@ class OverclockHandler:
         return recipe
 
 
-    def modifyPyrolyse(self, recipe):
+    def modifyPyrolyse(self, recipe: Recipe) -> Recipe:
         require(
             recipe,
             [
@@ -175,7 +179,7 @@ class OverclockHandler:
         return recipe
 
 
-    def modifyMultiSmelter(self, recipe):
+    def modifyMultiSmelter(self, recipe: Recipe) -> Recipe:
         recipe.eut = 4
         recipe.dur = 500
         recipe = self.modifyStandard(recipe)
@@ -186,7 +190,7 @@ class OverclockHandler:
         return recipe
 
 
-    def modifyTGS(self, recipe):
+    def modifyTGS(self, recipe: Recipe) -> Recipe:
         require(
             recipe,
             [
@@ -218,7 +222,7 @@ class OverclockHandler:
         return recipe
 
 
-    def modifyUtupu(self, recipe, override_max_parallel = None):
+    def modifyUtupu(self, recipe: Recipe, override_max_parallel: int = None) -> Recipe:
         require(
             recipe,
             [
@@ -273,12 +277,12 @@ class OverclockHandler:
     #   ebf bonuses to power, perfect OCs apply *after* parallels are calculated
     #   no heat-per-tier bonuses
     # This makes it match Utupu, except for the parallel maximum
-    def modifyVolcanus(self, recipe):        
+    def modifyVolcanus(self, recipe: Recipe) -> Recipe:        
         SPEED_BOOST, EU_DISCOUNT, MAX_PARALLEL = self.overclock_data['GTpp_stats'][recipe.machine]
         return self.modifyUtupu(recipe, MAX_PARALLEL)
        
 
-    def modifyFusion(self, recipe):
+    def modifyFusion(self, recipe: Recipe) -> Recipe:
         # Ignore "tier" and just use "mk" argument for OCs
         # start is also in "mk" notation
         require(
@@ -301,7 +305,7 @@ class OverclockHandler:
         return recipe
 
 
-    def modifyTurbine(self, recipe, fuel_type):
+    def modifyTurbine(self, recipe: Recipe, fuel_type: str) -> Recipe:
         require(
             recipe,
             [
@@ -363,7 +367,7 @@ class OverclockHandler:
         return recipe
 
 
-    def modifyAAL(self, recipe):
+    def modifyAAL(self, recipe: Recipe) -> Recipe:
         # Huge approximation, will not be accurate for laser overclock energy cost
         parallel_count = len(recipe.I)
         recipe.I *= parallel_count
@@ -372,7 +376,7 @@ class OverclockHandler:
         return self.modifyStandard(recipe)
 
 
-    def modifyXT(self, recipe, fuel_type):
+    def modifyXT(self, recipe: Recipe, fuel_type: str) -> Recipe:
         recipe = self.modifyTurbine(recipe, fuel_type)
         recipe.I *= 16
         recipe.O *= 16
@@ -380,7 +384,7 @@ class OverclockHandler:
         return recipe
     
 
-    def modifyMega(self, recipe, baseModifierFunction):
+    def modifyMega(self, recipe: Recipe, baseModifierFunction: Callable) -> Recipe:
         # FIXME: This is not how they work...
 
         recipe = baseModifierFunction(recipe)
@@ -391,7 +395,7 @@ class OverclockHandler:
         return recipe
 
 
-    def modifyICO(self, recipe):
+    def modifyICO(self, recipe: Recipe) -> Recipe:
         user_voltage = self.voltages.index(recipe.user_voltage)
         eut_discount = 1 - 0.04 * (user_voltage + 1)
 
@@ -400,7 +404,7 @@ class OverclockHandler:
         return recipe
 
 
-    def calculateStandardOC(self, recipe):
+    def calculateStandardOC(self, recipe: Recipe) -> Recipe:
         base_voltage = bisect_right(self.voltage_cutoffs, recipe.eut)
         user_voltage = self.voltages.index(recipe.user_voltage)
         oc_count = user_voltage - base_voltage
@@ -409,21 +413,21 @@ class OverclockHandler:
         return oc_count
 
 
-    def modifyStandard(self, recipe):
+    def modifyStandard(self, recipe: Recipe) -> Recipe:
         oc_count = self.calculateStandardOC(recipe)
         recipe.eut = recipe.eut * 4**oc_count
         recipe.dur = recipe.dur / 2**oc_count
         return recipe
 
 
-    def modifyPerfect(self, recipe):
+    def modifyPerfect(self, recipe: Recipe) -> Recipe:
         oc_count = self.calculateStandardOC(recipe)
         recipe.eut = recipe.eut * 4**oc_count
         recipe.dur = recipe.dur / 4**oc_count
         return recipe
 
 
-    def getOverclockFunction(self, recipe):
+    def getOverclockFunction(self, recipe: Recipe) -> Callable[[Recipe], Recipe]:
         machine_overrides = {
             # GT multis
             'pyrolyse oven': self.modifyPyrolyse,
@@ -447,7 +451,6 @@ class OverclockHandler:
             'mdt': lambda rec: self.modifyMega(rec, self.modifyStandard),
             'mega vacuum freezer': lambda rec: self.modifyMega(rec, self.modifyStandard),
             'mvf': lambda rec: self.modifyMega(rec, self.modifyStandard),
-            # TODO: These may not follow normal mega rules
             'mega large chemical reactor': lambda rec: self.modifyMega(rec, self.modifyPerfect),
             'mega chemical reactor': lambda rec: self.modifyMega(rec, self.modifyPerfect),
             'mcr': lambda rec: self.modifyMega(rec, self.modifyPerfect),
@@ -485,14 +488,13 @@ class OverclockHandler:
             "digester": self.modifyPerfect,
         }
 
-        # TODO: Check if casing matters here
         if recipe.machine in machine_overrides:
             return machine_overrides[recipe.machine](recipe)
         else:
             return self.modifyStandard(recipe)
 
 
-    def overclockRecipe(self, recipe, ignore_underclock=False):
+    def overclockRecipe(self, recipe: Recipe, ignore_underclock: bool = False) -> Recipe:
         ### Modifies recipe according to overclocks
         # By the time that the recipe arrives here, it should have a "user_voltage" argument which indicates
         # what the user is actually providing.

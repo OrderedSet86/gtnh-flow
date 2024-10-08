@@ -1,18 +1,20 @@
 import itertools
-from typing import Set
+from typing import Any, Set
 
 from termcolor import colored
 
+from src.data.basicTypes import Recipe
 from src.gtnh.overclocks import OverclockHandler
 
 
 class IdentityGroup:
-    def __init__(self, ground_truth_machine: str, aliases: Set[str]):
+    def __init__(self, ground_truth_machine: str, aliases: Set[str]) -> None:
         self.gtm = ground_truth_machine
         self.aliases = aliases
-    def isCanonical(self, machine_name):
+
+    def isCanonical(self, machine_name: str) -> bool:
         return machine_name == self.gtm
-    def isAlias(self, machine_name):
+    def isAlias(self, machine_name: str) -> bool:
         return machine_name in self.aliases
 
 
@@ -69,7 +71,13 @@ machine_identity_groups = [IdentityGroup(name, aliases) for name, aliases in mac
 class Graph:
 
 
-    def __init__(self, graph_name, recipes, parent_context, graph_config=None):
+    def __init__(
+            self,
+            graph_name: str,
+            recipes: list[Recipe],
+            parent_context, # TODO: figure out how to type this (ProgramContext)
+            graph_config: dict[str, Any] = None,
+        ) -> None:
         self.graph_name = graph_name
         self.recipes = {str(i): x for i, x in enumerate(recipes)}
         self.nodes = {}

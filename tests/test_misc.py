@@ -9,9 +9,7 @@ from src.gtnh.overclocks import OverclockHandler
 
 @pytest.fixture
 def overclock_handler():
-    # for now it uses config file in the project
-    # it may cause issue if config file is messed up
-    return OverclockHandler(ProgramContext())
+    return OverclockHandler(ProgramContext('tests/sanity_config.yaml'))
 
 
 @pytest.mark.parametrize(
@@ -23,7 +21,7 @@ def overclock_handler():
         "HSS-G",
     ],
 )
-def test_coils_value_case_sensitivity(coils, overclock_handler):
+def test_coils_value_case_sensitivity(coils: str, overclock_handler):
     recipe = Recipe(
         "electric blast furnace",
         "ev",
@@ -48,7 +46,7 @@ def test_coils_value_case_sensitivity(coils, overclock_handler):
         "BuzzSaw",
     ],
 )
-def test_saw_value_case_sensitivity(saw, overclock_handler):
+def test_saw_value_case_sensitivity(saw: str, overclock_handler):
     recipe = Recipe(
         "tree growth simulator",
         "lv",
