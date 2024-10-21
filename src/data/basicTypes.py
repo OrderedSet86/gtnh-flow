@@ -56,6 +56,21 @@ class IngredientCollection:
             self.addItem(ing)
         return self
 
+    def itemAmount(self, name: str) -> int:
+        return sum(self._ingdict.get(name, []))
+
+    def __contains__(self, item) -> bool:
+        if isinstance(item, str):
+            # Checks if an ingredient with the name exists
+            return item in self._ingdict and len(self._ingdict[item]) > 0
+        elif isinstance(item, Ingredient):
+            # If this collection has the ingredient and
+            # has more quantity than the ingredient has,
+            # return true
+            quant = item.quant
+            return quant > 0 and quant <= self.itemAmount(item.name)
+        return False
+
 
 class Recipe:
     def __init__(
