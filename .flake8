@@ -1,0 +1,5 @@
+[flake8]
+# Recommended settings from black
+max-line-length = 80
+extend-select = B950
+extend-ignore = E203,E501,E701

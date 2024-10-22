@@ -53,3 +53,9 @@ The idea of gtnh-flow is to automatically do all the machine balancing math for 
 
 ## It's still beta
 `gtnh-flow` cannot solve certain parallel edge product situations - this is hopefully being resolved in version 2, which is currently in pre-alpha development. It will take a while as I am trying to avoid the way Factorio solvers work, which is to define an "objective" value for every item in the game. This is impractical to do and permanently maintain for GTNH.
+
+## Development
+
+1. Create a virtualenv and activate it
+2. Run `pip install -r requirements_dev.txt`
+3. Run `pre-commit install`

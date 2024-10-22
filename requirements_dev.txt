@@ -1,0 +1,8 @@
+black>=24.8
+coverage>=7.6
+flake8>=7.1
+isort>=5.13
+mypy>=1.11
+pre-commit>=3.8
+pytest>=8.3
+pytest-check>=2.4
