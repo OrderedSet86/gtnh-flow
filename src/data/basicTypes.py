@@ -89,7 +89,7 @@ class Recipe:
         self.O = outputs
         self.eut = eut
         self.dur = dur
-        self.multiplier = -1
+        self.multiplier: float = -1
         self.base_eut = eut # Used for final graph output
         for key, value in kwargs.items():
             # quick fix to ignore cases
