@@ -10,15 +10,15 @@ class Ingredient:
 
 
 class IngredientCollection:
-    def __init__(self, *ingredient_list: list[Ingredient]) -> None:
+    def __init__(self, *ingredient_list: Ingredient) -> None:
         self._ings = list(ingredient_list)
         # Note: name is not a unique identifier for multi-input situations
         # therefore, need to defaultdict a list
-        self._ingdict = defaultdict(list)
+        self._ingdict: dict[str, list[float]] = defaultdict(list)
         for ing in self._ings:
             self._ingdict[ing.name].append(ing.quant)
 
-    def __iter__(self) -> Iterable[Ingredient]:
+    def __iter__(self):
         return iter(self._ings)
 
     def __getitem__(self, idx: Union[int, str]) -> Union[Ingredient, list[float]]:
@@ -56,7 +56,7 @@ class IngredientCollection:
             self.addItem(ing)
         return self
 
-    def itemAmount(self, name: str) -> int:
+    def itemAmount(self, name: str) -> float:
         return sum(self._ingdict.get(name, []))
 
     def __contains__(self, item) -> bool:
@@ -89,7 +89,7 @@ class Recipe:
         self.O = outputs
         self.eut = eut
         self.dur = dur
-        self.multiplier = -1
+        self.multiplier: float = -1
         self.base_eut = eut # Used for final graph output
         for key, value in kwargs.items():
             # quick fix to ignore cases
